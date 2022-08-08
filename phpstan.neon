@@ -1,0 +1,28 @@
+includes:
+	- vendor/phpstan/phpstan/conf/bleedingEdge.neon
+	- vendor/phpstan/phpstan-webmozart-assert/extension.neon
+
+parameters:
+	level: max
+	tmpDir: ./tmp/phpstan
+
+	paths:
+		- src
+
+	ignoreErrors:
+		# Wrong type inferrence
+		-
+			message: '#Method [a-z\\]+NativePHPDocDefinitionProvider::typeParameters\(\) should return [a-z\\]+Collection<int, [a-z\\]+TypeParameterDefinition> but returns [a-z\\]+Collection<int, mixed>#i'
+			path: 'src/GoodPhp/Reflection/Definition/NativePHPDoc/NativePHPDocDefinitionProvider.php'
+		# Illuminate's Container isn't covered with template types
+		-
+			message: '#expects .*, .*mixed.* given#i'
+			path: 'src/GoodPhp/Reflection/ReflectionBuilder.php'
+		# Illuminate's Collection isn't immutable (hence value isn't covariant) and I'm not aware of any immutable versions of it.
+		- '#expects Illuminate\\Support\\Collection<int, GoodPhp\\Reflection\\Type\\Type>, Illuminate\\Support\\Collection<int, GoodPhp\\Reflection\\Type\\[a-z\\]+> given#i'
+		-
+			message: '#Method [a-z\\]+::get\(\) should return static\([a-z\\]+\) but returns [a-z\\]+#i'
+			path: 'src/GoodPhp/Reflection/Util/IsSingleton.php'
+		-
+			message: '#Unsafe usage of new static\(\)#i'
+			path: 'src/GoodPhp/Reflection/Util/IsSingleton.php'
