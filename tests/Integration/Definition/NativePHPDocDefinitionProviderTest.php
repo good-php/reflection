@@ -107,6 +107,7 @@ class NativePHPDocDefinitionProviderTest extends TestCase
 					new PropertyDefinition(
 						name: 'factories',
 						type: PrimitiveType::array(new NamedType(SomeStub::class)),
+						hasDefaultValue: false,
 					),
 					new PropertyDefinition(
 						name: 'generic',
@@ -115,11 +116,13 @@ class NativePHPDocDefinitionProviderTest extends TestCase
 							new TemplateType(
 								name: 'T'
 							),
-						]))
+						])),
+						hasDefaultValue: false,
 					),
 					new PropertyDefinition(
 						name: 'promoted',
 						type: new TemplateType('T'),
+						hasDefaultValue: false,
 					),
 				]),
 				methods: new Collection([
@@ -235,9 +238,26 @@ class NativePHPDocDefinitionProviderTest extends TestCase
 					new PropertyDefinition(
 						name: 'property',
 						type: null,
+						hasDefaultValue: true,
+					),
+					new PropertyDefinition(
+						name: 'promoted',
+						type: null,
+						hasDefaultValue: true,
 					),
 				]),
 				methods: new Collection([
+					new MethodDefinition(
+						name: '__construct',
+						typeParameters: new Collection(),
+						parameters: new Collection([
+							new FunctionParameterDefinition(
+								name: 'promoted',
+								type: null
+							),
+						]),
+						returnType: null
+					),
 					new MethodDefinition(
 						name: 'test',
 						typeParameters: new Collection(),

@@ -214,7 +214,8 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 						$property->getType(),
 						$phpDocType,
 						$context
-					)
+					),
+					hasDefaultValue: $property->hasDefaultValue(),
 				);
 			});
 	}

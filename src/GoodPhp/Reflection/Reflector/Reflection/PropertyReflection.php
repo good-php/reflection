@@ -55,6 +55,11 @@ class PropertyReflection implements HasAttributes
 		return $this->type->value();
 	}
 
+	public function hasDefaultValue(): bool
+	{
+		return $this->definition->hasDefaultValue;
+	}
+
 	/**
 	 * @return Collection<int, object>
 	 */
