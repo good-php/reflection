@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GoodPhp\Reflection\Reflector\Reflection;
 
 use GoodPhp\Reflection\Definition\TypeDefinition\FunctionParameterDefinition;
@@ -89,8 +91,19 @@ class MethodReflection implements HasAttributes
 		return $this->returnType->value();
 	}
 
+	/**
+	 * Call a method with strict_types=0.
+	 */
 	public function invoke(object $receiver, mixed ...$args): mixed
 	{
 		return $this->nativeReflection->invoke($receiver, ...$args);
+	}
+
+	/**
+	 * Call a public method with strict_types=1.
+	 */
+	public function invokeStrict(object $receiver, mixed ...$args): mixed
+	{
+		return $receiver->{$this->name()}(...$args);
 	}
 }

@@ -68,8 +68,19 @@ class PropertyReflection implements HasAttributes
 		return $this->nativeReflection->getValue($receiver);
 	}
 
+	/**
+	 * Set a property with strict_types=0.
+	 */
 	public function set(object $receiver, mixed $value): void
 	{
 		$this->nativeReflection->setValue($receiver, $value);
+	}
+
+	/**
+	 * Set a public property with strict_types=1.
+	 */
+	public function setStrict(object $receiver, mixed $value): void
+	{
+		$receiver->{$this->name()} = $value;
 	}
 }

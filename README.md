@@ -1,4 +1,4 @@
-# Better reflection
+# Good PHP reflection
 
 Reflection that accounts for features that are in static analysers, but aren't in the language yet.
 
