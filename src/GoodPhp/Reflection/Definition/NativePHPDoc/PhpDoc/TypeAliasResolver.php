@@ -43,7 +43,7 @@ class TypeAliasResolver
 
 		$alias = $this->imported($symbol, $fileClassLikeContext);
 
-		if ($alias !== $symbol) {
+		if ($alias !== null) {
 			return $alias;
 		}
 
@@ -54,7 +54,7 @@ class TypeAliasResolver
 		return $symbol;
 	}
 
-	public function imported(string $symbol, FileClassLikeContext $fileClassLikeContext): string
+	public function imported(string $symbol, FileClassLikeContext $fileClassLikeContext): ?string
 	{
 		$alias = $symbol;
 
@@ -66,7 +66,7 @@ class TypeAliasResolver
 		}
 
 		if (!isset($fileClassLikeContext->uses[$alias])) {
-			return $symbol;
+			return null;
 		}
 
 		$full = $fileClassLikeContext->uses[$alias];

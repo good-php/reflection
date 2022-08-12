@@ -2,6 +2,7 @@
 
 namespace Tests\Integration\Definition;
 
+use DateTime;
 use Generator;
 use GoodPhp\Reflection\Definition\NativePHPDoc\NativePHPDocDefinitionProvider;
 use GoodPhp\Reflection\Definition\TypeDefinition;
@@ -112,7 +113,7 @@ class NativePHPDocDefinitionProviderTest extends TestCase
 					new PropertyDefinition(
 						name: 'generic',
 						type: new NamedType(DoubleTemplateType::class, collect([
-							new NamedType(SomeStub::class),
+							new NamedType(DateTime::class),
 							new TemplateType(
 								name: 'T'
 							),

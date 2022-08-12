@@ -2,6 +2,7 @@
 
 namespace Tests\Stubs\Classes;
 
+use DateTime;
 use Illuminate\Support\Collection;
 use Tests\Stubs\AttributeStub;
 use Tests\Stubs\Interfaces\ParentInterfaceStub;
@@ -25,7 +26,7 @@ final class ClassStub extends ParentClassStub implements ParentInterfaceStub
 	#[AttributeStub('4')]
 	private array $factories;
 
-	/** @var DoubleTemplateType<SomeStub, T> */
+	/** @var DoubleTemplateType<DateTime, T> */
 	private DoubleTemplateType $generic;
 
 	/**
