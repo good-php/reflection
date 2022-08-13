@@ -12,14 +12,18 @@ use GoodPhp\Reflection\Reflector\Reflection\TypeReflection;
 use GoodPhp\Reflection\Type\NamedType;
 use GoodPhp\Reflection\Type\Template\TypeParameterMap;
 use GoodPhp\Reflection\Type\Type;
+use GoodPhp\Reflection\Type\TypeComparator;
 use Illuminate\Support\Collection;
 use InvalidArgumentException;
 
 class Reflector
 {
+	public readonly TypeComparator $typeComparator;
+
 	public function __construct(
 		private readonly DefinitionProvider $definitionProvider,
 	) {
+		$this->typeComparator = new TypeComparator($this);
 	}
 
 	/**

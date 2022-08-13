@@ -2,17 +2,17 @@
 
 namespace Tests\Integration;
 
-use GoodPhp\Reflection\ReflectionBuilder;
-use Psr\Container\ContainerInterface;
+use GoodPhp\Reflection\Reflector\Reflector;
+use GoodPhp\Reflection\ReflectorBuilder;
 
 class TestCase extends \PHPUnit\Framework\TestCase
 {
-	protected ContainerInterface $container;
+	protected Reflector $reflector;
 
 	protected function setUp(): void
 	{
 		parent::setUp();
 
-		$this->container = (new ReflectionBuilder())->build();
+		$this->reflector = (new ReflectorBuilder())->build();
 	}
 }

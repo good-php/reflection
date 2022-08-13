@@ -23,9 +23,8 @@ use PHPStan\PhpDocParser\Lexer\Lexer;
 use PHPStan\PhpDocParser\Parser\ConstExprParser;
 use PHPStan\PhpDocParser\Parser\PhpDocParser;
 use PHPStan\PhpDocParser\Parser\TypeParser;
-use Psr\Container\ContainerInterface;
 
-class ReflectionBuilder
+class ReflectorBuilder
 {
 	private Container $container;
 
@@ -81,8 +80,8 @@ class ReflectionBuilder
 		return $builder;
 	}
 
-	public function build(): ContainerInterface
+	public function build(): Reflector
 	{
-		return $this->container;
+		return $this->container->get(Reflector::class);
 	}
 }

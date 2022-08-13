@@ -28,7 +28,7 @@ class TypeComparatorTest extends TestCase
 	{
 		parent::setUp();
 
-		$this->comparator = $this->container->get(TypeComparator::class);
+		$this->comparator = $this->reflector->typeComparator;
 	}
 
 	/**

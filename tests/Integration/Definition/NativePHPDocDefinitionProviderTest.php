@@ -4,7 +4,12 @@ namespace Tests\Integration\Definition;
 
 use DateTime;
 use Generator;
+use GoodPhp\Reflection\Definition\NativePHPDoc\File\FileContextParser;
+use GoodPhp\Reflection\Definition\NativePHPDoc\Native\NativeTypeMapper;
 use GoodPhp\Reflection\Definition\NativePHPDoc\NativePHPDocDefinitionProvider;
+use GoodPhp\Reflection\Definition\NativePHPDoc\PhpDoc\PhpDocStringParser;
+use GoodPhp\Reflection\Definition\NativePHPDoc\PhpDoc\PhpDocTypeMapper;
+use GoodPhp\Reflection\Definition\NativePHPDoc\PhpDoc\TypeAliasResolver;
 use GoodPhp\Reflection\Definition\TypeDefinition;
 use GoodPhp\Reflection\Definition\TypeDefinition\ClassTypeDefinition;
 use GoodPhp\Reflection\Definition\TypeDefinition\EnumCaseDefinition;
@@ -28,6 +33,12 @@ use GoodPhp\Reflection\Type\Special\VoidType;
 use GoodPhp\Reflection\Type\Template\TemplateType;
 use GoodPhp\Reflection\Type\Template\TemplateTypeVariance;
 use Illuminate\Support\Collection;
+use PhpParser\Lexer\Emulative;
+use PhpParser\Parser\Php7;
+use PHPStan\PhpDocParser\Lexer\Lexer;
+use PHPStan\PhpDocParser\Parser\ConstExprParser;
+use PHPStan\PhpDocParser\Parser\PhpDocParser;
+use PHPStan\PhpDocParser\Parser\TypeParser;
 use Tests\Integration\TestCase;
 use Tests\Stubs\Classes\AllMissingTypes;
 use Tests\Stubs\Classes\AllNativeTypes;
@@ -59,7 +70,23 @@ class NativePHPDocDefinitionProviderTest extends TestCase
 	{
 		parent::setUp();
 
-		$this->definitionProvider = $this->container->get(NativePHPDocDefinitionProvider::class);
+		$this->definitionProvider = new NativePHPDocDefinitionProvider(
+			new PhpDocStringParser(
+				new Lexer(),
+				new PhpDocParser(
+					new TypeParser($constExprParser = new ConstExprParser()),
+					$constExprParser,
+				),
+			),
+			new FileContextParser(
+				new Php7(new Emulative()),
+			),
+			new TypeAliasResolver(),
+			new NativeTypeMapper(),
+			new PhpDocTypeMapper(
+				new TypeAliasResolver()
+			),
+		);
 	}
 
 	public static function providesDefinitionForTypeProvider(): Generator
