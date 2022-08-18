@@ -248,4 +248,9 @@ class ClassReflection extends TypeReflection implements HasAttributes
 	{
 		return $this->definition->builtIn;
 	}
+
+	public function newInstanceWithoutConstructor(): object
+	{
+		return $this->nativeReflection->newInstanceWithoutConstructor();
+	}
 }
