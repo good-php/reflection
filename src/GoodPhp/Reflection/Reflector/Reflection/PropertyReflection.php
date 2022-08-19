@@ -12,6 +12,7 @@ use Illuminate\Support\Collection;
 use ReflectionProperty;
 use TenantCloud\Standard\Lazy\Lazy;
 use function TenantCloud\Standard\Lazy\lazy;
+use Webmozart\Assert\Assert;
 
 /**
  * @template-covariant OwnerType of ClassReflection|InterfaceReflection|TraitReflection|EnumReflection
@@ -71,6 +72,13 @@ class PropertyReflection implements HasAttributes
 	public function hasDefaultValue(): bool
 	{
 		return $this->definition->hasDefaultValue;
+	}
+
+	public function defaultValue(): mixed
+	{
+		Assert::true($this->hasDefaultValue());
+
+		return $this->nativeReflection->getDefaultValue();
 	}
 
 	public function isPromoted(): bool
