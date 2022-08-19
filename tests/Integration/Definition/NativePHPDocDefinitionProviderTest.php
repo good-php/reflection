@@ -164,6 +164,7 @@ class NativePHPDocDefinitionProviderTest extends TestCase
 							new FunctionParameterDefinition(
 								name: 'promoted',
 								type: new TemplateType('T'),
+								hasDefaultValue: false,
 							),
 						]),
 						returnType: null,
@@ -186,7 +187,8 @@ class NativePHPDocDefinitionProviderTest extends TestCase
 									new TemplateType(
 										name: 'T'
 									),
-								]))
+								])),
+								hasDefaultValue: false,
 							),
 						]),
 						returnType: new NamedType(Collection::class, collect([
@@ -224,6 +226,7 @@ class NativePHPDocDefinitionProviderTest extends TestCase
 								type: new TemplateType(
 									name: 'K'
 								),
+								hasDefaultValue: false,
 							),
 						]),
 						returnType: new TemplateType(
@@ -278,6 +281,12 @@ class NativePHPDocDefinitionProviderTest extends TestCase
 						hasDefaultValue: true,
 						isPromoted: true,
 					),
+					new PropertyDefinition(
+						name: 'promotedDefault',
+						type: new NullableType(PrimitiveType::integer()),
+						hasDefaultValue: false,
+						isPromoted: true,
+					),
 				]),
 				methods: new Collection([
 					new MethodDefinition(
@@ -286,7 +295,13 @@ class NativePHPDocDefinitionProviderTest extends TestCase
 						parameters: new Collection([
 							new FunctionParameterDefinition(
 								name: 'promoted',
-								type: null
+								type: null,
+								hasDefaultValue: true,
+							),
+							new FunctionParameterDefinition(
+								name: 'promotedDefault',
+								type: new NullableType(PrimitiveType::integer()),
+								hasDefaultValue: true,
 							),
 						]),
 						returnType: null
@@ -297,7 +312,8 @@ class NativePHPDocDefinitionProviderTest extends TestCase
 						parameters: new Collection([
 							new FunctionParameterDefinition(
 								name: 'something',
-								type: null
+								type: null,
+								hasDefaultValue: false,
 							),
 						]),
 						returnType: null
@@ -328,38 +344,47 @@ class NativePHPDocDefinitionProviderTest extends TestCase
 							new FunctionParameterDefinition(
 								name: 'p1',
 								type: PrimitiveType::integer(),
+								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p2',
 								type: PrimitiveType::string(),
+								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p3',
 								type: PrimitiveType::float(),
+								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p4',
 								type: PrimitiveType::boolean(),
+								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p5',
 								type: new NamedType('array'),
+								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p6',
 								type: PrimitiveType::object(),
+								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p7',
-								type: new NamedType('callable')
+								type: new NamedType('callable'),
+								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p8',
 								type: new NamedType('iterable'),
+								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p9',
 								type: MixedType::get(),
+								hasDefaultValue: false,
 							),
 						]),
 						returnType: VoidType::get(),
@@ -371,6 +396,7 @@ class NativePHPDocDefinitionProviderTest extends TestCase
 							new FunctionParameterDefinition(
 								name: 'p1',
 								type: new NullableType(PrimitiveType::integer()),
+								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p2',
@@ -380,6 +406,7 @@ class NativePHPDocDefinitionProviderTest extends TestCase
 										PrimitiveType::float(),
 									]))
 								),
+								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p3',
@@ -387,6 +414,7 @@ class NativePHPDocDefinitionProviderTest extends TestCase
 									PrimitiveType::string(),
 									PrimitiveType::float(),
 								])),
+								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p4',
@@ -394,10 +422,12 @@ class NativePHPDocDefinitionProviderTest extends TestCase
 									PrimitiveType::string(),
 									PrimitiveType::boolean(),
 								])),
+								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p5',
 								type: new NamedType(AllNativeTypes::class),
+								hasDefaultValue: false,
 							),
 						]),
 						returnType: NeverType::get(),
@@ -436,30 +466,37 @@ class NativePHPDocDefinitionProviderTest extends TestCase
 							new FunctionParameterDefinition(
 								name: 'p1',
 								type: PrimitiveType::integer(),
+								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p2',
 								type: PrimitiveType::integer(),
+								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p3',
 								type: PrimitiveType::integer(),
+								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p4',
 								type: PrimitiveType::integer(),
+								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p5',
 								type: PrimitiveType::integer(),
+								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p6',
 								type: PrimitiveType::integer(),
+								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p7',
 								type: PrimitiveType::integer(),
+								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p8',
@@ -467,18 +504,22 @@ class NativePHPDocDefinitionProviderTest extends TestCase
 									PrimitiveType::integer(),
 									PrimitiveType::float(),
 								])),
+								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p9',
 								type: new ErrorType('numeric'),
+								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p10',
 								type: PrimitiveType::float(),
+								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p11',
 								type: PrimitiveType::float(),
+								hasDefaultValue: false,
 							),
 						]),
 						returnType: VoidType::get(),
@@ -490,34 +531,42 @@ class NativePHPDocDefinitionProviderTest extends TestCase
 							new FunctionParameterDefinition(
 								name: 'p1',
 								type: PrimitiveType::string(),
+								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p2',
 								type: PrimitiveType::string(),
+								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p3',
 								type: PrimitiveType::string(),
+								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p4',
 								type: PrimitiveType::string(),
+								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p5',
 								type: PrimitiveType::string(),
+								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p6',
 								type: PrimitiveType::string(),
+								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p7',
 								type: PrimitiveType::string(),
+								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p8',
 								type: PrimitiveType::string(),
+								hasDefaultValue: false,
 							),
 						]),
 						returnType: NeverType::get(),
@@ -529,18 +578,22 @@ class NativePHPDocDefinitionProviderTest extends TestCase
 							new FunctionParameterDefinition(
 								name: 'p1',
 								type: PrimitiveType::boolean(),
+								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p2',
 								type: PrimitiveType::boolean(),
+								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p3',
 								type: PrimitiveType::boolean(),
+								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p4',
 								type: PrimitiveType::boolean(),
+								hasDefaultValue: false,
 							),
 						]),
 						returnType: NeverType::get(),
@@ -552,6 +605,7 @@ class NativePHPDocDefinitionProviderTest extends TestCase
 							new FunctionParameterDefinition(
 								name: 'p1',
 								type: new NamedType('array'),
+								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p2',
@@ -559,22 +613,27 @@ class NativePHPDocDefinitionProviderTest extends TestCase
 									PrimitiveType::integer(),
 									PrimitiveType::string(),
 								])),
+								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p3',
 								type: new NamedType('array'),
+								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p4',
 								type: new NamedType('array'),
+								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p5',
 								type: new NamedType('array'),
+								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p6',
 								type: new NamedType('array'),
+								hasDefaultValue: false,
 							),
 						]),
 						returnType: NeverType::get(),
@@ -591,30 +650,37 @@ class NativePHPDocDefinitionProviderTest extends TestCase
 									PrimitiveType::string(),
 									PrimitiveType::boolean(),
 								])),
+								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p2',
 								type: new ErrorType('null'),
+								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p3',
 								type: new NamedType('iterable'),
+								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p4',
 								type: new NamedType('callable'),
+								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p5',
 								type: new NamedType('resource'),
+								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p6',
 								type: MixedType::get(),
+								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p7',
 								type: new NamedType('object'),
+								hasDefaultValue: false,
 							),
 						]),
 						returnType: NeverType::get(),
@@ -742,6 +808,7 @@ class NativePHPDocDefinitionProviderTest extends TestCase
 							new FunctionParameterDefinition(
 								name: 'i',
 								type: PrimitiveType::string(),
+								hasDefaultValue: false,
 							),
 						]),
 						returnType: MixedType::get(),
@@ -851,6 +918,7 @@ class NativePHPDocDefinitionProviderTest extends TestCase
 							new FunctionParameterDefinition(
 								name: 'i',
 								type: PrimitiveType::string(),
+								hasDefaultValue: false,
 							),
 						]),
 						returnType: MixedType::get(),

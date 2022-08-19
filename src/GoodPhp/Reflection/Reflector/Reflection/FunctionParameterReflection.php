@@ -12,6 +12,7 @@ use Illuminate\Support\Collection;
 use ReflectionParameter;
 use TenantCloud\Standard\Lazy\Lazy;
 use function TenantCloud\Standard\Lazy\lazy;
+use Webmozart\Assert\Assert;
 
 /**
  * @template-covariant OwnerType of MethodReflection
@@ -53,6 +54,18 @@ class FunctionParameterReflection implements HasAttributes
 	public function type(): ?Type
 	{
 		return $this->type->value();
+	}
+
+	public function hasDefaultValue(): bool
+	{
+		return $this->definition->hasDefaultValue;
+	}
+
+	public function defaultValue(): mixed
+	{
+		Assert::true($this->hasDefaultValue());
+
+		return $this->nativeReflection->getDefaultValue();
 	}
 
 	/**
