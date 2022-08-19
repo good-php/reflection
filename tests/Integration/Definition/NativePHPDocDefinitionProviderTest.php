@@ -136,6 +136,7 @@ class NativePHPDocDefinitionProviderTest extends TestCase
 						name: 'factories',
 						type: PrimitiveType::array(new NamedType(SomeStub::class)),
 						hasDefaultValue: false,
+						isPromoted: false,
 					),
 					new PropertyDefinition(
 						name: 'generic',
@@ -146,11 +147,13 @@ class NativePHPDocDefinitionProviderTest extends TestCase
 							),
 						])),
 						hasDefaultValue: false,
+						isPromoted: false,
 					),
 					new PropertyDefinition(
 						name: 'promoted',
 						type: new TemplateType('T'),
 						hasDefaultValue: false,
+						isPromoted: true,
 					),
 				]),
 				methods: new Collection([
@@ -267,11 +270,13 @@ class NativePHPDocDefinitionProviderTest extends TestCase
 						name: 'property',
 						type: null,
 						hasDefaultValue: true,
+						isPromoted: false,
 					),
 					new PropertyDefinition(
 						name: 'promoted',
 						type: null,
 						hasDefaultValue: true,
+						isPromoted: true,
 					),
 				]),
 				methods: new Collection([

@@ -10,6 +10,7 @@ final class PropertyDefinition
 		public readonly string $name,
 		public readonly ?Type $type,
 		public readonly bool $hasDefaultValue,
+		public readonly bool $isPromoted,
 	) {
 	}
 }

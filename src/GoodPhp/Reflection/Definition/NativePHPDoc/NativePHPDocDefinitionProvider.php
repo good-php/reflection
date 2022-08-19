@@ -216,6 +216,7 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 						$context
 					),
 					hasDefaultValue: $property->hasDefaultValue(),
+					isPromoted: $property->isPromoted(),
 				);
 			});
 	}

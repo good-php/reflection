@@ -21,6 +21,9 @@ class PropertyReflection implements HasAttributes
 	/** @var Lazy<Type|null> */
 	private readonly Lazy $type;
 
+	/** @var Lazy<FunctionParameterReflection|null> */
+	private readonly Lazy $promotedParameter;
+
 	private readonly ReflectionProperty $nativeReflection;
 
 	private readonly HasNativeAttributes $nativeAttributes;
@@ -41,6 +44,16 @@ class PropertyReflection implements HasAttributes
 				) :
 				null
 		);
+		$this->promotedParameter = lazy(
+			fn () => $this->definition->isPromoted ?
+				$this->owner
+					->constructor()
+					->parameters()
+					->first(
+						fn (FunctionParameterReflection $parameter) => $this->definition->name === $parameter->name()
+					) :
+				null
+		);
 		$this->nativeReflection = new ReflectionProperty($this->owner->qualifiedName(), $this->definition->name);
 		$this->nativeAttributes = new HasNativeAttributes(fn () => $this->nativeReflection->getAttributes());
 	}
@@ -58,6 +71,16 @@ class PropertyReflection implements HasAttributes
 	public function hasDefaultValue(): bool
 	{
 		return $this->definition->hasDefaultValue;
+	}
+
+	public function isPromoted(): bool
+	{
+		return $this->definition->isPromoted;
+	}
+
+	public function promotedParameter(): FunctionParameterReflection|null
+	{
+		return $this->promotedParameter->value();
 	}
 
 	/**
