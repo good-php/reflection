@@ -56,7 +56,7 @@ class EnumReflection extends TypeReflection implements HasAttributes
 						default                                 => [],
 					};
 				})
-				->concat($this->declaredMethods())
+				->concat($this->declaredMethods->value())
 				->keyBy(fn (MethodReflection $method) => $method->name())
 				->values()
 		);

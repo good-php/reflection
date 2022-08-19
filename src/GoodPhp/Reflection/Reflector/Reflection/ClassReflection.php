@@ -100,7 +100,7 @@ class ClassReflection extends TypeReflection implements HasAttributes
 						default                                 => [],
 					};
 				})
-				->concat($this->declaredProperties())
+				->concat($this->declaredProperties->value())
 				->keyBy(fn (PropertyReflection $property) => $property->name())
 				->values()
 		);
@@ -127,7 +127,7 @@ class ClassReflection extends TypeReflection implements HasAttributes
 						default                                 => [],
 					};
 				})
-				->concat($this->declaredMethods())
+				->concat($this->declaredMethods->value())
 				->keyBy(fn (MethodReflection $method) => $method->name())
 				->values()
 		);
