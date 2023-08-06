@@ -89,7 +89,7 @@ class NativePHPDocDefinitionProviderTest extends TestCase
 		);
 	}
 
-	public static function providesDefinitionForTypeProvider(): Generator
+	public static function providesDefinitionForTypeProvider(): iterable
 	{
 		yield [
 			ClassStub::class,

@@ -59,7 +59,7 @@ class FileModificationCacheDefinitionProviderTest extends TestCase
 	{
 		parent::tearDown();
 
-//		rmdir(__DIR__ . '/../../../tmp/tests/Integration/Definition/FileModificationCacheDefinitionProviderTest');
+		//		rmdir(__DIR__ . '/../../../tmp/tests/Integration/Definition/FileModificationCacheDefinitionProviderTest');
 	}
 
 	public function testProvidesDefinitionForTypeNotInCache(): void

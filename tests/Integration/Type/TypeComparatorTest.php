@@ -3,7 +3,6 @@
 namespace Tests\Integration\Type;
 
 use Closure;
-use Generator;
 use GoodPhp\Reflection\Type\Combinatorial\IntersectionType;
 use GoodPhp\Reflection\Type\Combinatorial\UnionType;
 use GoodPhp\Reflection\Type\NamedType;
@@ -52,32 +51,32 @@ class TypeComparatorTest extends TestCase
 		);
 	}
 
-	public function acceptsIntersectionProvider(): Generator
+	public static function acceptsIntersectionProvider(): iterable
 	{
 		yield from [];
 	}
 
-	public function acceptsUnionProvider(): Generator
+	public static function acceptsUnionProvider(): iterable
 	{
 		yield from [];
 	}
 
-	public function acceptsErrorProvider(): Generator
+	public static function acceptsErrorProvider(): iterable
 	{
 		yield from [];
 	}
 
-	public function acceptsMixedProvider(): Generator
+	public static function acceptsMixedProvider(): iterable
 	{
 		yield from [];
 	}
 
-	public function acceptsNeverProvider(): Generator
+	public static function acceptsNeverProvider(): iterable
 	{
 		yield from [];
 	}
 
-	public function acceptsNullableProvider(): Generator
+	public static function acceptsNullableProvider(): iterable
 	{
 		yield '?string <= ?string' => [
 			true,
@@ -158,22 +157,22 @@ class TypeComparatorTest extends TestCase
 		];
 	}
 
-	public function acceptsStaticProvider(): Generator
+	public static function acceptsStaticProvider(): iterable
 	{
 		yield from [];
 	}
 
-	public function acceptsVoidProvider(): Generator
+	public static function acceptsVoidProvider(): iterable
 	{
 		yield from [];
 	}
 
-	public function acceptsTemplateProvider(): Generator
+	public static function acceptsTemplateProvider(): iterable
 	{
 		yield from [];
 	}
 
-	public function acceptsNamedProvider(): Generator
+	public static function acceptsNamedProvider(): iterable
 	{
 		yield 'SomeStub <= SomeStub' => [
 			true,

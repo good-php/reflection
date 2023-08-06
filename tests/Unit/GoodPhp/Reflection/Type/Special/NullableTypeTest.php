@@ -2,7 +2,6 @@
 
 namespace Tests\Unit\GoodPhp\Reflection\Type\Special;
 
-use Generator;
 use GoodPhp\Reflection\Type\Combinatorial\IntersectionType;
 use GoodPhp\Reflection\Type\Combinatorial\UnionType;
 use GoodPhp\Reflection\Type\PrimitiveType;
@@ -27,7 +26,7 @@ class NullableTypeTest extends TestCase
 		);
 	}
 
-	public function equalsProvider(): Generator
+	public static function equalsProvider(): iterable
 	{
 		yield 'exact same' => [
 			true,
@@ -59,7 +58,7 @@ class NullableTypeTest extends TestCase
 		);
 	}
 
-	public function stringRepresentationProvider(): Generator
+	public static function stringRepresentationProvider(): iterable
 	{
 		yield 'simple' => [
 			'?string',

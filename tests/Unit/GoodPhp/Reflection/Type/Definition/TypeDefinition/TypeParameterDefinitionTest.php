@@ -2,7 +2,6 @@
 
 namespace Tests\Unit\GoodPhp\Reflection\Type\Definition\TypeDefinition;
 
-use Generator;
 use GoodPhp\Reflection\Definition\TypeDefinition\TypeParameterDefinition;
 use GoodPhp\Reflection\Type\PrimitiveType;
 use GoodPhp\Reflection\Type\Template\TemplateTypeVariance;
@@ -24,7 +23,7 @@ class TypeParameterDefinitionTest extends TestCase
 		);
 	}
 
-	public function toStringProvider(): Generator
+	public static function toStringProvider(): iterable
 	{
 		yield [
 			'T',

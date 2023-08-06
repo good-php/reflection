@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2022 Oleksandr Prypkhan
+Copyright (c) 2023 Oleksandr Prypkhan
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

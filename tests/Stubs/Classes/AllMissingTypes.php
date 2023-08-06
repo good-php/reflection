@@ -11,8 +11,7 @@ class AllMissingTypes extends SomeStub implements SingleTemplateType
 	public function __construct(
 		public $promoted = true,
 		public readonly int|null $promotedDefault = null,
-	) {
-	}
+	) {}
 
 	public function test($something)
 	{

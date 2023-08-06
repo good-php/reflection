@@ -11,9 +11,11 @@ use Tests\Stubs\Traits\ParentTraitStub;
 
 /**
  * @template T
+ *
  * @template-covariant S of int
  *
  * @extends ParentClassStub<T, SomeStub>
+ *
  * @implements ParentInterfaceStub<T, SomeStub>
  */
 #[AttributeStub(something: '123')]
@@ -34,8 +36,7 @@ final class ClassStub extends ParentClassStub implements ParentInterfaceStub
 	 */
 	public function __construct(
 		public readonly mixed $promoted,
-	) {
-	}
+	) {}
 
 	/**
 	 * @template G
