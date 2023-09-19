@@ -14,10 +14,12 @@ class Attributes
 	private readonly Lazy $attributes;
 
 	/**
-	 * @param callable(): \ReflectionAttribute[] $makeAttributes
+	 * @param null|callable(): \ReflectionAttribute[] $makeAttributes
 	 */
-	public function __construct(callable $makeAttributes)
+	public function __construct(callable $makeAttributes = null)
 	{
+		$makeAttributes ??= fn () => [];
+
 		$this->attributes = lazy(fn () => collect($makeAttributes()));
 	}
 
