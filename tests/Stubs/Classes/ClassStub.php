@@ -16,7 +16,7 @@ use Tests\Stubs\Traits\ParentTraitStub;
  *
  * @extends ParentClassStub<T, SomeStub>
  *
- * @implements ParentInterfaceStub<T, SomeStub>
+ * @implements ParentInterfaceStub<S, SomeStub>
  */
 #[AttributeStub(something: '123')]
 final class ClassStub extends ParentClassStub implements ParentInterfaceStub
@@ -35,6 +35,7 @@ final class ClassStub extends ParentClassStub implements ParentInterfaceStub
 	 * @param T $promoted
 	 */
 	public function __construct(
+		#[AttributeStub('6')]
 		public readonly mixed $promoted,
 	) {}
 

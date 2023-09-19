@@ -4,6 +4,7 @@ namespace GoodPhp\Reflection\Reflector\Reflection;
 
 use GoodPhp\Reflection\Definition\TypeDefinition\EnumTypeDefinition;
 use GoodPhp\Reflection\Definition\TypeDefinition\MethodDefinition;
+use GoodPhp\Reflection\Reflector\Reflection\Attributes\Attributes;
 use GoodPhp\Reflection\Reflector\Reflection\Attributes\HasAttributes;
 use GoodPhp\Reflection\Reflector\Reflection\Attributes\HasNativeAttributes;
 use GoodPhp\Reflection\Reflector\Reflector;
@@ -22,20 +23,26 @@ use function TenantCloud\Standard\Lazy\lazy;
  */
 class EnumReflection extends TypeReflection implements HasAttributes
 {
+	/** @var Lazy<ReflectionEnum<object>> */
+	private readonly Lazy $nativeReflection;
+
+	/** @var Lazy<Attributes> */
+	private readonly Lazy $attributes;
+
 	/** @var Lazy<Collection<int, MethodReflection<$this>>> */
 	private Lazy $declaredMethods;
 
 	/** @var Lazy<Collection<int, MethodReflection<$this>>> */
 	private Lazy $methods;
 
-	private readonly ReflectionEnum $nativeReflection;
-
-	private readonly HasNativeAttributes $nativeAttributes;
-
 	public function __construct(
 		private readonly EnumTypeDefinition $definition,
 		private readonly Reflector $reflector
 	) {
+		$this->nativeReflection = lazy(fn () => new ReflectionEnum($this->definition->qualifiedName));
+		$this->attributes = lazy(fn () => new Attributes(
+			fn () => $this->nativeReflection->value()->getAttributes()
+		));
 		$this->declaredMethods = lazy(
 			fn () => $this->definition
 				->methods
@@ -61,9 +68,6 @@ class EnumReflection extends TypeReflection implements HasAttributes
 				->keyBy(fn (MethodReflection $method) => $method->name())
 				->values()
 		);
-
-		$this->nativeReflection = new ReflectionEnum($this->definition->qualifiedName);
-		$this->nativeAttributes = new HasNativeAttributes(fn () => $this->nativeReflection->getAttributes());
 	}
 
 	public function qualifiedName(): string
@@ -76,12 +80,9 @@ class EnumReflection extends TypeReflection implements HasAttributes
 		return $this->definition->fileName;
 	}
 
-	/**
-	 * @return Collection<int, object>
-	 */
-	public function attributes(): Collection
+	public function attributes(): Attributes
 	{
-		return $this->nativeAttributes->attributes();
+		return $this->attributes->value();
 	}
 
 	/**

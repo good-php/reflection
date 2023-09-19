@@ -23,6 +23,9 @@ use PHPStan\PhpDocParser\Lexer\Lexer;
 use PHPStan\PhpDocParser\Parser\ConstExprParser;
 use PHPStan\PhpDocParser\Parser\PhpDocParser;
 use PHPStan\PhpDocParser\Parser\TypeParser;
+use Psr\SimpleCache\CacheInterface;
+use Symfony\Component\Cache\Adapter\PhpFilesAdapter;
+use Symfony\Component\Cache\Psr16Cache;
 
 class ReflectorBuilder
 {
@@ -58,7 +61,7 @@ class ReflectorBuilder
 	{
 		$builder = clone $this;
 
-		$builder->container->singleton(CacheStorage::class, fn () => new SymfonyVarExportCacheStorage($path));
+		$builder->container->singleton(CacheInterface::class, fn () => new Psr16Cache(new PhpFilesAdapter($path)));
 		$builder->container->singleton(VerifiedCache::class);
 		$builder->container->singleton(
 			DefinitionProvider::class,

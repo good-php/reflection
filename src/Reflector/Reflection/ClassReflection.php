@@ -6,6 +6,7 @@ use GoodPhp\Reflection\Definition\TypeDefinition\ClassTypeDefinition;
 use GoodPhp\Reflection\Definition\TypeDefinition\MethodDefinition;
 use GoodPhp\Reflection\Definition\TypeDefinition\PropertyDefinition;
 use GoodPhp\Reflection\Definition\TypeDefinition\TypeParameterDefinition;
+use GoodPhp\Reflection\Reflector\Reflection\Attributes\Attributes;
 use GoodPhp\Reflection\Reflector\Reflection\Attributes\HasAttributes;
 use GoodPhp\Reflection\Reflector\Reflection\Attributes\HasNativeAttributes;
 use GoodPhp\Reflection\Reflector\Reflector;
@@ -25,6 +26,12 @@ use function TenantCloud\Standard\Lazy\lazy;
  */
 class ClassReflection extends TypeReflection implements HasAttributes
 {
+	/** @var Lazy<ReflectionClass<object>> */
+	private readonly Lazy $nativeReflection;
+
+	/** @var Lazy<Attributes> */
+	private readonly Lazy $attributes;
+
 	/** @var Lazy<Type|null> */
 	private Lazy $extends;
 
@@ -46,16 +53,15 @@ class ClassReflection extends TypeReflection implements HasAttributes
 	/** @var Lazy<Collection<int, MethodReflection<$this>>> */
 	private Lazy $methods;
 
-	/** @var ReflectionClass<object> */
-	private readonly ReflectionClass $nativeReflection;
-
-	private readonly HasNativeAttributes $nativeAttributes;
-
 	public function __construct(
 		private readonly ClassTypeDefinition $definition,
 		public readonly TypeParameterMap $resolvedTypeParameterMap,
 		private readonly Reflector $reflector,
 	) {
+		$this->nativeReflection = lazy(fn () => new ReflectionClass($this->definition->qualifiedName));
+		$this->attributes = lazy(fn () => new Attributes(
+			fn () => $this->nativeReflection->value()->getAttributes()
+		));
 		$this->extends = lazy(
 			fn () => $this->definition->extends ?
 				TypeProjector::templateTypes(
@@ -132,9 +138,6 @@ class ClassReflection extends TypeReflection implements HasAttributes
 				->keyBy(fn (MethodReflection $method) => $method->name())
 				->values()
 		);
-
-		$this->nativeReflection = new ReflectionClass($this->definition->qualifiedName);
-		$this->nativeAttributes = new HasNativeAttributes(fn () => $this->nativeReflection->getAttributes());
 	}
 
 	public function fileName(): ?string
@@ -147,12 +150,9 @@ class ClassReflection extends TypeReflection implements HasAttributes
 		return $this->definition->qualifiedName;
 	}
 
-	/**
-	 * @return Collection<int, object>
-	 */
-	public function attributes(): Collection
+	public function attributes(): Attributes
 	{
-		return $this->nativeAttributes->attributes();
+		return $this->attributes->value();
 	}
 
 	/**
@@ -207,7 +207,8 @@ class ClassReflection extends TypeReflection implements HasAttributes
 	{
 		return $this->declaredMethods
 			->value()
-			->reject(fn (MethodReflection $reflection) => $reflection->name() === '__construct');
+			->reject(fn (MethodReflection $reflection) => $reflection->name() === '__construct')
+			->values();
 	}
 
 	/**
@@ -217,7 +218,8 @@ class ClassReflection extends TypeReflection implements HasAttributes
 	{
 		return $this->methods
 			->value()
-			->reject(fn (MethodReflection $reflection) => $reflection->name() === '__construct');
+			->reject(fn (MethodReflection $reflection) => $reflection->name() === '__construct')
+			->values();
 	}
 
 	/**
@@ -250,8 +252,13 @@ class ClassReflection extends TypeReflection implements HasAttributes
 		return $this->definition->builtIn;
 	}
 
+	public function newInstance(mixed ...$args): object
+	{
+		return $this->nativeReflection->value()->newInstance(...$args);
+	}
+
 	public function newInstanceWithoutConstructor(): object
 	{
-		return $this->nativeReflection->newInstanceWithoutConstructor();
+		return $this->nativeReflection->value()->newInstanceWithoutConstructor();
 	}
 }

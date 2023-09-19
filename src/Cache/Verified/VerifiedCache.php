@@ -2,12 +2,12 @@
 
 namespace GoodPhp\Reflection\Cache\Verified;
 
-use GoodPhp\Reflection\Cache\Verified\Storage\CacheStorage;
+use Psr\SimpleCache\CacheInterface;
 
 final class VerifiedCache
 {
 	public function __construct(
-		private readonly CacheStorage $cacheStorage,
+		private readonly CacheInterface $cacheStorage,
 	) {}
 
 	/**
@@ -23,7 +23,7 @@ final class VerifiedCache
 		if ($cacheItem = $this->cacheStorage->get($key)) {
 			/** @var CacheItem<ItemType> $cacheItem */
 			if ($cacheItem->verificationKey !== $verificationKey($cacheItem->value)) {
-				$this->cacheStorage->remove($key);
+				$this->cacheStorage->delete($key);
 
 				return $this->remember($key, $verificationKey, $delegate);
 			}

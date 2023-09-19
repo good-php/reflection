@@ -5,6 +5,7 @@ namespace GoodPhp\Reflection\Reflector\Reflection;
 use GoodPhp\Reflection\Definition\TypeDefinition\FunctionParameterDefinition;
 use GoodPhp\Reflection\Definition\TypeDefinition\MethodDefinition;
 use GoodPhp\Reflection\Definition\TypeDefinition\TypeParameterDefinition;
+use GoodPhp\Reflection\Reflector\Reflection\Attributes\Attributes;
 use GoodPhp\Reflection\Reflector\Reflection\Attributes\HasAttributes;
 use GoodPhp\Reflection\Reflector\Reflection\Attributes\HasNativeAttributes;
 use GoodPhp\Reflection\Type\Template\TypeParameterMap;
@@ -21,15 +22,17 @@ use function TenantCloud\Standard\Lazy\lazy;
  */
 class MethodReflection implements HasAttributes
 {
+	/** @var Lazy<ReflectionMethod<object>> */
+	private readonly Lazy $nativeReflection;
+
+	/** @var Lazy<Attributes> */
+	private readonly Lazy $attributes;
+
 	/** @var Lazy<Collection<int, FunctionParameterReflection<$this>>> */
 	private Lazy $parameters;
 
 	/** @var Lazy<Type|null> */
 	private Lazy $returnType;
-
-	private readonly ReflectionMethod $nativeReflection;
-
-	private readonly HasNativeAttributes $nativeAttributes;
 
 	/**
 	 * @param OwnerType $owner
@@ -39,6 +42,10 @@ class MethodReflection implements HasAttributes
 		public readonly ClassReflection|InterfaceReflection|TraitReflection|EnumReflection $owner,
 		public readonly TypeParameterMap $resolvedTypeParameterMap,
 	) {
+		$this->nativeReflection = lazy(fn () => new ReflectionMethod($this->owner->qualifiedName(), $this->definition->name));
+		$this->attributes = lazy(fn () => new Attributes(
+			fn () => $this->nativeReflection->value()->getAttributes()
+		));
 		$this->parameters = lazy(
 			fn () => $this->definition
 				->parameters
@@ -52,8 +59,6 @@ class MethodReflection implements HasAttributes
 				) :
 				null
 		);
-		$this->nativeReflection = new ReflectionMethod($this->owner->qualifiedName(), $this->definition->name);
-		$this->nativeAttributes = new HasNativeAttributes(fn () => $this->nativeReflection->getAttributes());
 	}
 
 	public function name(): string
@@ -61,12 +66,9 @@ class MethodReflection implements HasAttributes
 		return $this->definition->name;
 	}
 
-	/**
-	 * @return Collection<int, object>
-	 */
-	public function attributes(): Collection
+	public function attributes(): Attributes
 	{
-		return $this->nativeAttributes->attributes();
+		return $this->attributes->value();
 	}
 
 	/**
@@ -95,7 +97,7 @@ class MethodReflection implements HasAttributes
 	 */
 	public function invoke(object $receiver, mixed ...$args): mixed
 	{
-		return $this->nativeReflection->invoke($receiver, ...$args);
+		return $this->nativeReflection->value()->invoke($receiver, ...$args);
 	}
 
 	/**

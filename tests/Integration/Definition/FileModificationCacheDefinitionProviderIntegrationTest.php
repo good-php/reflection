@@ -9,10 +9,12 @@ use GoodPhp\Reflection\Definition\DefinitionProvider;
 use GoodPhp\Reflection\Definition\TypeDefinition\ClassTypeDefinition;
 use Illuminate\Support\Collection;
 use Phake;
-use Tests\Integration\TestCase;
+use Symfony\Component\Cache\Adapter\ArrayAdapter;
+use Symfony\Component\Cache\Psr16Cache;
+use Tests\Integration\IntegrationTestCase;
 use Tests\Stubs\Classes\ClassStub;
 
-class FileModificationCacheDefinitionProviderTest extends TestCase
+class FileModificationCacheDefinitionProviderIntegrationTest extends IntegrationTestCase
 {
 	private DefinitionProvider $delegate;
 
@@ -46,20 +48,9 @@ class FileModificationCacheDefinitionProviderTest extends TestCase
 		$this->definitionProvider = new FileModificationCacheDefinitionProvider(
 			$this->delegate,
 			new VerifiedCache(
-				new SymfonyVarExportCacheStorage($tmpPath = __DIR__ . '/../../../tmp/tests/Integration/Definition/FileModificationCacheDefinitionProviderTest')
+				new Psr16Cache(new ArrayAdapter())
 			)
 		);
-
-		if (!is_dir($tmpPath)) {
-			mkdir($tmpPath, 0777, true);
-		}
-	}
-
-	protected function tearDown(): void
-	{
-		parent::tearDown();
-
-		//		rmdir(__DIR__ . '/../../../tmp/tests/Integration/Definition/FileModificationCacheDefinitionProviderTest');
 	}
 
 	public function testProvidesDefinitionForTypeNotInCache(): void

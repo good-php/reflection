@@ -9,6 +9,7 @@ use TenantCloud\PhpCsFixer\Config;
 $finder = Finder::create()
 	->in(__DIR__)
 	->exclude('build')
+	->exclude('tests/Stubs')
 	->exclude('tmp')
 	->exclude('vendor')
 	->name('*.php')

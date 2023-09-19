@@ -3,6 +3,7 @@
 namespace GoodPhp\Reflection\Reflector\Reflection;
 
 use GoodPhp\Reflection\Definition\TypeDefinition\PropertyDefinition;
+use GoodPhp\Reflection\Reflector\Reflection\Attributes\Attributes;
 use GoodPhp\Reflection\Reflector\Reflection\Attributes\HasAttributes;
 use GoodPhp\Reflection\Reflector\Reflection\Attributes\HasNativeAttributes;
 use GoodPhp\Reflection\Type\Template\TypeParameterMap;
@@ -20,15 +21,17 @@ use function TenantCloud\Standard\Lazy\lazy;
  */
 class PropertyReflection implements HasAttributes
 {
+	/** @var Lazy<ReflectionProperty<object>> */
+	private readonly Lazy $nativeReflection;
+
+	/** @var Lazy<Attributes> */
+	private readonly Lazy $attributes;
+
 	/** @var Lazy<Type|null> */
 	private readonly Lazy $type;
 
 	/** @var Lazy<FunctionParameterReflection|null> */
 	private readonly Lazy $promotedParameter;
-
-	private readonly ReflectionProperty $nativeReflection;
-
-	private readonly HasNativeAttributes $nativeAttributes;
 
 	/**
 	 * @param OwnerType $owner
@@ -38,6 +41,10 @@ class PropertyReflection implements HasAttributes
 		public readonly ClassReflection|InterfaceReflection|TraitReflection|EnumReflection $owner,
 		public readonly TypeParameterMap $resolvedTypeParameterMap,
 	) {
+		$this->nativeReflection = lazy(fn () => new ReflectionProperty($this->owner->qualifiedName(), $this->definition->name));
+		$this->attributes = lazy(fn () => new Attributes(
+			fn () => $this->nativeReflection->value()->getAttributes()
+		));
 		$this->type = lazy(
 			fn () => $this->definition->type ?
 				TypeProjector::templateTypes(
@@ -56,8 +63,6 @@ class PropertyReflection implements HasAttributes
 					) :
 				null
 		);
-		$this->nativeReflection = new ReflectionProperty($this->owner->qualifiedName(), $this->definition->name);
-		$this->nativeAttributes = new HasNativeAttributes(fn () => $this->nativeReflection->getAttributes());
 	}
 
 	public function name(): string
@@ -77,9 +82,12 @@ class PropertyReflection implements HasAttributes
 
 	public function defaultValue(): mixed
 	{
-		Assert::true($this->hasDefaultValue());
+		// I could have simply returned `null` in this case, but that would likely lead to developer errors on the other end
+		// because a property might have a default value of `null` too, and they wouldn't be able to distinguish the two
+		// without first calling the `->hasDefaultValue()`. So to avoid confusion, this assert is in place.
+		Assert::true($this->hasDefaultValue(), 'Property does not have a default value; you must first check if default value is set through ->hasDefaultValue().');
 
-		return $this->nativeReflection->getDefaultValue();
+		return $this->nativeReflection->value()->getDefaultValue();
 	}
 
 	public function isPromoted(): bool
@@ -87,22 +95,22 @@ class PropertyReflection implements HasAttributes
 		return $this->definition->isPromoted;
 	}
 
+	/**
+	 * If property is promoted, it refers to the __construct parameter it was promoted for.
+	 */
 	public function promotedParameter(): FunctionParameterReflection|null
 	{
 		return $this->promotedParameter->value();
 	}
 
-	/**
-	 * @return Collection<int, object>
-	 */
-	public function attributes(): Collection
+	public function attributes(): Attributes
 	{
-		return $this->nativeAttributes->attributes();
+		return $this->attributes->value();
 	}
 
 	public function get(object $receiver)
 	{
-		return $this->nativeReflection->getValue($receiver);
+		return $this->nativeReflection->value()->getValue($receiver);
 	}
 
 	/**
@@ -110,14 +118,6 @@ class PropertyReflection implements HasAttributes
 	 */
 	public function set(object $receiver, mixed $value): void
 	{
-		$this->nativeReflection->setValue($receiver, $value);
-	}
-
-	/**
-	 * Set a public property with strict_types=1.
-	 */
-	public function setStrict(object $receiver, mixed $value): void
-	{
-		$receiver->{$this->name()} = $value;
+		$this->nativeReflection->value()->setValue($receiver, $value);
 	}
 }

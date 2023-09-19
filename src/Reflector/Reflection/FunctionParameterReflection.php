@@ -3,6 +3,7 @@
 namespace GoodPhp\Reflection\Reflector\Reflection;
 
 use GoodPhp\Reflection\Definition\TypeDefinition\FunctionParameterDefinition;
+use GoodPhp\Reflection\Reflector\Reflection\Attributes\Attributes;
 use GoodPhp\Reflection\Reflector\Reflection\Attributes\HasAttributes;
 use GoodPhp\Reflection\Reflector\Reflection\Attributes\HasNativeAttributes;
 use GoodPhp\Reflection\Type\Template\TypeParameterMap;
@@ -20,12 +21,14 @@ use function TenantCloud\Standard\Lazy\lazy;
  */
 class FunctionParameterReflection implements HasAttributes
 {
+	/** @var Lazy<ReflectionParameter> */
+	private readonly Lazy $nativeReflection;
+
+	/** @var Lazy<Attributes> */
+	private readonly Lazy $attributes;
+
 	/** @var Lazy<Type|null> */
 	private Lazy $type;
-
-	private readonly ReflectionParameter $nativeReflection;
-
-	private readonly HasNativeAttributes $nativeAttributes;
 
 	/**
 	 * @param OwnerType $owner
@@ -35,6 +38,10 @@ class FunctionParameterReflection implements HasAttributes
 		public readonly MethodReflection $owner,
 		public readonly TypeParameterMap $resolvedTypeParameterMap,
 	) {
+		$this->nativeReflection = lazy(fn () => new ReflectionParameter([$this->owner->owner->qualifiedName(), $this->owner->name()], $this->definition->name));
+		$this->attributes = lazy(fn () => new Attributes(
+			fn () => $this->nativeReflection->value()->getAttributes()
+		));
 		$this->type = lazy(
 			fn () => $this->definition->type ?
 				TypeProjector::templateTypes(
@@ -43,8 +50,6 @@ class FunctionParameterReflection implements HasAttributes
 				) :
 				null
 		);
-		$this->nativeReflection = new ReflectionParameter([$this->owner->owner->qualifiedName(), $this->owner->name()], $this->definition->name);
-		$this->nativeAttributes = new HasNativeAttributes(fn () => $this->nativeReflection->getAttributes());
 	}
 
 	public function name(): string
@@ -64,16 +69,16 @@ class FunctionParameterReflection implements HasAttributes
 
 	public function defaultValue(): mixed
 	{
-		Assert::true($this->hasDefaultValue());
+		// I could have simply returned `null` in this case, but that would likely lead to developer errors on the other end
+		// because a parameter might have a default value of `null` too, and they wouldn't be able to distinguish the two
+		// without first calling the `->hasDefaultValue()`. So to avoid confusion, this assert is in place.
+		Assert::true($this->hasDefaultValue(), 'Parameter does not have a default value; you must first check if default value is set through ->hasDefaultValue().');
 
-		return $this->nativeReflection->getDefaultValue();
+		return $this->nativeReflection->value()->getDefaultValue();
 	}
 
-	/**
-	 * @return Collection<int, object>
-	 */
-	public function attributes(): Collection
+	public function attributes(): Attributes
 	{
-		return $this->nativeAttributes->attributes();
+		return $this->attributes->value();
 	}
 }

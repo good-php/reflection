@@ -11,7 +11,7 @@ use GoodPhp\Reflection\Type\Special\NullableType;
 use GoodPhp\Reflection\Type\Type;
 use GoodPhp\Reflection\Type\TypeComparator;
 use Illuminate\Support\Collection;
-use Tests\Integration\TestCase;
+use Tests\Integration\IntegrationTestCase;
 use Tests\Stubs\Classes\ClassStub;
 use Tests\Stubs\Classes\ParentClassStub;
 use Tests\Stubs\Classes\SomeStub;
@@ -19,7 +19,7 @@ use Tests\Stubs\Classes\SomeStub;
 /**
  * @see TypeComparator
  */
-class TypeComparatorTest extends TestCase
+class TypeComparatorIntegrationTest extends IntegrationTestCase
 {
 	private TypeComparator $comparator;
 

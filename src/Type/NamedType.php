@@ -35,6 +35,22 @@ class NamedType implements Type
 		);
 	}
 
+	public static function wrap(string|self $name, array|Collection $arguments = null): self
+	{
+		if ($name instanceof self) {
+			Assert::null($arguments, 'Arguments must be null when a NamedType instance is given.');
+
+			return $name;
+		}
+
+		return new NamedType(
+			$name,
+			Collection::wrap($arguments ?? [])->map(
+				fn (Type|string $type) => is_string($type) ? new NamedType($type) : $type
+			)
+		);
+	}
+
 	public function equals(Type $other): bool
 	{
 		return $other instanceof self &&

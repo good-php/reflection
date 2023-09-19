@@ -6,6 +6,7 @@ use GoodPhp\Reflection\Definition\TypeDefinition\MethodDefinition;
 use GoodPhp\Reflection\Definition\TypeDefinition\PropertyDefinition;
 use GoodPhp\Reflection\Definition\TypeDefinition\TraitTypeDefinition;
 use GoodPhp\Reflection\Definition\TypeDefinition\TypeParameterDefinition;
+use GoodPhp\Reflection\Reflector\Reflection\Attributes\Attributes;
 use GoodPhp\Reflection\Reflector\Reflection\Attributes\HasAttributes;
 use GoodPhp\Reflection\Reflector\Reflection\Attributes\HasNativeAttributes;
 use GoodPhp\Reflection\Reflector\Reflector;
@@ -25,6 +26,12 @@ use function TenantCloud\Standard\Lazy\lazy;
  */
 class TraitReflection extends TypeReflection implements HasAttributes
 {
+	/** @var Lazy<ReflectionClass<object>> */
+	private readonly Lazy $nativeReflection;
+
+	/** @var Lazy<Attributes> */
+	private readonly Lazy $attributes;
+
 	/** @var Lazy<Collection<int, Type>> */
 	private Lazy $uses;
 
@@ -40,16 +47,15 @@ class TraitReflection extends TypeReflection implements HasAttributes
 	/** @var Lazy<Collection<int, MethodReflection<$this>>> */
 	private Lazy $methods;
 
-	/** @var ReflectionClass<object> */
-	private readonly ReflectionClass $nativeReflection;
-
-	private readonly HasNativeAttributes $nativeAttributes;
-
 	public function __construct(
 		private readonly TraitTypeDefinition $definition,
 		public readonly TypeParameterMap $resolvedTypeParameterMap,
 		private readonly Reflector $reflector,
 	) {
+		$this->nativeReflection = lazy(fn () => new ReflectionClass($this->definition->qualifiedName));
+		$this->attributes = lazy(fn () => new Attributes(
+			fn () => $this->nativeReflection->value()->getAttributes()
+		));
 		$this->uses = lazy(
 			fn () => $this->definition
 				->uses
@@ -101,9 +107,6 @@ class TraitReflection extends TypeReflection implements HasAttributes
 				->keyBy(fn (MethodReflection $method) => $method->name())
 				->values()
 		);
-
-		$this->nativeReflection = new ReflectionClass($this->definition->qualifiedName);
-		$this->nativeAttributes = new HasNativeAttributes(fn () => $this->nativeReflection->getAttributes());
 	}
 
 	public function qualifiedName(): string
@@ -116,12 +119,9 @@ class TraitReflection extends TypeReflection implements HasAttributes
 		return $this->definition->fileName;
 	}
 
-	/**
-	 * @return Collection<int, object>
-	 */
-	public function attributes(): Collection
+	public function attributes(): Attributes
 	{
-		return $this->nativeAttributes->attributes();
+		return $this->attributes->value();
 	}
 
 	/**

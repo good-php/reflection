@@ -6,8 +6,5 @@ use Illuminate\Support\Collection;
 
 interface HasAttributes
 {
-	/**
-	 * @return Collection<int, object>
-	 */
-	public function attributes(): Collection;
+	public function attributes(): Attributes;
 }

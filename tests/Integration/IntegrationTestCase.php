@@ -5,7 +5,7 @@ namespace Tests\Integration;
 use GoodPhp\Reflection\Reflector\Reflector;
 use GoodPhp\Reflection\ReflectorBuilder;
 
-class TestCase extends \PHPUnit\Framework\TestCase
+class IntegrationTestCase extends \PHPUnit\Framework\TestCase
 {
 	protected Reflector $reflector;
 

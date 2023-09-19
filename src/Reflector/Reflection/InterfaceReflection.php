@@ -5,6 +5,7 @@ namespace GoodPhp\Reflection\Reflector\Reflection;
 use GoodPhp\Reflection\Definition\TypeDefinition\InterfaceTypeDefinition;
 use GoodPhp\Reflection\Definition\TypeDefinition\MethodDefinition;
 use GoodPhp\Reflection\Definition\TypeDefinition\TypeParameterDefinition;
+use GoodPhp\Reflection\Reflector\Reflection\Attributes\Attributes;
 use GoodPhp\Reflection\Reflector\Reflection\Attributes\HasAttributes;
 use GoodPhp\Reflection\Reflector\Reflection\Attributes\HasNativeAttributes;
 use GoodPhp\Reflection\Reflector\Reflector;
@@ -24,6 +25,12 @@ use function TenantCloud\Standard\Lazy\lazy;
  */
 class InterfaceReflection extends TypeReflection implements HasAttributes
 {
+	/** @var Lazy<ReflectionClass<object>> */
+	private readonly Lazy $nativeReflection;
+
+	/** @var Lazy<Attributes> */
+	private readonly Lazy $attributes;
+
 	/** @var Lazy<Collection<int, Type>> */
 	private Lazy $extends;
 
@@ -33,16 +40,15 @@ class InterfaceReflection extends TypeReflection implements HasAttributes
 	/** @var Lazy<Collection<int, MethodReflection<$this>>> */
 	private Lazy $methods;
 
-	/** @var ReflectionClass<object> */
-	private readonly ReflectionClass $nativeReflection;
-
-	private readonly HasNativeAttributes $nativeAttributes;
-
 	public function __construct(
 		private readonly InterfaceTypeDefinition $definition,
 		public readonly TypeParameterMap $resolvedTypeParameterMap,
 		private readonly Reflector $reflector,
 	) {
+		$this->nativeReflection = lazy(fn () => new ReflectionClass($this->definition->qualifiedName));
+		$this->attributes = lazy(fn () => new Attributes(
+			fn () => $this->nativeReflection->value()->getAttributes()
+		));
 		$this->extends = lazy(
 			fn () => $this->definition
 				->extends
@@ -73,9 +79,6 @@ class InterfaceReflection extends TypeReflection implements HasAttributes
 				->keyBy(fn (MethodReflection $method) => $method->name())
 				->values()
 		);
-
-		$this->nativeReflection = new ReflectionClass($this->definition->qualifiedName);
-		$this->nativeAttributes = new HasNativeAttributes(fn () => $this->nativeReflection->getAttributes());
 	}
 
 	public function qualifiedName(): string
@@ -88,12 +91,9 @@ class InterfaceReflection extends TypeReflection implements HasAttributes
 		return $this->definition->fileName;
 	}
 
-	/**
-	 * @return Collection<int, object>
-	 */
-	public function attributes(): Collection
+	public function attributes(): Attributes
 	{
-		return $this->nativeAttributes->attributes();
+		return $this->attributes->value();
 	}
 
 	/**

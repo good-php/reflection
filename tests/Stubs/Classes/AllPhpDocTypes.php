@@ -16,6 +16,8 @@ class AllPhpDocTypes
 	 * @param numeric            $p9
 	 * @param float              $p10
 	 * @param float              $p11
+	 *
+	 * @return void
 	 */
 	public function f1(
 		$p1,
@@ -98,6 +100,7 @@ class AllPhpDocTypes
 	 * @param iterable $p3
 	 * @param callable $p4
 	 * @param resource $p5
+	 * @param mixed    $p6
 	 * @param object   $p7
 	 *
 	 * @return no-return

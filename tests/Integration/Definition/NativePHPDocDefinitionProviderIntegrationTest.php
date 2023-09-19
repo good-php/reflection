@@ -39,7 +39,7 @@ use PHPStan\PhpDocParser\Lexer\Lexer;
 use PHPStan\PhpDocParser\Parser\ConstExprParser;
 use PHPStan\PhpDocParser\Parser\PhpDocParser;
 use PHPStan\PhpDocParser\Parser\TypeParser;
-use Tests\Integration\TestCase;
+use Tests\Integration\IntegrationTestCase;
 use Tests\Stubs\Classes\AllMissingTypes;
 use Tests\Stubs\Classes\AllNativeTypes;
 use Tests\Stubs\Classes\AllPhpDocTypes;
@@ -62,7 +62,7 @@ use Tests\Stubs\Traits\TraitWithoutProperties;
 /**
  * @see NativePHPDocDefinitionProvider
  */
-class NativePHPDocDefinitionProviderTest extends TestCase
+class NativePHPDocDefinitionProviderIntegrationTest extends IntegrationTestCase
 {
 	private NativePHPDocDefinitionProvider $definitionProvider;
 
@@ -123,7 +123,7 @@ class NativePHPDocDefinitionProviderTest extends TestCase
 				implements: new Collection([
 					new NamedType(ParentInterfaceStub::class, collect([
 						new TemplateType(
-							name: 'T'
+							name: 'S'
 						),
 						new NamedType(SomeStub::class),
 					])),

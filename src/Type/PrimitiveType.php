@@ -38,7 +38,7 @@ final class PrimitiveType
 	/**
 	 * @return NamedType<mixed>
 	 */
-	public static function array(Type $value, Type $key = null): NamedType
+	public static function array(Type|string $value, Type|string $key = null): NamedType
 	{
 		return new NamedType('array', new Collection([
 			$key ?? self::arrayKey(),
@@ -49,7 +49,7 @@ final class PrimitiveType
 	/**
 	 * @return NamedType<mixed>
 	 */
-	public static function iterable(Type $value, Type $key = null): NamedType
+	public static function iterable(Type|string $value, Type|string $key = null): NamedType
 	{
 		return new NamedType('iterable', new Collection([
 			$key ?? self::arrayKey(),
