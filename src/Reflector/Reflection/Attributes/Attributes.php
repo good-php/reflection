@@ -23,6 +23,9 @@ class Attributes
 		$this->attributes = lazy(fn () => collect($makeAttributes()));
 	}
 
+	/**
+	 * @param class-string<\Attribute> $className
+	 */
 	public function has(string $className): bool
 	{
 		return $this->attributes
@@ -30,6 +33,13 @@ class Attributes
 			->contains(self::matchesFilter($className));
 	}
 
+	/**
+	 * @template AttributeType of \Attribute
+	 *
+	 * @param class-string<AttributeType>|null $className
+	 *
+	 * @return Collection<int, AttributeType>
+	 */
 	public function all(?string $className = null): Collection
 	{
 		return $this->attributes
@@ -43,6 +53,13 @@ class Attributes
 			->map(fn (\ReflectionAttribute $attribute) => $attribute->newInstance());
 	}
 
+	/**
+	 * @template AttributeType of \Attribute
+	 *
+	 * @param class-string<AttributeType> $className
+	 *
+	 * @return AttributeType|null
+	 */
 	public function sole(string $className): ?object
 	{
 		try {

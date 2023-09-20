@@ -2,6 +2,7 @@
 
 namespace GoodPhp\Reflection\Type\Combinatorial;
 
+use GoodPhp\Reflection\Type\Special\NeverType;
 use GoodPhp\Reflection\Type\Special\NullableType;
 use GoodPhp\Reflection\Type\Type;
 use GoodPhp\Reflection\Type\TypeExtensions;
@@ -55,6 +56,21 @@ class UnionType implements Type
 		}
 
 		return $this;
+	}
+
+	public function withoutType(Type|callable $filter): Type
+	{
+		$filter = $filter instanceof Type ? fn (Type $other) => $other->equals($filter) : $filter;
+
+		$types = $this->types
+			->reject($filter)
+			->values();
+
+		return match ($types->count()) {
+			0 => NeverType::get(),
+			1 => $types->first(),
+			default => new self($types)
+		};
 	}
 
 	public function __toString(): string
