@@ -58,6 +58,7 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 	public function forType(string $type): ?TypeDefinition
 	{
 		return match (true) {
+			// enum_exists() MUST come first because for whatever reason class_exists() returns true for enums
 			enum_exists($type) => $this->forEnum($type),
 			class_exists($type), interface_exists($type), trait_exists($type) => $this->forClassLike($type),
 			default => null
@@ -402,8 +403,7 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 		// Because traits can be used multiple types, @uses annotations can't be specified in the class PHPDoc and instead
 		// must be specified above the `use TraitName;` itself. PHP's native reflection does not give you reflection
 		// on PHPDoc for trait uses, so we'll just say generic traits are unsupported due to the complexity of doing so.
-		return Collection::make($reflection->getTraitNames())
-			->map(fn (string $className) => $this->nativeTypeMapper->map($className, $context));
+		return Collection::make($reflection->getTraitNames())->map(fn (string $className) => new NamedType($className));
 	}
 
 	/**

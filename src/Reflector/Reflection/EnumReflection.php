@@ -6,7 +6,6 @@ use GoodPhp\Reflection\Definition\TypeDefinition\EnumTypeDefinition;
 use GoodPhp\Reflection\Definition\TypeDefinition\MethodDefinition;
 use GoodPhp\Reflection\Reflector\Reflection\Attributes\Attributes;
 use GoodPhp\Reflection\Reflector\Reflection\Attributes\HasAttributes;
-use GoodPhp\Reflection\Reflector\Reflection\Attributes\HasNativeAttributes;
 use GoodPhp\Reflection\Reflector\Reflector;
 use GoodPhp\Reflection\Type\Template\TypeParameterMap;
 use GoodPhp\Reflection\Type\Type;

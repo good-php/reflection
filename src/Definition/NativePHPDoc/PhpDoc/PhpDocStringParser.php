@@ -28,7 +28,7 @@ class PhpDocStringParser
 		}
 
 		if (!$input) {
-			$input = '/** */';
+			return new PhpDocNode([]);
 		}
 
 		$tokens = new TokenIterator($this->lexer->tokenize($input));

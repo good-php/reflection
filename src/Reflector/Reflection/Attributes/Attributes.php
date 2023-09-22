@@ -2,19 +2,22 @@
 
 namespace GoodPhp\Reflection\Reflector\Reflection\Attributes;
 
+use Attribute;
 use Illuminate\Support\Collection;
 use Illuminate\Support\ItemNotFoundException;
 use Illuminate\Support\MultipleItemsFoundException;
+use ReflectionAttribute;
 use TenantCloud\Standard\Lazy\Lazy;
+
 use function TenantCloud\Standard\Lazy\lazy;
 
 class Attributes
 {
-	/** @var Lazy<Collection<int, \ReflectionAttribute>> */
+	/** @var Lazy<Collection<int, ReflectionAttribute>> */
 	private readonly Lazy $attributes;
 
 	/**
-	 * @param null|callable(): \ReflectionAttribute[] $makeAttributes
+	 * @param callable(): ReflectionAttribute[]|null $makeAttributes
 	 */
 	public function __construct(callable $makeAttributes = null)
 	{
@@ -24,7 +27,7 @@ class Attributes
 	}
 
 	/**
-	 * @param class-string<\Attribute> $className
+	 * @param class-string<Attribute> $className
 	 */
 	public function has(string $className): bool
 	{
@@ -40,7 +43,7 @@ class Attributes
 	 *
 	 * @return Collection<int, AttributeType>
 	 */
-	public function all(?string $className = null): Collection
+	public function all(string $className = null): Collection
 	{
 		return $this->attributes
 			->value()
@@ -50,7 +53,7 @@ class Attributes
 					->filter(self::matchesFilter($className))
 					->values()
 			)
-			->map(fn (\ReflectionAttribute $attribute) => $attribute->newInstance());
+			->map(fn (ReflectionAttribute $attribute) => $attribute->newInstance());
 	}
 
 	/**
@@ -77,6 +80,6 @@ class Attributes
 
 	private static function matchesFilter(?string $className): callable
 	{
-		return fn (\ReflectionAttribute $attribute) => $attribute->getName() === $className;
+		return fn (ReflectionAttribute $attribute) => $className === $attribute->getName();
 	}
 }

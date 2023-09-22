@@ -7,7 +7,6 @@ use GoodPhp\Reflection\Definition\TypeDefinition\MethodDefinition;
 use GoodPhp\Reflection\Definition\TypeDefinition\TypeParameterDefinition;
 use GoodPhp\Reflection\Reflector\Reflection\Attributes\Attributes;
 use GoodPhp\Reflection\Reflector\Reflection\Attributes\HasAttributes;
-use GoodPhp\Reflection\Reflector\Reflection\Attributes\HasNativeAttributes;
 use GoodPhp\Reflection\Type\Template\TypeParameterMap;
 use GoodPhp\Reflection\Type\Type;
 use GoodPhp\Reflection\Type\TypeProjector;

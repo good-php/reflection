@@ -2,7 +2,6 @@
 
 namespace Tests\Integration\Definition;
 
-use GoodPhp\Reflection\Cache\Verified\Storage\SymfonyVarExportCacheStorage;
 use GoodPhp\Reflection\Cache\Verified\VerifiedCache;
 use GoodPhp\Reflection\Definition\Cache\FileModificationCacheDefinitionProvider;
 use GoodPhp\Reflection\Definition\DefinitionProvider;

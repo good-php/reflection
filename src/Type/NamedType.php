@@ -43,10 +43,10 @@ class NamedType implements Type
 			return $name;
 		}
 
-		return new NamedType(
+		return new self(
 			$name,
 			Collection::wrap($arguments ?? [])->map(
-				fn (Type|string $type) => is_string($type) ? new NamedType($type) : $type
+				fn (Type|string $type) => is_string($type) ? new self($type) : $type
 			)
 		);
 	}

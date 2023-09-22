@@ -67,8 +67,8 @@ class UnionType implements Type
 			->values();
 
 		return match ($types->count()) {
-			0 => NeverType::get(),
-			1 => $types->first(),
+			0       => NeverType::get(),
+			1       => $types->first(),
 			default => new self($types)
 		};
 	}
