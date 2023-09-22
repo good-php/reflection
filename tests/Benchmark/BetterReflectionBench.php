@@ -17,26 +17,39 @@ class BetterReflectionBench
 {
 	private Reflector $reflector;
 
-	public function setUp(): void
+	public function setUpWithMemoryCache(): void
 	{
 		$this->reflector = (new BetterReflection())->reflector();
+	}
+
+	public function setUpWithoutCache(): void
+	{
+		$builder = (new BetterReflection());
+
+		// There's no simple way of disabling in-memory cache with BetterReflection,
+		// but it's useful for these benchmarks.
+		(fn () => $this->sourceLocator =
+			(fn () => $this->wrappedSourceLocator)->call($this->sourceLocator())
+		)->call($builder);
+
+		$this->reflector = $builder->reflector();
 	}
 
 	#[Iterations(50)]
 	#[Revs(200)]
 	#[Warmup(1)]
-	#[BeforeMethods('setUp')]
+	#[BeforeMethods('setUpWithMemoryCache')]
 	#[ParamProviders('hardnessProvider')]
-	public function benchWarm(array $params): void
+	public function benchWarmWithMemoryCache(array $params): void
 	{
 		$this->callMethods($params['hardness'], $this->reflector->reflectClass(ClassStub::class));
 	}
 
 	#[Iterations(200)]
 	#[Warmup(1)]
-	#[BeforeMethods('setUp')]
+	#[BeforeMethods('setUpWithoutCache')]
 	#[ParamProviders('hardnessProvider')]
-	public function benchColdExceptInitialization(array $params): void
+	public function benchCold(array $params): void
 	{
 		$this->callMethods($params['hardness'], $this->reflector->reflectClass(ClassStub::class));
 	}
@@ -45,7 +58,7 @@ class BetterReflectionBench
 	#[ParamProviders('hardnessProvider')]
 	public function benchColdIncludingInitializationAndAutoLoad(array $params): void
 	{
-		$this->setUp();
+		$this->setUpWithoutCache();
 
 		$this->callMethods($params['hardness'], $this->reflector->reflectClass(ClassStub::class));
 	}

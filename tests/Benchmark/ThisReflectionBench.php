@@ -27,7 +27,7 @@ class ThisReflectionBench
 	public function setUpWithFileCache(): void
 	{
 		$this->reflector = (new ReflectorBuilder())
-			->withFileCache(realpath(__DIR__ . '/../../tmp/tests/bench/' . Str::random(32)))
+			->withFileCache(sys_get_temp_dir() . '/' . Str::random(32))
 			->build();
 	}
 
@@ -56,21 +56,11 @@ class ThisReflectionBench
 		$this->callMethods($params['hardness'], $this->reflector->forType(ClassStub::class));
 	}
 
-	#[Iterations(50)]
-	#[Revs(200)]
-	#[Warmup(1)]
-	#[BeforeMethods('setUpWithoutCache')]
-	#[ParamProviders('hardnessProvider')]
-	public function benchWarmWithoutCache(array $params): void
-	{
-		$this->callMethods($params['hardness'], $this->reflector->forType(ClassStub::class));
-	}
-
 	#[Iterations(200)]
 	#[Warmup(1)]
 	#[BeforeMethods('setUpWithoutCache')]
 	#[ParamProviders('hardnessProvider')]
-	public function benchColdExceptInitialization(array $params): void
+	public function benchCold(array $params): void
 	{
 		$this->callMethods($params['hardness'], $this->reflector->forType(ClassStub::class));
 	}

@@ -46,7 +46,7 @@
 		"phpstan":  "vendor/bin/phpstan analyse --memory-limit=2G",
 		"benchmark": [
 			"Composer\\Config::disableProcessTimeout",
-			"XDEBUG_MODE=off vendor/bin/phpbench run tests/Benchmark"
+			"vendor/bin/phpbench run tests/Benchmark"
 		]
 	},
 	"minimum-stability": "stable",

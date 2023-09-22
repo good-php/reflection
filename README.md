@@ -43,13 +43,43 @@ Here are some of the features supported (or would be welcomed):
 As much as possible of reflection information is cached to disk into `.php` files. When
 you request a reflection of a type, it only does `require cache_file_for_something.php`,
 wraps it in a reflection class and (optionally) substitutes template types. No
-heavy parsing is done if you previously requested reflection for a type.
+heavy parsing is done for previously reflected types.
 
-Because of this, it's pretty fast. Here's a benchmark comparing it to other libraries -
-all with cache enabled, but without in-memory cache. Keep in mind that it's just for 
-reference; it wouldn't be correct to compare these directly because they offer different features:
+Because of this, it's pretty fast (nanoseconds range) *after* initial caching. Both
+full Native PHP reflection and Roave/BetterReflection are generally faster, but keep in 
+mind this also has to parse AST and DocBlocks to extract generics and types. Still,
+I believe it to be fast enough to actually be used in production if you enable the cache.
 
-BENCHMARK HERE!!!!!!!!!!!
+Here is a reference benchmark, performed on an M1 MacBook Pro with OpCache:
+
+```
+\Tests\Benchmark\ThisReflectionBench
+
+    benchWarmWithMemoryCache # only name....I49 - Mo0.011ms (±15.06%) [3.856mb / 4.779mb]
+    benchWarmWithMemoryCache # everything...I49 - Mo0.137ms (±5.25%) [9.970mb / 9.988mb]
+    benchWarmWithFileCache # only name......I49 - Mo0.047ms (±11.98%) [6.917mb / 6.958mb]
+    benchWarmWithFileCache # everything.....I49 - Mo0.172ms (±4.64%) [13.097mb / 13.114mb]
+    benchCold # only name...................I199 - Mo2.384ms (±12.80%) [2.143mb / 4.779mb]
+    benchCold # everything..................I199 - Mo2.506ms (±18.67%) [2.276mb / 4.779mb]
+    benchColdIncludingInitializationAndAuto.I199 - Mo74.279ms (±18.78%) [2.092mb / 4.779mb]
+    benchColdIncludingInitializationAndAuto.I199 - Mo72.901ms (±4.37%) [2.188mb / 4.779mb]
+
+\Tests\Benchmark\BetterReflectionBench
+
+    benchWarmWithMemoryCache # only name....I49 - Mo0.005ms (±8.26%) [3.085mb / 4.779mb]
+    benchWarmWithMemoryCache # everything...I49 - Mo0.016ms (±5.70%) [3.093mb / 4.779mb]
+    benchCold # only name...................I199 - Mo1.693ms (±6.13%) [3.104mb / 4.779mb]
+    benchCold # everything..................I199 - Mo2.299ms (±14.67%) [3.116mb / 4.779mb]
+    benchColdIncludingInitializationAndAuto.I199 - Mo59.184ms (±5.79%) [3.084mb / 4.779mb]
+    benchColdIncludingInitializationAndAuto.I199 - Mo63.590ms (±18.52%) [3.092mb / 4.779mb]
+
+\Tests\Benchmark\NativeReflectionBench
+
+    benchWarm # only name...................I49 - Mo0.001ms (±9.11%) [517.504kb / 4.778mb]
+    benchWarm # everything..................I49 - Mo0.004ms (±6.08%) [517.568kb / 4.778mb]
+    benchCold # only name...................I199 - Mo0.009ms (±55.16%) [518.488kb / 4.779mb]
+    benchCold # everything..................I199 - Mo0.022ms (±23.29%) [518.488kb / 4.779mb]
+```
 
 ### How does it work
 
