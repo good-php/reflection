@@ -7,6 +7,7 @@ use GoodPhp\Reflection\Definition\BuiltIns\BuiltInCoreDefinitionProvider;
 use GoodPhp\Reflection\Definition\BuiltIns\BuiltInSpecialsDefinitionProvider;
 use GoodPhp\Reflection\Definition\Cache\FileModificationCacheDefinitionProvider;
 use GoodPhp\Reflection\Definition\Cache\StaticCacheDefinitionProvider;
+use GoodPhp\Reflection\Definition\DefinitionProvider;
 use GoodPhp\Reflection\Definition\Fallback\FallbackDefinitionProvider;
 use GoodPhp\Reflection\Definition\NativePHPDoc\File\FileContextParser;
 use GoodPhp\Reflection\Definition\NativePHPDoc\Native\NativeTypeMapper;
@@ -27,28 +28,65 @@ use Symfony\Component\Cache\Psr16Cache;
 
 class ReflectorBuilder
 {
-	private ?string $fileCachePath = null;
+	private ?DefinitionProvider $innerDefinitionProvider = null;
+	private ?DefinitionProvider $definitionProvider = null;
 
-	private bool $memoryCache = false;
-
-	public function withFileCache(string $path): self
+	public function withFileCache(string $path = null, ?\DateInterval $ttl = null): self
 	{
-		$builder = clone $this;
-		$builder->fileCachePath = $path;
+		$path ??= $path ?? sys_get_temp_dir() . '/good-php-reflection';
 
-		return $builder;
+		return $this->withInnerDefinitionProvider(new FileModificationCacheDefinitionProvider(
+			$this->innerDefinitionProvider(),
+			new VerifiedCache(
+				new Psr16Cache(
+					new PhpFilesAdapter(
+						defaultLifetime: (int) $ttl?->format('s'),
+						directory: $path ?? sys_get_temp_dir() . '/good-php-reflection'
+					)
+				)
+			)
+		));
 	}
 
-	public function withMemoryCache(): self
+	public function withMemoryCache(int $maxItems = 100, ?\DateInterval $ttl = null): self
 	{
-		$builder = clone $this;
-		$builder->memoryCache = true;
-
-		return $builder;
+		return $this->withDefinitionProvider(new StaticCacheDefinitionProvider(
+			$this->definitionProvider(),
+			new Psr16Cache(new ArrayAdapter(
+				defaultLifetime: (int) $ttl?->format('s'),
+				storeSerialized: false,
+				maxItems: $maxItems,
+			))
+		));
 	}
 
 	public function build(): Reflector
 	{
+		return new Reflector($this->definitionProvider());
+	}
+
+	public function withInnerDefinitionProvider(DefinitionProvider $provider): self
+	{
+		$builder = clone $this;
+		$builder->innerDefinitionProvider = $provider;
+
+		return $builder;
+	}
+
+	public function withDefinitionProvider(DefinitionProvider $provider): self
+	{
+		$builder = clone $this;
+		$builder->definitionProvider = $provider;
+
+		return $builder;
+	}
+
+	public function innerDefinitionProvider(): DefinitionProvider
+	{
+		if ($this->innerDefinitionProvider) {
+			return $this->innerDefinitionProvider;
+		}
+
 		$typeAliasResolver = new TypeAliasResolver();
 		$constExprParser = new ConstExprParser();
 		$typeParser = new TypeParser($constExprParser);
@@ -56,7 +94,7 @@ class ReflectorBuilder
 		$lexer = new Lexer();
 		$phpDocStringParser = new PhpDocStringParser($lexer, $phpDocParser);
 
-		$nativePhpDocDefinitionProvider = new NativePHPDocDefinitionProvider(
+		return $this->innerDefinitionProvider = new NativePHPDocDefinitionProvider(
 			$phpDocStringParser,
 			new FileContextParser(
 				new Parser\Php7(new Emulative([
@@ -67,31 +105,14 @@ class ReflectorBuilder
 			new NativeTypeMapper(),
 			new PhpDocTypeMapper($typeAliasResolver),
 		);
+	}
 
-		if ($this->fileCachePath) {
-			$nativePhpDocDefinitionProvider = new FileModificationCacheDefinitionProvider(
-				$nativePhpDocDefinitionProvider,
-				new VerifiedCache(
-					new Psr16Cache(
-						new PhpFilesAdapter(directory: $this->fileCachePath)
-					)
-				)
-			);
-		}
-
-		$definitionProvider = new FallbackDefinitionProvider([
+	public function definitionProvider(): DefinitionProvider
+	{
+		return $this->definitionProvider ??= new FallbackDefinitionProvider([
 			new BuiltInSpecialsDefinitionProvider(),
 			new BuiltInCoreDefinitionProvider(),
-			$nativePhpDocDefinitionProvider,
+			$this->innerDefinitionProvider(),
 		]);
-
-		if ($this->memoryCache) {
-			$definitionProvider = new StaticCacheDefinitionProvider(
-				$definitionProvider,
-				new Psr16Cache(new ArrayAdapter(storeSerialized: false))
-			);
-		}
-
-		return new Reflector($definitionProvider);
 	}
 }
