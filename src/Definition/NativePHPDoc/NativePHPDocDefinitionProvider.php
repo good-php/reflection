@@ -22,6 +22,7 @@ use GoodPhp\Reflection\Type\NamedType;
 use GoodPhp\Reflection\Type\Template\TemplateTypeVariance;
 use GoodPhp\Reflection\Type\Type;
 use GoodPhp\Reflection\Util\LateInitLazy;
+use GoodPhp\Reflection\Util\ReflectionAssert;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
@@ -41,6 +42,7 @@ use ReflectionParameter;
 use ReflectionProperty;
 use ReflectionType;
 use TenantCloud\Standard\Lazy\Lazy;
+use UnitEnum;
 use Webmozart\Assert\Assert;
 
 use function TenantCloud\Standard\Lazy\lazy;
@@ -133,12 +135,15 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 
 		$phpDoc = $this->phpDocStringParser->parse($reflection);
 		$context = $this->createTypeContext($reflection, $phpDoc);
+		$backingType = $reflection->getBackingType() ? $this->nativeTypeMapper->map($reflection->getBackingType(), $context) : null;
+
+		Assert::nullOrIsInstanceOf($backingType, NamedType::class);
 
 		return new EnumTypeDefinition(
 			qualifiedName: $this->qualifiedName($reflection),
 			fileName: $this->fileName($reflection),
 			builtIn: !$reflection->isUserDefined(),
-			backingType: $reflection->isBacked() ? $this->nativeTypeMapper->map($reflection->getBackingType(), $context) : null,
+			backingType: $backingType,
 			implements: $this->interfaces($reflection, $phpDoc, $context),
 			uses: $this->traits($reflection, $context),
 			cases: $this->enumCases($reflection),
@@ -146,6 +151,9 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 		);
 	}
 
+	/**
+	 * @param ReflectionClass<object> $reflection
+	 */
 	private function createTypeContext(ReflectionClass $reflection, PhpDocNode $phpDoc): TypeContext
 	{
 		$context = new TypeContext(
@@ -163,6 +171,8 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 
 	/**
 	 * @param ReflectionClass<object> $reflection
+	 *
+	 * @return ($reflection is ReflectionEnum ? class-string<UnitEnum> : class-string<object>)
 	 */
 	private function qualifiedName(ReflectionClass $reflection): string
 	{
@@ -254,13 +264,13 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 	}
 
 	/**
-	 * @return Collection<int, TypeParameterDefinition>
+	 * @return Collection<string, Lazy<TypeParameterDefinition>>
 	 */
 	private function lazyTypeParameters(PhpDocNode $phpDoc, TypeContext $context): Collection
 	{
 		/** @var Collection<string, Lazy<TypeParameterDefinition>> $lazyTypeParametersMap */
 		$lazyTypeParametersMap = new Collection();
-
+		/** @var LateInitLazy<TypeContext> $temporaryContext */
 		$temporaryContext = new LateInitLazy();
 
 		// For whatever reason phpstan/phpdoc-parser doesn't parse the differences between @template and @template-covariant,
@@ -304,6 +314,8 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 	 */
 	private function typeParameters(PhpDocNode $phpDoc, TypeContext $context): Collection
 	{
+		// The types are properly defined, but for whatever reason ->map() breaks it all.
+		/** @var Collection<int, TypeParameterDefinition> */
 		return $this->lazyTypeParameters($phpDoc, $context)
 			->values()
 			->map(fn (Lazy $lazy) => $lazy->value());
@@ -337,7 +349,7 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 	/**
 	 * @param ReflectionClass<object> $reflection
 	 */
-	private function parent(ReflectionClass $reflection, PhpDocNode $phpDoc, TypeContext $context): ?Type
+	private function parent(ReflectionClass $reflection, PhpDocNode $phpDoc, TypeContext $context): ?NamedType
 	{
 		$parentClass = $reflection->getParentClass() ? $reflection->getParentClass()->getName() : null;
 
@@ -355,22 +367,30 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 		/** @var ExtendsTagValueNode|null $tagValue */
 		$tagValue = $tag?->value;
 
-		return $this->map(
+		$type = $this->map(
 			$parentClass,
 			$tagValue?->type,
 			$context
 		);
+
+		if (!$type) {
+			return null;
+		}
+
+		ReflectionAssert::namedType($type, 'mapping `extends` type for [' . $reflection->getName() . ']');
+
+		return $type;
 	}
 
 	/**
 	 * @param ReflectionClass<object> $reflection
 	 *
-	 * @return Collection<int, Type>
+	 * @return Collection<int, NamedType>
 	 */
 	private function interfaces(ReflectionClass $reflection, PhpDocNode $phpDoc, TypeContext $context): Collection
 	{
 		return Collection::make($reflection->getInterfaceNames())
-			->map(function (string $className) use ($context, $phpDoc) {
+			->map(function (string $className) use ($reflection, $context, $phpDoc) {
 				/** @var PhpDocTagNode|null $tag */
 				$tag = Arr::first(
 					$phpDoc->getTags(),
@@ -388,6 +408,7 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 				);
 
 				Assert::notNull($type);
+				ReflectionAssert::namedType($type, 'mapping `implements` types for [' . $reflection->getName() . ']');
 
 				return $type;
 			});
@@ -396,19 +417,17 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 	/**
 	 * @param ReflectionClass<object> $reflection
 	 *
-	 * @return Collection<int, Type>
+	 * @return Collection<int, NamedType>
 	 */
 	private function traits(ReflectionClass $reflection, TypeContext $context): Collection
 	{
-		// Because traits can be used multiple types, @uses annotations can't be specified in the class PHPDoc and instead
+		// Because traits can be used multiple times, @uses annotations can't be specified in the class PHPDoc and instead
 		// must be specified above the `use TraitName;` itself. PHP's native reflection does not give you reflection
 		// on PHPDoc for trait uses, so we'll just say generic traits are unsupported due to the complexity of doing so.
 		return Collection::make($reflection->getTraitNames())->map(fn (string $className) => new NamedType($className));
 	}
 
 	/**
-	 * @param ReflectionClass<object> $reflection
-	 *
 	 * @return Collection<int, EnumCaseDefinition>
 	 */
 	private function enumCases(ReflectionEnum $reflection): Collection

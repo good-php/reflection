@@ -7,6 +7,7 @@ use GoodPhp\Reflection\Definition\TypeDefinition\MethodDefinition;
 use GoodPhp\Reflection\Definition\TypeDefinition\TypeParameterDefinition;
 use GoodPhp\Reflection\Reflector\Reflection\Attributes\Attributes;
 use GoodPhp\Reflection\Reflector\Reflection\Attributes\HasAttributes;
+use GoodPhp\Reflection\Reflector\Reflection\TypeParameters\HasTypeParameters;
 use GoodPhp\Reflection\Type\Template\TypeParameterMap;
 use GoodPhp\Reflection\Type\Type;
 use GoodPhp\Reflection\Type\TypeProjector;
@@ -17,11 +18,11 @@ use TenantCloud\Standard\Lazy\Lazy;
 use function TenantCloud\Standard\Lazy\lazy;
 
 /**
- * @template-covariant OwnerType of ClassReflection|InterfaceReflection|TraitReflection|EnumReflection
+ * @template-covariant DeclaringTypeReflection of ClassReflection|InterfaceReflection|TraitReflection|EnumReflection
  */
-class MethodReflection implements HasAttributes
+final class MethodReflection implements HasAttributes, HasTypeParameters
 {
-	/** @var Lazy<ReflectionMethod<object>> */
+	/** @var Lazy<ReflectionMethod> */
 	private readonly Lazy $nativeReflection;
 
 	/** @var Lazy<Attributes> */
@@ -34,14 +35,14 @@ class MethodReflection implements HasAttributes
 	private Lazy $returnType;
 
 	/**
-	 * @param OwnerType $owner
+	 * @param DeclaringTypeReflection $declaringType
 	 */
 	public function __construct(
 		private readonly MethodDefinition $definition,
-		public readonly ClassReflection|InterfaceReflection|TraitReflection|EnumReflection $owner,
+		public readonly ClassReflection|InterfaceReflection|TraitReflection|EnumReflection $declaringType,
 		public readonly TypeParameterMap $resolvedTypeParameterMap,
 	) {
-		$this->nativeReflection = lazy(fn () => new ReflectionMethod($this->owner->qualifiedName(), $this->definition->name));
+		$this->nativeReflection = lazy(fn () => new ReflectionMethod($this->declaringType->qualifiedName(), $this->definition->name));
 		$this->attributes = lazy(fn () => new Attributes(
 			fn () => $this->nativeReflection->value()->getAttributes()
 		));

@@ -15,9 +15,9 @@ use Webmozart\Assert\Assert;
 use function TenantCloud\Standard\Lazy\lazy;
 
 /**
- * @template-covariant OwnerType of MethodReflection
+ * @template-covariant DeclaringMethodReflection of MethodReflection
  */
-class FunctionParameterReflection implements HasAttributes
+final class FunctionParameterReflection implements HasAttributes
 {
 	/** @var Lazy<ReflectionParameter> */
 	private readonly Lazy $nativeReflection;
@@ -29,14 +29,14 @@ class FunctionParameterReflection implements HasAttributes
 	private Lazy $type;
 
 	/**
-	 * @param OwnerType $owner
+	 * @param DeclaringMethodReflection $declaringMethod
 	 */
 	public function __construct(
 		private readonly FunctionParameterDefinition $definition,
-		public readonly MethodReflection $owner,
+		public readonly MethodReflection $declaringMethod,
 		public readonly TypeParameterMap $resolvedTypeParameterMap,
 	) {
-		$this->nativeReflection = lazy(fn () => new ReflectionParameter([$this->owner->owner->qualifiedName(), $this->owner->name()], $this->definition->name));
+		$this->nativeReflection = lazy(fn () => new ReflectionParameter([$this->declaringMethod->declaringType->qualifiedName(), $this->declaringMethod->name()], $this->definition->name));
 		$this->attributes = lazy(fn () => new Attributes(
 			fn () => $this->nativeReflection->value()->getAttributes()
 		));

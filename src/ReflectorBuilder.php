@@ -2,6 +2,7 @@
 
 namespace GoodPhp\Reflection;
 
+use DateInterval;
 use GoodPhp\Reflection\Cache\Verified\VerifiedCache;
 use GoodPhp\Reflection\Definition\BuiltIns\BuiltInCoreDefinitionProvider;
 use GoodPhp\Reflection\Definition\BuiltIns\BuiltInSpecialsDefinitionProvider;
@@ -29,9 +30,10 @@ use Symfony\Component\Cache\Psr16Cache;
 class ReflectorBuilder
 {
 	private ?DefinitionProvider $innerDefinitionProvider = null;
+
 	private ?DefinitionProvider $definitionProvider = null;
 
-	public function withFileCache(string $path = null, ?\DateInterval $ttl = null): self
+	public function withFileCache(string $path = null, DateInterval $ttl = null): self
 	{
 		$path ??= $path ?? sys_get_temp_dir() . '/good-php-reflection';
 
@@ -41,14 +43,14 @@ class ReflectorBuilder
 				new Psr16Cache(
 					new PhpFilesAdapter(
 						defaultLifetime: (int) $ttl?->format('s'),
-						directory: $path ?? sys_get_temp_dir() . '/good-php-reflection'
+						directory: $path,
 					)
 				)
 			)
 		));
 	}
 
-	public function withMemoryCache(int $maxItems = 100, ?\DateInterval $ttl = null): self
+	public function withMemoryCache(int $maxItems = 100, DateInterval $ttl = null): self
 	{
 		return $this->withDefinitionProvider(new StaticCacheDefinitionProvider(
 			$this->definitionProvider(),

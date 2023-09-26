@@ -40,17 +40,17 @@ class PhpDocTypeMapper
 	) {}
 
 	/**
-	 * @param TypeNode|iterable<TypeNode> $node
+	 * @param TypeNode|iterable<int, TypeNode> $node
 	 *
-	 * @return ($node is iterable ? Collection<int, Type> : Type)
+	 * @return ($node is TypeNode ? Type : Collection<int, Type>)
 	 */
 	public function map(TypeNode|iterable $node, TypeContext $context): Type|Collection
 	{
-		try {
-			if (!$node instanceof TypeNode) {
-				return Collection::wrap($node)->map(fn ($node) => $this->map($node, $context));
-			}
+		if (!$node instanceof TypeNode) {
+			return Collection::wrap($node)->map(fn (TypeNode $node) => $this->map($node, $context));
+		}
 
+		try {
 			return match (true) {
 				$node instanceof ArrayTypeNode => PrimitiveType::array(
 					$this->map($node->type, $context)
@@ -92,7 +92,7 @@ class PhpDocTypeMapper
 				$node instanceof UnionTypeNode => $this->mapUnion($node, $context),
 				default                        => new ErrorType((string) $node),
 			};
-		} catch (Exception $e) {
+		} catch (Exception) {
 			return new ErrorType((string) $node);
 		}
 	}

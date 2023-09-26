@@ -7,22 +7,23 @@ use GoodPhp\Reflection\Definition\TypeDefinition\MethodDefinition;
 use GoodPhp\Reflection\Reflector\Reflection\Attributes\Attributes;
 use GoodPhp\Reflection\Reflector\Reflection\Attributes\HasAttributes;
 use GoodPhp\Reflection\Reflector\Reflector;
+use GoodPhp\Reflection\Type\NamedType;
 use GoodPhp\Reflection\Type\Template\TypeParameterMap;
-use GoodPhp\Reflection\Type\Type;
 use Illuminate\Support\Collection;
 use ReflectionEnum;
 use TenantCloud\Standard\Lazy\Lazy;
+use Webmozart\Assert\Assert;
 
 use function TenantCloud\Standard\Lazy\lazy;
 
 /**
- * @template-covariant T
+ * @template-covariant T of \UnitEnum
  *
  * @extends TypeReflection<T>
  */
-class EnumReflection extends TypeReflection implements HasAttributes
+final class EnumReflection extends TypeReflection implements HasAttributes
 {
-	/** @var Lazy<ReflectionEnum<object>> */
+	/** @var Lazy<ReflectionEnum> */
 	private readonly Lazy $nativeReflection;
 
 	/** @var Lazy<Attributes> */
@@ -31,9 +32,12 @@ class EnumReflection extends TypeReflection implements HasAttributes
 	/** @var Lazy<Collection<int, MethodReflection<$this>>> */
 	private Lazy $declaredMethods;
 
-	/** @var Lazy<Collection<int, MethodReflection<$this>>> */
+	/** @var Lazy<Collection<int, MethodReflection<$this|TraitReflection<object>|InterfaceReflection<object>>>> */
 	private Lazy $methods;
 
+	/**
+	 * @param EnumTypeDefinition<T> $definition
+	 */
 	public function __construct(
 		private readonly EnumTypeDefinition $definition,
 		private readonly Reflector $reflector
@@ -47,26 +51,25 @@ class EnumReflection extends TypeReflection implements HasAttributes
 				->methods
 				->map(fn (MethodDefinition $method) => new MethodReflection($method, $this, TypeParameterMap::empty()))
 		);
-		$this->methods = lazy(
-			fn () => collect([
+		$this->methods = lazy(function () {
+			$methods = collect([
 				...$this->implements(),
 				...$this->uses(),
 			])
 				->filter()
-				->flatMap(function (Type $type) {
+				->flatMap(function (NamedType $type) {
 					$reflection = $this->reflector->forNamedType($type);
 
-					return match (true) {
-						$reflection instanceof ClassReflection,
-						$reflection instanceof InterfaceReflection,
-						$reflection instanceof TraitReflection => $reflection->methods(),
-						default                                => [],
-					};
-				})
-				->concat($this->declaredMethods->value())
+					Assert::isInstanceOfAny($reflection, [InterfaceReflection::class, TraitReflection::class]);
+					/** @var InterfaceReflection<object>|TraitReflection<object> $reflection */
+
+					return $reflection->methods();
+				});
+
+			return collect([...$methods, ...$this->declaredMethods->value()])
 				->keyBy(fn (MethodReflection $method) => $method->name())
-				->values()
-		);
+				->values();
+		});
 	}
 
 	public function qualifiedName(): string
@@ -85,7 +88,7 @@ class EnumReflection extends TypeReflection implements HasAttributes
 	}
 
 	/**
-	 * @return Collection<int, Type>
+	 * @return Collection<int, NamedType>
 	 */
 	public function implements(): Collection
 	{
@@ -93,7 +96,7 @@ class EnumReflection extends TypeReflection implements HasAttributes
 	}
 
 	/**
-	 * @return Collection<int, Type>
+	 * @return Collection<int, NamedType>
 	 */
 	public function uses(): Collection
 	{
@@ -109,7 +112,7 @@ class EnumReflection extends TypeReflection implements HasAttributes
 	}
 
 	/**
-	 * @return Collection<int, MethodReflection<$this>>
+	 * @return Collection<int, MethodReflection<$this|TraitReflection<object>|InterfaceReflection<object>>>
 	 */
 	public function methods(): Collection
 	{

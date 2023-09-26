@@ -10,16 +10,17 @@ use GoodPhp\Reflection\Type\Type;
 use GoodPhp\Reflection\Type\TypeProjector;
 use ReflectionProperty;
 use TenantCloud\Standard\Lazy\Lazy;
+use UnitEnum;
 use Webmozart\Assert\Assert;
 
 use function TenantCloud\Standard\Lazy\lazy;
 
 /**
- * @template-covariant OwnerType of ClassReflection|InterfaceReflection|TraitReflection|EnumReflection
+ * @template-covariant DeclaringTypeReflection of ClassReflection|InterfaceReflection|TraitReflection|EnumReflection
  */
-class PropertyReflection implements HasAttributes
+final class PropertyReflection implements HasAttributes
 {
-	/** @var Lazy<ReflectionProperty<object>> */
+	/** @var Lazy<ReflectionProperty> */
 	private readonly Lazy $nativeReflection;
 
 	/** @var Lazy<Attributes> */
@@ -28,18 +29,18 @@ class PropertyReflection implements HasAttributes
 	/** @var Lazy<Type|null> */
 	private readonly Lazy $type;
 
-	/** @var Lazy<FunctionParameterReflection|null> */
+	/** @var Lazy<FunctionParameterReflection<MethodReflection<ClassReflection<object>|InterfaceReflection<object>|TraitReflection<object>|EnumReflection<UnitEnum>>>|null> */
 	private readonly Lazy $promotedParameter;
 
 	/**
-	 * @param OwnerType $owner
+	 * @param DeclaringTypeReflection $declaringType
 	 */
 	public function __construct(
 		private readonly PropertyDefinition $definition,
-		public readonly ClassReflection|InterfaceReflection|TraitReflection|EnumReflection $owner,
+		public readonly ClassReflection|InterfaceReflection|TraitReflection|EnumReflection $declaringType,
 		public readonly TypeParameterMap $resolvedTypeParameterMap,
 	) {
-		$this->nativeReflection = lazy(fn () => new ReflectionProperty($this->owner->qualifiedName(), $this->definition->name));
+		$this->nativeReflection = lazy(fn () => new ReflectionProperty($this->declaringType->qualifiedName(), $this->definition->name));
 		$this->attributes = lazy(fn () => new Attributes(
 			fn () => $this->nativeReflection->value()->getAttributes()
 		));
@@ -52,14 +53,19 @@ class PropertyReflection implements HasAttributes
 				null
 		);
 		$this->promotedParameter = lazy(
-			fn () => $this->definition->isPromoted ?
-				$this->owner
-					->constructor()
-					->parameters()
-					->first(
-						fn (FunctionParameterReflection $parameter) => $this->definition->name === $parameter->name()
-					) :
-				null
+			function () {
+				if (!$this->definition->isPromoted || !$this->declaringType instanceof ClassReflection) {
+					return null;
+				}
+
+				$constructor = $this->declaringType->constructor();
+
+				Assert::notNull($constructor);
+
+				return $constructor->parameters()->first(
+					fn (FunctionParameterReflection $parameter) => $this->definition->name === $parameter->name()
+				);
+			}
 		);
 	}
 
@@ -95,9 +101,15 @@ class PropertyReflection implements HasAttributes
 
 	/**
 	 * If property is promoted, it refers to the __construct parameter it was promoted for.
+	 *
+	 * @return FunctionParameterReflection<MethodReflection<ClassReflection<object>|InterfaceReflection<object>|TraitReflection<object>|EnumReflection<UnitEnum>>>|null
 	 */
 	public function promotedParameter(): FunctionParameterReflection|null
 	{
+		if (!$this->isPromoted()) {
+			return null;
+		}
+
 		return $this->promotedParameter->value();
 	}
 
@@ -106,7 +118,7 @@ class PropertyReflection implements HasAttributes
 		return $this->attributes->value();
 	}
 
-	public function get(object $receiver)
+	public function get(object $receiver): mixed
 	{
 		return $this->nativeReflection->value()->getValue($receiver);
 	}

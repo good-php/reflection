@@ -13,11 +13,11 @@ use function TenantCloud\Standard\Lazy\lazy;
 
 class Attributes
 {
-	/** @var Lazy<Collection<int, ReflectionAttribute>> */
+	/** @var Lazy<Collection<int, ReflectionAttribute<object>>> */
 	private readonly Lazy $attributes;
 
 	/**
-	 * @param callable(): ReflectionAttribute[]|null $makeAttributes
+	 * @param callable(): ReflectionAttribute<object>[]|null $makeAttributes
 	 */
 	public function __construct(callable $makeAttributes = null)
 	{
@@ -45,6 +45,7 @@ class Attributes
 	 */
 	public function all(string $className = null): Collection
 	{
+		/** @var Collection<int, AttributeType> */
 		return $this->attributes
 			->value()
 			->when(
@@ -70,6 +71,7 @@ class Attributes
 				->value()
 				->sole(self::matchesFilter($className));
 
+			/** @var AttributeType */
 			return $attribute->newInstance();
 		} catch (MultipleItemsFoundException) {
 			throw new MultipleAttributesFoundException($className);

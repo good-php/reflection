@@ -21,7 +21,11 @@ use Tests\Stubs\Traits\ParentTraitStub;
 #[AttributeStub(something: '123')]
 final class ClassStub extends ParentClassStub implements ParentInterfaceStub
 {
-	/* @use ParentTraitStub<T, SomeStub> */
+	/** @use ParentTraitStub<T, SomeStub> */
+	use ParentTraitStub {
+		traitMethod as traitMethod;
+		traitMethod as traitMethodTwo;
+	}
 	use ParentTraitStub;
 
 	/** @var SomeStub[] */

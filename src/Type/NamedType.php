@@ -5,15 +5,12 @@ namespace GoodPhp\Reflection\Type;
 use Illuminate\Support\Collection;
 use Webmozart\Assert\Assert;
 
-/**
- * @template-covariant T
- */
 class NamedType implements Type
 {
 	use TypeExtensions;
 
 	/**
-	 * @param class-string<T>       $name
+	 * @param class-string|string   $name
 	 * @param Collection<int, Type> $arguments
 	 */
 	public function __construct(
@@ -35,6 +32,9 @@ class NamedType implements Type
 		);
 	}
 
+	/**
+	 * @param array<int, Type|string>|Collection<int, Type|string>|null $arguments
+	 */
 	public static function wrap(string|self $name, array|Collection $arguments = null): self
 	{
 		if ($name instanceof self) {

@@ -8,6 +8,7 @@ use GoodPhp\Reflection\Reflector\Reflection\EnumReflection;
 use GoodPhp\Reflection\Reflector\Reflection\InterfaceReflection;
 use GoodPhp\Reflection\Reflector\Reflection\SpecialTypeReflection;
 use GoodPhp\Reflection\Reflector\Reflection\TraitReflection;
+use GoodPhp\Reflection\Reflector\Reflection\TypeParameters\HasTypeParameters;
 use GoodPhp\Reflection\Reflector\Reflector;
 use GoodPhp\Reflection\Type\Combinatorial\IntersectionType;
 use GoodPhp\Reflection\Type\Combinatorial\TupleType;
@@ -84,8 +85,7 @@ class TypeComparator
 
 		$aReflection = $this->reflector->forNamedType($a);
 
-		/** @var Collection<TypeParameterDefinition> $typeParameters */
-		$typeParameters = !$aReflection instanceof EnumReflection ? $aReflection->typeParameters() : new Collection();
+		$typeParameters = $aReflection instanceof HasTypeParameters ? $aReflection->typeParameters() : new Collection();
 
 		/** @var array<array{TypeParameterDefinition, Type, Type}> $pairs */
 		$pairs = [];
@@ -99,7 +99,9 @@ class TypeComparator
 				break;
 			}
 
+			/** @var Type|null $aArgument */
 			$aArgument = $aArguments->shift();
+			/** @var Type|null $bArgument */
 			$bArgument = $bArguments->shift();
 
 			if (!$aArgument || !$bArgument) {
@@ -139,7 +141,7 @@ class TypeComparator
 		$descendants = match (true) {
 			$aReflection instanceof ClassReflection => $aReflection
 				->implements()
-				->concat([$aReflection->extends()])
+				->concat($aReflection->extends() ? [$aReflection->extends()] : [])
 				->filter(),
 			$aReflection instanceof InterfaceReflection => $aReflection
 				->extends(),
@@ -148,7 +150,7 @@ class TypeComparator
 				->implements(),
 			$aReflection instanceof SpecialTypeReflection => $aReflection
 				->superTypes(),
-			default => throw new InvalidArgumentException('Unsupported type of reflection (' . $aReflection::class . ') given.'),
+			default => throw new InvalidArgumentException('Unsupported type of reflection [' . $aReflection::class . '] given.'),
 		};
 
 		foreach ($descendants as $type) {

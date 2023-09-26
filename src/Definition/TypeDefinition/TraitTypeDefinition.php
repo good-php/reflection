@@ -3,14 +3,21 @@
 namespace GoodPhp\Reflection\Definition\TypeDefinition;
 
 use GoodPhp\Reflection\Definition\TypeDefinition;
-use GoodPhp\Reflection\Type\Type;
+use GoodPhp\Reflection\Type\NamedType;
 use Illuminate\Support\Collection;
 
+/**
+ * @template-covariant T of object
+ */
 final class TraitTypeDefinition extends TypeDefinition
 {
+	/** @var class-string<T> */
+	public readonly string $qualifiedName;
+
 	/**
+	 * @param class-string<T>                          $qualifiedName
 	 * @param Collection<int, TypeParameterDefinition> $typeParameters
-	 * @param Collection<int, Type>                    $uses
+	 * @param Collection<int, NamedType>               $uses
 	 * @param Collection<int, PropertyDefinition>      $properties
 	 * @param Collection<int, MethodDefinition>        $methods
 	 */

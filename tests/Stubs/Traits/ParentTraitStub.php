@@ -8,6 +8,8 @@ namespace Tests\Stubs\Traits;
  */
 trait ParentTraitStub
 {
+	use TraitWithoutProperties;
+
 	public int $prop;
 
 	public function traitMethod(): void {}

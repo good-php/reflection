@@ -14,8 +14,8 @@ use PhpParser\Node\Stmt\Trait_;
 use PhpParser\Node\Stmt\TraitUse;
 use PhpParser\NodeVisitor\NameResolver;
 use PhpParser\NodeVisitorAbstract;
-use PHPUnit\Framework\Assert;
 use ReflectionProperty;
+use Webmozart\Assert\Assert;
 
 class ClassLikeContextParsingVisitor extends NodeVisitorAbstract
 {
@@ -56,9 +56,9 @@ class ClassLikeContextParsingVisitor extends NodeVisitorAbstract
 		if ($node->name) {
 			$this->classLikes[(string) $node->namespacedName] = $context;
 		} else {
-			Assert::assertArrayNotHasKey(
+			Assert::keyNotExists(
+				$this->anonymousClassLikes->all(),
 				$node->getStartLine(),
-				$this->anonymousClassLikes,
 				'Only one anonymous class-like can be defined within a single line due to PHPs limitations.'
 			);
 
@@ -68,6 +68,9 @@ class ClassLikeContextParsingVisitor extends NodeVisitorAbstract
 		return null;
 	}
 
+	/**
+	 * @return Collection<string, string>
+	 */
 	private function uses(NameContext $nameContext): Collection
 	{
 		static $aliasesProperty;
@@ -76,11 +79,16 @@ class ClassLikeContextParsingVisitor extends NodeVisitorAbstract
 			$aliasesProperty = new ReflectionProperty(NameContext::class, 'aliases');
 		}
 
+		/** @var array<string, Node\Name> $uses */
 		$uses = $aliasesProperty->getValue($nameContext)[Node\Stmt\Use_::TYPE_NORMAL] ?? [];
 
-		return collect($uses);
+		return collect($uses)
+			->map(fn (Node\Name $name) => (string) $name);
 	}
 
+	/**
+	 * @return Collection<int, FileClassLikeContext\TraitUse>
+	 */
 	private function traitUses(ClassLike $classLike): Collection
 	{
 		if (!$classLike instanceof Class_ && !$classLike instanceof Trait_) {
@@ -88,23 +96,20 @@ class ClassLikeContextParsingVisitor extends NodeVisitorAbstract
 		}
 
 		return collect($classLike->stmts)
-			->filter(fn (Node $node) => $node instanceof TraitUse)
-			->flatMap(function (TraitUse $node) {
-				return array_map(
-					function (Node\Name $traitName) use ($node) {
-						$docComment = $node->getDocComment();
-
-						return new FileClassLikeContext\TraitUse(
-							name: (string) $traitName,
-							docComment: $docComment ? (string) $docComment : null,
-							aliases: []
-						);
-					},
-					$node->traits,
-				);
-			});
+			->whereInstanceOf(TraitUse::class)
+			->flatMap(fn (TraitUse $node) => array_map(
+				fn (Node\Name $traitName) => new FileClassLikeContext\TraitUse(
+					name: (string) $traitName,
+					docComment: (string) $node->getDocComment() ?: null,
+					aliases: []
+				),
+				$node->traits,
+			));
 	}
 
+	/**
+	 * @return Collection<int, string>
+	 */
 	private function properties(ClassLike $classLike): Collection
 	{
 		if (!$classLike instanceof Class_ && !$classLike instanceof Trait_) {
@@ -112,27 +117,37 @@ class ClassLikeContextParsingVisitor extends NodeVisitorAbstract
 		}
 
 		$properties = collect($classLike->stmts)
-			->filter(fn (Node $node) => $node instanceof Property)
+			->whereInstanceOf(Property::class)
 			->flatMap(fn (Property $node) => $node->props)
 			->map(fn (PropertyProperty $property) => (string) $property->name);
 
-		$constructor = collect($classLike->stmts)->first(fn (Node $node) => $node instanceof ClassMethod && (string) $node->name === '__construct');
+		/** @var ClassMethod|null $constructor */
+		$constructor = collect($classLike->stmts)
+			->first(fn (Node $node) => $node instanceof ClassMethod && (string) $node->name === '__construct');
 
 		if (!$constructor) {
 			return $properties;
 		}
 
 		$promoted = collect($constructor->params)
-			->filter(fn (Node\Param $node) => $node->flags & Class_::VISIBILITY_MODIFIER_MASK)
-			->map(fn (Node\Param $node) => (string) $node->var->name);
+			->filter(fn (Node\Param $node) => (bool) ($node->flags & Class_::VISIBILITY_MODIFIER_MASK))
+			->map(function (Node\Param $node): string {
+				Assert::isInstanceOf($node->var, Node\Expr\Variable::class);
+				Assert::string($node->var->name);
+
+				return $node->var->name;
+			});
 
 		return $properties->concat($promoted);
 	}
 
+	/**
+	 * @return Collection<int, string>
+	 */
 	private function methods(ClassLike $classLike): Collection
 	{
 		return collect($classLike->stmts)
-			->filter(fn (Node $node) => $node instanceof ClassMethod)
+			->whereInstanceOf(ClassMethod::class)
 			->map(fn (ClassMethod $method) => (string) $method->name);
 	}
 }

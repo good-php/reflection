@@ -2,14 +2,12 @@
 
 namespace GoodPhp\Reflection\Type;
 
-use Closure;
-
 class TypeTraversingMapper
 {
 	/**
-	 * @param Closure(Type $type, callable(Type): Type $traverse): Type $callback
+	 * @param callable(Type $type, callable(Type): Type $traverse): Type $callback
 	 */
-	private function __construct(private readonly Closure $callback) {}
+	private function __construct(private readonly mixed $callback) {}
 
 	/**
 	 * Map a Type recursively

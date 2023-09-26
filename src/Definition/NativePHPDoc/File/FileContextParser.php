@@ -7,6 +7,7 @@ use PhpParser\NodeVisitor\NameResolver;
 use PhpParser\Parser;
 use ReflectionClass;
 use ReflectionFunction;
+use Webmozart\Assert\Assert;
 
 /**
  * Provides some context for reflection from file AST nodes.
@@ -15,15 +16,20 @@ class FileContextParser
 {
 	public function __construct(private readonly Parser $phpParser) {}
 
+	/**
+	 * @param ReflectionClass<object>|ReflectionFunction $reflection
+	 */
 	public function parse(ReflectionClass|ReflectionFunction $reflection): ?FileContext
 	{
-		if (!$reflection->getFileName()) {
+		$fileName = $reflection->getFileName();
+
+		if (!$fileName) {
 			return null;
 		}
 
-		$nodes = $this->phpParser->parse(
-			file_get_contents($reflection->getFileName())
-		);
+		$nodes = $this->phpParser->parse(file_get_contents($fileName));
+
+		Assert::notNull($nodes, "Failed to parse [{$fileName}] for Reflection; it probably contains syntax errors.");
 
 		$traverser = new NodeTraverser();
 		$traverser->addVisitor($nameResolverVisitior = new NameResolver());

@@ -5,12 +5,13 @@ namespace GoodPhp\Reflection\Type\Template;
 use GoodPhp\Reflection\Definition\TypeDefinition\TypeParameterDefinition;
 use GoodPhp\Reflection\Type\Combinatorial\TupleType;
 use GoodPhp\Reflection\Type\Type;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 
 final class TypeParameterMap
 {
 	/**
-	 * @param array<string, Type|array<int, Type>|null> $types
+	 * @param array<string, Type|null> $types
 	 */
 	public function __construct(
 		public readonly array $types
@@ -55,13 +56,13 @@ final class TypeParameterMap
 	}
 
 	/**
-	 * @param iterable<TypeParameterDefinition> $typeParameters
+	 * @param iterable<int, TypeParameterDefinition> $typeParameters
 	 *
 	 * @return Collection<int, Type>
 	 */
 	public function toList(iterable $typeParameters): Collection
 	{
 		return Collection::wrap($typeParameters)
-			->map(fn (TypeParameterDefinition $parameter) => $this->types[$parameter->name] ?? null);
+			->flatMap(fn (TypeParameterDefinition $parameter) => Arr::wrap($this->types[$parameter->name] ?? []));
 	}
 }

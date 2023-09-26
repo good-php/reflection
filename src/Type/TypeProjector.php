@@ -9,13 +9,17 @@ use GoodPhp\Reflection\Type\Template\TypeParameterMap;
 
 class TypeProjector
 {
+	/**
+	 * @return ($type is NamedType ? NamedType : Type)
+	 */
 	public static function templateTypes(Type $type, TypeParameterMap $typeParameterMap): Type
 	{
 		$mapped = TypeTraversingMapper::map($type, static function (Type $type, callable $traverse) use ($typeParameterMap): Type {
-			//  && !$type->isArgument()
+			// todo: && !$type->isArgument()
 			if ($type instanceof TemplateType) {
 				$newType = $typeParameterMap->types[$type->name] ?? null;
 
+				// If no type specified for this template type, just ignore it.
 				if ($newType === null) {
 					return $traverse($type);
 				}

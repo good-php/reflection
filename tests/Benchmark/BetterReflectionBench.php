@@ -24,11 +24,12 @@ class BetterReflectionBench
 
 	public function setUpWithoutCache(): void
 	{
-		$builder = (new BetterReflection());
+		$builder = new BetterReflection();
 
 		// There's no simple way of disabling in-memory cache with BetterReflection,
 		// but it's useful for these benchmarks.
-		(fn () => $this->sourceLocator =
+		(
+			fn () => $this->sourceLocator =
 			(fn () => $this->wrappedSourceLocator)->call($this->sourceLocator())
 		)->call($builder);
 

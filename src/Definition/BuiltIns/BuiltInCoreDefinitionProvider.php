@@ -76,7 +76,8 @@ class BuiltInCoreDefinitionProvider implements DefinitionProvider
 								name: 'offset',
 								type: new TemplateType(
 									name: 'TKey',
-								)
+								),
+								hasDefaultValue: false,
 							),
 						]),
 						returnType: PrimitiveType::boolean(),
@@ -89,7 +90,8 @@ class BuiltInCoreDefinitionProvider implements DefinitionProvider
 								name: 'offset',
 								type: new TemplateType(
 									name: 'TKey',
-								)
+								),
+								hasDefaultValue: false,
 							),
 						]),
 						returnType: new NullableType(
@@ -108,13 +110,15 @@ class BuiltInCoreDefinitionProvider implements DefinitionProvider
 									new TemplateType(
 										name: 'TKey',
 									)
-								)
+								),
+								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'value',
 								type: new TemplateType(
 									name: 'TValue',
-								)
+								),
+								hasDefaultValue: false,
 							),
 						]),
 						returnType: VoidType::get(),
@@ -127,7 +131,8 @@ class BuiltInCoreDefinitionProvider implements DefinitionProvider
 								name: 'offset',
 								type: new TemplateType(
 									name: 'TKey',
-								)
+								),
+								hasDefaultValue: false,
 							),
 						]),
 						returnType: VoidType::get(),

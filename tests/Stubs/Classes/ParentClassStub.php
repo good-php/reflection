@@ -18,4 +18,6 @@ class ParentClassStub
 	 * @return U
 	 */
 	public function parentMethod(): mixed {}
+
+	public function test(string $str = null): void {}
 }

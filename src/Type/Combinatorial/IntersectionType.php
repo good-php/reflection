@@ -66,6 +66,7 @@ class IntersectionType implements Type
 			->reject($filter)
 			->values();
 
+		/** @var Type */
 		return match ($types->count()) {
 			0       => NeverType::get(),
 			1       => $types->first(),

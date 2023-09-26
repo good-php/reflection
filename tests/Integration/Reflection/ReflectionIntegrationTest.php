@@ -55,8 +55,9 @@ class ReflectionIntegrationTest extends IntegrationTestCase
 					$reflection->implements()[0]
 				);
 
-				self::assertCount(1, $reflection->uses());
+				self::assertCount(2, $reflection->uses());
 				self::assertEquals(new NamedType(ParentTraitStub::class), $reflection->uses()[0]);
+				self::assertEquals(new NamedType(ParentTraitStub::class), $reflection->uses()[1]);
 
 				with($reflection->properties(), function (Collection $properties) use ($reflection) {
 					self::assertCount(5, $properties);
@@ -99,14 +100,16 @@ class ReflectionIntegrationTest extends IntegrationTestCase
 				});
 
 				with($reflection->methods(), function (Collection $methods) use ($reflection) {
-					self::assertCount(6, $methods);
+					self::assertCount(8, $methods);
 
-					self::assertSame('parentMethod', $methods[0]->name());
-					self::assertSame('traitMethod', $methods[1]->name());
-					self::assertSame('method', $methods[2]->name());
-					self::assertSame('methodTwo', $methods[3]->name());
-					self::assertSame('self', $methods[4]->name());
-					self::assertSame('par', $methods[5]->name());
+					self::assertSame('test', $methods[0]->name());
+					self::assertSame('parentMethod', $methods[1]->name());
+					self::assertSame('otherFunction', $methods[2]->name());
+					self::assertSame('traitMethod', $methods[3]->name()); // todo: traits
+					self::assertSame('method', $methods[4]->name());
+					self::assertSame('methodTwo', $methods[5]->name());
+					self::assertSame('self', $methods[6]->name());
+					self::assertSame('par', $methods[7]->name());
 				});
 			},
 		];

@@ -27,11 +27,7 @@ class Reflector
 	}
 
 	/**
-	 * @template T
-	 *
-	 * @param NamedType<T> $type
-	 *
-	 * @return TypeReflection<T>
+	 * @return TypeReflection<mixed>
 	 */
 	public function forNamedType(NamedType $type): TypeReflection
 	{
@@ -57,12 +53,9 @@ class Reflector
 	}
 
 	/**
-	 * @template T
-	 *
-	 * @param class-string<T>       $name
 	 * @param Collection<int, Type> $arguments
 	 *
-	 * @return TypeReflection<T>
+	 * @return TypeReflection<mixed>
 	 */
 	public function forType(string $name, Collection $arguments = new Collection()): TypeReflection
 	{

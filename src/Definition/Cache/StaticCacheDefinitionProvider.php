@@ -5,6 +5,7 @@ namespace GoodPhp\Reflection\Definition\Cache;
 use GoodPhp\Reflection\Definition\DefinitionProvider;
 use GoodPhp\Reflection\Definition\TypeDefinition;
 use Psr\SimpleCache\CacheInterface;
+use Webmozart\Assert\Assert;
 
 class StaticCacheDefinitionProvider implements DefinitionProvider
 {
@@ -18,6 +19,8 @@ class StaticCacheDefinitionProvider implements DefinitionProvider
 		$key = 'type.' . str_replace('\\', '.', $type);
 
 		if ($definition = $this->cache->get($key)) {
+			Assert::isInstanceOf($definition, TypeDefinition::class);
+
 			return $definition;
 		}
 

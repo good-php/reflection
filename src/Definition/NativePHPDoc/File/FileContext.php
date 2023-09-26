@@ -16,6 +16,9 @@ class FileContext
 		public readonly Collection $anonymousClassLikes,
 	) {}
 
+	/**
+	 * @param ReflectionClass<object> $reflection
+	 */
 	public function forClassLike(ReflectionClass $reflection): FileClassLikeContext
 	{
 		return !$reflection->isAnonymous() ?

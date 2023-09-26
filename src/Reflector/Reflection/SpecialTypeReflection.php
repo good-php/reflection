@@ -4,6 +4,7 @@ namespace GoodPhp\Reflection\Reflector\Reflection;
 
 use GoodPhp\Reflection\Definition\TypeDefinition\SpecialTypeDefinition;
 use GoodPhp\Reflection\Definition\TypeDefinition\TypeParameterDefinition;
+use GoodPhp\Reflection\Reflector\Reflection\TypeParameters\HasTypeParameters;
 use GoodPhp\Reflection\Type\Template\TypeParameterMap;
 use GoodPhp\Reflection\Type\Type;
 use Illuminate\Support\Collection;
@@ -13,7 +14,7 @@ use Illuminate\Support\Collection;
  *
  * @extends TypeReflection<T>
  */
-class SpecialTypeReflection extends TypeReflection
+final class SpecialTypeReflection extends TypeReflection implements HasTypeParameters
 {
 	public function __construct(
 		private readonly SpecialTypeDefinition $definition,

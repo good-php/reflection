@@ -130,6 +130,7 @@ class NativePHPDocDefinitionProviderIntegrationTest extends IntegrationTestCase
 				]),
 				uses: new Collection([
 					new NamedType(ParentTraitStub::class),
+					new NamedType(ParentTraitStub::class),
 				]),
 				properties: new Collection([
 					new PropertyDefinition(

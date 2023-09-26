@@ -25,14 +25,14 @@ use ReflectionUnionType;
 class NativeTypeMapper
 {
 	/**
-	 * @param ReflectionType|string|iterable<ReflectionType|string> $type
+	 * @param ReflectionType|string|iterable<int, ReflectionType|string> $type
 	 *
-	 * @return ($type is iterable ? Collection<int, Type> : Type)
+	 * @return ($type is ReflectionType|string ? Type : Collection<int, Type>)
 	 */
 	public function map(ReflectionType|string|iterable $type, TypeContext $context): Type|Collection
 	{
 		if (is_iterable($type)) {
-			return Collection::wrap($type)->map(fn ($type) => $this->map($type, $context));
+			return Collection::wrap($type)->map(fn (ReflectionType|string $type) => $this->map($type, $context));
 		}
 
 		$isNull = fn (ReflectionType $isNullType) => $isNullType instanceof ReflectionNamedType && $isNullType->getName() === 'null';

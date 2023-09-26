@@ -10,19 +10,13 @@ parameters:
 		- src
 
 	ignoreErrors:
-		# Wrong type inferrence
+		# We expect proper error handling, in which case file_get_contents() will never return `false`
 		-
-			message: '#Method [a-z\\]+NativePHPDocDefinitionProvider::typeParameters\(\) should return [a-z\\]+Collection<int, [a-z\\]+TypeParameterDefinition> but returns [a-z\\]+Collection<int, mixed>#i'
-			path: 'src/GoodPhp/Reflection/Definition/NativePHPDoc/NativePHPDocDefinitionProvider.php'
-		# Illuminate's Container isn't covered with template types
-		-
-			message: '#expects .*, .*mixed.* given#i'
-			path: 'src/GoodPhp/Reflection/ReflectionBuilder.php'
-		# Illuminate's Collection isn't immutable (hence value isn't covariant) and I'm not aware of any immutable versions of it.
-		- '#expects Illuminate\\Support\\Collection<int, GoodPhp\\Reflection\\Type\\Type>, Illuminate\\Support\\Collection<int, GoodPhp\\Reflection\\Type\\[a-z\\]+> given#i'
-		-
-			message: '#Method [a-z\\]+::get\(\) should return static\([a-z\\]+\) but returns [a-z\\]+#i'
-			path: 'src/GoodPhp/Reflection/Util/IsSingleton.php'
+			message: '#Parameter \#1 \$code of method PhpParser\\Parser::parse\(\) expects string, string\|false given\.#i'
+			path: 'src/Definition/NativePHPDoc/File/FileContextParser.php'
+		# It is assigned in the parent class. I'm not sure how to approach this and if this is a bug in PHPStan or not.
+		- '#Class GoodPhp\\Reflection\\Definition\\TypeDefinition\\[a-z]+Definition has an uninitialized readonly property \$qualifiedName\. Assign it in the constructor\.#i'
+		# This, again, I'm not sure how to approach.
 		-
 			message: '#Unsafe usage of new static\(\)#i'
-			path: 'src/GoodPhp/Reflection/Util/IsSingleton.php'
+			path: 'src/Util/IsSingleton.php'

@@ -7,38 +7,43 @@ use GoodPhp\Reflection\Definition\TypeDefinition\MethodDefinition;
 use GoodPhp\Reflection\Definition\TypeDefinition\TypeParameterDefinition;
 use GoodPhp\Reflection\Reflector\Reflection\Attributes\Attributes;
 use GoodPhp\Reflection\Reflector\Reflection\Attributes\HasAttributes;
+use GoodPhp\Reflection\Reflector\Reflection\TypeParameters\HasTypeParameters;
 use GoodPhp\Reflection\Reflector\Reflector;
+use GoodPhp\Reflection\Type\NamedType;
 use GoodPhp\Reflection\Type\Template\TypeParameterMap;
-use GoodPhp\Reflection\Type\Type;
 use GoodPhp\Reflection\Type\TypeProjector;
 use Illuminate\Support\Collection;
 use ReflectionClass;
 use TenantCloud\Standard\Lazy\Lazy;
+use Webmozart\Assert\Assert;
 
 use function TenantCloud\Standard\Lazy\lazy;
 
 /**
- * @template-covariant T
+ * @template-covariant T of object
  *
  * @extends TypeReflection<T>
  */
-class InterfaceReflection extends TypeReflection implements HasAttributes
+final class InterfaceReflection extends TypeReflection implements HasAttributes, HasTypeParameters
 {
-	/** @var Lazy<ReflectionClass<object>> */
+	/** @var Lazy<ReflectionClass<T>> */
 	private readonly Lazy $nativeReflection;
 
 	/** @var Lazy<Attributes> */
 	private readonly Lazy $attributes;
 
-	/** @var Lazy<Collection<int, Type>> */
+	/** @var Lazy<Collection<int, NamedType>> */
 	private Lazy $extends;
 
 	/** @var Lazy<Collection<int, MethodReflection<$this>>> */
 	private Lazy $declaredMethods;
 
-	/** @var Lazy<Collection<int, MethodReflection<$this>>> */
+	/** @var Lazy<Collection<int, MethodReflection<$this|self<object>>>> */
 	private Lazy $methods;
 
+	/**
+	 * @param InterfaceTypeDefinition<T> $definition
+	 */
 	public function __construct(
 		private readonly InterfaceTypeDefinition $definition,
 		public readonly TypeParameterMap $resolvedTypeParameterMap,
@@ -51,7 +56,7 @@ class InterfaceReflection extends TypeReflection implements HasAttributes
 		$this->extends = lazy(
 			fn () => $this->definition
 				->extends
-				->map(fn (Type $type) => TypeProjector::templateTypes(
+				->map(fn (NamedType $type) => TypeProjector::templateTypes(
 					$type,
 					$resolvedTypeParameterMap
 				))
@@ -64,15 +69,13 @@ class InterfaceReflection extends TypeReflection implements HasAttributes
 		);
 		$this->methods = lazy(
 			fn () => $this->extends()
-				->flatMap(function (Type $type) {
+				->flatMap(function (NamedType $type) {
 					$reflection = $this->reflector->forNamedType($type);
 
-					return match (true) {
-						$reflection instanceof ClassReflection,
-						$reflection instanceof self,
-						$reflection instanceof TraitReflection => $reflection->methods(),
-						default                                => [],
-					};
+					Assert::isInstanceOf($reflection, self::class);
+					/** @var self<object> $reflection */
+
+					return $reflection->methods();
 				})
 				->concat($this->declaredMethods->value())
 				->keyBy(fn (MethodReflection $method) => $method->name())
@@ -104,7 +107,7 @@ class InterfaceReflection extends TypeReflection implements HasAttributes
 	}
 
 	/**
-	 * @return Collection<int, Type>
+	 * @return Collection<int, NamedType>
 	 */
 	public function extends(): Collection
 	{
@@ -120,7 +123,7 @@ class InterfaceReflection extends TypeReflection implements HasAttributes
 	}
 
 	/**
-	 * @return Collection<int, MethodReflection<$this>>
+	 * @return Collection<int, MethodReflection<$this|self<object>>>
 	 */
 	public function methods(): Collection
 	{
