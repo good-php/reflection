@@ -91,7 +91,7 @@ class NativePHPDocDefinitionProviderIntegrationTest extends IntegrationTestCase
 
 	public static function providesDefinitionForTypeProvider(): iterable
 	{
-		yield [
+		yield ClassStub::class => [
 			ClassStub::class,
 			new ClassTypeDefinition(
 				qualifiedName: ClassStub::class,
@@ -237,16 +237,17 @@ class NativePHPDocDefinitionProviderIntegrationTest extends IntegrationTestCase
 					new MethodDefinition(
 						name: 'self',
 						typeParameters: collect([]),
-						parameters: collect([]),
+						parameters: collect([
+							new FunctionParameterDefinition(
+								name: 'parent',
+								type: NamedType::wrap(ParentClassStub::class, [
+									PrimitiveType::integer(),
+									PrimitiveType::integer(),
+								]),
+								hasDefaultValue: false,
+							)
+						]),
 						returnType: new StaticType(
-							new NamedType(ClassStub::class)
-						)
-					),
-					new MethodDefinition(
-						name: 'par',
-						typeParameters: collect([]),
-						parameters: collect([]),
-						returnType: new ParentType(
 							new NamedType(ClassStub::class)
 						)
 					),
@@ -254,7 +255,7 @@ class NativePHPDocDefinitionProviderIntegrationTest extends IntegrationTestCase
 			),
 		];
 
-		yield [
+		yield AllMissingTypes::class => [
 			AllMissingTypes::class,
 			new ClassTypeDefinition(
 				qualifiedName: AllMissingTypes::class,
@@ -323,7 +324,7 @@ class NativePHPDocDefinitionProviderIntegrationTest extends IntegrationTestCase
 			),
 		];
 
-		yield [
+		yield AllNativeTypes::class => [
 			AllNativeTypes::class,
 			new ClassTypeDefinition(
 				qualifiedName: AllNativeTypes::class,
@@ -445,7 +446,7 @@ class NativePHPDocDefinitionProviderIntegrationTest extends IntegrationTestCase
 			),
 		];
 
-		yield [
+		yield AllPhpDocTypes::class => [
 			AllPhpDocTypes::class,
 			new ClassTypeDefinition(
 				qualifiedName: AllPhpDocTypes::class,
@@ -718,7 +719,7 @@ class NativePHPDocDefinitionProviderIntegrationTest extends IntegrationTestCase
 			),
 		];
 
-		yield [
+		yield InvariantParameter::class => [
 			InvariantParameter::class,
 			new ClassTypeDefinition(
 				qualifiedName: InvariantParameter::class,
@@ -743,7 +744,7 @@ class NativePHPDocDefinitionProviderIntegrationTest extends IntegrationTestCase
 			),
 		];
 
-		yield [
+		yield ContravariantParameter::class => [
 			ContravariantParameter::class,
 			new ClassTypeDefinition(
 				qualifiedName: ContravariantParameter::class,
@@ -768,7 +769,7 @@ class NativePHPDocDefinitionProviderIntegrationTest extends IntegrationTestCase
 			),
 		];
 
-		yield [
+		yield CovariantParameter::class => [
 			CovariantParameter::class,
 			new ClassTypeDefinition(
 				qualifiedName: CovariantParameter::class,
@@ -793,7 +794,7 @@ class NativePHPDocDefinitionProviderIntegrationTest extends IntegrationTestCase
 			),
 		];
 
-		yield [
+		yield NonGenericInterface::class => [
 			NonGenericInterface::class,
 			new InterfaceTypeDefinition(
 				qualifiedName: NonGenericInterface::class,
@@ -837,7 +838,7 @@ class NativePHPDocDefinitionProviderIntegrationTest extends IntegrationTestCase
 			),
 		];
 
-		yield [
+		yield TraitWithoutProperties::class => [
 			TraitWithoutProperties::class,
 			new TraitTypeDefinition(
 				qualifiedName: TraitWithoutProperties::class,
@@ -857,7 +858,7 @@ class NativePHPDocDefinitionProviderIntegrationTest extends IntegrationTestCase
 			),
 		];
 
-		yield [
+		yield BackedEnum::class => [
 			BackedEnum::class,
 			new EnumTypeDefinition(
 				qualifiedName: BackedEnum::class,
@@ -886,7 +887,7 @@ class NativePHPDocDefinitionProviderIntegrationTest extends IntegrationTestCase
 			),
 		];
 
-		yield [
+		yield UnitEnum::class => [
 			UnitEnum::class,
 			new EnumTypeDefinition(
 				qualifiedName: UnitEnum::class,

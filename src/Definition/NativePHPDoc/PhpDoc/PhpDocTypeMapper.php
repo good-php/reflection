@@ -32,12 +32,15 @@ use PHPStan\PhpDocParser\Ast\Type\NullableTypeNode;
 use PHPStan\PhpDocParser\Ast\Type\ThisTypeNode;
 use PHPStan\PhpDocParser\Ast\Type\TypeNode;
 use PHPStan\PhpDocParser\Ast\Type\UnionTypeNode;
+use Webmozart\Assert\Assert;
 
 class PhpDocTypeMapper
 {
 	public function __construct(
 		private readonly TypeAliasResolver $typeAliasResolver,
-	) {}
+	)
+	{
+	}
 
 	/**
 	 * @param TypeNode|iterable<int, TypeNode> $node
@@ -47,7 +50,7 @@ class PhpDocTypeMapper
 	public function map(TypeNode|iterable $node, TypeContext $context): Type|Collection
 	{
 		if (!$node instanceof TypeNode) {
-			return Collection::wrap($node)->map(fn (TypeNode $node) => $this->map($node, $context));
+			return Collection::wrap($node)->map(fn(TypeNode $node) => $this->map($node, $context));
 		}
 
 		try {
@@ -56,14 +59,14 @@ class PhpDocTypeMapper
 					$this->map($node->type, $context)
 				),
 				$node instanceof ArrayShapeNode => new TupleType(
-					collect($node->items)->map(fn (ArrayShapeItemNode $node) => $this->map($node->valueType, $context))
+					collect($node->items)->map(fn(ArrayShapeItemNode $node) => $this->map($node->valueType, $context))
 				),
 				$node instanceof CallableTypeNode => $this->mapNamed(
 					$node->identifier->name,
 					new Collection([
 						$this->map($node->returnType, $context),
 						...array_map(
-							fn (CallableTypeParameterNode $parameterNode) => $this->map($parameterNode->type, $context),
+							fn(CallableTypeParameterNode $parameterNode) => $this->map($parameterNode->type, $context),
 							$node->parameters
 						),
 					]),
@@ -85,15 +88,14 @@ class PhpDocTypeMapper
 				$node instanceof NullableTypeNode => new NullableType(
 					$this->map($node->type, $context),
 				),
-				// todo: check
 				$node instanceof ThisTypeNode => new StaticType(
-					$context->definingType,
+					$context->declaringType,
 				),
 				$node instanceof UnionTypeNode => $this->mapUnion($node, $context),
-				default                        => new ErrorType((string) $node),
+				default => new ErrorType((string)$node),
 			};
 		} catch (Exception) {
-			return new ErrorType((string) $node);
+			return new ErrorType((string)$node);
 		}
 	}
 
@@ -108,7 +110,19 @@ class PhpDocTypeMapper
 			);
 		}
 
-		$specialType = match ($this->typeAliasResolver->forComparison($type)) {
+		$comparisonType = $this->typeAliasResolver->forComparison($type);
+
+		if ($comparisonType === 'parent') {
+			Assert::notNull($context->declaringTypeParent, 'Used [parent] type without a parent class.');
+
+			return new NamedType($context->declaringTypeParent->name, $arguments);
+		}
+
+		if ($comparisonType === 'numeric' || $comparisonType === 'null') {
+			return new ErrorType($type);
+		}
+
+		$specialType = match ($comparisonType) {
 			'mixed' => MixedType::get(),
 			'never', 'never-return', 'never-returns', 'no-return', 'noreturn' => NeverType::get(),
 			'void' => VoidType::get(),
@@ -117,8 +131,6 @@ class PhpDocTypeMapper
 				PrimitiveType::integer(),
 				PrimitiveType::float(),
 			])),
-			'numeric' => new ErrorType('numeric'),
-			'null'    => new ErrorType('null'),
 			'float', 'double' => PrimitiveType::float(),
 			'string', 'numeric-string', 'literal-string', 'class-string',
 			'interface-string', 'trait-string', 'callable-string', 'non-empty-string' => PrimitiveType::string(),
@@ -129,7 +141,7 @@ class PhpDocTypeMapper
 			])),
 			'callable', 'iterable', 'resource', 'object' => new NamedType($type, $arguments),
 			'array' => match ($arguments->count()) {
-				1       => PrimitiveType::array($arguments[0]),
+				1 => PrimitiveType::array($arguments[0]),
 				default => new NamedType('array', $arguments)
 			},
 			'associative-array', 'non-empty-array', 'list', 'non-empty-list' => new NamedType('array', $arguments),
@@ -139,10 +151,9 @@ class PhpDocTypeMapper
 				PrimitiveType::string(),
 				PrimitiveType::boolean(),
 			])),
-			'self'   => $context->definingType,
-			'parent' => new ParentType($context->definingType),
-			'static' => new StaticType($context->definingType),
-			default  => null,
+			'self' => new NamedType($context->declaringType->name, $arguments),
+			'static' => new StaticType($context->declaringType),
+			default => null,
 		};
 
 		if ($specialType) {
@@ -156,13 +167,13 @@ class PhpDocTypeMapper
 
 	private function mapUnion(UnionTypeNode $node, TypeContext $context): Type
 	{
-		$isNullNode = fn (TypeNode $node) => $node instanceof IdentifierTypeNode && $node->name === 'null';
+		$isNullNode = fn(TypeNode $node) => $node instanceof IdentifierTypeNode && $node->name === 'null';
 		$types = $node->types;
 		$containsNull = false;
 
 		if (Arr::first($types, $isNullNode)) {
 			$types = array_values(
-				array_filter($types, fn (TypeNode $node) => !$isNullNode($node))
+				array_filter($types, fn(TypeNode $node) => !$isNullNode($node))
 			);
 			$containsNull = true;
 		}

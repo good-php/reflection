@@ -15,9 +15,12 @@ class TypeContext
 	 */
 	public function __construct(
 		public readonly ?FileClassLikeContext $fileClassLikeContext,
-		public readonly NamedType $definingType,
-		public readonly Collection $typeParameters
-	) {}
+		public readonly NamedType             $declaringType,
+		public readonly ?NamedType            $declaringTypeParent,
+		public readonly Collection            $typeParameters
+	)
+	{
+	}
 
 	/**
 	 * @param Collection<string, Lazy<TypeParameterDefinition>> $parameters
@@ -26,7 +29,8 @@ class TypeContext
 	{
 		return new self(
 			fileClassLikeContext: $this->fileClassLikeContext,
-			definingType: $this->definingType,
+			declaringType: $this->declaringType,
+			declaringTypeParent: $this->declaringTypeParent,
 			typeParameters: (clone $this->typeParameters)->merge($parameters)
 		);
 	}

@@ -41,7 +41,9 @@ final class ClassStub extends ParentClassStub implements ParentInterfaceStub
 	public function __construct(
 		#[AttributeStub('6')]
 		public readonly mixed $promoted,
-	) {}
+	)
+	{
+	}
 
 	/**
 	 * @template G
@@ -53,7 +55,8 @@ final class ClassStub extends ParentClassStub implements ParentInterfaceStub
 	#[AttributeStub('5')]
 	public function method(
 		#[AttributeStub('6')] DoubleTemplateType $param
-	): Collection {
+	): Collection
+	{
 	}
 
 	/**
@@ -68,11 +71,10 @@ final class ClassStub extends ParentClassStub implements ParentInterfaceStub
 	{
 	}
 
-	public function self(): static
-	{
-	}
-
-	public function par(): parent
+	/**
+	 * @param parent<int, int> $parent
+	 */
+	public function self(parent $parent): static
 	{
 	}
 }

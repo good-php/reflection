@@ -21,6 +21,7 @@ use ReflectionIntersectionType;
 use ReflectionNamedType;
 use ReflectionType;
 use ReflectionUnionType;
+use Webmozart\Assert\Assert;
 
 class NativeTypeMapper
 {
@@ -32,10 +33,10 @@ class NativeTypeMapper
 	public function map(ReflectionType|string|iterable $type, TypeContext $context): Type|Collection
 	{
 		if (is_iterable($type)) {
-			return Collection::wrap($type)->map(fn (ReflectionType|string $type) => $this->map($type, $context));
+			return Collection::wrap($type)->map(fn(ReflectionType|string $type) => $this->map($type, $context));
 		}
 
-		$isNull = fn (ReflectionType $isNullType) => $isNullType instanceof ReflectionNamedType && $isNullType->getName() === 'null';
+		$isNull = fn(ReflectionType $isNullType) => $isNullType instanceof ReflectionNamedType && $isNullType->getName() === 'null';
 
 		$mappedType = match (true) {
 			$type instanceof ReflectionIntersectionType => new IntersectionType(
@@ -46,22 +47,22 @@ class NativeTypeMapper
 					array_values(
 						array_filter(
 							$type->getTypes(),
-							fn (ReflectionType $type) => !$isNull($type)
+							fn(ReflectionType $type) => !$isNull($type)
 						)
 					),
 					$context
 				)
 			),
 			$type instanceof ReflectionNamedType => $this->mapNamed($type->getName(), $context),
-			is_string($type)                     => $this->mapNamed($type, $context),
-			default                              => new ErrorType((string) $type),
+			is_string($type) => $this->mapNamed($type, $context),
+			default => new ErrorType((string)$type),
 		};
 
 		if ($type instanceof ReflectionType && $type->allowsNull() && !($type instanceof ReflectionNamedType && $type->getName() === 'mixed')) {
 			return new NullableType($mappedType);
 		}
 
-		if ($type instanceof ReflectionUnionType && Arr::first($type->getTypes(), fn (ReflectionType $type) => $isNull($type))) {
+		if ($type instanceof ReflectionUnionType && Arr::first($type->getTypes(), fn(ReflectionType $type) => $isNull($type))) {
 			return new NullableType($mappedType);
 		}
 
@@ -70,15 +71,22 @@ class NativeTypeMapper
 
 	private function mapNamed(string $name, TypeContext $context): Type
 	{
-		return match (mb_strtolower($name)) {
+		$comparisonName = mb_strtolower($name);
+
+		if ($comparisonName === 'parent') {
+			Assert::notNull($context->declaringTypeParent, 'Used [parent] type without a parent class.');
+
+			return $context->declaringTypeParent;
+		}
+
+		return match ($comparisonName) {
 			'mixed' => MixedType::get(),
 			'never' => NeverType::get(),
-			'void'  => VoidType::get(),
+			'void' => VoidType::get(),
 			'true', 'false' => PrimitiveType::boolean(),
-			'self'   => $context->definingType,
-			'parent' => new ParentType($context->definingType),
-			'static' => new StaticType($context->definingType),
-			default  => new NamedType($name),
+			'self' => $context->declaringType,
+			'static' => new StaticType($context->declaringType),
+			default => new NamedType($name),
 		};
 	}
 }
