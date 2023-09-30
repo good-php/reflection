@@ -13,7 +13,6 @@ use GoodPhp\Reflection\Type\Special\ErrorType;
 use GoodPhp\Reflection\Type\Special\MixedType;
 use GoodPhp\Reflection\Type\Special\NeverType;
 use GoodPhp\Reflection\Type\Special\NullableType;
-use GoodPhp\Reflection\Type\Special\ParentType;
 use GoodPhp\Reflection\Type\Special\StaticType;
 use GoodPhp\Reflection\Type\Special\VoidType;
 use GoodPhp\Reflection\Type\Template\TemplateType;
@@ -38,9 +37,7 @@ class PhpDocTypeMapper
 {
 	public function __construct(
 		private readonly TypeAliasResolver $typeAliasResolver,
-	)
-	{
-	}
+	) {}
 
 	/**
 	 * @param TypeNode|iterable<int, TypeNode> $node
@@ -50,7 +47,7 @@ class PhpDocTypeMapper
 	public function map(TypeNode|iterable $node, TypeContext $context): Type|Collection
 	{
 		if (!$node instanceof TypeNode) {
-			return Collection::wrap($node)->map(fn(TypeNode $node) => $this->map($node, $context));
+			return Collection::wrap($node)->map(fn (TypeNode $node) => $this->map($node, $context));
 		}
 
 		try {
@@ -59,14 +56,14 @@ class PhpDocTypeMapper
 					$this->map($node->type, $context)
 				),
 				$node instanceof ArrayShapeNode => new TupleType(
-					collect($node->items)->map(fn(ArrayShapeItemNode $node) => $this->map($node->valueType, $context))
+					collect($node->items)->map(fn (ArrayShapeItemNode $node) => $this->map($node->valueType, $context))
 				),
 				$node instanceof CallableTypeNode => $this->mapNamed(
 					$node->identifier->name,
 					new Collection([
 						$this->map($node->returnType, $context),
 						...array_map(
-							fn(CallableTypeParameterNode $parameterNode) => $this->map($parameterNode->type, $context),
+							fn (CallableTypeParameterNode $parameterNode) => $this->map($parameterNode->type, $context),
 							$node->parameters
 						),
 					]),
@@ -92,10 +89,10 @@ class PhpDocTypeMapper
 					$context->declaringType,
 				),
 				$node instanceof UnionTypeNode => $this->mapUnion($node, $context),
-				default => new ErrorType((string)$node),
+				default                        => new ErrorType((string) $node),
 			};
 		} catch (Exception) {
-			return new ErrorType((string)$node);
+			return new ErrorType((string) $node);
 		}
 	}
 
@@ -141,7 +138,7 @@ class PhpDocTypeMapper
 			])),
 			'callable', 'iterable', 'resource', 'object' => new NamedType($type, $arguments),
 			'array' => match ($arguments->count()) {
-				1 => PrimitiveType::array($arguments[0]),
+				1       => PrimitiveType::array($arguments[0]),
 				default => new NamedType('array', $arguments)
 			},
 			'associative-array', 'non-empty-array', 'list', 'non-empty-list' => new NamedType('array', $arguments),
@@ -151,9 +148,9 @@ class PhpDocTypeMapper
 				PrimitiveType::string(),
 				PrimitiveType::boolean(),
 			])),
-			'self' => new NamedType($context->declaringType->name, $arguments),
+			'self'   => new NamedType($context->declaringType->name, $arguments),
 			'static' => new StaticType($context->declaringType),
-			default => null,
+			default  => null,
 		};
 
 		if ($specialType) {
@@ -167,13 +164,13 @@ class PhpDocTypeMapper
 
 	private function mapUnion(UnionTypeNode $node, TypeContext $context): Type
 	{
-		$isNullNode = fn(TypeNode $node) => $node instanceof IdentifierTypeNode && $node->name === 'null';
+		$isNullNode = fn (TypeNode $node) => $node instanceof IdentifierTypeNode && $node->name === 'null';
 		$types = $node->types;
 		$containsNull = false;
 
 		if (Arr::first($types, $isNullNode)) {
 			$types = array_values(
-				array_filter($types, fn(TypeNode $node) => !$isNullNode($node))
+				array_filter($types, fn (TypeNode $node) => !$isNullNode($node))
 			);
 			$containsNull = true;
 		}

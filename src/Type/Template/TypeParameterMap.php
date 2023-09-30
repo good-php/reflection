@@ -5,8 +5,8 @@ namespace GoodPhp\Reflection\Type\Template;
 use GoodPhp\Reflection\Definition\TypeDefinition\TypeParameterDefinition;
 use GoodPhp\Reflection\Type\Combinatorial\TupleType;
 use GoodPhp\Reflection\Type\Type;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
+use Webmozart\Assert\Assert;
 
 final class TypeParameterMap
 {
@@ -60,9 +60,23 @@ final class TypeParameterMap
 	 *
 	 * @return Collection<int, Type>
 	 */
-	public function toList(iterable $typeParameters): Collection
+	public function toArguments(iterable $typeParameters): Collection
 	{
 		return Collection::wrap($typeParameters)
-			->flatMap(fn (TypeParameterDefinition $parameter) => Arr::wrap($this->types[$parameter->name] ?? []));
+			->flatMap(function (TypeParameterDefinition $parameter) {
+				$type = $this->types[$parameter->name] ?? null;
+
+				if (!$type) {
+					return [];
+				}
+
+				if ($parameter->variadic) {
+					Assert::isInstanceOf($type, TupleType::class);
+
+					return $type->types;
+				}
+
+				return [$type];
+			});
 	}
 }

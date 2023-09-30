@@ -8,5 +8,5 @@ namespace Tests\Stubs\Interfaces;
  */
 interface ParentInterfaceStub
 {
-	public function test(string $str): void;
+	public function test(string $str): static;
 }

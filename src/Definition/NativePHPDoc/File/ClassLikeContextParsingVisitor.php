@@ -5,9 +5,12 @@ namespace GoodPhp\Reflection\Definition\NativePHPDoc\File;
 use Illuminate\Support\Collection;
 use PhpParser\NameContext;
 use PhpParser\Node;
+use PhpParser\Node\Name;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\ClassLike;
 use PhpParser\Node\Stmt\ClassMethod;
+use PhpParser\Node\Stmt\Enum_;
+use PhpParser\Node\Stmt\Interface_;
 use PhpParser\Node\Stmt\Property;
 use PhpParser\Node\Stmt\PropertyProperty;
 use PhpParser\Node\Stmt\Trait_;
@@ -36,9 +39,9 @@ class ClassLikeContextParsingVisitor extends NodeVisitorAbstract
 	{
 		if (
 			!$node instanceof Node\Stmt\Class_ &&
-			!$node instanceof Node\Stmt\Interface_ &&
+			!$node instanceof Interface_ &&
 			!$node instanceof Node\Stmt\Trait_ &&
-			!$node instanceof Node\Stmt\Enum_
+			!$node instanceof Enum_
 		) {
 			return null;
 		}
@@ -47,6 +50,7 @@ class ClassLikeContextParsingVisitor extends NodeVisitorAbstract
 
 		$context = new FileClassLikeContext(
 			namespace: $nameContext->getNamespace() ? (string) $nameContext->getNamespace() : null,
+			implementsInterfaces: $this->implementsInterfaces($node),
 			uses: $this->uses($nameContext),
 			traitUses: $this->traitUses($node),
 			declaredProperties: $this->properties($node),
@@ -69,6 +73,22 @@ class ClassLikeContextParsingVisitor extends NodeVisitorAbstract
 	}
 
 	/**
+	 * @return Collection<int, string>
+	 */
+	private function implementsInterfaces(ClassLike $classLike): Collection
+	{
+		$nameNodes = match (true) {
+			$classLike instanceof Class_     => $classLike->implements,
+			$classLike instanceof Interface_ => $classLike->extends,
+			$classLike instanceof Enum_      => $classLike->implements,
+			default                          => [],
+		};
+
+		return collect($nameNodes)
+			->map(fn (Name $name) => (string) $name);
+	}
+
+	/**
 	 * @return Collection<string, string>
 	 */
 	private function uses(NameContext $nameContext): Collection
@@ -79,11 +99,11 @@ class ClassLikeContextParsingVisitor extends NodeVisitorAbstract
 			$aliasesProperty = new ReflectionProperty(NameContext::class, 'aliases');
 		}
 
-		/** @var array<string, Node\Name> $uses */
+		/** @var array<string, Name> $uses */
 		$uses = $aliasesProperty->getValue($nameContext)[Node\Stmt\Use_::TYPE_NORMAL] ?? [];
 
 		return collect($uses)
-			->map(fn (Node\Name $name) => (string) $name);
+			->map(fn (Name $name) => (string) $name);
 	}
 
 	/**
@@ -98,7 +118,7 @@ class ClassLikeContextParsingVisitor extends NodeVisitorAbstract
 		return collect($classLike->stmts)
 			->whereInstanceOf(TraitUse::class)
 			->flatMap(fn (TraitUse $node) => array_map(
-				fn (Node\Name $traitName) => new FileClassLikeContext\TraitUse(
+				fn (Name $traitName) => new FileClassLikeContext\TraitUse(
 					name: (string) $traitName,
 					docComment: (string) $node->getDocComment() ?: null,
 					aliases: []

@@ -4,6 +4,7 @@ namespace GoodPhp\Reflection\Type;
 
 use GoodPhp\Reflection\Type\Combinatorial\ExpandedType;
 use GoodPhp\Reflection\Type\Combinatorial\TupleType;
+use GoodPhp\Reflection\Type\Special\StaticType;
 use GoodPhp\Reflection\Type\Template\TemplateType;
 use GoodPhp\Reflection\Type\Template\TypeParameterMap;
 
@@ -12,9 +13,9 @@ class TypeProjector
 	/**
 	 * @return ($type is NamedType ? NamedType : Type)
 	 */
-	public static function templateTypes(Type $type, TypeParameterMap $typeParameterMap): Type
+	public static function templateTypes(Type $type, TypeParameterMap $typeParameterMap, NamedType $staticType = null): Type
 	{
-		$mapped = TypeTraversingMapper::map($type, static function (Type $type, callable $traverse) use ($typeParameterMap): Type {
+		$mapped = TypeTraversingMapper::map($type, static function (Type $type, callable $traverse) use ($staticType, $typeParameterMap): Type {
 			// todo: && !$type->isArgument()
 			if ($type instanceof TemplateType) {
 				$newType = $typeParameterMap->types[$type->name] ?? null;
@@ -25,6 +26,10 @@ class TypeProjector
 				}
 
 				return $newType;
+			}
+
+			if ($type instanceof StaticType && $staticType) {
+				return new StaticType($staticType);
 			}
 
 			return $traverse($type);

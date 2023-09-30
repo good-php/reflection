@@ -2,6 +2,7 @@
 
 namespace GoodPhp\Reflection\Definition\NativePHPDoc;
 
+use BackedEnum;
 use GoodPhp\Reflection\Definition\DefinitionProvider;
 use GoodPhp\Reflection\Definition\NativePHPDoc\File\FileContextParser;
 use GoodPhp\Reflection\Definition\NativePHPDoc\Native\NativeTypeMapper;
@@ -51,13 +52,11 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 {
 	public function __construct(
 		private readonly PhpDocStringParser $phpDocStringParser,
-		private readonly FileContextParser  $fileContextParser,
-		private readonly TypeAliasResolver  $typeAliasResolver,
-		private readonly NativeTypeMapper   $nativeTypeMapper,
-		private readonly PhpDocTypeMapper   $phpDocTypeMapper
-	)
-	{
-	}
+		private readonly FileContextParser $fileContextParser,
+		private readonly TypeAliasResolver $typeAliasResolver,
+		private readonly NativeTypeMapper $nativeTypeMapper,
+		private readonly PhpDocTypeMapper $phpDocTypeMapper
+	) {}
 
 	public function forType(string $type): ?TypeDefinition
 	{
@@ -71,10 +70,9 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 
 	public function map(
 		ReflectionType|string|null $nativeType,
-		?TypeNode                  $phpDocType,
-		TypeContext                $context
-	): ?Type
-	{
+		?TypeNode $phpDocType,
+		TypeContext $context
+	): ?Type {
 		if (!$nativeType && !$phpDocType) {
 			return null;
 		}
@@ -139,6 +137,7 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 		$phpDoc = $this->phpDocStringParser->parse($reflection);
 		$context = $this->createTypeContext($reflection, $phpDoc);
 		$backingType = $reflection->getBackingType() ? $this->nativeTypeMapper->map($reflection->getBackingType(), $context) : null;
+		$implicitInterfaces = $backingType ? [new NamedType(BackedEnum::class)] : [new NamedType(UnitEnum::class)];
 
 		Assert::nullOrIsInstanceOf($backingType, NamedType::class);
 
@@ -147,7 +146,7 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 			fileName: $this->fileName($reflection),
 			builtIn: !$reflection->isUserDefined(),
 			backingType: $backingType,
-			implements: $this->interfaces($reflection, $phpDoc, $context),
+			implements: $this->interfaces($reflection, $phpDoc, $context)->concat($implicitInterfaces),
 			uses: $this->traits($reflection, $context),
 			cases: $this->enumCases($reflection),
 			methods: $this->methods($reflection, $context),
@@ -203,7 +202,7 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 		);
 
 		return Collection::make($reflection->getProperties())
-			->filter(fn(ReflectionProperty $property) => !$context->fileClassLikeContext || $context->fileClassLikeContext->declaredProperties->contains($property->getName()))
+			->filter(fn (ReflectionProperty $property) => !$context->fileClassLikeContext || $context->fileClassLikeContext->declaredProperties->contains($property->getName()))
 			->map(function (ReflectionProperty $property) use ($context, $constructorPhpDoc) {
 				$phpDoc = $this->phpDocStringParser->parse($property);
 
@@ -217,7 +216,7 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 					/** @var ParamTagValueNode|null $paramNode */
 					$paramNode = Arr::first(
 						$constructorPhpDoc->getParamTagValues(),
-						fn(ParamTagValueNode $node) => Str::after($node->parameterName, '$') === $property->getName()
+						fn (ParamTagValueNode $node) => Str::after($node->parameterName, '$') === $property->getName()
 					);
 
 					$phpDocType = $paramNode?->type;
@@ -244,7 +243,7 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 	private function methods(ReflectionClass $reflection, TypeContext $context): Collection
 	{
 		return Collection::make($reflection->getMethods())
-			->filter(fn(ReflectionMethod $method) => !$context->fileClassLikeContext || $context->fileClassLikeContext->declaredMethods->contains($method->getName()))
+			->filter(fn (ReflectionMethod $method) => !$context->fileClassLikeContext || $context->fileClassLikeContext->declaredMethods->contains($method->getName()))
 			->map(function (ReflectionMethod $method) use ($context) {
 				$phpDoc = $this->phpDocStringParser->parse($method);
 
@@ -299,9 +298,9 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 							) :
 							null,
 						variance: match (true) {
-							Str::endsWith($node->name, '-covariant') => TemplateTypeVariance::COVARIANT,
+							Str::endsWith($node->name, '-covariant')     => TemplateTypeVariance::COVARIANT,
 							Str::endsWith($node->name, '-contravariant') => TemplateTypeVariance::CONTRAVARIANT,
-							default => TemplateTypeVariance::INVARIANT
+							default                                      => TemplateTypeVariance::INVARIANT
 						}
 					);
 				}
@@ -322,7 +321,7 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 		/** @var Collection<int, TypeParameterDefinition> */
 		return $this->lazyTypeParameters($phpDoc, $context)
 			->values()
-			->map(fn(Lazy $lazy) => $lazy->value());
+			->map(fn (Lazy $lazy) => $lazy->value());
 	}
 
 	/**
@@ -335,7 +334,7 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 				/** @var ParamTagValueNode|null $phpDocType */
 				$phpDocType = Arr::first(
 					$phpDoc->getParamTagValues(),
-					fn(ParamTagValueNode $node) => Str::after($node->parameterName, '$') === $parameter->getName()
+					fn (ParamTagValueNode $node) => Str::after($node->parameterName, '$') === $parameter->getName()
 				);
 
 				return new FunctionParameterDefinition(
@@ -364,7 +363,7 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 		/** @var PhpDocTagNode|null $tag */
 		$tag = Arr::first(
 			$phpDoc->getTags(),
-			fn(PhpDocTagNode $node) => $node->value instanceof ExtendsTagValueNode &&
+			fn (PhpDocTagNode $node) => $node->value instanceof ExtendsTagValueNode &&
 				$parentClass === $this->typeAliasResolver->resolve($node->value->type->type->name, $context->fileClassLikeContext)
 		);
 
@@ -394,11 +393,12 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 	private function interfaces(ReflectionClass $reflection, PhpDocNode $phpDoc, TypeContext $context): Collection
 	{
 		return Collection::make($reflection->getInterfaceNames())
+			->filter(fn (string $className) => !$context->fileClassLikeContext || $context->fileClassLikeContext->implementsInterfaces->contains($className))
 			->map(function (string $className) use ($reflection, $context, $phpDoc) {
 				/** @var PhpDocTagNode|null $tag */
 				$tag = Arr::first(
 					$phpDoc->getTags(),
-					fn(PhpDocTagNode $node) => ($node->value instanceof ImplementsTagValueNode || $node->value instanceof ExtendsTagValueNode) &&
+					fn (PhpDocTagNode $node) => ($node->value instanceof ImplementsTagValueNode || $node->value instanceof ExtendsTagValueNode) &&
 						$className === $this->typeAliasResolver->resolve($node->value->type->type->name, $context->fileClassLikeContext)
 				);
 
@@ -428,7 +428,7 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 		// Because traits can be used multiple times, @uses annotations can't be specified in the class PHPDoc and instead
 		// must be specified above the `use TraitName;` itself. PHP's native reflection does not give you reflection
 		// on PHPDoc for trait uses, so we'll just say generic traits are unsupported due to the complexity of doing so.
-		return Collection::make($reflection->getTraitNames())->map(fn(string $className) => new NamedType($className));
+		return Collection::make($reflection->getTraitNames())->map(fn (string $className) => new NamedType($className));
 	}
 
 	/**
@@ -437,7 +437,7 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 	private function enumCases(ReflectionEnum $reflection): Collection
 	{
 		return Collection::make($reflection->getCases())
-			->map(fn(ReflectionEnumUnitCase $case) => new EnumCaseDefinition(
+			->map(fn (ReflectionEnumUnitCase $case) => new EnumCaseDefinition(
 				name: $case->getName(),
 				backingValue: $case instanceof ReflectionEnumBackedCase ? $case->getBackingValue() : null,
 			));

@@ -9,16 +9,14 @@ use GoodPhp\Reflection\Definition\TypeDefinition\TypeParameterDefinition;
 use GoodPhp\Reflection\Reflector\Reflection\Attributes\Attributes;
 use GoodPhp\Reflection\Reflector\Reflection\Attributes\HasAttributes;
 use GoodPhp\Reflection\Reflector\Reflection\TypeParameters\HasTypeParameters;
+use GoodPhp\Reflection\Reflector\Reflection\TypeParameters\TypeParameterReflection;
 use GoodPhp\Reflection\Reflector\Reflector;
 use GoodPhp\Reflection\Type\NamedType;
 use GoodPhp\Reflection\Type\Template\TypeParameterMap;
 use GoodPhp\Reflection\Type\TypeProjector;
 use Illuminate\Support\Collection;
 use ReflectionClass;
-use TenantCloud\Standard\Lazy\Lazy;
 use Webmozart\Assert\Assert;
-
-use function TenantCloud\Standard\Lazy\lazy;
 
 /**
  * @template-covariant T of object
@@ -27,32 +25,37 @@ use function TenantCloud\Standard\Lazy\lazy;
  */
 final class ClassReflection extends TypeReflection implements HasAttributes, HasTypeParameters
 {
-	/** @var Lazy<ReflectionClass<T>> */
-	private readonly Lazy $nativeReflection;
+	private readonly NamedType $type;
 
-	/** @var Lazy<Attributes> */
-	private readonly Lazy $attributes;
+	private NamedType $staticType;
 
-	/** @var Lazy<NamedType|null> */
-	private Lazy $extends;
+	/** @var ReflectionClass<T> */
+	private readonly ReflectionClass $nativeReflection;
 
-	/** @var Lazy<Collection<int, NamedType>> */
-	private Lazy $implements;
+	/** @var Collection<int, TypeParameterReflection<$this>> */
+	private readonly Collection $typeParameters;
 
-	/** @var Lazy<Collection<int, NamedType>> */
-	private Lazy $uses;
+	private readonly Attributes $attributes;
 
-	/** @var Lazy<Collection<int, PropertyReflection<$this>>> */
-	private Lazy $declaredProperties;
+	private readonly ?NamedType $extends;
 
-	/** @var Lazy<Collection<int, PropertyReflection<$this|self<object>|InterfaceReflection<object>|TraitReflection<object>>>> */
-	private Lazy $properties;
+	/** @var Collection<int, NamedType> */
+	private readonly Collection $implements;
 
-	/** @var Lazy<Collection<int, MethodReflection<$this>>> */
-	private Lazy $declaredMethods;
+	/** @var Collection<int, NamedType> */
+	private readonly Collection $uses;
 
-	/** @var Lazy<Collection<int, MethodReflection<$this|self<object>|InterfaceReflection<object>|TraitReflection<object>>>> */
-	private Lazy $methods;
+	/** @var Collection<int, PropertyReflection<$this>> */
+	private readonly Collection $declaredProperties;
+
+	/** @var Collection<int, PropertyReflection<$this|self<object>|InterfaceReflection<object>|TraitReflection<object>>> */
+	private readonly Collection $properties;
+
+	/** @var Collection<int, MethodReflection<$this>> */
+	private readonly Collection $declaredMethods;
+
+	/** @var Collection<int, MethodReflection<$this|self<object>|InterfaceReflection<object>|TraitReflection<object>>> */
+	private readonly Collection $methods;
 
 	/**
 	 * @param ClassTypeDefinition<T> $definition
@@ -62,91 +65,26 @@ final class ClassReflection extends TypeReflection implements HasAttributes, Has
 		public readonly TypeParameterMap $resolvedTypeParameterMap,
 		private readonly Reflector $reflector,
 	) {
-		$this->nativeReflection = lazy(fn () => new ReflectionClass($this->definition->qualifiedName));
-		$this->attributes = lazy(fn () => new Attributes(
-			fn () => $this->nativeReflection->value()->getAttributes()
-		));
-		$this->extends = lazy(
-			fn () => $this->definition->extends ?
-				TypeProjector::templateTypes(
-					$this->definition->extends,
-					$resolvedTypeParameterMap
-				) :
-				null
-		);
-		$this->implements = lazy(
-			fn () => $this->definition
-				->implements
-				->map(fn (NamedType $type) => TypeProjector::templateTypes(
-					$type,
-					$resolvedTypeParameterMap
-				))
-		);
-		$this->uses = lazy(
-			fn () => $this->definition
-				->uses
-				->map(fn (NamedType $type) => TypeProjector::templateTypes(
-					$type,
-					$resolvedTypeParameterMap
-				))
-		);
+		$this->type = new NamedType($this->qualifiedName(), $this->resolvedTypeParameterMap->toArguments($this->definition->typeParameters));
+		$this->staticType = $this->type;
+	}
 
-		$this->declaredProperties = lazy(
-			fn () => $this->definition
-				->properties
-				->map(fn (PropertyDefinition $property) => new PropertyReflection($property, $this, $resolvedTypeParameterMap))
-		);
-		$this->properties = lazy(
-			function () {
-				/** @var Collection<int, NamedType> $types */
-				$types = collect([
-					$this->extends(),
-					...$this->uses(),
-				])->filter();
+	public function withStaticType(NamedType $staticType): static
+	{
+		if ($this->staticType->equals($staticType)) {
+			return $this;
+		}
 
-				return $types
-					->flatMap(function (NamedType $type) {
-						$reflection = $this->reflector->forNamedType($type);
+		$that = clone $this;
+		$that->staticType = $staticType;
+		unset($this->typeParameters, $this->extends, $that->implements, $that->uses, $that->declaredProperties, $that->properties, $that->declaredMethods, $that->methods);
 
-						Assert::isInstanceOfAny($reflection, [self::class, TraitReflection::class]);
-						/** @var self<object>|TraitReflection<object> $reflection */
+		return $that;
+	}
 
-						return $reflection->properties();
-					})
-					->concat($this->declaredProperties->value())
-					->keyBy(fn (PropertyReflection $property) => $property->name())
-					->values();
-			}
-		);
-
-		$this->declaredMethods = lazy(
-			fn () => $this->definition
-				->methods
-				->map(fn (MethodDefinition $method) => new MethodReflection($method, $this, $resolvedTypeParameterMap))
-		);
-		$this->methods = lazy(
-			function () {
-				/** @var Collection<int, NamedType> $types */
-				$types = collect([
-					...$this->implements(),
-					$this->extends(),
-					...$this->uses(),
-				])->filter();
-
-				return $types
-					->flatMap(function (NamedType $type) {
-						$reflection = $this->reflector->forNamedType($type);
-
-						Assert::isInstanceOfAny($reflection, [self::class, InterfaceReflection::class, TraitReflection::class]);
-						/** @var self<object>|InterfaceReflection<object>|TraitReflection<object> $reflection */
-
-						return $reflection->methods();
-					})
-					->concat($this->declaredMethods->value())
-					->keyBy(fn (MethodReflection $method) => $method->name())
-					->values();
-			}
-		);
+	public function type(): NamedType
+	{
+		return $this->type;
 	}
 
 	public function fileName(): ?string
@@ -161,20 +99,36 @@ final class ClassReflection extends TypeReflection implements HasAttributes, Has
 
 	public function attributes(): Attributes
 	{
-		return $this->attributes->value();
+		return $this->attributes ??= new Attributes(
+			fn () => $this->nativeReflection()->getAttributes()
+		);
 	}
 
 	/**
-	 * @return Collection<int, TypeParameterDefinition>
+	 * @return Collection<int, TypeParameterReflection<$this>>
 	 */
 	public function typeParameters(): Collection
 	{
-		return $this->definition->typeParameters;
+		return $this->typeParameters ??= $this->definition
+			->typeParameters
+			->map(fn (TypeParameterDefinition $parameter) => new TypeParameterReflection($parameter, $this, $this->staticType));
 	}
 
 	public function extends(): ?NamedType
 	{
-		return $this->extends->value();
+		if (isset($this->extends)) {
+			return $this->extends;
+		}
+
+		if (!$this->definition->extends) {
+			return null;
+		}
+
+		return $this->extends ??= TypeProjector::templateTypes(
+			$this->definition->extends,
+			$this->resolvedTypeParameterMap,
+			$this->staticType,
+		);
 	}
 
 	/**
@@ -182,7 +136,13 @@ final class ClassReflection extends TypeReflection implements HasAttributes, Has
 	 */
 	public function implements(): Collection
 	{
-		return $this->implements->value();
+		return $this->implements ??= $this->definition
+			->implements
+			->map(fn (NamedType $type) => TypeProjector::templateTypes(
+				$type,
+				$this->resolvedTypeParameterMap,
+				$this->staticType,
+			));
 	}
 
 	/**
@@ -190,7 +150,13 @@ final class ClassReflection extends TypeReflection implements HasAttributes, Has
 	 */
 	public function uses(): Collection
 	{
-		return $this->uses->value();
+		return $this->uses ??= $this->definition
+			->uses
+			->map(fn (NamedType $type) => TypeProjector::templateTypes(
+				$type,
+				$this->resolvedTypeParameterMap,
+				$this->staticType,
+			));
 	}
 
 	/**
@@ -198,7 +164,9 @@ final class ClassReflection extends TypeReflection implements HasAttributes, Has
 	 */
 	public function declaredProperties(): Collection
 	{
-		return $this->declaredProperties->value();
+		return $this->declaredProperties ??= $this->definition
+			->properties
+			->map(fn (PropertyDefinition $property) => new PropertyReflection($property, $this, $this->staticType, $this->resolvedTypeParameterMap));
 	}
 
 	/**
@@ -206,7 +174,33 @@ final class ClassReflection extends TypeReflection implements HasAttributes, Has
 	 */
 	public function properties(): Collection
 	{
-		return $this->properties->value();
+		if (isset($this->properties)) {
+			return $this->properties;
+		}
+
+		/** @var Collection<int, NamedType> $types */
+		$types = collect([
+			$this->extends(),
+			...$this->uses(),
+		])->filter();
+
+		$inheritedProperties = $types
+			->flatMap(function (NamedType $type) {
+				$reflection = $this->reflector->forNamedType($type);
+
+				Assert::isInstanceOfAny($reflection, [self::class, TraitReflection::class]);
+				/** @var self<object>|TraitReflection<object> $reflection */
+
+				return $reflection
+					->withStaticType($this->staticType)
+					->properties();
+			});
+
+		/* @phpstan-ignore-next-line return.type, assign.propertyType */
+		return $this->properties ??= collect([...$inheritedProperties, ...$this->declaredProperties()])
+			->keyBy(fn (PropertyReflection $property) => $property->name())
+			->values()
+			->map(fn (PropertyReflection $property) => $property->withStaticType($this->staticType));
 	}
 
 	/**
@@ -214,10 +208,9 @@ final class ClassReflection extends TypeReflection implements HasAttributes, Has
 	 */
 	public function declaredMethods(): Collection
 	{
-		return $this->declaredMethods
-			->value()
-			->reject(fn (MethodReflection $reflection) => $reflection->name() === '__construct')
-			->values();
+		return $this->declaredMethods ??= $this->definition
+			->methods
+			->map(fn (MethodDefinition $method) => new MethodReflection($method, $this, $this->staticType, $this->resolvedTypeParameterMap));
 	}
 
 	/**
@@ -225,10 +218,34 @@ final class ClassReflection extends TypeReflection implements HasAttributes, Has
 	 */
 	public function methods(): Collection
 	{
-		return $this->methods
-			->value()
-			->reject(fn (MethodReflection $reflection) => $reflection->name() === '__construct')
-			->values();
+		if (isset($this->methods)) {
+			return $this->methods;
+		}
+
+		/** @var Collection<int, NamedType> $types */
+		$types = collect([
+			...$this->implements(),
+			$this->extends(),
+			...$this->uses(),
+		])->filter();
+
+		$inheritedMethods = $types
+			->flatMap(function (NamedType $type) {
+				$reflection = $this->reflector->forNamedType($type);
+
+				Assert::isInstanceOfAny($reflection, [self::class, InterfaceReflection::class, TraitReflection::class]);
+				/** @var self<object>|InterfaceReflection<object>|TraitReflection<object> $reflection */
+
+				return $reflection
+					->withStaticType($this->staticType)
+					->methods();
+			});
+
+		/* @phpstan-ignore-next-line return.type, assign.propertyType */
+		return $this->methods ??= collect([...$inheritedMethods, ...$this->declaredMethods()])
+			->keyBy(fn (MethodReflection $method) => $method->name())
+			->values()
+			->map(fn (MethodReflection $method) => $method->withStaticType($this->staticType));
 	}
 
 	/**
@@ -236,8 +253,8 @@ final class ClassReflection extends TypeReflection implements HasAttributes, Has
 	 */
 	public function constructor(): ?MethodReflection
 	{
-		return $this->methods
-			->value()
+		return $this
+			->methods()
 			->first(fn (MethodReflection $reflection) => $reflection->name() === '__construct');
 	}
 
@@ -261,13 +278,27 @@ final class ClassReflection extends TypeReflection implements HasAttributes, Has
 		return $this->definition->builtIn;
 	}
 
+	/**
+	 * @return T
+	 */
 	public function newInstance(mixed ...$args): object
 	{
-		return $this->nativeReflection->value()->newInstance(...$args);
+		return $this->nativeReflection()->newInstance(...$args);
 	}
 
+	/**
+	 * @return T
+	 */
 	public function newInstanceWithoutConstructor(): object
 	{
-		return $this->nativeReflection->value()->newInstanceWithoutConstructor();
+		return $this->nativeReflection()->newInstanceWithoutConstructor();
+	}
+
+	/**
+	 * @return ReflectionClass<T>
+	 */
+	private function nativeReflection(): ReflectionClass
+	{
+		return $this->nativeReflection ??= new ReflectionClass($this->definition->qualifiedName);
 	}
 }

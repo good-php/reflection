@@ -15,12 +15,10 @@ class TypeContext
 	 */
 	public function __construct(
 		public readonly ?FileClassLikeContext $fileClassLikeContext,
-		public readonly NamedType             $declaringType,
-		public readonly ?NamedType            $declaringTypeParent,
-		public readonly Collection            $typeParameters
-	)
-	{
-	}
+		public readonly NamedType $declaringType,
+		public readonly ?NamedType $declaringTypeParent,
+		public readonly Collection $typeParameters
+	) {}
 
 	/**
 	 * @param Collection<string, Lazy<TypeParameterDefinition>> $parameters

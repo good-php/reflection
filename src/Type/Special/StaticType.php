@@ -10,21 +10,21 @@ class StaticType implements Type
 	use TypeExtensions;
 
 	public function __construct(
-		public readonly Type $baseType,
+		public readonly Type $upperBound,
 	) {}
 
 	public function equals(Type $other): bool
 	{
 		return $other instanceof self &&
-			$other->baseType->equals($this->baseType);
+			$other->upperBound->equals($this->upperBound);
 	}
 
 	public function traverse(callable $callback): Type
 	{
-		$newBaseType = $callback($this->baseType);
+		$newUpperBound = $callback($this->upperBound);
 
-		if ($this->baseType !== $newBaseType) {
-			return new self($newBaseType);
+		if ($this->upperBound !== $newUpperBound) {
+			return new self($newUpperBound);
 		}
 
 		return $this;
@@ -32,6 +32,6 @@ class StaticType implements Type
 
 	public function __toString(): string
 	{
-		return "static<{$this->baseType}>";
+		return "static<{$this->upperBound}>";
 	}
 }

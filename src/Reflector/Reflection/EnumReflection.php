@@ -11,10 +11,7 @@ use GoodPhp\Reflection\Type\NamedType;
 use GoodPhp\Reflection\Type\Template\TypeParameterMap;
 use Illuminate\Support\Collection;
 use ReflectionEnum;
-use TenantCloud\Standard\Lazy\Lazy;
 use Webmozart\Assert\Assert;
-
-use function TenantCloud\Standard\Lazy\lazy;
 
 /**
  * @template-covariant T of \UnitEnum
@@ -23,17 +20,19 @@ use function TenantCloud\Standard\Lazy\lazy;
  */
 final class EnumReflection extends TypeReflection implements HasAttributes
 {
-	/** @var Lazy<ReflectionEnum> */
-	private readonly Lazy $nativeReflection;
+	private readonly NamedType $type;
 
-	/** @var Lazy<Attributes> */
-	private readonly Lazy $attributes;
+	private NamedType $staticType;
 
-	/** @var Lazy<Collection<int, MethodReflection<$this>>> */
-	private Lazy $declaredMethods;
+	private readonly ReflectionEnum $nativeReflection;
 
-	/** @var Lazy<Collection<int, MethodReflection<$this|TraitReflection<object>|InterfaceReflection<object>>>> */
-	private Lazy $methods;
+	private readonly Attributes $attributes;
+
+	/** @var Collection<int, MethodReflection<$this>> */
+	private readonly Collection $declaredMethods;
+
+	/** @var Collection<int, MethodReflection<$this|TraitReflection<object>|InterfaceReflection<object>>> */
+	private readonly Collection $methods;
 
 	/**
 	 * @param EnumTypeDefinition<T> $definition
@@ -42,34 +41,26 @@ final class EnumReflection extends TypeReflection implements HasAttributes
 		private readonly EnumTypeDefinition $definition,
 		private readonly Reflector $reflector
 	) {
-		$this->nativeReflection = lazy(fn () => new ReflectionEnum($this->definition->qualifiedName));
-		$this->attributes = lazy(fn () => new Attributes(
-			fn () => $this->nativeReflection->value()->getAttributes()
-		));
-		$this->declaredMethods = lazy(
-			fn () => $this->definition
-				->methods
-				->map(fn (MethodDefinition $method) => new MethodReflection($method, $this, TypeParameterMap::empty()))
-		);
-		$this->methods = lazy(function () {
-			$methods = collect([
-				...$this->implements(),
-				...$this->uses(),
-			])
-				->filter()
-				->flatMap(function (NamedType $type) {
-					$reflection = $this->reflector->forNamedType($type);
+		$this->type = new NamedType($this->qualifiedName());
+		$this->staticType = $this->type;
+	}
 
-					Assert::isInstanceOfAny($reflection, [InterfaceReflection::class, TraitReflection::class]);
-					/** @var InterfaceReflection<object>|TraitReflection<object> $reflection */
+	public function withStaticType(NamedType $staticType): static
+	{
+		if ($this->staticType->equals($staticType)) {
+			return $this;
+		}
 
-					return $reflection->methods();
-				});
+		$that = clone $this;
+		$that->staticType = $staticType;
+		unset($that->declaredMethods, $that->methods);
 
-			return collect([...$methods, ...$this->declaredMethods->value()])
-				->keyBy(fn (MethodReflection $method) => $method->name())
-				->values();
-		});
+		return $that;
+	}
+
+	public function type(): NamedType
+	{
+		return $this->type;
 	}
 
 	public function qualifiedName(): string
@@ -84,7 +75,9 @@ final class EnumReflection extends TypeReflection implements HasAttributes
 
 	public function attributes(): Attributes
 	{
-		return $this->attributes->value();
+		return $this->attributes ??= new Attributes(
+			fn () => $this->nativeReflection()->getAttributes()
+		);
 	}
 
 	/**
@@ -108,7 +101,9 @@ final class EnumReflection extends TypeReflection implements HasAttributes
 	 */
 	public function declaredMethods(): Collection
 	{
-		return $this->declaredMethods->value();
+		return $this->declaredMethods ??= $this->definition
+			->methods
+			->map(fn (MethodDefinition $method) => new MethodReflection($method, $this, $this->staticType, TypeParameterMap::empty()));
 	}
 
 	/**
@@ -116,11 +111,40 @@ final class EnumReflection extends TypeReflection implements HasAttributes
 	 */
 	public function methods(): Collection
 	{
-		return $this->methods->value();
+		if (isset($this->methods)) {
+			return $this->methods;
+		}
+
+		$inheritedMethods = collect([
+			...$this->implements(),
+			...$this->uses(),
+		])
+			->filter()
+			->flatMap(function (NamedType $type) {
+				$reflection = $this->reflector->forNamedType($type);
+
+				Assert::isInstanceOfAny($reflection, [InterfaceReflection::class, TraitReflection::class]);
+				/** @var InterfaceReflection<object>|TraitReflection<object> $reflection */
+
+				return $reflection
+					->withStaticType($this->staticType)
+					->methods();
+			});
+
+		/* @phpstan-ignore-next-line return.type, assign.propertyType */
+		return $this->methods ??= collect([...$inheritedMethods, ...$this->declaredMethods()])
+			->keyBy(fn (MethodReflection $method) => $method->name())
+			->values()
+			->map(fn (MethodReflection $method) => $method->withStaticType($this->staticType));
 	}
 
 	public function isBuiltIn(): bool
 	{
 		return $this->definition->builtIn;
+	}
+
+	private function nativeReflection(): ReflectionEnum
+	{
+		return $this->nativeReflection ??= new ReflectionEnum($this->definition->qualifiedName);
 	}
 }

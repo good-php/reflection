@@ -11,7 +11,6 @@ use GoodPhp\Reflection\Type\Special\ErrorType;
 use GoodPhp\Reflection\Type\Special\MixedType;
 use GoodPhp\Reflection\Type\Special\NeverType;
 use GoodPhp\Reflection\Type\Special\NullableType;
-use GoodPhp\Reflection\Type\Special\ParentType;
 use GoodPhp\Reflection\Type\Special\StaticType;
 use GoodPhp\Reflection\Type\Special\VoidType;
 use GoodPhp\Reflection\Type\Type;
@@ -33,10 +32,10 @@ class NativeTypeMapper
 	public function map(ReflectionType|string|iterable $type, TypeContext $context): Type|Collection
 	{
 		if (is_iterable($type)) {
-			return Collection::wrap($type)->map(fn(ReflectionType|string $type) => $this->map($type, $context));
+			return Collection::wrap($type)->map(fn (ReflectionType|string $type) => $this->map($type, $context));
 		}
 
-		$isNull = fn(ReflectionType $isNullType) => $isNullType instanceof ReflectionNamedType && $isNullType->getName() === 'null';
+		$isNull = fn (ReflectionType $isNullType) => $isNullType instanceof ReflectionNamedType && $isNullType->getName() === 'null';
 
 		$mappedType = match (true) {
 			$type instanceof ReflectionIntersectionType => new IntersectionType(
@@ -47,22 +46,22 @@ class NativeTypeMapper
 					array_values(
 						array_filter(
 							$type->getTypes(),
-							fn(ReflectionType $type) => !$isNull($type)
+							fn (ReflectionType $type) => !$isNull($type)
 						)
 					),
 					$context
 				)
 			),
 			$type instanceof ReflectionNamedType => $this->mapNamed($type->getName(), $context),
-			is_string($type) => $this->mapNamed($type, $context),
-			default => new ErrorType((string)$type),
+			is_string($type)                     => $this->mapNamed($type, $context),
+			default                              => new ErrorType((string) $type),
 		};
 
 		if ($type instanceof ReflectionType && $type->allowsNull() && !($type instanceof ReflectionNamedType && $type->getName() === 'mixed')) {
 			return new NullableType($mappedType);
 		}
 
-		if ($type instanceof ReflectionUnionType && Arr::first($type->getTypes(), fn(ReflectionType $type) => $isNull($type))) {
+		if ($type instanceof ReflectionUnionType && Arr::first($type->getTypes(), fn (ReflectionType $type) => $isNull($type))) {
 			return new NullableType($mappedType);
 		}
 
@@ -82,11 +81,11 @@ class NativeTypeMapper
 		return match ($comparisonName) {
 			'mixed' => MixedType::get(),
 			'never' => NeverType::get(),
-			'void' => VoidType::get(),
+			'void'  => VoidType::get(),
 			'true', 'false' => PrimitiveType::boolean(),
-			'self' => $context->declaringType,
+			'self'   => $context->declaringType,
 			'static' => new StaticType($context->declaringType),
-			default => new NamedType($name),
+			default  => new NamedType($name),
 		};
 	}
 }

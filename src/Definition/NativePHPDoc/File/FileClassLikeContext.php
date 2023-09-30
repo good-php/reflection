@@ -9,6 +9,8 @@ class FileClassLikeContext
 {
 	public function __construct(
 		public readonly ?string $namespace,
+		/** @var Collection<int, string> */
+		public readonly Collection $implementsInterfaces,
 		/** @var Collection<string, string> */
 		public readonly Collection $uses,
 		/** @var Collection<int, TraitUse> */

@@ -27,7 +27,6 @@ use GoodPhp\Reflection\Type\Special\ErrorType;
 use GoodPhp\Reflection\Type\Special\MixedType;
 use GoodPhp\Reflection\Type\Special\NeverType;
 use GoodPhp\Reflection\Type\Special\NullableType;
-use GoodPhp\Reflection\Type\Special\ParentType;
 use GoodPhp\Reflection\Type\Special\StaticType;
 use GoodPhp\Reflection\Type\Special\VoidType;
 use GoodPhp\Reflection\Type\Template\TemplateType;
@@ -245,7 +244,7 @@ class NativePHPDocDefinitionProviderIntegrationTest extends IntegrationTestCase
 									PrimitiveType::integer(),
 								]),
 								hasDefaultValue: false,
-							)
+							),
 						]),
 						returnType: new StaticType(
 							new NamedType(ClassStub::class)
@@ -869,7 +868,6 @@ class NativePHPDocDefinitionProviderIntegrationTest extends IntegrationTestCase
 					new NamedType(SingleGenericInterface::class, new Collection([
 						PrimitiveType::string(),
 					])),
-					new NamedType(\UnitEnum::class),
 					new NamedType(\BackedEnum::class),
 				]),
 				uses: new Collection(),

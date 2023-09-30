@@ -1,6 +1,7 @@
 includes:
 	- vendor/phpstan/phpstan/conf/bleedingEdge.neon
 	- vendor/phpstan/phpstan-webmozart-assert/extension.neon
+	- vendor/jiripudil/phpstan-sealed-classes/extension.neon
 
 parameters:
 	level: max
@@ -10,12 +11,12 @@ parameters:
 		- src
 
 	ignoreErrors:
+		- '#Readonly property [a-z\\]+::\$[a-z0-9]+ is assigned outside of the constructor.#i'
+		- '#Class [a-z\\]+ has an uninitialized readonly property \$[a-z0-9]+\. Assign it in the constructor.#i'
 		# We expect proper error handling, in which case file_get_contents() will never return `false`
 		-
 			message: '#Parameter \#1 \$code of method PhpParser\\Parser::parse\(\) expects string, string\|false given\.#i'
 			path: 'src/Definition/NativePHPDoc/File/FileContextParser.php'
-		# It is assigned in the parent class. I'm not sure how to approach this and if this is a bug in PHPStan or not.
-		- '#Class GoodPhp\\Reflection\\Definition\\TypeDefinition\\[a-z]+Definition has an uninitialized readonly property \$qualifiedName\. Assign it in the constructor\.#i'
 		# This, again, I'm not sure how to approach.
 		-
 			message: '#Unsafe usage of new static\(\)#i'

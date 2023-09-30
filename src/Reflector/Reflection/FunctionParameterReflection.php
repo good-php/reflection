@@ -5,28 +5,24 @@ namespace GoodPhp\Reflection\Reflector\Reflection;
 use GoodPhp\Reflection\Definition\TypeDefinition\FunctionParameterDefinition;
 use GoodPhp\Reflection\Reflector\Reflection\Attributes\Attributes;
 use GoodPhp\Reflection\Reflector\Reflection\Attributes\HasAttributes;
+use GoodPhp\Reflection\Type\NamedType;
 use GoodPhp\Reflection\Type\Template\TypeParameterMap;
 use GoodPhp\Reflection\Type\Type;
 use GoodPhp\Reflection\Type\TypeProjector;
 use ReflectionParameter;
-use TenantCloud\Standard\Lazy\Lazy;
+use Stringable;
 use Webmozart\Assert\Assert;
-
-use function TenantCloud\Standard\Lazy\lazy;
 
 /**
  * @template-covariant DeclaringMethodReflection of MethodReflection
  */
-final class FunctionParameterReflection implements HasAttributes
+final class FunctionParameterReflection implements Stringable, HasAttributes
 {
-	/** @var Lazy<ReflectionParameter> */
-	private readonly Lazy $nativeReflection;
+	private readonly ReflectionParameter $nativeReflection;
 
-	/** @var Lazy<Attributes> */
-	private readonly Lazy $attributes;
+	private readonly Attributes $attributes;
 
-	/** @var Lazy<Type|null> */
-	private Lazy $type;
+	private readonly ?Type $type;
 
 	/**
 	 * @param DeclaringMethodReflection $declaringMethod
@@ -34,21 +30,9 @@ final class FunctionParameterReflection implements HasAttributes
 	public function __construct(
 		private readonly FunctionParameterDefinition $definition,
 		public readonly MethodReflection $declaringMethod,
+		public NamedType $staticType,
 		public readonly TypeParameterMap $resolvedTypeParameterMap,
-	) {
-		$this->nativeReflection = lazy(fn () => new ReflectionParameter([$this->declaringMethod->declaringType->qualifiedName(), $this->declaringMethod->name()], $this->definition->name));
-		$this->attributes = lazy(fn () => new Attributes(
-			fn () => $this->nativeReflection->value()->getAttributes()
-		));
-		$this->type = lazy(
-			fn () => $this->definition->type ?
-				TypeProjector::templateTypes(
-					$this->definition->type,
-					$resolvedTypeParameterMap
-				) :
-				null
-		);
-	}
+	) {}
 
 	public function name(): string
 	{
@@ -57,7 +41,19 @@ final class FunctionParameterReflection implements HasAttributes
 
 	public function type(): ?Type
 	{
-		return $this->type->value();
+		if (isset($this->type)) {
+			return $this->type;
+		}
+
+		if (!$this->definition->type) {
+			return null;
+		}
+
+		return $this->type ??= TypeProjector::templateTypes(
+			$this->definition->type,
+			$this->resolvedTypeParameterMap,
+			$this->staticType,
+		);
 	}
 
 	public function hasDefaultValue(): bool
@@ -72,11 +68,31 @@ final class FunctionParameterReflection implements HasAttributes
 		// without first calling the `->hasDefaultValue()`. So to avoid confusion, this assert is in place.
 		Assert::true($this->hasDefaultValue(), 'Parameter does not have a default value; you must first check if default value is set through ->hasDefaultValue().');
 
-		return $this->nativeReflection->value()->getDefaultValue();
+		return $this->nativeReflection()->getDefaultValue();
 	}
 
 	public function attributes(): Attributes
 	{
-		return $this->attributes->value();
+		return $this->attributes ??= new Attributes(
+			fn () => $this->nativeReflection()->getAttributes()
+		);
+	}
+
+	public function location(): string
+	{
+		return $this->declaringMethod->location() . ' ' . $this;
+	}
+
+	private function nativeReflection(): ReflectionParameter
+	{
+		return $this->nativeReflection ??= new ReflectionParameter(
+			[$this->declaringMethod->declaringType->qualifiedName(), $this->declaringMethod->name()],
+			$this->definition->name
+		);
+	}
+
+	public function __toString(): string
+	{
+		return 'arg $' . $this->name();
 	}
 }

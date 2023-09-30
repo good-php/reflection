@@ -2,13 +2,13 @@
 
 namespace GoodPhp\Reflection\Type;
 
-use GoodPhp\Reflection\Definition\TypeDefinition\TypeParameterDefinition;
 use GoodPhp\Reflection\Reflector\Reflection\ClassReflection;
 use GoodPhp\Reflection\Reflector\Reflection\EnumReflection;
 use GoodPhp\Reflection\Reflector\Reflection\InterfaceReflection;
 use GoodPhp\Reflection\Reflector\Reflection\SpecialTypeReflection;
 use GoodPhp\Reflection\Reflector\Reflection\TraitReflection;
 use GoodPhp\Reflection\Reflector\Reflection\TypeParameters\HasTypeParameters;
+use GoodPhp\Reflection\Reflector\Reflection\TypeParameters\TypeParameterReflection;
 use GoodPhp\Reflection\Reflector\Reflector;
 use GoodPhp\Reflection\Type\Combinatorial\IntersectionType;
 use GoodPhp\Reflection\Type\Combinatorial\TupleType;
@@ -17,7 +17,6 @@ use GoodPhp\Reflection\Type\Special\ErrorType;
 use GoodPhp\Reflection\Type\Special\MixedType;
 use GoodPhp\Reflection\Type\Special\NeverType;
 use GoodPhp\Reflection\Type\Special\NullableType;
-use GoodPhp\Reflection\Type\Special\ParentType;
 use GoodPhp\Reflection\Type\Special\StaticType;
 use GoodPhp\Reflection\Type\Special\VoidType;
 use GoodPhp\Reflection\Type\Template\TemplateType;
@@ -33,38 +32,34 @@ class TypeComparator
 {
 	public function __construct(
 		private readonly Reflector $reflector
-	)
-	{
-	}
+	) {}
 
 	public function accepts(Type $a, Type $b): bool
 	{
 		return match (true) {
 			$a instanceof NeverType || $b instanceof NeverType => false,
 			$a instanceof ErrorType || $b instanceof ErrorType => false,
-			$a instanceof VoidType => true,
-			$b instanceof VoidType => false,
-			$a instanceof MixedType => true,
-			$b instanceof MixedType => false,
-			$a instanceof IntersectionType => $a->types->every(fn(Type $type) => $this->accepts($type, $b)),
-			$b instanceof IntersectionType => $b->types->some(fn(Type $type) => $this->accepts($a, $type)),
-			$a instanceof UnionType => $a->types->some(fn(Type $type) => $this->accepts($type, $b)),
-			$b instanceof UnionType => $b->types->every(fn(Type $type) => $this->accepts($a, $type)),
-			$a instanceof NullableType => $this->accepts($a->innerType, $b instanceof NullableType ? $b->innerType : $b),
-			$b instanceof NullableType => false,
-			// This operates under the assumption that static types should only exist in a scope of a single class,
-			// the one that declares a function with that type. If other class extends the one that declares a static,
-			// baseType of static types should be changed similarly to how it's done with template types.
-			// todo: change these static types in reflection
-			$a instanceof StaticType => $this->accepts($a->baseType, $b),
-			$b instanceof StaticType => $this->accepts($a, $b->baseType),
-			// todo
-			$a instanceof TemplateType => false,
-			$b instanceof TemplateType => false,
-			$a instanceof TupleType => $this->acceptsTuple($a, $b),
-			$b instanceof TupleType => false,
+			$a instanceof VoidType                             => true,
+			$b instanceof VoidType                             => false,
+			$a instanceof MixedType                            => true,
+			$b instanceof MixedType                            => false,
+			$a instanceof IntersectionType                     => $a->types->every(fn (Type $type) => $this->accepts($type, $b)),
+			$b instanceof IntersectionType                     => $b->types->some(fn (Type $type) => $this->accepts($a, $type)),
+			$a instanceof UnionType                            => $a->types->some(fn (Type $type) => $this->accepts($type, $b)),
+			$b instanceof UnionType                            => $b->types->every(fn (Type $type) => $this->accepts($a, $type)),
+			$a instanceof NullableType                         => $this->accepts($a->innerType, $b instanceof NullableType ? $b->innerType : $b),
+			$b instanceof NullableType                         => false,
+			// `static` type is very much like a template type - in a sense that it should have been replaced with another
+			// type by the type it's compared here. But at least we can compare it with the upper bounds.
+			$a instanceof StaticType => $this->accepts($a->upperBound, $b),
+			$b instanceof StaticType => $this->accepts($a, $b->upperBound),
+			// TODO
+			$a instanceof TemplateType                         => false,
+			$b instanceof TemplateType                         => false,
+			$a instanceof TupleType                            => $this->acceptsTuple($a, $b),
+			$b instanceof TupleType                            => false,
 			$a instanceof NamedType && $b instanceof NamedType => $this->acceptsNamed($a, $b),
-			default => throw new InvalidArgumentException("Unsupported types given: {$a} (" . $a::class . ") and {$b} (" . $b::class . ')')
+			default                                            => throw new InvalidArgumentException("Unsupported types given: {$a} (" . $a::class . ") and {$b} (" . $b::class . ')')
 		};
 	}
 
@@ -87,13 +82,13 @@ class TypeComparator
 
 		$typeParameters = $aReflection instanceof HasTypeParameters ? $aReflection->typeParameters() : new Collection();
 
-		/** @var array<array{TypeParameterDefinition, Type, Type}> $pairs */
+		/** @var array<array{TypeParameterReflection<HasTypeParameters>, Type, Type}> $pairs */
 		$pairs = [];
 		$aArguments = clone $a->arguments;
 		$bArguments = clone $b->arguments;
 
 		foreach ($typeParameters as $i => $typeParameter) {
-			if ($typeParameter->variadic) {
+			if ($typeParameter->variadic()) {
 				$pairs[] = [$typeParameter, new TupleType($aArguments), new TupleType($bArguments)];
 
 				break;
@@ -112,9 +107,9 @@ class TypeComparator
 		}
 
 		foreach ($pairs as [$typeParameter, $aArgument, $bArgument]) {
-			$validVariance = match ($typeParameter->variance) {
-				TemplateTypeVariance::INVARIANT => $aArgument->equals($bArgument),
-				TemplateTypeVariance::COVARIANT => $this->accepts($aArgument, $bArgument),
+			$validVariance = match ($typeParameter->variance()) {
+				TemplateTypeVariance::INVARIANT     => $aArgument->equals($bArgument),
+				TemplateTypeVariance::COVARIANT     => $this->accepts($aArgument, $bArgument),
 				TemplateTypeVariance::CONTRAVARIANT => $this->accepts($bArgument, $aArgument),
 			};
 
@@ -130,7 +125,7 @@ class TypeComparator
 	{
 		return $b instanceof TupleType &&
 			$b->types->count() >= $a->types->count() &&
-			$a->types->every(fn(Type $type, int $i) => $this->accepts($type, $b->types[$i]));
+			$a->types->every(fn (Type $type, int $i) => $this->accepts($type, $b->types[$i]));
 	}
 
 	private function findDescendant(NamedType $a, string $className): ?NamedType
@@ -146,7 +141,7 @@ class TypeComparator
 			$aReflection instanceof InterfaceReflection => $aReflection
 				->extends(),
 			$aReflection instanceof TraitReflection => new Collection(),
-			$aReflection instanceof EnumReflection => $aReflection
+			$aReflection instanceof EnumReflection  => $aReflection
 				->implements(),
 			$aReflection instanceof SpecialTypeReflection => $aReflection
 				->superTypes(),
