@@ -3,9 +3,10 @@
 namespace Tests\Integration\Definition;
 
 use GoodPhp\Reflection\Cache\Verified\VerifiedCache;
-use GoodPhp\Reflection\Definition\Cache\FileModificationCacheDefinitionProvider;
-use GoodPhp\Reflection\Definition\DefinitionProvider;
-use GoodPhp\Reflection\Definition\TypeDefinition\ClassTypeDefinition;
+use GoodPhp\Reflection\NativePHPDoc\Definition\Cache\FileModificationCacheDefinitionProvider;
+use GoodPhp\Reflection\NativePHPDoc\Definition\DefinitionProvider;
+use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\ClassTypeDefinition;
+use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\UsedTraitsDefinition;
 use Illuminate\Support\Collection;
 use Phake;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
@@ -39,7 +40,7 @@ class FileModificationCacheDefinitionProviderIntegrationTest extends Integration
 				typeParameters: new Collection(),
 				extends: null,
 				implements: new Collection(),
-				uses: new Collection(),
+				uses: new UsedTraitsDefinition(),
 				properties: new Collection(),
 				methods: new Collection()
 			));

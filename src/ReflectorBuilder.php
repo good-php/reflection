@@ -4,19 +4,19 @@ namespace GoodPhp\Reflection;
 
 use DateInterval;
 use GoodPhp\Reflection\Cache\Verified\VerifiedCache;
-use GoodPhp\Reflection\Definition\BuiltIns\BuiltInCoreDefinitionProvider;
-use GoodPhp\Reflection\Definition\BuiltIns\BuiltInSpecialsDefinitionProvider;
-use GoodPhp\Reflection\Definition\Cache\FileModificationCacheDefinitionProvider;
-use GoodPhp\Reflection\Definition\Cache\StaticCacheDefinitionProvider;
-use GoodPhp\Reflection\Definition\DefinitionProvider;
-use GoodPhp\Reflection\Definition\Fallback\FallbackDefinitionProvider;
-use GoodPhp\Reflection\Definition\NativePHPDoc\File\FileContextParser;
-use GoodPhp\Reflection\Definition\NativePHPDoc\Native\NativeTypeMapper;
-use GoodPhp\Reflection\Definition\NativePHPDoc\NativePHPDocDefinitionProvider;
-use GoodPhp\Reflection\Definition\NativePHPDoc\PhpDoc\PhpDocStringParser;
-use GoodPhp\Reflection\Definition\NativePHPDoc\PhpDoc\PhpDocTypeMapper;
-use GoodPhp\Reflection\Definition\NativePHPDoc\PhpDoc\TypeAliasResolver;
-use GoodPhp\Reflection\Reflector\Reflector;
+use GoodPhp\Reflection\NativePHPDoc\Definition\BuiltIns\BuiltInCoreDefinitionProvider;
+use GoodPhp\Reflection\NativePHPDoc\Definition\BuiltIns\BuiltInSpecialsDefinitionProvider;
+use GoodPhp\Reflection\NativePHPDoc\Definition\Cache\FileModificationCacheDefinitionProvider;
+use GoodPhp\Reflection\NativePHPDoc\Definition\Cache\StaticCacheDefinitionProvider;
+use GoodPhp\Reflection\NativePHPDoc\Definition\DefinitionProvider;
+use GoodPhp\Reflection\NativePHPDoc\Definition\Fallback\FallbackDefinitionProvider;
+use GoodPhp\Reflection\NativePHPDoc\Definition\NativePHPDoc\File\FileContextParser;
+use GoodPhp\Reflection\NativePHPDoc\Definition\NativePHPDoc\Native\NativeTypeMapper;
+use GoodPhp\Reflection\NativePHPDoc\Definition\NativePHPDoc\NativePHPDocDefinitionProvider;
+use GoodPhp\Reflection\NativePHPDoc\Definition\NativePHPDoc\PhpDoc\PhpDocStringParser;
+use GoodPhp\Reflection\NativePHPDoc\Definition\NativePHPDoc\PhpDoc\PhpDocTypeMapper;
+use GoodPhp\Reflection\NativePHPDoc\Definition\NativePHPDoc\PhpDoc\TypeAliasResolver;
+use GoodPhp\Reflection\NativePHPDoc\DefinitionProviderReflector;
 use PhpParser\Lexer\Emulative;
 use PhpParser\Parser;
 use PHPStan\PhpDocParser\Lexer\Lexer;
@@ -64,7 +64,7 @@ class ReflectorBuilder
 
 	public function build(): Reflector
 	{
-		return new Reflector($this->definitionProvider());
+		return new DefinitionProviderReflector($this->definitionProvider());
 	}
 
 	public function withInnerDefinitionProvider(DefinitionProvider $provider): self

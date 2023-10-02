@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\GoodPhp\Reflection\Type\Definition\TypeDefinition;
 
-use GoodPhp\Reflection\Definition\TypeDefinition\TypeParameterDefinition;
+use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\TypeParameterDefinition;
 use GoodPhp\Reflection\Type\PrimitiveType;
 use GoodPhp\Reflection\Type\Template\TemplateTypeVariance;
 use PHPUnit\Framework\TestCase;

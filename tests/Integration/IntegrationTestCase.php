@@ -2,7 +2,7 @@
 
 namespace Tests\Integration;
 
-use GoodPhp\Reflection\Reflector\Reflector;
+use GoodPhp\Reflection\Reflector;
 use GoodPhp\Reflection\ReflectorBuilder;
 
 class IntegrationTestCase extends \PHPUnit\Framework\TestCase

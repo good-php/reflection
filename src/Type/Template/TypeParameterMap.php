@@ -2,7 +2,7 @@
 
 namespace GoodPhp\Reflection\Type\Template;
 
-use GoodPhp\Reflection\Definition\TypeDefinition\TypeParameterDefinition;
+use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\TypeParameterDefinition;
 use GoodPhp\Reflection\Type\Combinatorial\TupleType;
 use GoodPhp\Reflection\Type\Type;
 use Illuminate\Support\Collection;

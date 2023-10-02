@@ -4,22 +4,25 @@ namespace Tests\Integration\Definition;
 
 use DateTime;
 use Generator;
-use GoodPhp\Reflection\Definition\NativePHPDoc\File\FileContextParser;
-use GoodPhp\Reflection\Definition\NativePHPDoc\Native\NativeTypeMapper;
-use GoodPhp\Reflection\Definition\NativePHPDoc\NativePHPDocDefinitionProvider;
-use GoodPhp\Reflection\Definition\NativePHPDoc\PhpDoc\PhpDocStringParser;
-use GoodPhp\Reflection\Definition\NativePHPDoc\PhpDoc\PhpDocTypeMapper;
-use GoodPhp\Reflection\Definition\NativePHPDoc\PhpDoc\TypeAliasResolver;
-use GoodPhp\Reflection\Definition\TypeDefinition;
-use GoodPhp\Reflection\Definition\TypeDefinition\ClassTypeDefinition;
-use GoodPhp\Reflection\Definition\TypeDefinition\EnumCaseDefinition;
-use GoodPhp\Reflection\Definition\TypeDefinition\EnumTypeDefinition;
-use GoodPhp\Reflection\Definition\TypeDefinition\FunctionParameterDefinition;
-use GoodPhp\Reflection\Definition\TypeDefinition\InterfaceTypeDefinition;
-use GoodPhp\Reflection\Definition\TypeDefinition\MethodDefinition;
-use GoodPhp\Reflection\Definition\TypeDefinition\PropertyDefinition;
-use GoodPhp\Reflection\Definition\TypeDefinition\TraitTypeDefinition;
-use GoodPhp\Reflection\Definition\TypeDefinition\TypeParameterDefinition;
+use GoodPhp\Reflection\NativePHPDoc\Definition\NativePHPDoc\File\FileContextParser;
+use GoodPhp\Reflection\NativePHPDoc\Definition\NativePHPDoc\Native\NativeTypeMapper;
+use GoodPhp\Reflection\NativePHPDoc\Definition\NativePHPDoc\NativePHPDocDefinitionProvider;
+use GoodPhp\Reflection\NativePHPDoc\Definition\NativePHPDoc\PhpDoc\PhpDocStringParser;
+use GoodPhp\Reflection\NativePHPDoc\Definition\NativePHPDoc\PhpDoc\PhpDocTypeMapper;
+use GoodPhp\Reflection\NativePHPDoc\Definition\NativePHPDoc\PhpDoc\TypeAliasResolver;
+use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition;
+use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\ClassTypeDefinition;
+use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\EnumCaseDefinition;
+use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\EnumTypeDefinition;
+use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\FunctionParameterDefinition;
+use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\InterfaceTypeDefinition;
+use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\MethodDefinition;
+use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\PropertyDefinition;
+use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\TraitTypeDefinition;
+use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\TypeParameterDefinition;
+use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\UsedTraitAliasDefinition;
+use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\UsedTraitDefinition;
+use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\UsedTraitsDefinition;
 use GoodPhp\Reflection\Type\Combinatorial\UnionType;
 use GoodPhp\Reflection\Type\NamedType;
 use GoodPhp\Reflection\Type\PrimitiveType;
@@ -38,6 +41,7 @@ use PHPStan\PhpDocParser\Lexer\Lexer;
 use PHPStan\PhpDocParser\Parser\ConstExprParser;
 use PHPStan\PhpDocParser\Parser\PhpDocParser;
 use PHPStan\PhpDocParser\Parser\TypeParser;
+use ReflectionMethod;
 use Tests\Integration\IntegrationTestCase;
 use Tests\Stubs\Classes\AllMissingTypes;
 use Tests\Stubs\Classes\AllNativeTypes;
@@ -127,10 +131,23 @@ class NativePHPDocDefinitionProviderIntegrationTest extends IntegrationTestCase
 						new NamedType(SomeStub::class),
 					])),
 				]),
-				uses: new Collection([
-					new NamedType(ParentTraitStub::class),
-					new NamedType(ParentTraitStub::class),
-				]),
+				uses: new UsedTraitsDefinition(
+					traits: new Collection([
+						new UsedTraitDefinition(
+							trait: NamedType::wrap(ParentTraitStub::class, [
+								new TemplateType('T'),
+								SomeStub::class,
+							]),
+							aliases: new Collection([
+								new UsedTraitAliasDefinition('traitMethod', null, ReflectionMethod::IS_PRIVATE),
+								new UsedTraitAliasDefinition('traitMethod', 'traitMethodTwo', ReflectionMethod::IS_PROTECTED),
+							])
+						),
+						new UsedTraitDefinition(
+							trait: NamedType::wrap(ParentTraitStub::class)
+						),
+					])
+				),
 				properties: new Collection([
 					new PropertyDefinition(
 						name: 'factories',
@@ -268,7 +285,7 @@ class NativePHPDocDefinitionProviderIntegrationTest extends IntegrationTestCase
 				implements: new Collection([
 					new NamedType(SingleTemplateType::class),
 				]),
-				uses: new Collection(),
+				uses: new UsedTraitsDefinition(),
 				properties: new Collection([
 					new PropertyDefinition(
 						name: 'property',
@@ -335,7 +352,7 @@ class NativePHPDocDefinitionProviderIntegrationTest extends IntegrationTestCase
 				typeParameters: new Collection(),
 				extends: null,
 				implements: new Collection(),
-				uses: new Collection(),
+				uses: new UsedTraitsDefinition(),
 				properties: new Collection(),
 				methods: new Collection([
 					new MethodDefinition(
@@ -457,7 +474,7 @@ class NativePHPDocDefinitionProviderIntegrationTest extends IntegrationTestCase
 				typeParameters: new Collection(),
 				extends: null,
 				implements: new Collection(),
-				uses: new Collection(),
+				uses: new UsedTraitsDefinition(),
 				properties: new Collection(),
 				methods: new Collection([
 					new MethodDefinition(
@@ -737,7 +754,7 @@ class NativePHPDocDefinitionProviderIntegrationTest extends IntegrationTestCase
 				]),
 				extends: null,
 				implements: new Collection(),
-				uses: new Collection(),
+				uses: new UsedTraitsDefinition(),
 				properties: new Collection(),
 				methods: new Collection(),
 			),
@@ -762,7 +779,7 @@ class NativePHPDocDefinitionProviderIntegrationTest extends IntegrationTestCase
 				]),
 				extends: null,
 				implements: new Collection(),
-				uses: new Collection(),
+				uses: new UsedTraitsDefinition(),
 				properties: new Collection(),
 				methods: new Collection(),
 			),
@@ -787,7 +804,7 @@ class NativePHPDocDefinitionProviderIntegrationTest extends IntegrationTestCase
 				]),
 				extends: null,
 				implements: new Collection(),
-				uses: new Collection(),
+				uses: new UsedTraitsDefinition(),
 				properties: new Collection(),
 				methods: new Collection(),
 			),
@@ -844,7 +861,7 @@ class NativePHPDocDefinitionProviderIntegrationTest extends IntegrationTestCase
 				fileName: realpath(__DIR__ . '/../../Stubs/Traits/TraitWithoutProperties.php'),
 				builtIn: false,
 				typeParameters: new Collection(),
-				uses: new Collection(),
+				uses: new UsedTraitsDefinition(),
 				properties: new Collection(),
 				methods: new Collection([
 					new MethodDefinition(
@@ -870,7 +887,7 @@ class NativePHPDocDefinitionProviderIntegrationTest extends IntegrationTestCase
 					])),
 					new NamedType(\BackedEnum::class),
 				]),
-				uses: new Collection(),
+				uses: new UsedTraitsDefinition(),
 				cases: new Collection([
 					new EnumCaseDefinition(
 						name: 'FIRST',
@@ -896,10 +913,19 @@ class NativePHPDocDefinitionProviderIntegrationTest extends IntegrationTestCase
 					new NamedType(NonGenericInterface::class),
 					new NamedType(\UnitEnum::class),
 				]),
-				uses: new Collection([
-					new NamedType(TraitWithoutProperties::class),
-					new NamedType(TraitWithoutProperties::class),
-				]),
+				uses: new UsedTraitsDefinition(
+					traits: new Collection([
+						new UsedTraitDefinition(
+							trait: NamedType::wrap(TraitWithoutProperties::class),
+						),
+						new UsedTraitDefinition(
+							trait: NamedType::wrap(TraitWithoutProperties::class),
+							aliases: new Collection([
+								new UsedTraitAliasDefinition('otherFunction', 'otherOtherFunction'),
+							])
+						),
+					])
+				),
 				cases: new Collection([
 					new EnumCaseDefinition(
 						name: 'FIRST',

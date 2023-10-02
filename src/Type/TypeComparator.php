@@ -2,14 +2,14 @@
 
 namespace GoodPhp\Reflection\Type;
 
-use GoodPhp\Reflection\Reflector\Reflection\ClassReflection;
-use GoodPhp\Reflection\Reflector\Reflection\EnumReflection;
-use GoodPhp\Reflection\Reflector\Reflection\InterfaceReflection;
-use GoodPhp\Reflection\Reflector\Reflection\SpecialTypeReflection;
-use GoodPhp\Reflection\Reflector\Reflection\TraitReflection;
-use GoodPhp\Reflection\Reflector\Reflection\TypeParameters\HasTypeParameters;
-use GoodPhp\Reflection\Reflector\Reflection\TypeParameters\TypeParameterReflection;
-use GoodPhp\Reflection\Reflector\Reflector;
+use GoodPhp\Reflection\Reflection\ClassReflection;
+use GoodPhp\Reflection\Reflection\EnumReflection;
+use GoodPhp\Reflection\Reflection\InterfaceReflection;
+use GoodPhp\Reflection\Reflection\SpecialTypeReflection;
+use GoodPhp\Reflection\Reflection\TraitReflection;
+use GoodPhp\Reflection\Reflection\TypeParameters\HasTypeParameters;
+use GoodPhp\Reflection\Reflection\TypeParameters\TypeParameterReflection;
+use GoodPhp\Reflection\Reflector;
 use GoodPhp\Reflection\Type\Combinatorial\IntersectionType;
 use GoodPhp\Reflection\Type\Combinatorial\TupleType;
 use GoodPhp\Reflection\Type\Combinatorial\UnionType;

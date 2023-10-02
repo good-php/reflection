@@ -23,8 +23,8 @@ final class ClassStub extends ParentClassStub implements ParentInterfaceStub
 {
 	/** @use ParentTraitStub<T, SomeStub> */
 	use ParentTraitStub {
-		traitMethod as traitMethod;
-		traitMethod as traitMethodTwo;
+		traitMethod as private;
+		traitMethod as protected traitMethodTwo;
 	}
 	use ParentTraitStub;
 

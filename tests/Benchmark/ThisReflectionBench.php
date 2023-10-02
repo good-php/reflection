@@ -2,8 +2,8 @@
 
 namespace Tests\Benchmark;
 
-use GoodPhp\Reflection\Reflector\Reflection\ClassReflection;
-use GoodPhp\Reflection\Reflector\Reflector;
+use GoodPhp\Reflection\Reflection\ClassReflection;
+use GoodPhp\Reflection\Reflector;
 use GoodPhp\Reflection\ReflectorBuilder;
 use Illuminate\Support\Str;
 use PhpBench\Attributes\BeforeMethods;

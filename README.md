@@ -6,20 +6,26 @@ Reflection that accounts for features that are in static analysers, but aren't i
 
 PHP is in a state where some very vital features only exist in userland (i.e. PHPStan),
 like generics, tuple types, conditional types, type aliases and more. When you need 
-reflection, you usually also need it work with all of those userland features. Obviously,
+reflection, you usually also need it to work with all of those userland features. Obviously,
 PHP's built in reflection doesn't do that.
 
-And while custom reflection libraries do exist (like `roave/better-reflection`), none
-of them actually try to parse, understand and help with PHPDoc based types and features
+While custom reflection libraries do exist (like `roave/better-reflection`), none
+of them are capable of parsing or understanding PHPDoc based types and features
 from modern-day PHP. Furthermore, not all of them are performant enough to be used
 in runtime (e.g. outside of tooling).
 
-This library aims to be both runtime-ready (using some very very performant caching)
+This library aims to be both runtime-ready (using some performant caching and lazy resolving)
 and to cover the entire set of features of both built-in reflection and PHPStan features.
 
 The perfect scenario here would be for PHPStan to simply extract it's own reflection
 into a package, but this has already [been declined](https://github.com/phpstan/phpstan/discussions/4646) 
-by the project author @ondrejmirtes, and understandably so.
+by the project author @ondrejmirtes, and understandably so. I've tried extracting it
+myself by relocating parts of the PHPStan code, but it has proven to be complex,
+unreliable and most importantly - slow to execute. 
+
+So instead this projects attempts to fill the holes of the native reflection and modernize
+the API in the process. Most of the API is defined with interfaces which you can extend
+to implement things you need done.
 
 ### What does it do
 

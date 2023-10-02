@@ -27,7 +27,7 @@ class TypeComparatorIntegrationTest extends IntegrationTestCase
 	{
 		parent::setUp();
 
-		$this->comparator = $this->reflector->typeComparator;
+		$this->comparator = $this->reflector->typeComparator();
 	}
 
 	/**

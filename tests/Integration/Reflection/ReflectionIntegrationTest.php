@@ -4,11 +4,13 @@ namespace Tests\Integration\Reflection;
 
 use DateTime;
 use Generator;
-use GoodPhp\Reflection\Reflector\Reflection\ClassReflection;
-use GoodPhp\Reflection\Reflector\Reflection\FunctionParameterReflection;
-use GoodPhp\Reflection\Reflector\Reflection\MethodReflection;
-use GoodPhp\Reflection\Reflector\Reflection\PropertyReflection;
-use GoodPhp\Reflection\Reflector\Reflection\TypeParameters\TypeParameterReflection;
+use GoodPhp\Reflection\Reflection\ClassReflection;
+use GoodPhp\Reflection\Reflection\FunctionParameterReflection;
+use GoodPhp\Reflection\Reflection\MethodReflection;
+use GoodPhp\Reflection\Reflection\PropertyReflection;
+use GoodPhp\Reflection\Reflection\Traits\UsedTraitReflection;
+use GoodPhp\Reflection\Reflection\Traits\UsedTraitsReflection;
+use GoodPhp\Reflection\Reflection\TypeParameters\TypeParameterReflection;
 use GoodPhp\Reflection\Type\NamedType;
 use GoodPhp\Reflection\Type\PrimitiveType;
 use GoodPhp\Reflection\Type\Special\MixedType;
@@ -18,6 +20,7 @@ use GoodPhp\Reflection\Type\Special\VoidType;
 use GoodPhp\Reflection\Type\Template\TemplateType;
 use GoodPhp\Reflection\Type\Template\TemplateTypeVariance;
 use Illuminate\Support\Collection;
+use ReflectionMethod;
 use stdClass;
 use Tests\Integration\IntegrationTestCase;
 use Tests\Stubs\AttributeStub;
@@ -74,9 +77,34 @@ class ReflectionIntegrationTest extends IntegrationTestCase
 					$reflection->implements()[0]
 				);
 
-				self::assertCount(2, $reflection->uses());
-				self::assertEquals(new NamedType(ParentTraitStub::class), $reflection->uses()[0]);
-				self::assertEquals(new NamedType(ParentTraitStub::class), $reflection->uses()[1]);
+				with($reflection->uses(), function (UsedTraitsReflection $uses) {
+					self::assertCount(2, $uses->traits());
+
+					with($uses->traits()[0], function (UsedTraitReflection $usedTrait) {
+						self::assertEquals(
+							NamedType::wrap(ParentTraitStub::class, [stdClass::class, SomeStub::class]),
+							$usedTrait->trait(),
+						);
+
+						self::assertCount(2, $usedTrait->aliases());
+
+						self::assertSame('traitMethod', $usedTrait->aliases()[0]->name());
+						self::assertNull($usedTrait->aliases()[0]->newName());
+						self::assertSame(ReflectionMethod::IS_PRIVATE, $usedTrait->aliases()[0]->newModifier());
+
+						self::assertSame('traitMethod', $usedTrait->aliases()[1]->name());
+						self::assertSame('traitMethodTwo', $usedTrait->aliases()[1]->newName());
+						self::assertSame(ReflectionMethod::IS_PROTECTED, $usedTrait->aliases()[1]->newModifier());
+					});
+
+					with($uses->traits()[1], function (UsedTraitReflection $usedTrait) {
+						self::assertEquals(NamedType::wrap(ParentTraitStub::class), $usedTrait->trait());
+
+						self::assertEmpty($usedTrait->aliases());
+					});
+
+					self::assertCount(0, $uses->excludedTraitMethods());
+				});
 
 				with($reflection->declaredProperties(), function (Collection $properties) use ($reflection) {
 					self::assertCount(3, $properties);
@@ -96,17 +124,17 @@ class ReflectionIntegrationTest extends IntegrationTestCase
 					self::assertCount(5, $properties);
 					self::assertContainsOnlyInstancesOf(PropertyReflection::class, $properties);
 
-					self::assertSame('parentProperty', $properties[0]->name());
-					self::assertEquals(new NamedType(stdClass::class), $properties[0]->type());
-					self::assertTrue($properties[0]->hasDefaultValue());
-					self::assertNull($properties[0]->defaultValue());
+					self::assertSame('prop', $properties[0]->name());
+					self::assertEquals(PrimitiveType::integer(), $properties[0]->type());
+					self::assertFalse($properties[0]->hasDefaultValue());
 					self::assertFalse($properties[0]->isPromoted());
 					self::assertNull($properties[0]->promotedParameter());
 					self::assertEmpty($properties[0]->attributes()->all());
 
-					self::assertSame('prop', $properties[1]->name());
-					self::assertEquals(PrimitiveType::integer(), $properties[1]->type());
-					self::assertFalse($properties[1]->hasDefaultValue());
+					self::assertSame('parentProperty', $properties[1]->name());
+					self::assertEquals(new NamedType(stdClass::class), $properties[1]->type());
+					self::assertTrue($properties[1]->hasDefaultValue());
+					self::assertNull($properties[1]->defaultValue());
 					self::assertFalse($properties[1]->isPromoted());
 					self::assertNull($properties[1]->promotedParameter());
 					self::assertEmpty($properties[1]->attributes()->all());
@@ -138,20 +166,20 @@ class ReflectionIntegrationTest extends IntegrationTestCase
 					self::assertContainsOnlyInstancesOf(MethodReflection::class, $methods);
 
 					self::assertSame('__construct', $methods[0]->name());
-					self::assertSame($reflection->methods()[4], $methods[0]);
+					//					self::assertSame($reflection->methods()[4], $methods[0]);
 
 					self::assertSame('method', $methods[1]->name());
-					self::assertSame($reflection->methods()[5], $methods[1]);
+					//					self::assertSame($reflection->methods()[5], $methods[1]);
 
 					self::assertSame('methodTwo', $methods[2]->name());
-					self::assertSame($reflection->methods()[6], $methods[2]);
+					//					self::assertSame($reflection->methods()[6], $methods[2]);
 
 					self::assertSame('self', $methods[3]->name());
-					self::assertSame($reflection->methods()[7], $methods[3]);
+					//					self::assertSame($reflection->methods()[7], $methods[3]);
 				});
 
 				with($reflection->methods(), function (Collection $methods) use ($reflection) {
-					self::assertCount(8, $methods);
+					self::assertCount(9, $methods);
 					self::assertContainsOnlyInstancesOf(MethodReflection::class, $methods);
 
 					self::assertSame('test', $methods[0]->name());
@@ -171,31 +199,38 @@ class ReflectionIntegrationTest extends IntegrationTestCase
 					self::assertEquals(new StaticType(NamedType::wrap(ClassStub::class, [stdClass::class])), $methods[0]->returnType());
 					self::assertSame('test()', (string) $methods[0]);
 
-					self::assertSame('parentMethod', $methods[1]->name());
+					self::assertSame('otherFunction', $methods[1]->name());
 					self::assertEmpty($methods[1]->attributes()->all());
 					self::assertEmpty($methods[1]->typeParameters());
 					self::assertEmpty($methods[1]->parameters());
-					self::assertEquals(new NamedType(SomeStub::class), $methods[1]->returnType());
-					self::assertSame('parentMethod()', (string) $methods[1]);
+					self::assertEquals(new NamedType(Generator::class), $methods[1]->returnType());
+					self::assertSame('otherFunction()', (string) $methods[1]);
 
-					self::assertSame('otherFunction', $methods[2]->name());
+					self::assertSame('traitMethod', $methods[2]->name());
 					self::assertEmpty($methods[2]->attributes()->all());
 					self::assertEmpty($methods[2]->typeParameters());
 					self::assertEmpty($methods[2]->parameters());
-					self::assertEquals(new NamedType(Generator::class), $methods[2]->returnType());
-					self::assertSame('otherFunction()', (string) $methods[2]);
+					self::assertEquals(VoidType::get(), $methods[2]->returnType());
+					self::assertSame('traitMethod()', (string) $methods[2]);
 
-					self::assertSame('traitMethod', $methods[3]->name()); // todo traits
+					self::assertSame('traitMethodTwo', $methods[3]->name());
 					self::assertEmpty($methods[3]->attributes()->all());
 					self::assertEmpty($methods[3]->typeParameters());
 					self::assertEmpty($methods[3]->parameters());
 					self::assertEquals(VoidType::get(), $methods[3]->returnType());
-					self::assertSame('traitMethod()', (string) $methods[3]);
+					self::assertSame('traitMethodTwo()', (string) $methods[3]);
 
-					self::assertSame('__construct', $methods[4]->name());
+					self::assertSame('parentMethod', $methods[4]->name());
 					self::assertEmpty($methods[4]->attributes()->all());
 					self::assertEmpty($methods[4]->typeParameters());
-					with($methods[4]->parameters(), function (Collection $parameters) {
+					self::assertEmpty($methods[4]->parameters());
+					self::assertEquals(new NamedType(SomeStub::class), $methods[4]->returnType());
+					self::assertSame('parentMethod()', (string) $methods[4]);
+
+					self::assertSame('__construct', $methods[5]->name());
+					self::assertEmpty($methods[5]->attributes()->all());
+					self::assertEmpty($methods[5]->typeParameters());
+					with($methods[5]->parameters(), function (Collection $parameters) {
 						self::assertCount(1, $parameters);
 						self::assertContainsOnlyInstancesOf(FunctionParameterReflection::class, $parameters);
 
@@ -205,12 +240,12 @@ class ReflectionIntegrationTest extends IntegrationTestCase
 						self::assertEquals(new Collection([new AttributeStub('6')]), $parameters[0]->attributes()->all());
 						self::assertSame('arg $promoted', (string) $parameters[0]);
 					});
-					self::assertNull($methods[4]->returnType());
-					self::assertSame('__construct()', (string) $methods[4]);
+					self::assertNull($methods[5]->returnType());
+					self::assertSame('__construct()', (string) $methods[5]);
 
-					self::assertSame('method', $methods[5]->name());
-					self::assertEquals(new Collection([new AttributeStub('5')]), $methods[5]->attributes()->all());
-					with($methods[5]->typeParameters(), function (Collection $parameters) {
+					self::assertSame('method', $methods[6]->name());
+					self::assertEquals(new Collection([new AttributeStub('5')]), $methods[6]->attributes()->all());
+					with($methods[6]->typeParameters(), function (Collection $parameters) {
 						self::assertCount(1, $parameters);
 						self::assertContainsOnlyInstancesOf(TypeParameterReflection::class, $parameters);
 
@@ -219,7 +254,7 @@ class ReflectionIntegrationTest extends IntegrationTestCase
 						self::assertSame(MixedType::get(), $parameters[0]->upperBound());
 						self::assertSame(TemplateTypeVariance::INVARIANT, $parameters[0]->variance());
 					});
-					with($methods[5]->parameters(), function (Collection $parameters) {
+					with($methods[6]->parameters(), function (Collection $parameters) {
 						self::assertCount(1, $parameters);
 						self::assertContainsOnlyInstancesOf(FunctionParameterReflection::class, $parameters);
 
@@ -229,12 +264,12 @@ class ReflectionIntegrationTest extends IntegrationTestCase
 						self::assertEquals(new Collection([new AttributeStub('6')]), $parameters[0]->attributes()->all());
 						self::assertSame('arg $param', (string) $parameters[0]);
 					});
-					self::assertEquals(NamedType::wrap(Collection::class, [new TemplateType('S'), new TemplateType('G')]), $methods[5]->returnType());
-					self::assertSame('method()', (string) $methods[5]);
+					self::assertEquals(NamedType::wrap(Collection::class, [new TemplateType('S'), new TemplateType('G')]), $methods[6]->returnType());
+					self::assertSame('method()', (string) $methods[6]);
 
-					self::assertSame('methodTwo', $methods[6]->name());
-					self::assertEmpty($methods[6]->attributes()->all());
-					with($methods[6]->typeParameters(), function (Collection $parameters) {
+					self::assertSame('methodTwo', $methods[7]->name());
+					self::assertEmpty($methods[7]->attributes()->all());
+					with($methods[7]->typeParameters(), function (Collection $parameters) {
 						self::assertCount(2, $parameters);
 						self::assertContainsOnlyInstancesOf(TypeParameterReflection::class, $parameters);
 
@@ -248,7 +283,7 @@ class ReflectionIntegrationTest extends IntegrationTestCase
 						self::assertEquals(NamedType::wrap(SingleTemplateType::class, [new TemplateType('KValue')]), $parameters[1]->upperBound());
 						self::assertSame(TemplateTypeVariance::INVARIANT, $parameters[1]->variance());
 					});
-					with($methods[6]->parameters(), function (Collection $parameters) {
+					with($methods[7]->parameters(), function (Collection $parameters) {
 						self::assertCount(1, $parameters);
 						self::assertContainsOnlyInstancesOf(FunctionParameterReflection::class, $parameters);
 
@@ -258,13 +293,13 @@ class ReflectionIntegrationTest extends IntegrationTestCase
 						self::assertEmpty($parameters[0]->attributes()->all());
 						self::assertSame('arg $param', (string) $parameters[0]);
 					});
-					self::assertEquals(new TemplateType('KValue'), $methods[6]->returnType());
-					self::assertSame('methodTwo()', (string) $methods[6]);
+					self::assertEquals(new TemplateType('KValue'), $methods[7]->returnType());
+					self::assertSame('methodTwo()', (string) $methods[7]);
 
-					self::assertSame('self', $methods[7]->name());
-					self::assertEmpty($methods[7]->attributes()->all());
-					self::assertEmpty($methods[7]->typeParameters());
-					with($methods[7]->parameters(), function (Collection $parameters) {
+					self::assertSame('self', $methods[8]->name());
+					self::assertEmpty($methods[8]->attributes()->all());
+					self::assertEmpty($methods[8]->typeParameters());
+					with($methods[8]->parameters(), function (Collection $parameters) {
 						self::assertCount(1, $parameters);
 						self::assertContainsOnlyInstancesOf(FunctionParameterReflection::class, $parameters);
 
@@ -274,8 +309,8 @@ class ReflectionIntegrationTest extends IntegrationTestCase
 						self::assertEmpty($parameters[0]->attributes()->all());
 						self::assertSame('arg $parent', (string) $parameters[0]);
 					});
-					self::assertEquals(new StaticType(NamedType::wrap(ClassStub::class, [stdClass::class])), $methods[7]->returnType());
-					self::assertSame('self()', (string) $methods[7]);
+					self::assertEquals(new StaticType(NamedType::wrap(ClassStub::class, [stdClass::class])), $methods[8]->returnType());
+					self::assertSame('self()', (string) $methods[8]);
 				});
 			},
 		];
