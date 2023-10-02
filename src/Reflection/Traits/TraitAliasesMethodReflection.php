@@ -4,12 +4,21 @@ namespace GoodPhp\Reflection\Reflection\Traits;
 
 use GoodPhp\Reflection\Reflection\Attributes\Attributes;
 use GoodPhp\Reflection\Reflection\MethodReflection;
+use GoodPhp\Reflection\Reflection\Methods\HasMethods;
 use GoodPhp\Reflection\Type\NamedType;
 use GoodPhp\Reflection\Type\Type;
 use Illuminate\Support\Collection;
 
+/**
+ * @template-covariant DeclaringTypeReflection of HasMethods
+ *
+ * @implements MethodReflection<DeclaringTypeReflection>
+ */
 final class TraitAliasesMethodReflection implements MethodReflection
 {
+	/**
+	 * @param MethodReflection<DeclaringTypeReflection> $method
+	 */
 	public function __construct(
 		private MethodReflection $method,
 		private readonly UsedTraitAliasReflection $alias,
@@ -50,12 +59,12 @@ final class TraitAliasesMethodReflection implements MethodReflection
 		return $this->method->returnType();
 	}
 
-	public function invoke(object $receiver, ...$args): mixed
+	public function invoke(object $receiver, mixed ...$args): mixed
 	{
 		return $this->method->invoke($receiver, ...$args);
 	}
 
-	public function invokeLax(object $receiver, ...$args): mixed
+	public function invokeLax(object $receiver, mixed ...$args): mixed
 	{
 		return $this->method->invokeLax($receiver, ...$args);
 	}
@@ -63,6 +72,14 @@ final class TraitAliasesMethodReflection implements MethodReflection
 	public function location(): string
 	{
 		return $this->method->location();
+	}
+
+	/**
+	 * @return DeclaringTypeReflection
+	 */
+	public function declaringType(): HasMethods
+	{
+		return $this->method->declaringType();
 	}
 
 	public function __toString(): string

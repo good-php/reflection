@@ -42,7 +42,7 @@ class PhpDocTypeMapper
 	/**
 	 * @param TypeNode|iterable<int, TypeNode> $node
 	 *
-	 * @return Collection
+	 * @return ($node is TypeNode ? Type : Collection<int, Type>)
 	 */
 	public function map(TypeNode|iterable $node, TypeContext $context): Type|Collection
 	{

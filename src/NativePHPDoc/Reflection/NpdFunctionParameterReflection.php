@@ -4,7 +4,9 @@ namespace GoodPhp\Reflection\NativePHPDoc\Reflection;
 
 use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\FunctionParameterDefinition;
 use GoodPhp\Reflection\NativePHPDoc\Reflection\Attributes\NpdAttributes;
+use GoodPhp\Reflection\Reflection\Attributes\Attributes;
 use GoodPhp\Reflection\Reflection\FunctionParameterReflection;
+use GoodPhp\Reflection\Reflection\MethodReflection;
 use GoodPhp\Reflection\Type\NamedType;
 use GoodPhp\Reflection\Type\Template\TypeParameterMap;
 use GoodPhp\Reflection\Type\Type;
@@ -13,7 +15,7 @@ use ReflectionParameter;
 use Webmozart\Assert\Assert;
 
 /**
- * @template-covariant DeclaringMethodReflection of NpdMethodReflection
+ * @template-covariant DeclaringMethodReflection of MethodReflection
  *
  * @implements FunctionParameterReflection<DeclaringMethodReflection>
  */
@@ -21,13 +23,16 @@ final class NpdFunctionParameterReflection implements FunctionParameterReflectio
 {
 	private readonly ReflectionParameter $nativeReflection;
 
-	private readonly NpdAttributes $attributes;
+	private readonly Attributes $attributes;
 
 	private readonly ?Type $type;
 
+	/**
+	 * @param DeclaringMethodReflection $declaringMethod
+	 */
 	public function __construct(
 		private readonly FunctionParameterDefinition $definition,
-		private readonly NpdMethodReflection $declaringMethod,
+		private readonly MethodReflection $declaringMethod,
 		private NamedType $staticType,
 		private readonly TypeParameterMap $resolvedTypeParameterMap,
 	) {}
@@ -69,7 +74,7 @@ final class NpdFunctionParameterReflection implements FunctionParameterReflectio
 		return $this->nativeReflection()->getDefaultValue();
 	}
 
-	public function attributes(): NpdAttributes
+	public function attributes(): Attributes
 	{
 		return $this->attributes ??= new NpdAttributes(
 			fn () => $this->nativeReflection()->getAttributes()
@@ -84,7 +89,7 @@ final class NpdFunctionParameterReflection implements FunctionParameterReflectio
 	/**
 	 * @return DeclaringMethodReflection
 	 */
-	public function declaringMethod(): NpdMethodReflection
+	public function declaringMethod(): MethodReflection
 	{
 		return $this->declaringMethod;
 	}

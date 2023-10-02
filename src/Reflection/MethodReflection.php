@@ -3,6 +3,7 @@
 namespace GoodPhp\Reflection\Reflection;
 
 use GoodPhp\Reflection\Reflection\Attributes\HasAttributes;
+use GoodPhp\Reflection\Reflection\Methods\HasMethods;
 use GoodPhp\Reflection\Reflection\TypeParameters\HasTypeParameters;
 use GoodPhp\Reflection\Type\NamedType;
 use GoodPhp\Reflection\Type\Type;
@@ -10,7 +11,7 @@ use Illuminate\Support\Collection;
 use Stringable;
 
 /**
- * @template-covariant DeclaringTypeReflection of ClassReflection|InterfaceReflection|TraitReflection|EnumReflection
+ * @template-covariant DeclaringTypeReflection of HasMethods
  */
 interface MethodReflection extends Stringable, HasAttributes, HasTypeParameters
 {
@@ -36,4 +37,9 @@ interface MethodReflection extends Stringable, HasAttributes, HasTypeParameters
 	public function invokeLax(object $receiver, mixed ...$args): mixed;
 
 	public function location(): string;
+
+	/**
+	 * @return DeclaringTypeReflection
+	 */
+	public function declaringType(): HasMethods;
 }

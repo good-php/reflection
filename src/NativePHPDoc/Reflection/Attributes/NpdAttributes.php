@@ -4,6 +4,7 @@ namespace GoodPhp\Reflection\NativePHPDoc\Reflection\Attributes;
 
 use Attribute;
 use GoodPhp\Reflection\Reflection\Attributes\Attributes;
+use GoodPhp\Reflection\Reflection\Attributes\MultipleAttributesFoundException;
 use Illuminate\Support\Collection;
 use Illuminate\Support\ItemNotFoundException;
 use Illuminate\Support\MultipleItemsFoundException;

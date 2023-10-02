@@ -4,17 +4,22 @@ namespace GoodPhp\Reflection\NativePHPDoc\Reflection;
 
 use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\PropertyDefinition;
 use GoodPhp\Reflection\NativePHPDoc\Reflection\Attributes\NpdAttributes;
+use GoodPhp\Reflection\Reflection\Attributes\Attributes;
+use GoodPhp\Reflection\Reflection\ClassReflection;
+use GoodPhp\Reflection\Reflection\FunctionParameterReflection;
+use GoodPhp\Reflection\Reflection\MethodReflection;
+use GoodPhp\Reflection\Reflection\Methods\HasMethods;
+use GoodPhp\Reflection\Reflection\Properties\HasProperties;
 use GoodPhp\Reflection\Reflection\PropertyReflection;
 use GoodPhp\Reflection\Type\NamedType;
 use GoodPhp\Reflection\Type\Template\TypeParameterMap;
 use GoodPhp\Reflection\Type\Type;
 use GoodPhp\Reflection\Type\TypeProjector;
 use ReflectionProperty;
-use UnitEnum;
 use Webmozart\Assert\Assert;
 
 /**
- * @template-covariant DeclaringTypeReflection of NpdClassReflection|NpdInterfaceReflection|NpdTraitReflection|NpdEnumReflection
+ * @template-covariant DeclaringTypeReflection of HasProperties
  *
  * @implements PropertyReflection<DeclaringTypeReflection>
  */
@@ -22,19 +27,19 @@ final class NpdPropertyReflection implements PropertyReflection
 {
 	private readonly ReflectionProperty $nativeReflection;
 
-	private readonly NpdAttributes $attributes;
+	private readonly Attributes $attributes;
 
 	private readonly ?Type $type;
 
-	/** @var NpdFunctionParameterReflection<NpdMethodReflection<NpdClassReflection<object>|NpdInterfaceReflection<object>|NpdTraitReflection<object>|NpdEnumReflection<UnitEnum>>>|null */
-	private readonly ?NpdFunctionParameterReflection $promotedParameter;
+	/** @var FunctionParameterReflection<MethodReflection<HasMethods>>|null */
+	private readonly ?FunctionParameterReflection $promotedParameter;
 
 	/**
-	 * @param NpdClassReflection $declaringType
+	 * @param DeclaringTypeReflection $declaringType
 	 */
 	public function __construct(
 		private readonly PropertyDefinition $definition,
-		private readonly NpdClassReflection|NpdInterfaceReflection|NpdTraitReflection|NpdEnumReflection $declaringType,
+		private readonly HasProperties $declaringType,
 		private NamedType $staticType,
 		private readonly TypeParameterMap $resolvedTypeParameterMap,
 	) {}
@@ -97,15 +102,15 @@ final class NpdPropertyReflection implements PropertyReflection
 	/**
 	 * If property is promoted, it refers to the __construct parameter it was promoted for.
 	 *
-	 * @return NpdFunctionParameterReflection<NpdMethodReflection<NpdClassReflection<object>|NpdInterfaceReflection<object>|NpdTraitReflection<object>|NpdEnumReflection<UnitEnum>>>|null
+	 * @return FunctionParameterReflection<MethodReflection<HasMethods>>|null
 	 */
-	public function promotedParameter(): NpdFunctionParameterReflection|null
+	public function promotedParameter(): FunctionParameterReflection|null
 	{
 		if (isset($this->promotedParameter)) {
 			return $this->promotedParameter;
 		}
 
-		if (!$this->isPromoted() || !$this->declaringType instanceof NpdClassReflection) {
+		if (!$this->isPromoted() || !$this->declaringType instanceof ClassReflection) {
 			return null;
 		}
 
@@ -114,11 +119,11 @@ final class NpdPropertyReflection implements PropertyReflection
 		Assert::notNull($constructor);
 
 		return $this->promotedParameter ??= $constructor->parameters()->first(
-			fn (NpdFunctionParameterReflection $parameter) => $this->definition->name === $parameter->name()
+			fn (FunctionParameterReflection $parameter) => $this->definition->name === $parameter->name()
 		);
 	}
 
-	public function attributes(): NpdAttributes
+	public function attributes(): Attributes
 	{
 		return $this->attributes ??= new NpdAttributes(
 			fn () => $this->nativeReflection()->getAttributes()
@@ -150,7 +155,7 @@ final class NpdPropertyReflection implements PropertyReflection
 	/**
 	 * @return DeclaringTypeReflection
 	 */
-	public function declaringType(): NpdClassReflection|NpdInterfaceReflection|NpdTraitReflection|NpdEnumReflection
+	public function declaringType(): HasProperties
 	{
 		return $this->declaringType;
 	}

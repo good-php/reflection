@@ -7,11 +7,15 @@ use GoodPhp\Reflection\Reflection\EnumReflection;
 use GoodPhp\Reflection\Reflection\InterfaceReflection;
 use GoodPhp\Reflection\Reflection\PropertyReflection;
 use GoodPhp\Reflection\Reflection\TraitReflection;
+use GoodPhp\Reflection\Reflection\TypeReflection;
 use GoodPhp\Reflection\Type\NamedType;
 use Illuminate\Support\Collection;
 use UnitEnum;
 
-interface HasProperties
+/**
+ * @extends TypeReflection<object>
+ */
+interface HasProperties extends TypeReflection
 {
 	public function withStaticType(NamedType $staticType): static;
 

@@ -19,7 +19,7 @@ trait InheritsClassMembers
 	/**
 	 * @param Collection<int, NamedType>|Type $types
 	 *
-	 * @return Collection<int, PropertyReflection>
+	 * @return Collection<int, PropertyReflection<HasProperties>>
 	 */
 	protected function propertiesFromTypes(Collection|Type $types, NamedType $staticType, Reflector $reflector): Collection
 	{
@@ -38,7 +38,7 @@ trait InheritsClassMembers
 	}
 
 	/**
-	 * @return Collection<int, PropertyReflection>
+	 * @return Collection<int, PropertyReflection<HasProperties>>
 	 */
 	protected function propertiesFromTraits(UsedTraitsReflection $usedTraits, NamedType $staticType, Reflector $reflector): Collection
 	{
@@ -52,7 +52,7 @@ trait InheritsClassMembers
 	/**
 	 * @param Collection<int, NamedType>|Type $types
 	 *
-	 * @return Collection<int, MethodReflection>
+	 * @return Collection<int, MethodReflection<HasMethods>>
 	 */
 	protected function methodsFromTypes(Collection|Type $types, NamedType $staticType, Reflector $reflector): Collection
 	{
@@ -71,7 +71,7 @@ trait InheritsClassMembers
 	}
 
 	/**
-	 * @return Collection<int, MethodReflection>
+	 * @return Collection<int, MethodReflection<TraitReflection<object>>>
 	 */
 	protected function methodsFromTraits(UsedTraitsReflection $usedTraits, NamedType $staticType, Reflector $reflector): Collection
 	{
@@ -96,9 +96,10 @@ trait InheritsClassMembers
 	}
 
 	/**
+	 * @param MethodReflection<TraitReflection<object>> $method
 	 * @param Collection<int, UsedTraitAliasReflection> $aliases
 	 *
-	 * @return array<int, MethodReflection>
+	 * @return array<int, MethodReflection<TraitReflection<object>>>
 	 */
 	private function aliasMethod(MethodReflection $method, Collection $aliases): array
 	{

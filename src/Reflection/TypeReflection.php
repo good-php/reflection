@@ -3,13 +3,11 @@
 namespace GoodPhp\Reflection\Reflection;
 
 use GoodPhp\Reflection\Type\NamedType;
-use JiriPudil\SealedClasses\Sealed;
 use Stringable;
 
 /**
  * @template-covariant T
  */
-#[Sealed(permits: [ClassReflection::class, InterfaceReflection::class, TraitReflection::class, EnumReflection::class])]
 interface TypeReflection extends Stringable
 {
 	public function fileName(): ?string;

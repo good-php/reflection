@@ -27,7 +27,7 @@ class NativeTypeMapper
 	/**
 	 * @param ReflectionType|string|iterable<int, ReflectionType|string> $type
 	 *
-	 * @return Collection
+	 * @return ($type is ReflectionType|string ? Type : Collection<int, Type>)
 	 */
 	public function map(ReflectionType|string|iterable $type, TypeContext $context): Type|Collection
 	{

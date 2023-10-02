@@ -19,6 +19,9 @@ use GoodPhp\Reflection\Type\TypeProjector;
  */
 final class NpdTypeParameterReflection implements TypeParameterReflection
 {
+	/**
+	 * @param DeclaringStructureReflection $declaringStructure
+	 */
 	public function __construct(
 		private readonly TypeParameterDefinition $definition,
 		private readonly HasTypeParameters $declaringStructure,

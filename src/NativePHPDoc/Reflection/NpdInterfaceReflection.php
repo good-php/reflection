@@ -7,9 +7,12 @@ use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\MethodDefinition;
 use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\TypeParameterDefinition;
 use GoodPhp\Reflection\NativePHPDoc\Reflection\Attributes\NpdAttributes;
 use GoodPhp\Reflection\NativePHPDoc\Reflection\TypeParameters\NpdTypeParameterReflection;
+use GoodPhp\Reflection\Reflection\Attributes\Attributes;
 use GoodPhp\Reflection\Reflection\InheritsClassMembers;
 use GoodPhp\Reflection\Reflection\InterfaceReflection;
 use GoodPhp\Reflection\Reflection\MethodReflection;
+use GoodPhp\Reflection\Reflection\Methods\HasMethods;
+use GoodPhp\Reflection\Reflection\TypeParameters\TypeParameterReflection;
 use GoodPhp\Reflection\Reflector;
 use GoodPhp\Reflection\Type\NamedType;
 use GoodPhp\Reflection\Type\Template\TypeParameterMap;
@@ -32,21 +35,21 @@ final class NpdInterfaceReflection extends NpdTypeReflection implements Interfac
 
 	private NamedType $staticType;
 
-	/** @var Collection<int, NpdTypeParameterReflection<$this>> */
+	/** @var Collection<int, TypeParameterReflection<$this>> */
 	private readonly Collection $typeParameters;
 
 	/** @var ReflectionClass<T> */
 	private readonly ReflectionClass $nativeReflection;
 
-	private readonly NpdAttributes $attributes;
+	private readonly Attributes $attributes;
 
 	/** @var Collection<int, NamedType> */
 	private readonly Collection $extends;
 
-	/** @var Collection<int, NpdMethodReflection<$this>> */
+	/** @var Collection<int, MethodReflection<$this>> */
 	private readonly Collection $declaredMethods;
 
-	/** @var Collection<int, NpdMethodReflection<$this|self<object>>> */
+	/** @var Collection<int, MethodReflection<HasMethods>> */
 	private readonly Collection $methods;
 
 	/**
@@ -89,7 +92,7 @@ final class NpdInterfaceReflection extends NpdTypeReflection implements Interfac
 		return $this->definition->fileName;
 	}
 
-	public function attributes(): NpdAttributes
+	public function attributes(): Attributes
 	{
 		return $this->attributes ??= new NpdAttributes(
 			fn () => $this->nativeReflection()->getAttributes()
@@ -97,7 +100,7 @@ final class NpdInterfaceReflection extends NpdTypeReflection implements Interfac
 	}
 
 	/**
-	 * @return Collection<int, NpdTypeParameterReflection<$this>>
+	 * @return Collection<int, TypeParameterReflection<$this>>
 	 */
 	public function typeParameters(): Collection
 	{
@@ -121,7 +124,7 @@ final class NpdInterfaceReflection extends NpdTypeReflection implements Interfac
 	}
 
 	/**
-	 * @return Collection<int, NpdMethodReflection<$this>>
+	 * @return Collection<int, MethodReflection<$this>>
 	 */
 	public function declaredMethods(): Collection
 	{
@@ -131,15 +134,11 @@ final class NpdInterfaceReflection extends NpdTypeReflection implements Interfac
 	}
 
 	/**
-	 * @return Collection<int, NpdMethodReflection<$this|self<object>>>
+	 * @return Collection<int, MethodReflection<HasMethods>>
 	 */
 	public function methods(): Collection
 	{
-		if (isset($this->methods)) {
-			return $this->methods;
-		}
-
-		return collect([
+		return $this->methods ??= collect([
 			...$this->methodsFromTypes($this->extends(), $this->staticType, $this->reflector),
 			...$this->declaredMethods(),
 		])

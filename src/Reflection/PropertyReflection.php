@@ -3,13 +3,14 @@
 namespace GoodPhp\Reflection\Reflection;
 
 use GoodPhp\Reflection\Reflection\Attributes\HasAttributes;
+use GoodPhp\Reflection\Reflection\Methods\HasMethods;
+use GoodPhp\Reflection\Reflection\Properties\HasProperties;
 use GoodPhp\Reflection\Type\NamedType;
 use GoodPhp\Reflection\Type\Type;
 use Stringable;
-use UnitEnum;
 
 /**
- * @template-covariant DeclaringTypeReflection of ClassReflection|InterfaceReflection|TraitReflection|EnumReflection
+ * @template-covariant DeclaringTypeReflection of HasProperties
  */
 interface PropertyReflection extends Stringable, HasAttributes
 {
@@ -28,7 +29,7 @@ interface PropertyReflection extends Stringable, HasAttributes
 	/**
 	 * If property is promoted, it refers to the __construct parameter it was promoted for.
 	 *
-	 * @return FunctionParameterReflection<MethodReflection<ClassReflection<object>|InterfaceReflection<object>|TraitReflection<object>|EnumReflection<UnitEnum>>>|null
+	 * @return FunctionParameterReflection<MethodReflection<HasMethods>>|null
 	 */
 	public function promotedParameter(): FunctionParameterReflection|null;
 
@@ -45,4 +46,9 @@ interface PropertyReflection extends Stringable, HasAttributes
 	public function setLax(object $receiver, mixed $value): void;
 
 	public function location(): string;
+
+	/**
+	 * @return DeclaringTypeReflection
+	 */
+	public function declaringType(): HasProperties;
 }

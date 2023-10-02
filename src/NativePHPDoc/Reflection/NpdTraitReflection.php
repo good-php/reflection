@@ -9,10 +9,15 @@ use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\TypeParameterDefin
 use GoodPhp\Reflection\NativePHPDoc\Reflection\Attributes\NpdAttributes;
 use GoodPhp\Reflection\NativePHPDoc\Reflection\Traits\NpdUsedTraitsReflection;
 use GoodPhp\Reflection\NativePHPDoc\Reflection\TypeParameters\NpdTypeParameterReflection;
+use GoodPhp\Reflection\Reflection\Attributes\Attributes;
 use GoodPhp\Reflection\Reflection\InheritsClassMembers;
 use GoodPhp\Reflection\Reflection\MethodReflection;
+use GoodPhp\Reflection\Reflection\Methods\HasMethods;
+use GoodPhp\Reflection\Reflection\Properties\HasProperties;
 use GoodPhp\Reflection\Reflection\PropertyReflection;
 use GoodPhp\Reflection\Reflection\TraitReflection;
+use GoodPhp\Reflection\Reflection\Traits\UsedTraitsReflection;
+use GoodPhp\Reflection\Reflection\TypeParameters\TypeParameterReflection;
 use GoodPhp\Reflection\Reflector;
 use GoodPhp\Reflection\Type\NamedType;
 use GoodPhp\Reflection\Type\Template\TypeParameterMap;
@@ -37,23 +42,23 @@ final class NpdTraitReflection extends NpdTypeReflection implements TraitReflect
 	/** @var ReflectionClass<T> */
 	private readonly ReflectionClass $nativeReflection;
 
-	/** @var Collection<int, NpdTypeParameterReflection<$this>> */
+	/** @var Collection<int, TypeParameterReflection<$this>> */
 	private readonly Collection $typeParameters;
 
-	private readonly NpdAttributes $attributes;
+	private readonly Attributes $attributes;
 
-	private NpdUsedTraitsReflection $uses;
+	private UsedTraitsReflection $uses;
 
-	/** @var Collection<int, NpdPropertyReflection<$this>> */
+	/** @var Collection<int, PropertyReflection<$this>> */
 	private Collection $declaredProperties;
 
-	/** @var Collection<int, NpdPropertyReflection<$this|self<object>>> */
+	/** @var Collection<int, PropertyReflection<HasProperties>> */
 	private Collection $properties;
 
-	/** @var Collection<int, NpdMethodReflection<$this>> */
+	/** @var Collection<int, MethodReflection<$this>> */
 	private Collection $declaredMethods;
 
-	/** @var Collection<int, NpdMethodReflection<$this|self<object>>> */
+	/** @var Collection<int, MethodReflection<HasMethods>> */
 	private Collection $methods;
 
 	/**
@@ -96,7 +101,7 @@ final class NpdTraitReflection extends NpdTypeReflection implements TraitReflect
 		return $this->definition->fileName;
 	}
 
-	public function attributes(): NpdAttributes
+	public function attributes(): Attributes
 	{
 		return $this->attributes ??= new NpdAttributes(
 			fn () => $this->nativeReflection()->getAttributes()
@@ -104,7 +109,7 @@ final class NpdTraitReflection extends NpdTypeReflection implements TraitReflect
 	}
 
 	/**
-	 * @return Collection<int, NpdTypeParameterReflection<$this>>
+	 * @return Collection<int, TypeParameterReflection<$this>>
 	 */
 	public function typeParameters(): Collection
 	{
@@ -113,13 +118,13 @@ final class NpdTraitReflection extends NpdTypeReflection implements TraitReflect
 			->map(fn (TypeParameterDefinition $parameter) => new NpdTypeParameterReflection($parameter, $this, $this->staticType));
 	}
 
-	public function uses(): NpdUsedTraitsReflection
+	public function uses(): UsedTraitsReflection
 	{
 		return $this->uses ??= new NpdUsedTraitsReflection($this->definition->uses, $this->resolvedTypeParameterMap, $this->staticType);
 	}
 
 	/**
-	 * @return Collection<int, NpdPropertyReflection<$this>>
+	 * @return Collection<int, PropertyReflection<$this>>
 	 */
 	public function declaredProperties(): Collection
 	{
@@ -129,15 +134,11 @@ final class NpdTraitReflection extends NpdTypeReflection implements TraitReflect
 	}
 
 	/**
-	 * @return Collection<int, NpdPropertyReflection<$this|self<object>>>
+	 * @return Collection<int, PropertyReflection<HasProperties>>
 	 */
 	public function properties(): Collection
 	{
-		if (isset($this->properties)) {
-			return $this->properties;
-		}
-
-		return collect([
+		return $this->properties ??= collect([
 			...$this->propertiesFromTraits($this->uses(), $this->staticType, $this->reflector),
 			...$this->declaredProperties(),
 		])
@@ -146,7 +147,7 @@ final class NpdTraitReflection extends NpdTypeReflection implements TraitReflect
 	}
 
 	/**
-	 * @return Collection<int, NpdMethodReflection<$this>>
+	 * @return Collection<int, MethodReflection<$this>>
 	 */
 	public function declaredMethods(): Collection
 	{
@@ -156,15 +157,11 @@ final class NpdTraitReflection extends NpdTypeReflection implements TraitReflect
 	}
 
 	/**
-	 * @return Collection<int, NpdMethodReflection<$this|self<object>>>
+	 * @return Collection<int, MethodReflection<HasMethods>>
 	 */
 	public function methods(): Collection
 	{
-		if (isset($this->methods)) {
-			return $this->methods;
-		}
-
-		return collect([
+		return $this->methods ??= collect([
 			...$this->methodsFromTraits($this->uses(), $this->staticType, $this->reflector),
 			...$this->declaredMethods(),
 		])

@@ -7,7 +7,11 @@ use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\MethodDefinition;
 use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\TypeParameterDefinition;
 use GoodPhp\Reflection\NativePHPDoc\Reflection\Attributes\NpdAttributes;
 use GoodPhp\Reflection\NativePHPDoc\Reflection\TypeParameters\NpdTypeParameterReflection;
+use GoodPhp\Reflection\Reflection\Attributes\Attributes;
+use GoodPhp\Reflection\Reflection\FunctionParameterReflection;
 use GoodPhp\Reflection\Reflection\MethodReflection;
+use GoodPhp\Reflection\Reflection\Methods\HasMethods;
+use GoodPhp\Reflection\Reflection\TypeParameters\TypeParameterReflection;
 use GoodPhp\Reflection\Type\NamedType;
 use GoodPhp\Reflection\Type\Template\TypeParameterMap;
 use GoodPhp\Reflection\Type\Type;
@@ -16,7 +20,7 @@ use Illuminate\Support\Collection;
 use ReflectionMethod;
 
 /**
- * @template-covariant DeclaringTypeReflection of NpdClassReflection|NpdInterfaceReflection|NpdTraitReflection|NpdEnumReflection
+ * @template-covariant DeclaringTypeReflection of HasMethods
  *
  * @implements MethodReflection<DeclaringTypeReflection>
  */
@@ -24,22 +28,22 @@ final class NpdMethodReflection implements MethodReflection
 {
 	private readonly ReflectionMethod $nativeReflection;
 
-	/** @var Collection<int, NpdTypeParameterReflection<$this>> */
+	/** @var Collection<int, TypeParameterReflection<$this>> */
 	private readonly Collection $typeParameters;
 
-	private readonly NpdAttributes $attributes;
+	private readonly Attributes $attributes;
 
-	/** @var Collection<int, NpdFunctionParameterReflection<$this>> */
+	/** @var Collection<int, FunctionParameterReflection<$this>> */
 	private Collection $parameters;
 
 	private ?Type $returnType;
 
 	/**
-	 * @param NpdClassReflection $declaringType
+	 * @param DeclaringTypeReflection $declaringType
 	 */
 	public function __construct(
 		private readonly MethodDefinition $definition,
-		private readonly NpdClassReflection|NpdInterfaceReflection|NpdTraitReflection|NpdEnumReflection $declaringType,
+		private readonly HasMethods $declaringType,
 		private NamedType $staticType,
 		private readonly TypeParameterMap $resolvedTypeParameterMap,
 	) {}
@@ -62,7 +66,7 @@ final class NpdMethodReflection implements MethodReflection
 		return $this->definition->name;
 	}
 
-	public function attributes(): NpdAttributes
+	public function attributes(): Attributes
 	{
 		return $this->attributes ??= new NpdAttributes(
 			fn () => $this->nativeReflection()->getAttributes()
@@ -70,7 +74,7 @@ final class NpdMethodReflection implements MethodReflection
 	}
 
 	/**
-	 * @return Collection<int, NpdTypeParameterReflection<$this>>
+	 * @return Collection<int, TypeParameterReflection<$this>>
 	 */
 	public function typeParameters(): Collection
 	{
@@ -80,7 +84,7 @@ final class NpdMethodReflection implements MethodReflection
 	}
 
 	/**
-	 * @return Collection<int, NpdFunctionParameterReflection<$this>>
+	 * @return Collection<int, FunctionParameterReflection<$this>>
 	 */
 	public function parameters(): Collection
 	{
@@ -126,7 +130,7 @@ final class NpdMethodReflection implements MethodReflection
 	/**
 	 * @return DeclaringTypeReflection
 	 */
-	public function declaringType(): NpdClassReflection|NpdInterfaceReflection|NpdTraitReflection|NpdEnumReflection
+	public function declaringType(): HasMethods
 	{
 		return $this->declaringType;
 	}

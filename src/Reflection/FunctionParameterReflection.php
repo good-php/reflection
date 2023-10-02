@@ -20,4 +20,9 @@ interface FunctionParameterReflection extends Stringable, HasAttributes
 	public function defaultValue(): mixed;
 
 	public function location(): string;
+
+	/**
+	 * @return DeclaringMethodReflection
+	 */
+	public function declaringMethod(): MethodReflection;
 }

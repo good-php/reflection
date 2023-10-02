@@ -6,6 +6,7 @@ use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\SpecialTypeDefinit
 use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\TypeParameterDefinition;
 use GoodPhp\Reflection\NativePHPDoc\Reflection\TypeParameters\NpdTypeParameterReflection;
 use GoodPhp\Reflection\Reflection\SpecialTypeReflection;
+use GoodPhp\Reflection\Reflection\TypeParameters\TypeParameterReflection;
 use GoodPhp\Reflection\Type\NamedType;
 use GoodPhp\Reflection\Type\Template\TypeParameterMap;
 use GoodPhp\Reflection\Type\Type;
@@ -22,7 +23,7 @@ final class NpdSpecialTypeReflection extends NpdTypeReflection implements Specia
 {
 	private readonly NamedType $type;
 
-	/** @var Collection<int, NpdTypeParameterReflection<$this>> */
+	/** @var Collection<int, TypeParameterReflection<$this>> */
 	private readonly Collection $typeParameters;
 
 	public function __construct(
@@ -48,7 +49,7 @@ final class NpdSpecialTypeReflection extends NpdTypeReflection implements Specia
 	}
 
 	/**
-	 * @return Collection<int, NpdTypeParameterReflection<$this>>
+	 * @return Collection<int, TypeParameterReflection<$this>>
 	 */
 	public function typeParameters(): Collection
 	{
