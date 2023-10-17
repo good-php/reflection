@@ -7,6 +7,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\ItemNotFoundException;
 use Illuminate\Support\MultipleItemsFoundException;
+use Illuminate\Support\Str;
 
 class ArrayAttributes implements Attributes
 {
@@ -20,11 +21,13 @@ class ArrayAttributes implements Attributes
 	}
 
 	/**
-	 * @param class-string<object> $className
+	 * @param class-string<object>|null $className
 	 */
-	public function has(string $className): bool
+	public function has(?string $className = null): bool
 	{
-		return Arr::has($this->attributes, $className);
+		$attributes = $className ? $this->attributes[$className] ?? [] : $this->attributes;
+
+		return (bool) $attributes;
 	}
 
 	/**
@@ -56,6 +59,15 @@ class ArrayAttributes implements Attributes
 		} catch (ItemNotFoundException) {
 			return null;
 		}
+	}
+
+	public function __toString(): string
+	{
+		$attributes = collect($this->attributes)
+			->map(fn (mixed $attributes, string $className) => "\\{$className}(...)")
+			->implode(', ');
+
+		return "#[{$attributes}]";
 	}
 
 	/**

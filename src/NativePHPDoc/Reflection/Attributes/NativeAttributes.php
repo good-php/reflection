@@ -41,9 +41,9 @@ final class NativeAttributes implements Attributes
 	}
 
 	/**
-	 * @param class-string<object> $className
+	 * @param class-string<object>|null $className
 	 */
-	public function has(string $className): bool
+	public function has(?string $className = null): bool
 	{
 		return $this->delegate->value()->has($className);
 	}
@@ -70,5 +70,10 @@ final class NativeAttributes implements Attributes
 	public function sole(string $className): ?object
 	{
 		return $this->delegate->value()->sole($className);
+	}
+
+	public function __toString()
+	{
+		return (string) $this->delegate->value();
 	}
 }

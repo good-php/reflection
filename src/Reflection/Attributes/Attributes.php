@@ -5,12 +5,12 @@ namespace GoodPhp\Reflection\Reflection\Attributes;
 use Attribute;
 use Illuminate\Support\Collection;
 
-interface Attributes
+interface Attributes extends \Stringable
 {
 	/**
-	 * @param class-string<object> $className
+	 * @param class-string<object>|null $className
 	 */
-	public function has(string $className): bool;
+	public function has(?string $className = null): bool;
 
 	/**
 	 * @template AttributeType of object

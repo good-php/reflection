@@ -50,6 +50,8 @@ class ReflectionTest extends IntegrationTestCase
 				self::assertTrue($reflection->isFinal());
 				self::assertFalse($reflection->isBuiltIn());
 				self::assertEquals(new Collection([new AttributeStub('123')]), $reflection->attributes()->all());
+				self::assertTrue($reflection->attributes()->has());
+				self::assertEquals('#[\Tests\Stubs\AttributeStub(...)]', (string) $reflection->attributes());
 
 				with($reflection->typeParameters(), function (Collection $parameters) {
 					self::assertCount(2, $parameters);
