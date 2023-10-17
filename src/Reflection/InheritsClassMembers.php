@@ -17,11 +17,11 @@ use Webmozart\Assert\Assert;
 trait InheritsClassMembers
 {
 	/**
-	 * @param Collection<int, NamedType>|Type $types
+	 * @param Collection<int, NamedType>|NamedType $types
 	 *
 	 * @return Collection<int, PropertyReflection<HasProperties>>
 	 */
-	protected function propertiesFromTypes(Collection|Type $types, NamedType $staticType, Reflector $reflector): Collection
+	protected function propertiesFromTypes(Collection|NamedType $types, NamedType $staticType, Reflector $reflector): Collection
 	{
 		return Collection::wrap($types)
 			->flatMap(function (NamedType $type) use ($staticType, $reflector) {
@@ -50,11 +50,11 @@ trait InheritsClassMembers
 	}
 
 	/**
-	 * @param Collection<int, NamedType>|Type $types
+	 * @param Collection<int, NamedType>|NamedType $types
 	 *
 	 * @return Collection<int, MethodReflection<HasMethods>>
 	 */
-	protected function methodsFromTypes(Collection|Type $types, NamedType $staticType, Reflector $reflector): Collection
+	protected function methodsFromTypes(Collection|NamedType $types, NamedType $staticType, Reflector $reflector): Collection
 	{
 		return Collection::wrap($types)
 			->flatMap(function (NamedType $type) use ($staticType, $reflector) {

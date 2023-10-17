@@ -23,6 +23,8 @@ final class NpdSpecialTypeReflection extends NpdTypeReflection implements Specia
 {
 	private readonly NamedType $type;
 
+	private NamedType $staticType;
+
 	/** @var Collection<int, TypeParameterReflection<$this>> */
 	private readonly Collection $typeParameters;
 
@@ -31,6 +33,20 @@ final class NpdSpecialTypeReflection extends NpdTypeReflection implements Specia
 		private readonly TypeParameterMap $resolvedTypeParameterMap,
 	) {
 		$this->type = new NamedType($this->qualifiedName(), $this->resolvedTypeParameterMap->toArguments($this->definition->typeParameters));
+		$this->staticType = $this->type;
+	}
+
+	public function withStaticType(NamedType $staticType): static
+	{
+		if ($this->staticType->equals($staticType)) {
+			return $this;
+		}
+
+		$that = clone $this;
+		$that->staticType = $staticType;
+		unset($this->typeParameters);
+
+		return $that;
 	}
 
 	public function type(): NamedType

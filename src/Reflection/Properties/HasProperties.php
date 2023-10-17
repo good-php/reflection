@@ -13,19 +13,19 @@ use Illuminate\Support\Collection;
 use UnitEnum;
 
 /**
- * @extends TypeReflection<object>
+ * @template ReflectableType of object
+ *
+ * @extends TypeReflection<ReflectableType>
  */
 interface HasProperties extends TypeReflection
 {
-	public function withStaticType(NamedType $staticType): static;
-
 	/**
-	 * @return Collection<int, PropertyReflection<$this>>
+	 * @return Collection<int, PropertyReflection<ReflectableType, $this>>
 	 */
 	public function declaredProperties(): Collection;
 
 	/**
-	 * @return Collection<int, PropertyReflection<$this|ClassReflection<object>|InterfaceReflection<object>|TraitReflection<object>|EnumReflection<UnitEnum>>>
+	 * @return Collection<int, PropertyReflection<ReflectableType, HasProperties<object>>>
 	 */
 	public function properties(): Collection;
 }

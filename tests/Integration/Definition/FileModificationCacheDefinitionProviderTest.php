@@ -14,7 +14,7 @@ use Symfony\Component\Cache\Psr16Cache;
 use Tests\Integration\IntegrationTestCase;
 use Tests\Stubs\Classes\ClassStub;
 
-class FileModificationCacheDefinitionProviderIntegrationTest extends IntegrationTestCase
+class FileModificationCacheDefinitionProviderTest extends IntegrationTestCase
 {
 	private DefinitionProvider $delegate;
 

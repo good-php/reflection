@@ -4,8 +4,9 @@ namespace Tests\Integration;
 
 use GoodPhp\Reflection\Reflector;
 use GoodPhp\Reflection\ReflectorBuilder;
+use PHPUnit\Framework\TestCase;
 
-class IntegrationTestCase extends \PHPUnit\Framework\TestCase
+class IntegrationTestCase extends TestCase
 {
 	protected Reflector $reflector;
 
@@ -13,6 +14,8 @@ class IntegrationTestCase extends \PHPUnit\Framework\TestCase
 	{
 		parent::setUp();
 
-		$this->reflector = (new ReflectorBuilder())->build();
+		$this->reflector = (new ReflectorBuilder())
+			->withMemoryCache()
+			->build();
 	}
 }

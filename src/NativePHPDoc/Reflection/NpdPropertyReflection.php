@@ -3,7 +3,7 @@
 namespace GoodPhp\Reflection\NativePHPDoc\Reflection;
 
 use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\PropertyDefinition;
-use GoodPhp\Reflection\NativePHPDoc\Reflection\Attributes\NpdAttributes;
+use GoodPhp\Reflection\NativePHPDoc\Reflection\Attributes\NativeAttributes;
 use GoodPhp\Reflection\Reflection\Attributes\Attributes;
 use GoodPhp\Reflection\Reflection\ClassReflection;
 use GoodPhp\Reflection\Reflection\FunctionParameterReflection;
@@ -125,7 +125,7 @@ final class NpdPropertyReflection implements PropertyReflection
 
 	public function attributes(): Attributes
 	{
-		return $this->attributes ??= new NpdAttributes(
+		return $this->attributes ??= new NativeAttributes(
 			fn () => $this->nativeReflection()->getAttributes()
 		);
 	}

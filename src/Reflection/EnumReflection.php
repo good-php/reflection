@@ -9,9 +9,10 @@ use GoodPhp\Reflection\Type\NamedType;
 use Illuminate\Support\Collection;
 
 /**
- * @template-covariant T of \UnitEnum
+ * @template ReflectableType of \UnitEnum
  *
- * @extends TypeReflection<T>
+ * @extends TypeReflection<ReflectableType>
+ * @extends HasMethods<ReflectableType>
  */
 interface EnumReflection extends TypeReflection, HasAttributes, HasMethods
 {

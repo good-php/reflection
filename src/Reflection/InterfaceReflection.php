@@ -9,9 +9,11 @@ use GoodPhp\Reflection\Type\NamedType;
 use Illuminate\Support\Collection;
 
 /**
- * @template-covariant T of object
+ * @template ReflectableType of object
  *
- * @extends TypeReflection<T>
+ * @extends TypeReflection<ReflectableType>
+ * @extends HasTypeParameters<self<ReflectableType>>
+ * @extends HasMethods<ReflectableType>
  */
 interface InterfaceReflection extends TypeReflection, HasAttributes, HasTypeParameters, HasMethods
 {

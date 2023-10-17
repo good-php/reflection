@@ -5,7 +5,7 @@ namespace GoodPhp\Reflection\NativePHPDoc\Reflection;
 use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\FunctionParameterDefinition;
 use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\MethodDefinition;
 use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\TypeParameterDefinition;
-use GoodPhp\Reflection\NativePHPDoc\Reflection\Attributes\NpdAttributes;
+use GoodPhp\Reflection\NativePHPDoc\Reflection\Attributes\NativeAttributes;
 use GoodPhp\Reflection\NativePHPDoc\Reflection\TypeParameters\NpdTypeParameterReflection;
 use GoodPhp\Reflection\Reflection\Attributes\Attributes;
 use GoodPhp\Reflection\Reflection\FunctionParameterReflection;
@@ -68,7 +68,7 @@ final class NpdMethodReflection implements MethodReflection
 
 	public function attributes(): Attributes
 	{
-		return $this->attributes ??= new NpdAttributes(
+		return $this->attributes ??= new NativeAttributes(
 			fn () => $this->nativeReflection()->getAttributes()
 		);
 	}

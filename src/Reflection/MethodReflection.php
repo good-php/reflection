@@ -11,7 +11,10 @@ use Illuminate\Support\Collection;
 use Stringable;
 
 /**
- * @template-covariant DeclaringTypeReflection of HasMethods
+ * @template-contravariant ReflectableType of object
+ * @template-covariant DeclaringTypeReflection of HasMethods<ReflectableType>
+ *
+ * @extends HasTypeParameters<self<DeclaringTypeReflection>>
  */
 interface MethodReflection extends Stringable, HasAttributes, HasTypeParameters
 {
@@ -20,7 +23,7 @@ interface MethodReflection extends Stringable, HasAttributes, HasTypeParameters
 	public function name(): string;
 
 	/**
-	 * @return Collection<int, FunctionParameterReflection<$this>>
+	 * @return Collection<int, FunctionParameterReflection<self<ReflectableType, DeclaringTypeReflection>>>
 	 */
 	public function parameters(): Collection;
 
@@ -28,11 +31,15 @@ interface MethodReflection extends Stringable, HasAttributes, HasTypeParameters
 
 	/**
 	 * Call a method with strict_types=1.
+	 *
+	 * @param ReflectableType $receiver
 	 */
 	public function invoke(object $receiver, mixed ...$args): mixed;
 
 	/**
 	 * Call a public method with strict_types=0.
+	 *
+	 * @param ReflectableType $receiver
 	 */
 	public function invokeLax(object $receiver, mixed ...$args): mixed;
 

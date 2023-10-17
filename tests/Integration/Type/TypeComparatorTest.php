@@ -19,7 +19,7 @@ use Tests\Stubs\Classes\SomeStub;
 /**
  * @see TypeComparator
  */
-class TypeComparatorIntegrationTest extends IntegrationTestCase
+class TypeComparatorTest extends IntegrationTestCase
 {
 	private TypeComparator $comparator;
 

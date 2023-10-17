@@ -7,9 +7,10 @@ use GoodPhp\Reflection\Type\Type;
 use Illuminate\Support\Collection;
 
 /**
- * @template-covariant T
+ * @template ReflectableType
  *
- * @extends TypeReflection<T>
+ * @extends TypeReflection<ReflectableType>
+ * @extends HasTypeParameters<self<ReflectableType>>
  */
 interface SpecialTypeReflection extends TypeReflection, HasTypeParameters
 {

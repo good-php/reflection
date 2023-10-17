@@ -32,7 +32,7 @@ use Tests\Stubs\Interfaces\ParentInterfaceStub;
 use Tests\Stubs\Interfaces\SingleTemplateType;
 use Tests\Stubs\Traits\ParentTraitStub;
 
-class ReflectionIntegrationTest extends IntegrationTestCase
+class ReflectionTest extends IntegrationTestCase
 {
 	public static function reflectsNamedTypeProvider(): iterable
 	{

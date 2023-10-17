@@ -65,7 +65,7 @@ use Tests\Stubs\Traits\TraitWithoutProperties;
 /**
  * @see NativePHPDocDefinitionProvider
  */
-class NativePHPDocDefinitionProviderIntegrationTest extends IntegrationTestCase
+class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 {
 	private NativePHPDocDefinitionProvider $definitionProvider;
 

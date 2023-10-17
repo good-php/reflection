@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\GoodPhp\Reflection\Type\Definition\TypeDefinition;
+namespace Tests\Unit\Type\Definition\TypeDefinition;
 
 use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\TypeParameterDefinition;
 use GoodPhp\Reflection\Type\PrimitiveType;

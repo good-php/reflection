@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\GoodPhp\Reflection\Type\Special;
+namespace Tests\Unit\Type\Special;
 
 use GoodPhp\Reflection\Type\Combinatorial\IntersectionType;
 use GoodPhp\Reflection\Type\Combinatorial\UnionType;

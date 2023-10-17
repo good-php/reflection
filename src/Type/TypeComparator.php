@@ -9,6 +9,7 @@ use GoodPhp\Reflection\Reflection\SpecialTypeReflection;
 use GoodPhp\Reflection\Reflection\TraitReflection;
 use GoodPhp\Reflection\Reflection\TypeParameters\HasTypeParameters;
 use GoodPhp\Reflection\Reflection\TypeParameters\TypeParameterReflection;
+use GoodPhp\Reflection\Reflection\TypeReflection;
 use GoodPhp\Reflection\Reflector;
 use GoodPhp\Reflection\Type\Combinatorial\IntersectionType;
 use GoodPhp\Reflection\Type\Combinatorial\TupleType;
@@ -82,7 +83,7 @@ class TypeComparator
 
 		$typeParameters = $aReflection instanceof HasTypeParameters ? $aReflection->typeParameters() : new Collection();
 
-		/** @var array<array{TypeParameterReflection<HasTypeParameters>, Type, Type}> $pairs */
+		/** @var array<array{TypeParameterReflection<ClassReflection<object>|TraitReflection<object>|TraitReflection<object>>, Type, Type}> $pairs */
 		$pairs = [];
 		$aArguments = clone $a->arguments;
 		$bArguments = clone $b->arguments;

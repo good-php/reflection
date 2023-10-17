@@ -8,12 +8,12 @@ use Illuminate\Support\Collection;
 interface Attributes
 {
 	/**
-	 * @param class-string<Attribute> $className
+	 * @param class-string<object> $className
 	 */
 	public function has(string $className): bool;
 
 	/**
-	 * @template AttributeType of \Attribute
+	 * @template AttributeType of object
 	 *
 	 * @param class-string<AttributeType>|null $className
 	 *
@@ -22,11 +22,11 @@ interface Attributes
 	public function all(string $className = null): Collection;
 
 	/**
-	 * @template AttributeType of \Attribute
+	 * @template AttributeType of object
 	 *
 	 * @param class-string<AttributeType> $className
 	 *
-	 * @return Attribute|null
+	 * @return AttributeType|null
 	 */
 	public function sole(string $className): ?object;
 }

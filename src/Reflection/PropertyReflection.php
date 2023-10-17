@@ -10,7 +10,8 @@ use GoodPhp\Reflection\Type\Type;
 use Stringable;
 
 /**
- * @template-covariant DeclaringTypeReflection of HasProperties
+ * @template-contravariant ReflectableType of object
+ * @template-covariant DeclaringTypeReflection of HasProperties<ReflectableType>
  */
 interface PropertyReflection extends Stringable, HasAttributes
 {
@@ -33,15 +34,22 @@ interface PropertyReflection extends Stringable, HasAttributes
 	 */
 	public function promotedParameter(): FunctionParameterReflection|null;
 
+	/**
+	 * @param ReflectableType $receiver
+	 */
 	public function get(object $receiver): mixed;
 
 	/**
 	 * Set a property with strict_types=1.
+	 *
+	 * @param ReflectableType $receiver
 	 */
 	public function set(object $receiver, mixed $value): void;
 
 	/**
 	 * Set a property with strict_types=0.
+	 *
+	 * @param ReflectableType $receiver
 	 */
 	public function setLax(object $receiver, mixed $value): void;
 

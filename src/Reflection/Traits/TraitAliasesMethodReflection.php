@@ -10,14 +10,15 @@ use GoodPhp\Reflection\Type\Type;
 use Illuminate\Support\Collection;
 
 /**
- * @template-covariant DeclaringTypeReflection of HasMethods
+ * @template-contravariant ReflectableType of object
+ * @template-covariant DeclaringTypeReflection of HasMethods<ReflectableType>
  *
- * @implements MethodReflection<DeclaringTypeReflection>
+ * @implements MethodReflection<ReflectableType, DeclaringTypeReflection>
  */
 final class TraitAliasesMethodReflection implements MethodReflection
 {
 	/**
-	 * @param MethodReflection<DeclaringTypeReflection> $method
+	 * @param MethodReflection<ReflectableType, DeclaringTypeReflection> $method
 	 */
 	public function __construct(
 		private MethodReflection $method,
