@@ -112,9 +112,11 @@ final class NpdMethodReflection implements MethodReflection
 
 	public function invoke(object $receiver, mixed ...$args): mixed
 	{
+		$methodName = $this->name();
+
 		// TODO: generic type for $receiver
 		/* @phpstan-ignore-next-line method.notFound */
-		return (fn () => $this->{$this->name()})->call($receiver, ...$args);
+		return (fn () => $this->{$methodName}(...$args))->call($receiver);
 	}
 
 	public function invokeLax(object $receiver, mixed ...$args): mixed

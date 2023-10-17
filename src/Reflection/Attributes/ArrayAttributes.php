@@ -7,7 +7,6 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\ItemNotFoundException;
 use Illuminate\Support\MultipleItemsFoundException;
-use TenantCloud\Standard\Lazy\Lazy;
 
 class ArrayAttributes implements Attributes
 {

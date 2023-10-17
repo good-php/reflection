@@ -137,9 +137,11 @@ final class NpdPropertyReflection implements PropertyReflection
 
 	public function set(object $receiver, mixed $value): void
 	{
+		$propertyName = $this->name();
+
 		// TODO: generic type for $receiver
 		/* @phpstan-ignore-next-line property.notFound */
-		(fn () => $this->{$this->name()} = $value)->call($receiver);
+		(fn () => $this->{$propertyName} = $value)->call($receiver);
 	}
 
 	public function setLax(object $receiver, mixed $value): void
