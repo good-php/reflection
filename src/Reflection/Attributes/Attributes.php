@@ -29,4 +29,6 @@ interface Attributes extends \Stringable
 	 * @return AttributeType|null
 	 */
 	public function sole(string $className): ?object;
+
+	public function allEqual(self $attributes): bool;
 }

@@ -76,4 +76,9 @@ final class NativeAttributes implements Attributes
 	{
 		return (string) $this->delegate->value();
 	}
+
+	public function allEqual(Attributes $attributes): bool
+	{
+		return $this->delegate->value()->allEqual($attributes);
+	}
 }

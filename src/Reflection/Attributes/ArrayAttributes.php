@@ -70,6 +70,38 @@ class ArrayAttributes implements Attributes
 		return "#[{$attributes}]";
 	}
 
+	public function allEqual(Attributes $attributes): bool
+	{
+		$thisAttributes = $this->all();
+		$otherAttributes = $attributes->all();
+
+		if ($thisAttributes->count() !== $otherAttributes->count()) {
+			return false;
+		}
+
+		foreach ($thisAttributes as $thisAttribute) {
+			$otherAttributeKey = null;
+
+			foreach ($otherAttributes as $otherAttributeIndex => $otherAttribute) {
+				$equals = method_exists($thisAttribute, 'equals') ?
+					$thisAttribute->equals($otherAttribute) :
+					$thisAttribute == $otherAttribute;
+
+				if ($equals) {
+					$otherAttributeKey = $otherAttributeIndex;
+				}
+			}
+
+			if ($otherAttributeKey === null) {
+				return false;
+			}
+
+			$otherAttributes->forget($otherAttributeKey);
+		}
+
+		return true;
+	}
+
 	/**
 	 * @template AttributeType of object
 	 *
