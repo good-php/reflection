@@ -82,7 +82,9 @@ class NamedType implements Type
 
 	public function __toString(): string
 	{
-		$arguments = $this->arguments->join(', ');
+		$arguments = $this->arguments
+			->map(fn (Type $type) => (string) $type)
+			->join(', ');
 
 		return $this->name . ($arguments ? '<' . $arguments . '>' : '');
 	}
