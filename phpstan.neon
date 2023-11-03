@@ -13,13 +13,18 @@ parameters:
 	ignoreErrors:
 		# It is in fact nullable. Probably a bug in PHPStan.
 		- '#Using nullsafe property access \"\?->excludedTraitMethods\" on left side of \?\? is unnecessary. Use -> instead.#i'
-
+		# It's not a native type. Bug in PHPStan.
+		- '#PHPDoc tag @var with type GoodPhp\\Reflection\\Reflection\\MethodReflection<ReflectableType of UnitEnum, GoodPhp\\Reflection\\Reflection\\Methods\\HasMethods<ReflectableType of UnitEnum>> is not subtype of native type GoodPhp\\Reflection\\Reflection\\MethodReflection<object, GoodPhp\\Reflection\\Reflection\\Methods\\HasMethods<object>>#i'
+		# Bug with inherited readonly properties
 		- '#Readonly property [a-z\\]+::\$[a-z0-9]+ is assigned outside of the constructor.#i'
 		- '#Class [a-z\\]+ has an uninitialized readonly property \$[a-z0-9]+\. Assign it in the constructor.#i'
 		# We expect proper error handling, in which case file_get_contents() will never return `false`
 		-
 			message: '#Parameter \#1 \$code of method PhpParser\\Parser::parse\(\) expects string, string\|false given\.#i'
 			path: 'src/NativePHPDoc/Definition/NativePHPDoc/File/FileContextParser.php'
+		-
+			message: '#Parameter \#2 \$aliases of class GoodPhp\\Reflection\\NativePHPDoc\\Definition\\NativePHPDoc\\File\\FileClassLikeContext\\TraitUse constructor expects Illuminate\\Support\\Collection<int, array{string, string\|null, [\d\|]+null}>, Illuminate\\Support\\Collection<int, array{string, string\|null, int\|null}> given\.#i'
+			path: 'src/NativePHPDoc/Definition/NativePHPDoc/File/ClassLikeContextParsingVisitor.php'
 		# This, again, I'm not sure how to approach.
 		-
 			message: '#Unsafe usage of new static\(\)#i'

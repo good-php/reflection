@@ -9,7 +9,6 @@ use GoodPhp\Reflection\Reflection\SpecialTypeReflection;
 use GoodPhp\Reflection\Reflection\TraitReflection;
 use GoodPhp\Reflection\Reflection\TypeParameters\HasTypeParameters;
 use GoodPhp\Reflection\Reflection\TypeParameters\TypeParameterReflection;
-use GoodPhp\Reflection\Reflection\TypeReflection;
 use GoodPhp\Reflection\Reflector;
 use GoodPhp\Reflection\Type\Combinatorial\IntersectionType;
 use GoodPhp\Reflection\Type\Combinatorial\TupleType;

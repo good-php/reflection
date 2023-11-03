@@ -11,6 +11,7 @@ use Illuminate\Support\Collection;
 
 /**
  * @template-contravariant ReflectableType of object
+ *
  * @template-covariant DeclaringTypeReflection of HasMethods<ReflectableType>
  *
  * @implements MethodReflection<ReflectableType, DeclaringTypeReflection>

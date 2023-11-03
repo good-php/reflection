@@ -35,7 +35,7 @@ class ReflectorBuilder
 
 	public function withFileCache(string $path = null, DateInterval $ttl = null): self
 	{
-		$path ??= $path ?? sys_get_temp_dir() . '/good-php-reflection';
+		$path ??= sys_get_temp_dir() . '/good-php-reflection';
 
 		return $this->withInnerDefinitionProvider(new FileModificationCacheDefinitionProvider(
 			$this->innerDefinitionProvider(),

@@ -13,11 +13,9 @@ use GoodPhp\Reflection\Type\Type;
 use Illuminate\Support\Collection;
 
 /**
- * @template-covariant T
+ * @template ReflectableType
  *
- * @extends NpdTypeReflection<T>
- *
- * @implements SpecialTypeReflection<T>
+ * @implements SpecialTypeReflection<ReflectableType>
  */
 final class NpdSpecialTypeReflection extends NpdTypeReflection implements SpecialTypeReflection
 {

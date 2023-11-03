@@ -21,14 +21,13 @@ use Illuminate\Support\Collection;
 use ReflectionClass;
 
 /**
- * @template-covariant T of object
+ * @template ReflectableType of object
  *
- * @extends NpdTypeReflection<T>
- *
- * @implements InterfaceReflection<T>
+ * @implements InterfaceReflection<ReflectableType>
  */
 final class NpdInterfaceReflection extends NpdTypeReflection implements InterfaceReflection
 {
+	/** @use InheritsClassMembers<ReflectableType> */
 	use InheritsClassMembers;
 
 	private readonly NamedType $type;
@@ -38,7 +37,7 @@ final class NpdInterfaceReflection extends NpdTypeReflection implements Interfac
 	/** @var Collection<int, TypeParameterReflection<$this>> */
 	private readonly Collection $typeParameters;
 
-	/** @var ReflectionClass<T> */
+	/** @var ReflectionClass<ReflectableType> */
 	private readonly ReflectionClass $nativeReflection;
 
 	private readonly Attributes $attributes;
@@ -46,14 +45,14 @@ final class NpdInterfaceReflection extends NpdTypeReflection implements Interfac
 	/** @var Collection<int, NamedType> */
 	private readonly Collection $extends;
 
-	/** @var Collection<int, MethodReflection<$this>> */
+	/** @var Collection<int, MethodReflection<ReflectableType, $this>> */
 	private readonly Collection $declaredMethods;
 
-	/** @var Collection<int, MethodReflection<HasMethods>> */
+	/** @var Collection<int, MethodReflection<ReflectableType, HasMethods<ReflectableType>>> */
 	private readonly Collection $methods;
 
 	/**
-	 * @param InterfaceTypeDefinition<T> $definition
+	 * @param InterfaceTypeDefinition<ReflectableType> $definition
 	 */
 	public function __construct(
 		private readonly InterfaceTypeDefinition $definition,
@@ -124,7 +123,7 @@ final class NpdInterfaceReflection extends NpdTypeReflection implements Interfac
 	}
 
 	/**
-	 * @return Collection<int, MethodReflection<$this>>
+	 * @return Collection<int, MethodReflection<ReflectableType, $this>>
 	 */
 	public function declaredMethods(): Collection
 	{
@@ -134,7 +133,7 @@ final class NpdInterfaceReflection extends NpdTypeReflection implements Interfac
 	}
 
 	/**
-	 * @return Collection<int, MethodReflection<HasMethods>>
+	 * @return Collection<int, MethodReflection<ReflectableType, HasMethods<ReflectableType>>>
 	 */
 	public function methods(): Collection
 	{
@@ -152,7 +151,7 @@ final class NpdInterfaceReflection extends NpdTypeReflection implements Interfac
 	}
 
 	/**
-	 * @return ReflectionClass<T>
+	 * @return ReflectionClass<ReflectableType>
 	 */
 	private function nativeReflection(): ReflectionClass
 	{

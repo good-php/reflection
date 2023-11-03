@@ -2,13 +2,9 @@
 
 namespace GoodPhp\Reflection\NativePHPDoc\Reflection\Attributes;
 
-use Attribute;
 use GoodPhp\Reflection\Reflection\Attributes\ArrayAttributes;
 use GoodPhp\Reflection\Reflection\Attributes\Attributes;
-use GoodPhp\Reflection\Reflection\Attributes\MultipleAttributesFoundException;
 use Illuminate\Support\Collection;
-use Illuminate\Support\ItemNotFoundException;
-use Illuminate\Support\MultipleItemsFoundException;
 use ReflectionAttribute;
 use TenantCloud\Standard\Lazy\Lazy;
 
@@ -43,7 +39,7 @@ final class NativeAttributes implements Attributes
 	/**
 	 * @param class-string<object>|null $className
 	 */
-	public function has(?string $className = null): bool
+	public function has(string $className = null): bool
 	{
 		return $this->delegate->value()->has($className);
 	}
@@ -53,7 +49,7 @@ final class NativeAttributes implements Attributes
 	 *
 	 * @param class-string<AttributeType>|null $className
 	 *
-	 * @return Collection<int, AttributeType>
+	 * @return ($className is null ? Collection<int, object> : Collection<int, AttributeType>)
 	 */
 	public function all(string $className = null): Collection
 	{
@@ -72,13 +68,13 @@ final class NativeAttributes implements Attributes
 		return $this->delegate->value()->sole($className);
 	}
 
-	public function __toString()
-	{
-		return (string) $this->delegate->value();
-	}
-
 	public function allEqual(Attributes $attributes): bool
 	{
 		return $this->delegate->value()->allEqual($attributes);
+	}
+
+	public function __toString()
+	{
+		return (string) $this->delegate->value();
 	}
 }

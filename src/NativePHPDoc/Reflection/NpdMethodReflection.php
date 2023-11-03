@@ -20,9 +20,11 @@ use Illuminate\Support\Collection;
 use ReflectionMethod;
 
 /**
- * @template-covariant DeclaringTypeReflection of HasMethods
+ * @template-contravariant ReflectableType of object
  *
- * @implements MethodReflection<DeclaringTypeReflection>
+ * @template-covariant DeclaringTypeReflection of HasMethods<ReflectableType>
+ *
+ * @implements MethodReflection<ReflectableType, DeclaringTypeReflection>
  */
 final class NpdMethodReflection implements MethodReflection
 {
@@ -114,8 +116,6 @@ final class NpdMethodReflection implements MethodReflection
 	{
 		$methodName = $this->name();
 
-		// TODO: generic type for $receiver
-		/* @phpstan-ignore-next-line method.notFound */
 		return (fn () => $this->{$methodName}(...$args))->call($receiver);
 	}
 

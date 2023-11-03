@@ -11,6 +11,7 @@ use Stringable;
 
 /**
  * @template-contravariant ReflectableType of object
+ *
  * @template-covariant DeclaringTypeReflection of HasProperties<ReflectableType>
  */
 interface PropertyReflection extends Stringable, HasAttributes
@@ -30,7 +31,7 @@ interface PropertyReflection extends Stringable, HasAttributes
 	/**
 	 * If property is promoted, it refers to the __construct parameter it was promoted for.
 	 *
-	 * @return FunctionParameterReflection<MethodReflection<HasMethods>>|null
+	 * @return FunctionParameterReflection<MethodReflection<object, HasMethods<object>>>|null
 	 */
 	public function promotedParameter(): FunctionParameterReflection|null;
 

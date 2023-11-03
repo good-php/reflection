@@ -19,14 +19,13 @@ use Illuminate\Support\Collection;
 use ReflectionEnum;
 
 /**
- * @template-covariant T of \UnitEnum
+ * @template ReflectableType of \UnitEnum
  *
- * @extends NpdTypeReflection<T>
- *
- * @implements EnumReflection<T>
+ * @implements EnumReflection<ReflectableType>
  */
 final class NpdEnumReflection extends NpdTypeReflection implements EnumReflection
 {
+	/** @use InheritsClassMembers<ReflectableType> */
 	use InheritsClassMembers;
 
 	private readonly NamedType $type;
@@ -39,14 +38,14 @@ final class NpdEnumReflection extends NpdTypeReflection implements EnumReflectio
 
 	private UsedTraitsReflection $uses;
 
-	/** @var Collection<int, MethodReflection<$this>> */
+	/** @var Collection<int, MethodReflection<ReflectableType, $this>> */
 	private readonly Collection $declaredMethods;
 
-	/** @var Collection<int, MethodReflection<HasMethods>> */
+	/** @var Collection<int, MethodReflection<ReflectableType, HasMethods<ReflectableType>>> */
 	private readonly Collection $methods;
 
 	/**
-	 * @param EnumTypeDefinition<T> $definition
+	 * @param EnumTypeDefinition<ReflectableType> $definition
 	 */
 	public function __construct(
 		private readonly EnumTypeDefinition $definition,
@@ -105,7 +104,7 @@ final class NpdEnumReflection extends NpdTypeReflection implements EnumReflectio
 	}
 
 	/**
-	 * @return Collection<int, MethodReflection<$this>>
+	 * @return Collection<int, MethodReflection<ReflectableType, $this>>
 	 */
 	public function declaredMethods(): Collection
 	{
@@ -115,7 +114,7 @@ final class NpdEnumReflection extends NpdTypeReflection implements EnumReflectio
 	}
 
 	/**
-	 * @return Collection<int, MethodReflection<HasMethods>>
+	 * @return Collection<int, MethodReflection<ReflectableType, HasMethods<ReflectableType>>>
 	 */
 	public function methods(): Collection
 	{

@@ -32,7 +32,7 @@ interface ClassReflection extends TypeReflection, HasAttributes, HasTypeParamete
 	public function uses(): UsedTraitsReflection;
 
 	/**
-	 * @return MethodReflection<$this|self<object>|InterfaceReflection<object>|TraitReflection<object>>|null
+	 * @return MethodReflection<ReflectableType, $this|self<object>|InterfaceReflection<object>|TraitReflection<object>>|null
 	 */
 	public function constructor(): ?MethodReflection;
 
@@ -45,12 +45,12 @@ interface ClassReflection extends TypeReflection, HasAttributes, HasTypeParamete
 	public function isBuiltIn(): bool;
 
 	/**
-	 * @return T
+	 * @return ReflectableType
 	 */
 	public function newInstance(mixed ...$args): object;
 
 	/**
-	 * @return T
+	 * @return ReflectableType
 	 */
 	public function newInstanceWithoutConstructor(): object;
 }

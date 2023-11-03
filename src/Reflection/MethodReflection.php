@@ -12,9 +12,10 @@ use Stringable;
 
 /**
  * @template-contravariant ReflectableType of object
+ *
  * @template-covariant DeclaringTypeReflection of HasMethods<ReflectableType>
  *
- * @extends HasTypeParameters<self<DeclaringTypeReflection>>
+ * @extends HasTypeParameters<self<ReflectableType, DeclaringTypeReflection>>
  */
 interface MethodReflection extends Stringable, HasAttributes, HasTypeParameters
 {

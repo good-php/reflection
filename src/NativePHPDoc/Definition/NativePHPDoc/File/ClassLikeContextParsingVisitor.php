@@ -87,6 +87,7 @@ class ClassLikeContextParsingVisitor extends NodeVisitorAbstract
 			)
 			->reduce(function (Collection $carry, Precedence $precedence) {
 				foreach ($precedence->insteadof as $insteadof) {
+					/** @var Collection<string, Collection<int, string>> $carry */
 					$carry[(string) $insteadof] ??= collect();
 					$carry[(string) $insteadof]->push((string) $precedence->method);
 				}
@@ -155,11 +156,13 @@ class ClassLikeContextParsingVisitor extends NodeVisitorAbstract
 							$name = (string) $name;
 							$aliasNodesForTrait = $aliasNodes[$name] ?? collect();
 
-							$aliases = $aliasNodesForTrait->map(fn (Alias $alias) => [
-								(string) $alias->method,
-								((string) $alias->newName) ?: null,
-								$alias->newModifier ?: null,
-							]);
+							$aliases = $aliasNodesForTrait
+								->map(fn (Alias $alias) => [
+									(string) $alias->method,
+									((string) $alias->newName) ?: null,
+									$alias->newModifier ?: null,
+								])
+								->values();
 
 							return new TraitUse($name, $aliases);
 						}),

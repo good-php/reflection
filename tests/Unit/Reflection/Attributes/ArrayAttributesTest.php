@@ -31,7 +31,7 @@ class ArrayAttributesTest extends TestCase
 			]),
 			new ArrayAttributes([
 				AttributeStub::class => [new AttributeStub('123')],
-			])
+			]),
 		];
 
 		yield [
@@ -41,7 +41,7 @@ class ArrayAttributesTest extends TestCase
 			]),
 			new ArrayAttributes([
 				AttributeStub::class => [new AttributeStub('456')],
-			])
+			]),
 		];
 
 		yield [
@@ -51,7 +51,7 @@ class ArrayAttributesTest extends TestCase
 			]),
 			new ArrayAttributes([
 				AttributeStub::class => [new AttributeStub('123'), new AttributeStub('456')],
-			])
+			]),
 		];
 
 		yield [
@@ -61,7 +61,7 @@ class ArrayAttributesTest extends TestCase
 			]),
 			new ArrayAttributes([
 				AttributeStub::class => [new AttributeStub('456')],
-			])
+			]),
 		];
 
 		yield [
@@ -71,7 +71,7 @@ class ArrayAttributesTest extends TestCase
 			]),
 			new ArrayAttributes([
 				AttributeStub::class => [new AttributeStub('123'), new AttributeStub('456'), new AttributeStub('789')],
-			])
+			]),
 		];
 	}
 }

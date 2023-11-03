@@ -26,21 +26,20 @@ use Illuminate\Support\Collection;
 use ReflectionClass;
 
 /**
- * @template-covariant T of object
+ * @template ReflectableType of object
  *
- * @extends NpdTypeReflection<T>
- *
- * @implements ClassReflection<T>
+ * @implements ClassReflection<ReflectableType>
  */
 final class NpdClassReflection extends NpdTypeReflection implements ClassReflection
 {
+	/** @use InheritsClassMembers<ReflectableType> */
 	use InheritsClassMembers;
 
 	private readonly NamedType $type;
 
 	private NamedType $staticType;
 
-	/** @var ReflectionClass<T> */
+	/** @var ReflectionClass<ReflectableType> */
 	private readonly ReflectionClass $nativeReflection;
 
 	/** @var Collection<int, TypeParameterReflection<$this>> */
@@ -55,20 +54,20 @@ final class NpdClassReflection extends NpdTypeReflection implements ClassReflect
 
 	private UsedTraitsReflection $uses;
 
-	/** @var Collection<int, PropertyReflection<$this>> */
+	/** @var Collection<int, PropertyReflection<ReflectableType, $this>> */
 	private readonly Collection $declaredProperties;
 
-	/** @var Collection<int, PropertyReflection<HasProperties>> */
+	/** @var Collection<int, PropertyReflection<ReflectableType, HasProperties<ReflectableType>>> */
 	private readonly Collection $properties;
 
-	/** @var Collection<int, MethodReflection<$this>> */
+	/** @var Collection<int, MethodReflection<ReflectableType, $this>> */
 	private readonly Collection $declaredMethods;
 
-	/** @var Collection<int, MethodReflection<HasMethods>> */
+	/** @var Collection<int, MethodReflection<ReflectableType, HasMethods<ReflectableType>>> */
 	private readonly Collection $methods;
 
 	/**
-	 * @param ClassTypeDefinition<T> $definition
+	 * @param ClassTypeDefinition<ReflectableType> $definition
 	 */
 	public function __construct(
 		private readonly ClassTypeDefinition $definition,
@@ -161,7 +160,7 @@ final class NpdClassReflection extends NpdTypeReflection implements ClassReflect
 	}
 
 	/**
-	 * @return Collection<int, PropertyReflection<$this>>
+	 * @return Collection<int, PropertyReflection<ReflectableType, $this>>
 	 */
 	public function declaredProperties(): Collection
 	{
@@ -171,7 +170,7 @@ final class NpdClassReflection extends NpdTypeReflection implements ClassReflect
 	}
 
 	/**
-	 * @return Collection<int, PropertyReflection<HasProperties>>
+	 * @return Collection<int, PropertyReflection<ReflectableType, HasProperties<ReflectableType>>>
 	 */
 	public function properties(): Collection
 	{
@@ -185,7 +184,7 @@ final class NpdClassReflection extends NpdTypeReflection implements ClassReflect
 	}
 
 	/**
-	 * @return Collection<int, MethodReflection<$this>>
+	 * @return Collection<int, MethodReflection<ReflectableType, $this>>
 	 */
 	public function declaredMethods(): Collection
 	{
@@ -195,7 +194,7 @@ final class NpdClassReflection extends NpdTypeReflection implements ClassReflect
 	}
 
 	/**
-	 * @return Collection<int, MethodReflection<HasMethods>>
+	 * @return Collection<int, MethodReflection<ReflectableType, HasMethods<ReflectableType>>>
 	 */
 	public function methods(): Collection
 	{
@@ -210,7 +209,7 @@ final class NpdClassReflection extends NpdTypeReflection implements ClassReflect
 	}
 
 	/**
-	 * @return MethodReflection<HasMethods>|null
+	 * @return MethodReflection<ReflectableType, HasMethods<ReflectableType>>|null
 	 */
 	public function constructor(): ?MethodReflection
 	{
@@ -240,7 +239,7 @@ final class NpdClassReflection extends NpdTypeReflection implements ClassReflect
 	}
 
 	/**
-	 * @return T
+	 * @return ReflectableType
 	 */
 	public function newInstance(mixed ...$args): object
 	{
@@ -248,7 +247,7 @@ final class NpdClassReflection extends NpdTypeReflection implements ClassReflect
 	}
 
 	/**
-	 * @return T
+	 * @return ReflectableType
 	 */
 	public function newInstanceWithoutConstructor(): object
 	{
@@ -256,7 +255,7 @@ final class NpdClassReflection extends NpdTypeReflection implements ClassReflect
 	}
 
 	/**
-	 * @return ReflectionClass<T>
+	 * @return ReflectionClass<ReflectableType>
 	 */
 	private function nativeReflection(): ReflectionClass
 	{

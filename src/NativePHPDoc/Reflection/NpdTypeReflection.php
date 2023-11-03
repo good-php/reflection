@@ -2,16 +2,10 @@
 
 namespace GoodPhp\Reflection\NativePHPDoc\Reflection;
 
-use GoodPhp\Reflection\Reflection\TypeReflection;
 use GoodPhp\Reflection\Type\NamedType;
 use Illuminate\Support\Str;
 
-/**
- * @template-covariant T
- *
- * @implements TypeReflection<T>
- */
-abstract class NpdTypeReflection implements TypeReflection
+abstract class NpdTypeReflection
 {
 	abstract public function qualifiedName(): string;
 

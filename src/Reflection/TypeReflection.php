@@ -7,7 +7,7 @@ use JiriPudil\SealedClasses\Sealed;
 use Stringable;
 
 /**
- * @template ReflectableType
+ * @template-covariant ReflectableType
  */
 #[Sealed(permits: [
 	ClassReflection::class,
@@ -16,17 +16,9 @@ use Stringable;
 	EnumReflection::class,
 	SpecialTypeReflection::class,
 ])]
-interface TypeReflection extends Stringable
+interface TypeReflection extends HasName, Stringable
 {
 	public function withStaticType(NamedType $staticType): static;
 
-	public function fileName(): ?string;
-
-	public function qualifiedName(): string;
-
-	public function shortName(): string;
-
 	public function type(): NamedType;
-
-	public function location(): string;
 }

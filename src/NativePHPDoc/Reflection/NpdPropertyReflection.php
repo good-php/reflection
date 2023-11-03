@@ -19,9 +19,11 @@ use ReflectionProperty;
 use Webmozart\Assert\Assert;
 
 /**
- * @template-covariant DeclaringTypeReflection of HasProperties
+ * @template-contravariant ReflectableType of object
  *
- * @implements PropertyReflection<DeclaringTypeReflection>
+ * @template-covariant DeclaringTypeReflection of HasProperties<ReflectableType>
+ *
+ * @implements PropertyReflection<ReflectableType, DeclaringTypeReflection>
  */
 final class NpdPropertyReflection implements PropertyReflection
 {
@@ -31,7 +33,7 @@ final class NpdPropertyReflection implements PropertyReflection
 
 	private readonly ?Type $type;
 
-	/** @var FunctionParameterReflection<MethodReflection<HasMethods>>|null */
+	/** @var FunctionParameterReflection<MethodReflection<object, HasMethods<object>>>|null */
 	private readonly ?FunctionParameterReflection $promotedParameter;
 
 	/**
@@ -102,7 +104,7 @@ final class NpdPropertyReflection implements PropertyReflection
 	/**
 	 * If property is promoted, it refers to the __construct parameter it was promoted for.
 	 *
-	 * @return FunctionParameterReflection<MethodReflection<HasMethods>>|null
+	 * @return FunctionParameterReflection<MethodReflection<object, HasMethods<object>>>|null
 	 */
 	public function promotedParameter(): FunctionParameterReflection|null
 	{
@@ -139,8 +141,6 @@ final class NpdPropertyReflection implements PropertyReflection
 	{
 		$propertyName = $this->name();
 
-		// TODO: generic type for $receiver
-		/* @phpstan-ignore-next-line property.notFound */
 		(fn () => $this->{$propertyName} = $value)->call($receiver);
 	}
 
