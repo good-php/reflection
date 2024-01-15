@@ -1,3 +1,10 @@
+# [1.0.0-alpha.2](https://github.com/good-php/reflection/compare/v1.0.0-alpha.1...v1.0.0-alpha.2) (2024-01-15)
+
+
+### Bug Fixes
+
+* Dependency requirement ([#1](https://github.com/good-php/reflection/issues/1)) ([dac6995](https://github.com/good-php/reflection/commit/dac6995bde28956dddb8f4e00d130a0653aca6b5))
+
 # 1.0.0-alpha.1 (2023-11-03)
 
 
