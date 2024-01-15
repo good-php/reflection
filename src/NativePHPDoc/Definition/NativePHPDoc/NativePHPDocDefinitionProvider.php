@@ -134,7 +134,7 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 	}
 
 	/**
-	 * @param class-string<object> $type
+	 * @param class-string<UnitEnum> $type
 	 */
 	private function forEnum(string $type): TypeDefinition
 	{
@@ -181,7 +181,7 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 	/**
 	 * @param ReflectionClass<object> $reflection
 	 *
-	 * @return ($reflection is ReflectionEnum ? class-string<UnitEnum> : class-string<object>)
+	 * @return ($reflection is ReflectionEnum<UnitEnum> ? class-string<UnitEnum> : class-string<object>)
 	 */
 	private function qualifiedName(ReflectionClass $reflection): string
 	{
@@ -487,6 +487,8 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 	}
 
 	/**
+	 * @param ReflectionEnum<UnitEnum> $reflection
+	 *
 	 * @return Collection<int, EnumCaseDefinition>
 	 */
 	private function enumCases(ReflectionEnum $reflection): Collection

@@ -32,6 +32,7 @@ final class NpdEnumReflection extends NpdTypeReflection implements EnumReflectio
 
 	private NamedType $staticType;
 
+	/** @var ReflectionEnum<ReflectableType> */
 	private readonly ReflectionEnum $nativeReflection;
 
 	private readonly Attributes $attributes;
@@ -132,6 +133,9 @@ final class NpdEnumReflection extends NpdTypeReflection implements EnumReflectio
 		return $this->definition->builtIn;
 	}
 
+	/**
+	 * @return ReflectionEnum<ReflectableType>
+	 */
 	private function nativeReflection(): ReflectionEnum
 	{
 		return $this->nativeReflection ??= new ReflectionEnum($this->definition->qualifiedName);
