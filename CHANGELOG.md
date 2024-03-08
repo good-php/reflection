@@ -1,3 +1,10 @@
+# [1.0.0-alpha.3](https://github.com/good-php/reflection/compare/v1.0.0-alpha.2...v1.0.0-alpha.3) (2024-03-08)
+
+
+### Bug Fixes
+
+* Release new version ([#3](https://github.com/good-php/reflection/issues/3)) ([0969c8e](https://github.com/good-php/reflection/commit/0969c8e44e338f680ca70a04fa09fba322b008f2))
+
 # [1.0.0-alpha.2](https://github.com/good-php/reflection/compare/v1.0.0-alpha.1...v1.0.0-alpha.2) (2024-01-15)
 
 
