@@ -8,13 +8,13 @@ use Illuminate\Support\Collection;
 use PhpParser\NameContext;
 use PhpParser\Node;
 use PhpParser\Node\Name;
+use PhpParser\Node\PropertyItem;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\ClassLike;
 use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node\Stmt\Enum_;
 use PhpParser\Node\Stmt\Interface_;
 use PhpParser\Node\Stmt\Property;
-use PhpParser\Node\Stmt\PropertyProperty;
 use PhpParser\Node\Stmt\Trait_;
 use PhpParser\Node\Stmt\TraitUseAdaptation\Alias;
 use PhpParser\Node\Stmt\TraitUseAdaptation\Precedence;
@@ -183,7 +183,7 @@ class ClassLikeContextParsingVisitor extends NodeVisitorAbstract
 		$properties = collect($classLike->stmts)
 			->whereInstanceOf(Property::class)
 			->flatMap(fn (Property $node) => $node->props)
-			->map(fn (PropertyProperty $property) => (string) $property->name);
+			->map(fn (PropertyItem $property) => (string) $property->name);
 
 		/** @var ClassMethod|null $constructor */
 		$constructor = collect($classLike->stmts)

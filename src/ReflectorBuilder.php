@@ -17,8 +17,7 @@ use GoodPhp\Reflection\NativePHPDoc\Definition\NativePHPDoc\PhpDoc\PhpDocStringP
 use GoodPhp\Reflection\NativePHPDoc\Definition\NativePHPDoc\PhpDoc\PhpDocTypeMapper;
 use GoodPhp\Reflection\NativePHPDoc\Definition\NativePHPDoc\PhpDoc\TypeAliasResolver;
 use GoodPhp\Reflection\NativePHPDoc\DefinitionProviderReflector;
-use PhpParser\Lexer\Emulative;
-use PhpParser\Parser;
+use PhpParser\ParserFactory;
 use PHPStan\PhpDocParser\Lexer\Lexer;
 use PHPStan\PhpDocParser\Parser\ConstExprParser;
 use PHPStan\PhpDocParser\Parser\PhpDocParser;
@@ -99,9 +98,7 @@ class ReflectorBuilder
 		return $this->innerDefinitionProvider = new NativePHPDocDefinitionProvider(
 			$phpDocStringParser,
 			new FileContextParser(
-				new Parser\Php7(new Emulative([
-					'usedAttributes' => ['comments', 'startLine'],
-				]))
+				(new ParserFactory())->createForNewestSupportedVersion(),
 			),
 			$typeAliasResolver,
 			new NativeTypeMapper(),
