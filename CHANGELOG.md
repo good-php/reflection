@@ -1,3 +1,10 @@
+# [1.0.0-alpha.4](https://github.com/good-php/reflection/compare/v1.0.0-alpha.3...v1.0.0-alpha.4) (2024-03-08)
+
+
+### Bug Fixes
+
+* Update nikic/parser to 5.x ([#4](https://github.com/good-php/reflection/issues/4)) ([3226376](https://github.com/good-php/reflection/commit/3226376d071af03e5a3728df3f2f3778c984c3f4))
+
 # [1.0.0-alpha.3](https://github.com/good-php/reflection/compare/v1.0.0-alpha.2...v1.0.0-alpha.3) (2024-03-08)
 
 
