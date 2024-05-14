@@ -27,7 +27,7 @@ parameters:
 		-
 			message: '#Parameter \#2 \$aliases of class GoodPhp\\Reflection\\NativePHPDoc\\Definition\\NativePHPDoc\\File\\FileClassLikeContext\\TraitUse constructor expects Illuminate\\Support\\Collection<int, array{string, string\|null, [\d\|]+null}>, Illuminate\\Support\\Collection<int, array{string, string\|null, int\|null}> given\.#i'
 			path: 'src/NativePHPDoc/Definition/NativePHPDoc/File/ClassLikeContextParsingVisitor.php'
-		# This, again, I'm not sure how to approach.
+		# This, again, I'm not sure how to approach
 		-
 			message: '#Unsafe usage of new static\(\)#i'
 			path: 'src/Util/IsSingleton.php'
