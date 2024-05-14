@@ -18,6 +18,8 @@ parameters:
 		# Bug with inherited readonly properties
 		- '#Readonly property [a-z\\]+::\$[a-z0-9]+ is assigned outside of the constructor.#i'
 		- '#Class [a-z\\]+ has an uninitialized readonly property \$[a-z0-9]+\. Assign it in the constructor.#i'
+		# Wrongly inferred types
+		- '#Property GoodPhp\\Reflection\\Type\\Combinatorial\\(IntersectionType|UnionType)::\$types \(Illuminate\\Support\\Collection<int, GoodPhp\\Reflection\\Type\\Type>\) does not accept Illuminate\\Support\\Collection<\(int\|string\), mixed>.#i'
 		# We expect proper error handling, in which case file_get_contents() will never return `false`
 		-
 			message: '#Parameter \#1 \$code of method PhpParser\\Parser::parse\(\) expects string, string\|false given\.#i'
