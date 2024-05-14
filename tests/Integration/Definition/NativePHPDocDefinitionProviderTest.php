@@ -622,7 +622,13 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 						parameters: new Collection([
 							new FunctionParameterDefinition(
 								name: 'p1',
-								type: new NamedType('array'),
+								type: new NamedType('array', new Collection([
+									new UnionType(new Collection([
+										PrimitiveType::integer(),
+										PrimitiveType::string(),
+									])),
+									PrimitiveType::string(),
+								])),
 								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
@@ -640,17 +646,25 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 							),
 							new FunctionParameterDefinition(
 								name: 'p4',
-								type: new NamedType('array'),
+								type: new NamedType('array', new Collection([
+									PrimitiveType::string(),
+									PrimitiveType::string(),
+								])),
 								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p5',
-								type: new NamedType('array'),
+								type: new NamedType('array', new Collection([
+									PrimitiveType::integer(),
+									PrimitiveType::string(),
+								])),
 								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p6',
-								type: new NamedType('array'),
+								type: new NamedType('array', new Collection([
+									PrimitiveType::integer(),
+								])),
 								hasDefaultValue: false,
 							),
 						]),
