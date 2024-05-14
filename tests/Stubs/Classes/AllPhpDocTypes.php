@@ -75,11 +75,11 @@ class AllPhpDocTypes
 	}
 
 	/**
-	 * @param array             $p1
+	 * @param array<string>             $p1
 	 * @param array-key         $p2
 	 * @param associative-array $p3
-	 * @param non-empty-array   $p4
-	 * @param list              $p5
+	 * @param non-empty-array<string, string>   $p4
+	 * @param list<string>              $p5
 	 * @param non-empty-list    $p6
 	 *
 	 * @return never-returns

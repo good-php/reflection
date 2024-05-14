@@ -137,11 +137,15 @@ class PhpDocTypeMapper
 				PrimitiveType::string(),
 			])),
 			'callable', 'iterable', 'resource', 'object' => new NamedType($type, $arguments),
-			'array' => match ($arguments->count()) {
+			'array', 'non-empty-array' => match ($arguments->count()) {
 				1       => PrimitiveType::array($arguments[0]),
 				default => new NamedType('array', $arguments)
 			},
-			'associative-array', 'non-empty-array', 'list', 'non-empty-list' => new NamedType('array', $arguments),
+			'associative-array' => new NamedType('array', $arguments),
+			'list', 'non-empty-list' => new NamedType('array', new Collection([
+				PrimitiveType::integer(),
+				...$arguments,
+			])),
 			'scalar' => new UnionType(new Collection([
 				PrimitiveType::integer(),
 				PrimitiveType::float(),
