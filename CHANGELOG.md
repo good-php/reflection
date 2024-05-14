@@ -1,3 +1,10 @@
+# [1.0.0-alpha.5](https://github.com/good-php/reflection/compare/v1.0.0-alpha.4...v1.0.0-alpha.5) (2024-05-14)
+
+
+### Bug Fixes
+
+* Broken list type ([#5](https://github.com/good-php/reflection/issues/5)) ([458c631](https://github.com/good-php/reflection/commit/458c631173bbe6a49e8fe9fbcde13a854a10108b))
+
 # [1.0.0-alpha.4](https://github.com/good-php/reflection/compare/v1.0.0-alpha.3...v1.0.0-alpha.4) (2024-03-08)
 
 
