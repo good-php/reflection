@@ -42,7 +42,7 @@ class ReflectorBuilder
 			new VerifiedCache(
 				new Psr16Cache(
 					new PhpFilesAdapter(
-						namespace: (string) InstalledVersions::getReference('thecodingmachine/graphqlite'),
+						namespace: (string) InstalledVersions::getReference('good-php/reflection'),
 						defaultLifetime: (int) $ttl?->format('s'),
 						directory: $path,
 					)
