@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/good-php/reflection/compare/v1.0.1...v1.0.2) (2024-05-15)
+
+
+### Bug Fixes
+
+* Cache namespace ([#9](https://github.com/good-php/reflection/issues/9)) ([4599204](https://github.com/good-php/reflection/commit/45992046c2a469f99de4d5ca8e648e718b9af480))
+
 ## [1.0.1](https://github.com/good-php/reflection/compare/v1.0.0...v1.0.1) (2024-05-15)
 
 
