@@ -2,6 +2,7 @@
 
 namespace GoodPhp\Reflection;
 
+use Composer\InstalledVersions;
 use DateInterval;
 use GoodPhp\Reflection\Cache\Verified\VerifiedCache;
 use GoodPhp\Reflection\NativePHPDoc\Definition\BuiltIns\BuiltInCoreDefinitionProvider;
@@ -41,6 +42,7 @@ class ReflectorBuilder
 			new VerifiedCache(
 				new Psr16Cache(
 					new PhpFilesAdapter(
+						namespace: (string) InstalledVersions::getReference('thecodingmachine/graphqlite'),
 						defaultLifetime: (int) $ttl?->format('s'),
 						directory: $path,
 					)
