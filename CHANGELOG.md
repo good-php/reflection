@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/good-php/reflection/compare/v1.0.0...v1.0.1) (2024-05-15)
+
+
+### Bug Fixes
+
+* Use namespaced cache per reflection version to avoid having to manually clear it ([#8](https://github.com/good-php/reflection/issues/8)) ([b287bb5](https://github.com/good-php/reflection/commit/b287bb5018aff7d8ac3e1a378dac9e598957eb27))
+
 # 1.0.0 (2024-05-14)
 
 
