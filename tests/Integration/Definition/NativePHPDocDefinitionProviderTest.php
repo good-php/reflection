@@ -41,6 +41,7 @@ use PHPStan\PhpDocParser\Lexer\Lexer;
 use PHPStan\PhpDocParser\Parser\ConstExprParser;
 use PHPStan\PhpDocParser\Parser\PhpDocParser;
 use PHPStan\PhpDocParser\Parser\TypeParser;
+use PHPStan\PhpDocParser\ParserConfig;
 use ReflectionMethod;
 use Tests\Integration\IntegrationTestCase;
 use Tests\Stubs\Classes\AllMissingTypes;
@@ -73,11 +74,14 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 	{
 		parent::setUp();
 
+		$parserConfig = new ParserConfig(usedAttributes: []);
+
 		$this->definitionProvider = new NativePHPDocDefinitionProvider(
 			new PhpDocStringParser(
-				new Lexer(),
+				new Lexer($parserConfig),
 				new PhpDocParser(
-					new TypeParser($constExprParser = new ConstExprParser()),
+					$parserConfig,
+					new TypeParser($parserConfig, $constExprParser = new ConstExprParser($parserConfig)),
 					$constExprParser,
 				),
 			),

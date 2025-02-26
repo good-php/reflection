@@ -23,6 +23,7 @@ use PHPStan\PhpDocParser\Lexer\Lexer;
 use PHPStan\PhpDocParser\Parser\ConstExprParser;
 use PHPStan\PhpDocParser\Parser\PhpDocParser;
 use PHPStan\PhpDocParser\Parser\TypeParser;
+use PHPStan\PhpDocParser\ParserConfig;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Component\Cache\Adapter\PhpFilesAdapter;
 use Symfony\Component\Cache\Psr16Cache;
@@ -90,11 +91,12 @@ class ReflectorBuilder
 			return $this->innerDefinitionProvider;
 		}
 
+		$config = new ParserConfig(usedAttributes: []);
 		$typeAliasResolver = new TypeAliasResolver();
-		$constExprParser = new ConstExprParser();
-		$typeParser = new TypeParser($constExprParser);
-		$phpDocParser = new PhpDocParser($typeParser, $constExprParser);
-		$lexer = new Lexer();
+		$constExprParser = new ConstExprParser($config);
+		$typeParser = new TypeParser($config, $constExprParser);
+		$phpDocParser = new PhpDocParser($config, $typeParser, $constExprParser);
+		$lexer = new Lexer($config);
 		$phpDocStringParser = new PhpDocStringParser($lexer, $phpDocParser);
 
 		return $this->innerDefinitionProvider = new NativePHPDocDefinitionProvider(

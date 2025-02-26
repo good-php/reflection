@@ -11,6 +11,9 @@ parameters:
 		- src
 
 	ignoreErrors:
+		# Intentionally left as nullable. If there was a solid way of checking if a property is initialized
+		# in PHP, then these would in fact be assigned nulls if definitions contain null types.
+		- '#Property GoodPhp\\Reflection\\NativePHPDoc\\Reflection\\Npd.*::.* \(GoodPhp\\Reflection\\Type\\(NamedType|Type)\|null\) is never assigned null so it can be removed from the property type.#i'
 		# It is in fact nullable. Probably a bug in PHPStan.
 		- '#Using nullsafe property access \"\?->excludedTraitMethods\" on left side of \?\? is unnecessary. Use -> instead.#i'
 		# It's not a native type. Bug in PHPStan.

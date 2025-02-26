@@ -40,7 +40,7 @@ class PhpDocTypeMapper
 	) {}
 
 	/**
-	 * @param TypeNode|iterable<int, TypeNode> $node
+	 * @param TypeNode|iterable<*, TypeNode> $node
 	 *
 	 * @return ($node is TypeNode ? Type : Collection<int, Type>)
 	 */

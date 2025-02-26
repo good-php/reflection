@@ -46,6 +46,7 @@ final class TypeParameterMap
 
 	public static function empty(): self
 	{
+		/** @var self $map */
 		static $map;
 
 		if (!$map) {

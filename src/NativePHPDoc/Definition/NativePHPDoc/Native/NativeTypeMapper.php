@@ -25,7 +25,7 @@ use Webmozart\Assert\Assert;
 class NativeTypeMapper
 {
 	/**
-	 * @param ReflectionType|string|iterable<int, ReflectionType|string> $type
+	 * @param ReflectionType|string|iterable<*, ReflectionType|string> $type
 	 *
 	 * @return ($type is ReflectionType|string ? Type : Collection<int, Type>)
 	 */

@@ -124,6 +124,7 @@ class ClassLikeContextParsingVisitor extends NodeVisitorAbstract
 		}
 
 		/** @var array<string, Name> $uses */
+		/** @phpstan-ignore-next-line */
 		$uses = $aliasesProperty->getValue($nameContext)[Node\Stmt\Use_::TYPE_NORMAL] ?? [];
 
 		return collect($uses)
