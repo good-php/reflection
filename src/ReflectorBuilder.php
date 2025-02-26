@@ -34,7 +34,7 @@ class ReflectorBuilder
 
 	private ?DefinitionProvider $definitionProvider = null;
 
-	public function withFileCache(string $path = null, DateInterval $ttl = null): self
+	public function withFileCache(?string $path = null, ?DateInterval $ttl = null): self
 	{
 		$path ??= sys_get_temp_dir() . '/good-php-reflection';
 
@@ -52,7 +52,7 @@ class ReflectorBuilder
 		));
 	}
 
-	public function withMemoryCache(int $maxItems = 100, DateInterval $ttl = null): self
+	public function withMemoryCache(int $maxItems = 100, ?DateInterval $ttl = null): self
 	{
 		return $this->withDefinitionProvider(new StaticCacheDefinitionProvider(
 			$this->definitionProvider(),

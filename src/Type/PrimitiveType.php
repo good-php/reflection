@@ -29,7 +29,7 @@ final class PrimitiveType
 		]);
 	}
 
-	public static function array(Type|string $value, Type|string $key = null): NamedType
+	public static function array(Type|string $value, Type|string|null $key = null): NamedType
 	{
 		return NamedType::wrap('array', [
 			$key ?? self::arrayKey(),
@@ -37,7 +37,7 @@ final class PrimitiveType
 		]);
 	}
 
-	public static function iterable(Type|string $value, Type|string $key = null): NamedType
+	public static function iterable(Type|string $value, Type|string|null $key = null): NamedType
 	{
 		return NamedType::wrap('iterable', [
 			$key ?? self::arrayKey(),

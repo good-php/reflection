@@ -16,9 +16,9 @@ final class NativeAttributes implements Attributes
 	private readonly Lazy $delegate;
 
 	/**
-	 * @param callable(): ReflectionAttribute<object>[]|null $makeAttributes
+	 * @param callable(): list<ReflectionAttribute<object>>|null $makeAttributes
 	 */
-	public function __construct(callable $makeAttributes = null)
+	public function __construct(?callable $makeAttributes = null)
 	{
 		$makeAttributes ??= fn () => [];
 
@@ -39,7 +39,7 @@ final class NativeAttributes implements Attributes
 	/**
 	 * @param class-string<object>|null $className
 	 */
-	public function has(string $className = null): bool
+	public function has(?string $className = null): bool
 	{
 		return $this->delegate->value()->has($className);
 	}
@@ -51,7 +51,7 @@ final class NativeAttributes implements Attributes
 	 *
 	 * @return ($className is null ? Collection<int, object> : Collection<int, AttributeType>)
 	 */
-	public function all(string $className = null): Collection
+	public function all(?string $className = null): Collection
 	{
 		return $this->delegate->value()->all($className);
 	}

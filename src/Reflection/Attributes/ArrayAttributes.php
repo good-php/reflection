@@ -19,7 +19,7 @@ class ArrayAttributes implements Attributes
 	/**
 	 * @param class-string<object>|null $className
 	 */
-	public function has(string $className = null): bool
+	public function has(?string $className = null): bool
 	{
 		$attributes = $className ? $this->attributes[$className] ?? [] : $this->attributes;
 
@@ -33,7 +33,7 @@ class ArrayAttributes implements Attributes
 	 *
 	 * @return ($className is null ? Collection<int, object> : Collection<int, AttributeType>)
 	 */
-	public function all(string $className = null): Collection
+	public function all(?string $className = null): Collection
 	{
 		/** @var Collection<int, AttributeType> */
 		return $this->resolveAttributesFiltered($className);
@@ -96,7 +96,7 @@ class ArrayAttributes implements Attributes
 	 *
 	 * @return Collection<int, AttributeType>
 	 */
-	private function resolveAttributesFiltered(string $className = null): Collection
+	private function resolveAttributesFiltered(?string $className = null): Collection
 	{
 		$attributes = $className ? $this->attributes[$className] ?? [] : Arr::flatten($this->attributes);
 

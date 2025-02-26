@@ -8,6 +8,7 @@ use GoodPhp\Reflection\Type\PrimitiveType;
 use GoodPhp\Reflection\Type\Special\NullableType;
 use GoodPhp\Reflection\Type\Type;
 use Illuminate\Support\Collection;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -15,9 +16,7 @@ use PHPUnit\Framework\TestCase;
  */
 class NullableTypeTest extends TestCase
 {
-	/**
-	 * @dataProvider equalsProvider
-	 */
+	#[DataProvider('equalsProvider')]
 	public function testEquals(bool $expected, NullableType $first, Type $second): void
 	{
 		self::assertSame(
@@ -47,9 +46,7 @@ class NullableTypeTest extends TestCase
 		];
 	}
 
-	/**
-	 * @dataProvider stringRepresentationProvider
-	 */
+	#[DataProvider('stringRepresentationProvider')]
 	public function testStringRepresentation(string $expected, Type $delegate): void
 	{
 		self::assertSame(

@@ -11,6 +11,7 @@ use GoodPhp\Reflection\Type\Special\NullableType;
 use GoodPhp\Reflection\Type\Type;
 use GoodPhp\Reflection\Type\TypeComparator;
 use Illuminate\Support\Collection;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\Integration\IntegrationTestCase;
 use Tests\Stubs\Classes\ClassStub;
 use Tests\Stubs\Classes\ParentClassStub;
@@ -30,18 +31,16 @@ class TypeComparatorTest extends IntegrationTestCase
 		$this->comparator = $this->reflector->typeComparator();
 	}
 
-	/**
-	 * @dataProvider acceptsIntersectionProvider
-	 * @dataProvider acceptsUnionProvider
-	 * @dataProvider acceptsErrorProvider
-	 * @dataProvider acceptsMixedProvider
-	 * @dataProvider acceptsNeverProvider
-	 * @dataProvider acceptsNullableProvider
-	 * @dataProvider acceptsStaticProvider
-	 * @dataProvider acceptsVoidProvider
-	 * @dataProvider acceptsTemplateProvider
-	 * @dataProvider acceptsNamedProvider
-	 */
+	#[DataProvider('acceptsIntersectionProvider')]
+	#[DataProvider('acceptsUnionProvider')]
+	#[DataProvider('acceptsErrorProvider')]
+	#[DataProvider('acceptsMixedProvider')]
+	#[DataProvider('acceptsNeverProvider')]
+	#[DataProvider('acceptsNullableProvider')]
+	#[DataProvider('acceptsStaticProvider')]
+	#[DataProvider('acceptsVoidProvider')]
+	#[DataProvider('acceptsTemplateProvider')]
+	#[DataProvider('acceptsNamedProvider')]
 	public function testAccepts(bool $expected, Type $a, Type $b): void
 	{
 		self::assertSame(

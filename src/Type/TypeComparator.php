@@ -82,7 +82,7 @@ class TypeComparator
 
 		$typeParameters = $aReflection instanceof HasTypeParameters ? $aReflection->typeParameters() : new Collection();
 
-		/** @var array<array{TypeParameterReflection<ClassReflection<object>|TraitReflection<object>|TraitReflection<object>>, Type, Type}> $pairs */
+		/** @var list<array{TypeParameterReflection<ClassReflection<object>|TraitReflection<object>|TraitReflection<object>>, Type, Type}> $pairs */
 		$pairs = [];
 		$aArguments = clone $a->arguments;
 		$bArguments = clone $b->arguments;
@@ -132,7 +132,7 @@ class TypeComparator
 	{
 		$aReflection = $this->reflector->forNamedType($a);
 
-		/** @var NamedType[] $descendants */
+		/** @var list<NamedType> $descendants */
 		$descendants = match (true) {
 			$aReflection instanceof ClassReflection => $aReflection
 				->implements()

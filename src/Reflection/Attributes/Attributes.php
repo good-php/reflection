@@ -10,7 +10,7 @@ interface Attributes extends Stringable
 	/**
 	 * @param class-string<object>|null $className
 	 */
-	public function has(string $className = null): bool;
+	public function has(?string $className = null): bool;
 
 	/**
 	 * @template AttributeType of object
@@ -19,7 +19,7 @@ interface Attributes extends Stringable
 	 *
 	 * @return ($className is null ? Collection<int, object> : Collection<int, AttributeType>)
 	 */
-	public function all(string $className = null): Collection;
+	public function all(?string $className = null): Collection;
 
 	/**
 	 * @template AttributeType of object

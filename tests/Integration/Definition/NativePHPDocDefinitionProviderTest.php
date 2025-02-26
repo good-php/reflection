@@ -42,6 +42,7 @@ use PHPStan\PhpDocParser\Parser\ConstExprParser;
 use PHPStan\PhpDocParser\Parser\PhpDocParser;
 use PHPStan\PhpDocParser\Parser\TypeParser;
 use PHPStan\PhpDocParser\ParserConfig;
+use PHPUnit\Framework\Attributes\DataProvider;
 use ReflectionMethod;
 use Tests\Integration\IntegrationTestCase;
 use Tests\Stubs\Classes\AllMissingTypes;
@@ -972,9 +973,7 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 		];
 	}
 
-	/**
-	 * @dataProvider providesDefinitionForTypeProvider
-	 */
+	#[DataProvider('providesDefinitionForTypeProvider')]
 	public function testProvidesDefinitionForType(string $type, TypeDefinition $expected): void
 	{
 		$actual = $this->definitionProvider->forType($type);

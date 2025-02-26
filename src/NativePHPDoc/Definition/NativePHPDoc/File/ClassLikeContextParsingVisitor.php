@@ -41,9 +41,9 @@ class ClassLikeContextParsingVisitor extends NodeVisitorAbstract
 	public function enterNode(Node $node)
 	{
 		if (
-			!$node instanceof Node\Stmt\Class_ &&
+			!$node instanceof Class_ &&
 			!$node instanceof Interface_ &&
-			!$node instanceof Node\Stmt\Trait_ &&
+			!$node instanceof Trait_ &&
 			!$node instanceof Enum_
 		) {
 			return null;

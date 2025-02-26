@@ -35,7 +35,7 @@ class NamedType implements Type
 	/**
 	 * @param array<int, Type|string>|Collection<int, Type|string>|null $arguments
 	 */
-	public static function wrap(string|self $name, array|Collection $arguments = null): self
+	public static function wrap(string|self $name, array|Collection|null $arguments = null): self
 	{
 		if ($name instanceof self) {
 			Assert::null($arguments, 'Arguments must be null when a NamedType instance is given.');

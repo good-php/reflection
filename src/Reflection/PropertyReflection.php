@@ -33,7 +33,7 @@ interface PropertyReflection extends Stringable, HasAttributes
 	 *
 	 * @return FunctionParameterReflection<MethodReflection<object, HasMethods<object>>>|null
 	 */
-	public function promotedParameter(): FunctionParameterReflection|null;
+	public function promotedParameter(): ?FunctionParameterReflection;
 
 	/**
 	 * @param ReflectableType $receiver

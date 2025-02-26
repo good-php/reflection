@@ -13,7 +13,7 @@ class TypeProjector
 	/**
 	 * @return ($type is NamedType ? NamedType : Type)
 	 */
-	public static function templateTypes(Type $type, TypeParameterMap $typeParameterMap, NamedType $staticType = null): Type
+	public static function templateTypes(Type $type, TypeParameterMap $typeParameterMap, ?NamedType $staticType = null): Type
 	{
 		$mapped = TypeTraversingMapper::map($type, static function (Type $type, callable $traverse) use ($staticType, $typeParameterMap): Type {
 			// todo: && !$type->isArgument()

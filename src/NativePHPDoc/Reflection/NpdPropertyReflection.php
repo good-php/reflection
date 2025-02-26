@@ -106,7 +106,7 @@ final class NpdPropertyReflection implements PropertyReflection
 	 *
 	 * @return FunctionParameterReflection<MethodReflection<object, HasMethods<object>>>|null
 	 */
-	public function promotedParameter(): FunctionParameterReflection|null
+	public function promotedParameter(): ?FunctionParameterReflection
 	{
 		if (isset($this->promotedParameter)) {
 			return $this->promotedParameter;

@@ -18,7 +18,7 @@ final class TypeParameterMap
 	) {}
 
 	/**
-	 * @param Type[]                            $arguments
+	 * @param list<Type>                        $arguments
 	 * @param iterable<TypeParameterDefinition> $typeParameters
 	 */
 	public static function fromArguments(array $arguments, iterable $typeParameters): self

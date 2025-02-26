@@ -5,6 +5,7 @@ namespace Tests\Unit\Type\Definition\TypeDefinition;
 use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\TypeParameterDefinition;
 use GoodPhp\Reflection\Type\PrimitiveType;
 use GoodPhp\Reflection\Type\Template\TemplateTypeVariance;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -12,9 +13,7 @@ use PHPUnit\Framework\TestCase;
  */
 class TypeParameterDefinitionTest extends TestCase
 {
-	/**
-	 * @dataProvider toStringProvider
-	 */
+	#[DataProvider('toStringProvider')]
 	public function testToString(string $expected, TypeParameterDefinition $parameter): void
 	{
 		self::assertSame(

@@ -20,6 +20,7 @@ use GoodPhp\Reflection\Type\Special\VoidType;
 use GoodPhp\Reflection\Type\Template\TemplateType;
 use GoodPhp\Reflection\Type\Template\TemplateTypeVariance;
 use Illuminate\Support\Collection;
+use PHPUnit\Framework\Attributes\DataProvider;
 use ReflectionMethod;
 use stdClass;
 use Tests\Integration\IntegrationTestCase;
@@ -318,9 +319,7 @@ class ReflectionTest extends IntegrationTestCase
 		];
 	}
 
-	/**
-	 * @dataProvider reflectsNamedTypeProvider
-	 */
+	#[DataProvider('reflectsNamedTypeProvider')]
 	public function testReflectsNamedType(NamedType|string $type, callable $assertReflection): void
 	{
 		if (is_string($type)) {
