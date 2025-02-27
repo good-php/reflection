@@ -19,5 +19,5 @@ class ParentClassStub
 	 */
 	public function parentMethod(): mixed {}
 
-	public function test(string $str = null): static {}
+	public function test(?string $str = null): static {}
 }
