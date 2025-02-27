@@ -67,32 +67,48 @@ I believe it to be fast enough to actually be used in production if you enable t
 Here is a reference benchmark, performed on an M1 MacBook Pro with OpCache:
 
 ```
+PHPBench (1.4.0) running benchmarks... #standwithukraine
+with configuration file: /app/phpbench.json
+with PHP version 8.2.27, xdebug ✔, opcache ✔
+
 \Tests\Benchmark\ThisReflectionBench
 
-    benchWarmWithMemoryCache # only name....I49 - Mo0.011ms (±15.06%) [3.856mb / 4.779mb]
-    benchWarmWithMemoryCache # everything...I49 - Mo0.137ms (±5.25%) [9.970mb / 9.988mb]
-    benchWarmWithFileCache # only name......I49 - Mo0.047ms (±11.98%) [6.917mb / 6.958mb]
-    benchWarmWithFileCache # everything.....I49 - Mo0.172ms (±4.64%) [13.097mb / 13.114mb]
-    benchCold # only name...................I199 - Mo2.384ms (±12.80%) [2.143mb / 4.779mb]
-    benchCold # everything..................I199 - Mo2.506ms (±18.67%) [2.276mb / 4.779mb]
-    benchColdIncludingInitializationAndAuto.I199 - Mo74.279ms (±18.78%) [2.092mb / 4.779mb]
-    benchColdIncludingInitializationAndAuto.I199 - Mo72.901ms (±4.37%) [2.188mb / 4.779mb]
+    benchWarmWithMemoryCache # only name....I49 - Mo0.014ms (±3.52%) [2.655mb / 5.119mb]
+    benchWarmWithMemoryCache # everything...I49 - Mo0.101ms (±2.74%) [4.040mb / 5.119mb]
+    benchWarmWithFileCache # only name......I49 - Mo0.046ms (±13.64%) [2.824mb / 5.119mb]
+    benchWarmWithFileCache # everything.....I49 - Mo0.138ms (±4.13%) [6.883mb / 6.917mb]
+    benchCold # only name...................I199 - Mo3.049ms (±6.14%) [2.848mb / 5.119mb]
+    benchCold # everything..................I199 - Mo3.231ms (±8.59%) [2.892mb / 5.119mb]
+    benchColdIncludingInitializationAndAuto.I199 - Mo70.248ms (±13.82%) [2.629mb / 5.119mb]
+    benchColdIncludingInitializationAndAuto.I199 - Mo74.509ms (±6.07%) [2.648mb / 5.119mb]
 
-\Tests\Benchmark\BetterReflectionBench
+\TyphoonReflectionBench
 
-    benchWarmWithMemoryCache # only name....I49 - Mo0.005ms (±8.26%) [3.085mb / 4.779mb]
-    benchWarmWithMemoryCache # everything...I49 - Mo0.016ms (±5.70%) [3.093mb / 4.779mb]
-    benchCold # only name...................I199 - Mo1.693ms (±6.13%) [3.104mb / 4.779mb]
-    benchCold # everything..................I199 - Mo2.299ms (±14.67%) [3.116mb / 4.779mb]
-    benchColdIncludingInitializationAndAuto.I199 - Mo59.184ms (±5.79%) [3.084mb / 4.779mb]
-    benchColdIncludingInitializationAndAuto.I199 - Mo63.590ms (±18.52%) [3.092mb / 4.779mb]
+    benchWarmWithMemoryCache # only name....I49 - Mo0.007ms (±3.40%) [2.743mb / 5.007mb]
+    benchWarmWithMemoryCache # everything...I49 - Mo0.035ms (±4.54%) [2.855mb / 5.007mb]
+    benchWarmWithFileCache # only name......I49 - Mo0.565ms (±16.26%) [2.768mb / 5.007mb]
+    benchWarmWithFileCache # everything.....I49 - Mo0.610ms (±4.60%) [2.880mb / 5.007mb]
+    benchCold # only name...................I199 - Mo8.304ms (±10.59%) [2.795mb / 5.007mb]
+    benchCold # everything..................I199 - Mo9.099ms (±32.67%) [2.781mb / 5.007mb]
+    benchColdIncludingInitializationAndAuto.I199 - Mo93.155ms (±9.28%) [2.797mb / 5.007mb]
+    benchColdIncludingInitializationAndAuto.I199 - Mo94.742ms (±9.53%) [2.798mb / 5.007mb]
 
 \Tests\Benchmark\NativeReflectionBench
 
-    benchWarm # only name...................I49 - Mo0.001ms (±9.11%) [517.504kb / 4.778mb]
-    benchWarm # everything..................I49 - Mo0.004ms (±6.08%) [517.568kb / 4.778mb]
-    benchCold # only name...................I199 - Mo0.009ms (±55.16%) [518.488kb / 4.779mb]
-    benchCold # everything..................I199 - Mo0.022ms (±23.29%) [518.488kb / 4.779mb]
+    benchWarm # only name...................I49 - Mo0.001ms (±4.52%) [718.136kb / 5.118mb]
+    benchWarm # everything..................I49 - Mo0.004ms (±6.02%) [718.200kb / 5.118mb]
+    benchCold # only name...................I199 - Mo0.006ms (±46.22%) [718.960kb / 5.119mb]
+    benchCold # everything..................I199 - Mo0.018ms (±28.15%) [718.960kb / 5.119mb]
+
+\Tests\Benchmark\BetterReflectionBench
+
+    benchWarmWithMemoryCache # only name....I49 - Mo0.006ms (±5.14%) [3.321mb / 5.119mb]
+    benchWarmWithMemoryCache # everything...I49 - Mo0.024ms (±2.55%) [3.296mb / 5.119mb]
+    benchCold # only name...................I199 - Mo1.551ms (±7.82%) [3.341mb / 5.119mb]
+    benchCold # everything..................I199 - Mo2.330ms (±5.83%) [3.328mb / 5.119mb]
+    benchColdIncludingInitializationAndAuto.I199 - Mo54.618ms (±11.56%) [3.320mb / 5.119mb]
+    benchColdIncludingInitializationAndAuto.I199 - Mo58.794ms (±15.56%) [3.299mb / 5.119mb]
+
 ```
 
 ### How does it work
