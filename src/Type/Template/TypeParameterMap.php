@@ -23,6 +23,10 @@ final class TypeParameterMap
 	 */
 	public static function fromArguments(array $arguments, iterable $typeParameters): self
 	{
+		if (!$arguments) {
+			return self::empty();
+		}
+
 		$map = [];
 		$i = 0;
 
@@ -63,6 +67,10 @@ final class TypeParameterMap
 	 */
 	public function toArguments(iterable $typeParameters): Collection
 	{
+		if (!$this->types) {
+			return Collection::empty();
+		}
+
 		return Collection::wrap($typeParameters)
 			->flatMap(function (TypeParameterDefinition $parameter) {
 				$type = $this->types[$parameter->name] ?? null;
