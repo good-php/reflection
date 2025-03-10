@@ -9,9 +9,8 @@ use GoodPhp\Reflection\Type\NamedType;
 use GoodPhp\Reflection\Type\Template\TemplateType;
 use GoodPhp\Reflection\Type\Template\TemplateTypeVariance;
 use Illuminate\Support\Collection;
-use TenantCloud\Standard\Lazy\Lazy;
-
-use function TenantCloud\Standard\Lazy\lazy;
+use GoodPhp\Reflection\Util\Lazy\Lazy;
+use function GoodPhp\Reflection\Util\Lazy\lazy;
 
 class BuiltInSpecialsDefinitionProvider implements DefinitionProvider
 {

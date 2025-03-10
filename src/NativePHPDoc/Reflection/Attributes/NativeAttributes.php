@@ -6,9 +6,8 @@ use GoodPhp\Reflection\Reflection\Attributes\ArrayAttributes;
 use GoodPhp\Reflection\Reflection\Attributes\Attributes;
 use Illuminate\Support\Collection;
 use ReflectionAttribute;
-use TenantCloud\Standard\Lazy\Lazy;
-
-use function TenantCloud\Standard\Lazy\lazy;
+use GoodPhp\Reflection\Util\Lazy\Lazy;
+use function GoodPhp\Reflection\Util\Lazy\lazy;
 
 final class NativeAttributes implements Attributes
 {

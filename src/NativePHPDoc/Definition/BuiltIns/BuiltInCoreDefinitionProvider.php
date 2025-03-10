@@ -21,10 +21,9 @@ use GoodPhp\Reflection\Type\Special\VoidType;
 use GoodPhp\Reflection\Type\Template\TemplateType;
 use GoodPhp\Reflection\Type\Template\TemplateTypeVariance;
 use Illuminate\Support\Collection;
-use TenantCloud\Standard\Lazy\Lazy;
+use GoodPhp\Reflection\Util\Lazy\Lazy;
 use Traversable;
-
-use function TenantCloud\Standard\Lazy\lazy;
+use function GoodPhp\Reflection\Util\Lazy\lazy;
 
 class BuiltInCoreDefinitionProvider implements DefinitionProvider
 {

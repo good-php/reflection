@@ -1,9 +1,9 @@
 <?php
 
-namespace GoodPhp\Reflection\Util;
+namespace GoodPhp\Reflection\Util\Lazy;
 
 use RuntimeException;
-use TenantCloud\Standard\Lazy\Lazy;
+use GoodPhp\Reflection\Util\Lazy\Lazy;
 
 /**
  * @template  T

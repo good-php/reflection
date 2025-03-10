@@ -6,7 +6,7 @@ use GoodPhp\Reflection\NativePHPDoc\Definition\NativePHPDoc\File\FileClassLikeCo
 use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\TypeParameterDefinition;
 use GoodPhp\Reflection\Type\NamedType;
 use Illuminate\Support\Collection;
-use TenantCloud\Standard\Lazy\Lazy;
+use GoodPhp\Reflection\Util\Lazy\Lazy;
 
 class TypeContext
 {

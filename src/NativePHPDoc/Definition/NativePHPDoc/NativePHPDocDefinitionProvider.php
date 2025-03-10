@@ -27,7 +27,7 @@ use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\UsedTraitsDefiniti
 use GoodPhp\Reflection\Type\NamedType;
 use GoodPhp\Reflection\Type\Template\TemplateTypeVariance;
 use GoodPhp\Reflection\Type\Type;
-use GoodPhp\Reflection\Util\LateInitLazy;
+use GoodPhp\Reflection\Util\Lazy\LateInitLazy;
 use GoodPhp\Reflection\Util\ReflectionAssert;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
@@ -48,11 +48,10 @@ use ReflectionMethod;
 use ReflectionParameter;
 use ReflectionProperty;
 use ReflectionType;
-use TenantCloud\Standard\Lazy\Lazy;
+use GoodPhp\Reflection\Util\Lazy\Lazy;
 use UnitEnum;
 use Webmozart\Assert\Assert;
-
-use function TenantCloud\Standard\Lazy\lazy;
+use function GoodPhp\Reflection\Util\Lazy\lazy;
 
 class NativePHPDocDefinitionProvider implements DefinitionProvider
 {
