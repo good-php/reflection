@@ -39,10 +39,10 @@ final class NpdEnumReflection extends NpdTypeReflection implements EnumReflectio
 	private UsedTraitsReflection $uses;
 
 	/** @var list<MethodReflection<ReflectableType, $this>> */
-	private readonly array $declaredMethods;
+	private array $declaredMethods;
 
 	/** @var list<MethodReflection<ReflectableType, HasMethods<ReflectableType>>> */
-	private readonly array $methods;
+	private array $methods;
 
 	/**
 	 * @param EnumTypeDefinition<ReflectableType> $definition

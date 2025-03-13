@@ -32,10 +32,10 @@ final class NpdPropertyReflection implements PropertyReflection
 
 	private readonly Attributes $attributes;
 
-	private readonly ?Type $type;
+	private ?Type $type;
 
 	/** @var FunctionParameterReflection<MethodReflection<object, HasMethods<object>>>|null */
-	private readonly ?FunctionParameterReflection $promotedParameter;
+	private ?FunctionParameterReflection $promotedParameter;
 
 	/**
 	 * @param DeclaringTypeReflection $declaringType

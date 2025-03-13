@@ -23,7 +23,7 @@ final class NpdSpecialTypeReflection extends NpdTypeReflection implements Specia
 	private NamedType $staticType;
 
 	/** @var list<TypeParameterReflection<$this>> */
-	private readonly array $typeParameters;
+	private array $typeParameters;
 
 	public function __construct(
 		private readonly SpecialTypeDefinition $definition,

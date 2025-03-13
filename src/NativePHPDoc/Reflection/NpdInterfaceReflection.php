@@ -34,7 +34,7 @@ final class NpdInterfaceReflection extends NpdTypeReflection implements Interfac
 	private NamedType $staticType;
 
 	/** @var list<TypeParameterReflection<$this>> */
-	private readonly array $typeParameters;
+	private array $typeParameters;
 
 	/** @var ReflectionClass<ReflectableType> */
 	private readonly ReflectionClass $nativeReflection;
@@ -42,13 +42,13 @@ final class NpdInterfaceReflection extends NpdTypeReflection implements Interfac
 	private readonly Attributes $attributes;
 
 	/** @var list<NamedType> */
-	private readonly array $extends;
+	private array $extends;
 
 	/** @var list<MethodReflection<ReflectableType, $this>> */
-	private readonly array $declaredMethods;
+	private array $declaredMethods;
 
 	/** @var list<MethodReflection<ReflectableType, HasMethods<ReflectableType>>> */
-	private readonly array $methods;
+	private array $methods;
 
 	/**
 	 * @param InterfaceTypeDefinition<ReflectableType> $definition

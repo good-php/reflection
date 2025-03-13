@@ -43,28 +43,28 @@ final class NpdClassReflection extends NpdTypeReflection implements ClassReflect
 	private readonly ReflectionClass $nativeReflection;
 
 	/** @var list<TypeParameterReflection<$this>> */
-	private readonly array $typeParameters;
+	private array $typeParameters;
 
 	private readonly Attributes $attributes;
 
-	private readonly ?NamedType $extends;
+	private ?NamedType $extends;
 
 	/** @var list<NamedType> */
-	private readonly array $implements;
+	private array $implements;
 
 	private UsedTraitsReflection $uses;
 
 	/** @var list<PropertyReflection<ReflectableType, $this>> */
-	private readonly array $declaredProperties;
+	private array $declaredProperties;
 
 	/** @var list<PropertyReflection<ReflectableType, HasProperties<ReflectableType>>> */
-	private readonly array $properties;
+	private array $properties;
 
 	/** @var list<MethodReflection<ReflectableType, $this>> */
-	private readonly array $declaredMethods;
+	private array $declaredMethods;
 
 	/** @var list<MethodReflection<ReflectableType, HasMethods<ReflectableType>>> */
-	private readonly array $methods;
+	private array $methods;
 
 	/**
 	 * @param ClassTypeDefinition<ReflectableType> $definition

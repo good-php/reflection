@@ -30,7 +30,7 @@ final class NpdMethodReflection implements MethodReflection
 	private readonly ReflectionMethod $nativeReflection;
 
 	/** @var list<TypeParameterReflection<$this>> */
-	private readonly array $typeParameters;
+	private array $typeParameters;
 
 	private readonly Attributes $attributes;
 

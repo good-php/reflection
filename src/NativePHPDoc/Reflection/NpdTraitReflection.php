@@ -41,7 +41,7 @@ final class NpdTraitReflection extends NpdTypeReflection implements TraitReflect
 	private readonly ReflectionClass $nativeReflection;
 
 	/** @var list<TypeParameterReflection<$this>> */
-	private readonly array $typeParameters;
+	private array $typeParameters;
 
 	private readonly Attributes $attributes;
 
