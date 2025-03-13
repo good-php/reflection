@@ -4,7 +4,6 @@ namespace GoodPhp\Reflection\Reflection\Methods;
 
 use GoodPhp\Reflection\Reflection\HasName;
 use GoodPhp\Reflection\Reflection\MethodReflection;
-use Illuminate\Support\Collection;
 
 /**
  * @template ReflectableType of object
@@ -12,12 +11,12 @@ use Illuminate\Support\Collection;
 interface HasMethods extends HasName
 {
 	/**
-	 * @return Collection<int, MethodReflection<ReflectableType, $this>>
+	 * @return list<MethodReflection<ReflectableType, $this>>
 	 */
-	public function declaredMethods(): Collection;
+	public function declaredMethods(): array;
 
 	/**
-	 * @return Collection<int, MethodReflection<ReflectableType, self<ReflectableType>>>
+	 * @return list<MethodReflection<ReflectableType, self<ReflectableType>>>
 	 */
-	public function methods(): Collection;
+	public function methods(): array;
 }

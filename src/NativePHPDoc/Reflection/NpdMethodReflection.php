@@ -16,7 +16,6 @@ use GoodPhp\Reflection\Type\NamedType;
 use GoodPhp\Reflection\Type\Template\TypeParameterMap;
 use GoodPhp\Reflection\Type\Type;
 use GoodPhp\Reflection\Type\TypeProjector;
-use Illuminate\Support\Collection;
 use ReflectionMethod;
 
 /**
@@ -30,13 +29,13 @@ final class NpdMethodReflection implements MethodReflection
 {
 	private readonly ReflectionMethod $nativeReflection;
 
-	/** @var Collection<int, TypeParameterReflection<$this>> */
-	private readonly Collection $typeParameters;
+	/** @var list<TypeParameterReflection<$this>> */
+	private readonly array $typeParameters;
 
 	private readonly Attributes $attributes;
 
-	/** @var Collection<int, FunctionParameterReflection<$this>> */
-	private Collection $parameters;
+	/** @var list<FunctionParameterReflection<$this>> */
+	private array $parameters;
 
 	private ?Type $returnType;
 
@@ -76,23 +75,25 @@ final class NpdMethodReflection implements MethodReflection
 	}
 
 	/**
-	 * @return Collection<int, TypeParameterReflection<$this>>
+	 * @return list<TypeParameterReflection<$this>>
 	 */
-	public function typeParameters(): Collection
+	public function typeParameters(): array
 	{
-		return $this->typeParameters ??= $this->definition
-			->typeParameters
-			->map(fn (TypeParameterDefinition $parameter) => new NpdTypeParameterReflection($parameter, $this, $this->staticType));
+		return $this->typeParameters ??= array_map(
+			fn (TypeParameterDefinition $parameter) => new NpdTypeParameterReflection($parameter, $this, $this->staticType),
+			$this->definition->typeParameters
+		);
 	}
 
 	/**
-	 * @return Collection<int, FunctionParameterReflection<$this>>
+	 * @return list<FunctionParameterReflection<$this>>
 	 */
-	public function parameters(): Collection
+	public function parameters(): array
 	{
-		return $this->parameters ??= $this->definition
-			->parameters
-			->map(fn (FunctionParameterDefinition $parameter) => new NpdFunctionParameterReflection($parameter, $this, $this->staticType, $this->resolvedTypeParameterMap));
+		return $this->parameters ??= array_map(
+			fn (FunctionParameterDefinition $parameter) => new NpdFunctionParameterReflection($parameter, $this, $this->staticType, $this->resolvedTypeParameterMap),
+			$this->definition->parameters
+		);
 	}
 
 	public function returnType(): ?Type

@@ -5,17 +5,16 @@ namespace GoodPhp\Reflection\Type\Combinatorial;
 use GoodPhp\Reflection\Type\Type;
 use GoodPhp\Reflection\Type\TypeExtensions;
 use GoodPhp\Reflection\Type\TypeUtil;
-use Illuminate\Support\Collection;
 
 class TupleType implements Type
 {
 	use TypeExtensions;
 
 	/**
-	 * @param Collection<int, Type> $types
+	 * @param list<Type> $types
 	 */
 	public function __construct(
-		public Collection $types,
+		public array $types,
 	) {}
 
 	public function equals(Type $other): bool
@@ -28,16 +27,15 @@ class TupleType implements Type
 	{
 		$changed = false;
 
-		$types = $this->types
-			->map(function (Type $type) use ($callback, &$changed) {
-				$newType = $callback($type);
+		$types = array_map(function (Type $type) use ($callback, &$changed) {
+			$newType = $callback($type);
 
-				if ($type !== $newType) {
-					$changed = true;
-				}
+			if ($type !== $newType) {
+				$changed = true;
+			}
 
-				return $newType;
-			});
+			return $newType;
+		}, $this->types);
 
 		if ($changed) {
 			return new self($types);
@@ -48,9 +46,12 @@ class TupleType implements Type
 
 	public function __toString(): string
 	{
-		$types = $this->types
-			->map(fn (Type $type) => (string) $type)
-			->join(', ');
+		$types = array_map(
+			fn (Type $type) => (string) $type,
+			$this->types
+		);
+
+		$types = implode(', ', $types);
 
 		return "array{{$types}}";
 	}

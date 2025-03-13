@@ -17,7 +17,6 @@ use GoodPhp\Reflection\Reflector;
 use GoodPhp\Reflection\Type\NamedType;
 use GoodPhp\Reflection\Type\Template\TypeParameterMap;
 use GoodPhp\Reflection\Type\TypeProjector;
-use Illuminate\Support\Collection;
 use ReflectionClass;
 
 /**
@@ -34,22 +33,22 @@ final class NpdInterfaceReflection extends NpdTypeReflection implements Interfac
 
 	private NamedType $staticType;
 
-	/** @var Collection<int, TypeParameterReflection<$this>> */
-	private readonly Collection $typeParameters;
+	/** @var list<TypeParameterReflection<$this>> */
+	private readonly array $typeParameters;
 
 	/** @var ReflectionClass<ReflectableType> */
 	private readonly ReflectionClass $nativeReflection;
 
 	private readonly Attributes $attributes;
 
-	/** @var Collection<int, NamedType> */
-	private readonly Collection $extends;
+	/** @var list<NamedType> */
+	private readonly array $extends;
 
-	/** @var Collection<int, MethodReflection<ReflectableType, $this>> */
-	private readonly Collection $declaredMethods;
+	/** @var list<MethodReflection<ReflectableType, $this>> */
+	private readonly array $declaredMethods;
 
-	/** @var Collection<int, MethodReflection<ReflectableType, HasMethods<ReflectableType>>> */
-	private readonly Collection $methods;
+	/** @var list<MethodReflection<ReflectableType, HasMethods<ReflectableType>>> */
+	private readonly array $methods;
 
 	/**
 	 * @param InterfaceTypeDefinition<ReflectableType> $definition
@@ -99,50 +98,51 @@ final class NpdInterfaceReflection extends NpdTypeReflection implements Interfac
 	}
 
 	/**
-	 * @return Collection<int, TypeParameterReflection<$this>>
+	 * @return list<TypeParameterReflection<$this>>
 	 */
-	public function typeParameters(): Collection
+	public function typeParameters(): array
 	{
-		return $this->typeParameters ??= $this->definition
-			->typeParameters
-			->map(fn (TypeParameterDefinition $parameter) => new NpdTypeParameterReflection($parameter, $this, $this->staticType));
+		return $this->typeParameters ??= array_map(
+			fn (TypeParameterDefinition $parameter) => new NpdTypeParameterReflection($parameter, $this, $this->staticType),
+			$this->definition->typeParameters
+		);
 	}
 
 	/**
-	 * @return Collection<int, NamedType>
+	 * @return list<NamedType>
 	 */
-	public function extends(): Collection
+	public function extends(): array
 	{
-		return $this->extends ??= $this->definition
-			->extends
-			->map(fn (NamedType $type) => TypeProjector::templateTypes(
-				$type,
-				$this->resolvedTypeParameterMap,
-				$this->staticType,
-			));
+		return $this->extends ??= array_map(fn (NamedType $type) => TypeProjector::templateTypes(
+			$type,
+			$this->resolvedTypeParameterMap,
+			$this->staticType,
+		), $this->definition->extends);
 	}
 
 	/**
-	 * @return Collection<int, MethodReflection<ReflectableType, $this>>
+	 * @return list<MethodReflection<ReflectableType, $this>>
 	 */
-	public function declaredMethods(): Collection
+	public function declaredMethods(): array
 	{
-		return $this->declaredMethods ??= $this->definition
-			->methods
-			->map(fn (MethodDefinition $method) => new NpdMethodReflection($method, $this, $this->staticType, $this->resolvedTypeParameterMap));
+		return $this->declaredMethods ??= array_map(
+			fn (MethodDefinition $method) => new NpdMethodReflection($method, $this, $this->staticType, $this->resolvedTypeParameterMap),
+			$this->definition->methods
+		);
 	}
 
 	/**
-	 * @return Collection<int, MethodReflection<ReflectableType, HasMethods<ReflectableType>>>
+	 * @return list<MethodReflection<ReflectableType, HasMethods<ReflectableType>>>
 	 */
-	public function methods(): Collection
+	public function methods(): array
 	{
 		return $this->methods ??= collect([
 			...$this->methodsFromTypes($this->extends(), $this->staticType, $this->reflector),
 			...$this->declaredMethods(),
 		])
 			->keyBy(fn (MethodReflection $method) => $method->name())
-			->values();
+			->values()
+			->all();
 	}
 
 	public function isBuiltIn(): bool

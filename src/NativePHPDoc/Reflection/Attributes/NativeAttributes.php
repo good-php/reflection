@@ -4,9 +4,10 @@ namespace GoodPhp\Reflection\NativePHPDoc\Reflection\Attributes;
 
 use GoodPhp\Reflection\Reflection\Attributes\ArrayAttributes;
 use GoodPhp\Reflection\Reflection\Attributes\Attributes;
+use GoodPhp\Reflection\Util\Lazy\Lazy;
 use Illuminate\Support\Collection;
 use ReflectionAttribute;
-use GoodPhp\Reflection\Util\Lazy\Lazy;
+
 use function GoodPhp\Reflection\Util\Lazy\lazy;
 
 final class NativeAttributes implements Attributes
@@ -48,9 +49,9 @@ final class NativeAttributes implements Attributes
 	 *
 	 * @param class-string<AttributeType>|null $className
 	 *
-	 * @return ($className is null ? Collection<int, object> : Collection<int, AttributeType>)
+	 * @return ($className is null ? list<object> : list<AttributeType>)
 	 */
-	public function all(?string $className = null): Collection
+	public function all(?string $className = null): array
 	{
 		return $this->delegate->value()->all($className);
 	}

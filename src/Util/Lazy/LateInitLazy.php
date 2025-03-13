@@ -3,7 +3,6 @@
 namespace GoodPhp\Reflection\Util\Lazy;
 
 use RuntimeException;
-use GoodPhp\Reflection\Util\Lazy\Lazy;
 
 /**
  * @template  T

@@ -6,7 +6,6 @@ use GoodPhp\Reflection\Reflection\TypeReflection;
 use GoodPhp\Reflection\Type\NamedType;
 use GoodPhp\Reflection\Type\Type;
 use GoodPhp\Reflection\Type\TypeComparator;
-use Illuminate\Support\Collection;
 
 interface Reflector
 {
@@ -18,9 +17,9 @@ interface Reflector
 	public function forNamedType(NamedType $type): TypeReflection;
 
 	/**
-	 * @param Collection<int, Type> $arguments
+	 * @param list<Type> $arguments
 	 *
 	 * @return TypeReflection<mixed>
 	 */
-	public function forType(string $name, Collection $arguments = new Collection()): TypeReflection;
+	public function forType(string $name, array $arguments = []): TypeReflection;
 }

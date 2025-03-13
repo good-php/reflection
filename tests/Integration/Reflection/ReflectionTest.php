@@ -50,11 +50,11 @@ class ReflectionTest extends IntegrationTestCase
 				self::assertFalse($reflection->isAbstract());
 				self::assertTrue($reflection->isFinal());
 				self::assertFalse($reflection->isBuiltIn());
-				self::assertEquals(new Collection([new AttributeStub('123')]), $reflection->attributes()->all());
+				self::assertEquals([new AttributeStub('123')], $reflection->attributes()->all());
 				self::assertTrue($reflection->attributes()->has());
 				self::assertEquals('#[\Tests\Stubs\AttributeStub(...)]', (string) $reflection->attributes());
 
-				with($reflection->typeParameters(), function (Collection $parameters) {
+				with($reflection->typeParameters(), function (array $parameters) {
 					self::assertCount(2, $parameters);
 					self::assertContainsOnlyInstancesOf(TypeParameterReflection::class, $parameters);
 
@@ -109,7 +109,7 @@ class ReflectionTest extends IntegrationTestCase
 					self::assertCount(0, $uses->excludedTraitMethods());
 				});
 
-				with($reflection->declaredProperties(), function (Collection $properties) use ($reflection) {
+				with($reflection->declaredProperties(), function (array $properties) use ($reflection) {
 					self::assertCount(3, $properties);
 					self::assertContainsOnlyInstancesOf(PropertyReflection::class, $properties);
 
@@ -123,7 +123,7 @@ class ReflectionTest extends IntegrationTestCase
 					self::assertSame($reflection->properties()[4], $properties[2]);
 				});
 
-				with($reflection->properties(), function (Collection $properties) use ($reflection) {
+				with($reflection->properties(), function (array $properties) use ($reflection) {
 					self::assertCount(5, $properties);
 					self::assertContainsOnlyInstancesOf(PropertyReflection::class, $properties);
 
@@ -147,7 +147,7 @@ class ReflectionTest extends IntegrationTestCase
 					self::assertFalse($properties[2]->hasDefaultValue());
 					self::assertFalse($properties[2]->isPromoted());
 					self::assertNull($properties[2]->promotedParameter());
-					self::assertEquals(new Collection([new AttributeStub('4')]), $properties[2]->attributes()->all());
+					self::assertEquals([new AttributeStub('4')], $properties[2]->attributes()->all());
 
 					self::assertSame('generic', $properties[3]->name());
 					self::assertEquals(NamedType::wrap(DoubleTemplateType::class, [DateTime::class, stdClass::class]), $properties[3]->type());
@@ -161,10 +161,10 @@ class ReflectionTest extends IntegrationTestCase
 					self::assertFalse($properties[4]->hasDefaultValue());
 					self::assertTrue($properties[4]->isPromoted());
 					self::assertSame($reflection->constructor()->parameters()[0], $properties[4]->promotedParameter());
-					self::assertEquals(new Collection([new AttributeStub('6')]), $properties[4]->attributes()->all());
+					self::assertEquals([new AttributeStub('6')], $properties[4]->attributes()->all());
 				});
 
-				with($reflection->declaredMethods(), function (Collection $methods) use ($reflection) {
+				with($reflection->declaredMethods(), function (array $methods) use ($reflection) {
 					self::assertCount(4, $methods);
 					self::assertContainsOnlyInstancesOf(MethodReflection::class, $methods);
 
@@ -181,14 +181,14 @@ class ReflectionTest extends IntegrationTestCase
 					//					self::assertSame($reflection->methods()[7], $methods[3]);
 				});
 
-				with($reflection->methods(), function (Collection $methods) use ($reflection) {
+				with($reflection->methods(), function (array $methods) use ($reflection) {
 					self::assertCount(9, $methods);
 					self::assertContainsOnlyInstancesOf(MethodReflection::class, $methods);
 
 					self::assertSame('test', $methods[0]->name());
 					self::assertEmpty($methods[0]->attributes()->all());
 					self::assertEmpty($methods[0]->typeParameters());
-					with($methods[0]->parameters(), function (Collection $parameters) {
+					with($methods[0]->parameters(), function (array $parameters) {
 						self::assertCount(1, $parameters);
 						self::assertContainsOnlyInstancesOf(FunctionParameterReflection::class, $parameters);
 
@@ -233,22 +233,22 @@ class ReflectionTest extends IntegrationTestCase
 					self::assertSame('__construct', $methods[5]->name());
 					self::assertEmpty($methods[5]->attributes()->all());
 					self::assertEmpty($methods[5]->typeParameters());
-					with($methods[5]->parameters(), function (Collection $parameters) {
+					with($methods[5]->parameters(), function (array $parameters) {
 						self::assertCount(1, $parameters);
 						self::assertContainsOnlyInstancesOf(FunctionParameterReflection::class, $parameters);
 
 						self::assertEquals('promoted', $parameters[0]->name());
 						self::assertEquals(new NamedType(stdClass::class), $parameters[0]->type());
 						self::assertFalse($parameters[0]->hasDefaultValue());
-						self::assertEquals(new Collection([new AttributeStub('6')]), $parameters[0]->attributes()->all());
+						self::assertEquals([new AttributeStub('6')], $parameters[0]->attributes()->all());
 						self::assertSame('arg $promoted', (string) $parameters[0]);
 					});
 					self::assertNull($methods[5]->returnType());
 					self::assertSame('__construct()', (string) $methods[5]);
 
 					self::assertSame('method', $methods[6]->name());
-					self::assertEquals(new Collection([new AttributeStub('5')]), $methods[6]->attributes()->all());
-					with($methods[6]->typeParameters(), function (Collection $parameters) {
+					self::assertEquals([new AttributeStub('5')], $methods[6]->attributes()->all());
+					with($methods[6]->typeParameters(), function (array $parameters) {
 						self::assertCount(1, $parameters);
 						self::assertContainsOnlyInstancesOf(TypeParameterReflection::class, $parameters);
 
@@ -257,14 +257,14 @@ class ReflectionTest extends IntegrationTestCase
 						self::assertSame(MixedType::get(), $parameters[0]->upperBound());
 						self::assertSame(TemplateTypeVariance::INVARIANT, $parameters[0]->variance());
 					});
-					with($methods[6]->parameters(), function (Collection $parameters) {
+					with($methods[6]->parameters(), function (array $parameters) {
 						self::assertCount(1, $parameters);
 						self::assertContainsOnlyInstancesOf(FunctionParameterReflection::class, $parameters);
 
 						self::assertEquals('param', $parameters[0]->name());
 						self::assertEquals(NamedType::wrap(DoubleTemplateType::class, [SomeStub::class, stdClass::class]), $parameters[0]->type());
 						self::assertFalse($parameters[0]->hasDefaultValue());
-						self::assertEquals(new Collection([new AttributeStub('6')]), $parameters[0]->attributes()->all());
+						self::assertEquals([new AttributeStub('6')], $parameters[0]->attributes()->all());
 						self::assertSame('arg $param', (string) $parameters[0]);
 					});
 					self::assertEquals(NamedType::wrap(Collection::class, [new TemplateType('S'), new TemplateType('G')]), $methods[6]->returnType());
@@ -272,7 +272,7 @@ class ReflectionTest extends IntegrationTestCase
 
 					self::assertSame('methodTwo', $methods[7]->name());
 					self::assertEmpty($methods[7]->attributes()->all());
-					with($methods[7]->typeParameters(), function (Collection $parameters) {
+					with($methods[7]->typeParameters(), function (array $parameters) {
 						self::assertCount(2, $parameters);
 						self::assertContainsOnlyInstancesOf(TypeParameterReflection::class, $parameters);
 
@@ -286,7 +286,7 @@ class ReflectionTest extends IntegrationTestCase
 						self::assertEquals(NamedType::wrap(SingleTemplateType::class, [new TemplateType('KValue')]), $parameters[1]->upperBound());
 						self::assertSame(TemplateTypeVariance::INVARIANT, $parameters[1]->variance());
 					});
-					with($methods[7]->parameters(), function (Collection $parameters) {
+					with($methods[7]->parameters(), function (array $parameters) {
 						self::assertCount(1, $parameters);
 						self::assertContainsOnlyInstancesOf(FunctionParameterReflection::class, $parameters);
 
@@ -302,7 +302,7 @@ class ReflectionTest extends IntegrationTestCase
 					self::assertSame('self', $methods[8]->name());
 					self::assertEmpty($methods[8]->attributes()->all());
 					self::assertEmpty($methods[8]->typeParameters());
-					with($methods[8]->parameters(), function (Collection $parameters) {
+					with($methods[8]->parameters(), function (array $parameters) {
 						self::assertCount(1, $parameters);
 						self::assertContainsOnlyInstancesOf(FunctionParameterReflection::class, $parameters);
 

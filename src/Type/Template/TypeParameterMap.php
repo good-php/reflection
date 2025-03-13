@@ -5,7 +5,7 @@ namespace GoodPhp\Reflection\Type\Template;
 use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\TypeParameterDefinition;
 use GoodPhp\Reflection\Type\Combinatorial\TupleType;
 use GoodPhp\Reflection\Type\Type;
-use Illuminate\Support\Collection;
+use Illuminate\Support\Arr;
 use Webmozart\Assert\Assert;
 
 final class TypeParameterMap
@@ -32,7 +32,7 @@ final class TypeParameterMap
 
 		foreach ($typeParameters as $parameter) {
 			if ($parameter->variadic) {
-				$map[$parameter->name] = new TupleType(collect(array_slice($arguments, $i)));
+				$map[$parameter->name] = new TupleType(array_slice($arguments, $i));
 
 				break;
 			}
@@ -51,28 +51,24 @@ final class TypeParameterMap
 	public static function empty(): self
 	{
 		/** @var self $map */
-		static $map;
-
-		if (!$map) {
-			$map = new self([]);
-		}
+		static $map = new self([]);
 
 		return $map;
 	}
 
 	/**
-	 * @param iterable<int, TypeParameterDefinition> $typeParameters
+	 * @param list<TypeParameterDefinition> $typeParameters
 	 *
-	 * @return Collection<int, Type>
+	 * @return list<Type>
 	 */
-	public function toArguments(iterable $typeParameters): Collection
+	public function toArguments(array $typeParameters): array
 	{
 		if (!$this->types) {
-			return Collection::empty();
+			return [];
 		}
 
-		return Collection::wrap($typeParameters)
-			->flatMap(function (TypeParameterDefinition $parameter) {
+		return Arr::flatten(
+			array_map(function (TypeParameterDefinition $parameter) {
 				$type = $this->types[$parameter->name] ?? null;
 
 				if (!$type) {
@@ -86,6 +82,8 @@ final class TypeParameterMap
 				}
 
 				return [$type];
-			});
+			}, $typeParameters),
+			depth: 1
+		);
 	}
 }

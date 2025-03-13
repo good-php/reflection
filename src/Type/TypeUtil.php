@@ -2,17 +2,24 @@
 
 namespace GoodPhp\Reflection\Type;
 
-use Illuminate\Support\Collection;
-
 class TypeUtil
 {
 	/**
-	 * @param Collection<int, Type> $types
-	 * @param Collection<int, Type> $otherTypes
+	 * @param list<Type> $types
+	 * @param list<Type> $otherTypes
 	 */
-	public static function allEqual(Collection $types, Collection $otherTypes): bool
+	public static function allEqual(array $types, array $otherTypes): bool
 	{
-		return $types->count() === $otherTypes->count() &&
-			$types->every(fn (Type $type, int $i) => $type->equals($otherTypes[$i]));
+		if (count($types) !== count($otherTypes)) {
+			return false;
+		}
+
+		foreach ($types as $i => $type) {
+			if (!$type->equals($otherTypes[$i])) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 }

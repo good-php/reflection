@@ -20,7 +20,6 @@ use GoodPhp\Reflection\Type\Template\TypeParameterMap;
 use GoodPhp\Reflection\Type\Type;
 use GoodPhp\Reflection\Type\TypeComparator;
 use GoodPhp\Reflection\UnknownTypeException;
-use Illuminate\Support\Collection;
 use InvalidArgumentException;
 
 final class DefinitionProviderReflector implements Reflector
@@ -50,7 +49,7 @@ final class DefinitionProviderReflector implements Reflector
 			$definition instanceof ClassTypeDefinition ||
 			$definition instanceof InterfaceTypeDefinition ||
 			$definition instanceof TraitTypeDefinition ||
-			$definition instanceof SpecialTypeDefinition => TypeParameterMap::fromArguments($type->arguments->all(), $definition->typeParameters),
+			$definition instanceof SpecialTypeDefinition => TypeParameterMap::fromArguments($type->arguments, $definition->typeParameters),
 			default                                      => TypeParameterMap::empty()
 		};
 
@@ -65,11 +64,11 @@ final class DefinitionProviderReflector implements Reflector
 	}
 
 	/**
-	 * @param Collection<int, Type> $arguments
+	 * @param list<Type> $arguments
 	 *
 	 * @return TypeReflection<mixed>
 	 */
-	public function forType(string $name, Collection $arguments = new Collection()): TypeReflection
+	public function forType(string $name, array $arguments = []): TypeReflection
 	{
 		return $this->forNamedType(new NamedType($name, $arguments));
 	}

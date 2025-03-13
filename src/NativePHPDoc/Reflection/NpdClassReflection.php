@@ -22,7 +22,7 @@ use GoodPhp\Reflection\Reflector;
 use GoodPhp\Reflection\Type\NamedType;
 use GoodPhp\Reflection\Type\Template\TypeParameterMap;
 use GoodPhp\Reflection\Type\TypeProjector;
-use Illuminate\Support\Collection;
+use Illuminate\Support\Arr;
 use ReflectionClass;
 
 /**
@@ -42,29 +42,29 @@ final class NpdClassReflection extends NpdTypeReflection implements ClassReflect
 	/** @var ReflectionClass<ReflectableType> */
 	private readonly ReflectionClass $nativeReflection;
 
-	/** @var Collection<int, TypeParameterReflection<$this>> */
-	private readonly Collection $typeParameters;
+	/** @var list<TypeParameterReflection<$this>> */
+	private readonly array $typeParameters;
 
 	private readonly Attributes $attributes;
 
 	private readonly ?NamedType $extends;
 
-	/** @var Collection<int, NamedType> */
-	private readonly Collection $implements;
+	/** @var list<NamedType> */
+	private readonly array $implements;
 
 	private UsedTraitsReflection $uses;
 
-	/** @var Collection<int, PropertyReflection<ReflectableType, $this>> */
-	private readonly Collection $declaredProperties;
+	/** @var list<PropertyReflection<ReflectableType, $this>> */
+	private readonly array $declaredProperties;
 
-	/** @var Collection<int, PropertyReflection<ReflectableType, HasProperties<ReflectableType>>> */
-	private readonly Collection $properties;
+	/** @var list<PropertyReflection<ReflectableType, HasProperties<ReflectableType>>> */
+	private readonly array $properties;
 
-	/** @var Collection<int, MethodReflection<ReflectableType, $this>> */
-	private readonly Collection $declaredMethods;
+	/** @var list<MethodReflection<ReflectableType, $this>> */
+	private readonly array $declaredMethods;
 
-	/** @var Collection<int, MethodReflection<ReflectableType, HasMethods<ReflectableType>>> */
-	private readonly Collection $methods;
+	/** @var list<MethodReflection<ReflectableType, HasMethods<ReflectableType>>> */
+	private readonly array $methods;
 
 	/**
 	 * @param ClassTypeDefinition<ReflectableType> $definition
@@ -114,13 +114,14 @@ final class NpdClassReflection extends NpdTypeReflection implements ClassReflect
 	}
 
 	/**
-	 * @return Collection<int, TypeParameterReflection<$this>>
+	 * @return list<TypeParameterReflection<$this>>
 	 */
-	public function typeParameters(): Collection
+	public function typeParameters(): array
 	{
-		return $this->typeParameters ??= $this->definition
-			->typeParameters
-			->map(fn (TypeParameterDefinition $parameter) => new NpdTypeParameterReflection($parameter, $this, $this->staticType));
+		return $this->typeParameters ??= array_map(
+			fn (TypeParameterDefinition $parameter) => new NpdTypeParameterReflection($parameter, $this, $this->staticType),
+			$this->definition->typeParameters
+		);
 	}
 
 	public function extends(): ?NamedType
@@ -141,17 +142,18 @@ final class NpdClassReflection extends NpdTypeReflection implements ClassReflect
 	}
 
 	/**
-	 * @return Collection<int, NamedType>
+	 * @return list<NamedType>
 	 */
-	public function implements(): Collection
+	public function implements(): array
 	{
-		return $this->implements ??= $this->definition
-			->implements
-			->map(fn (NamedType $type) => TypeProjector::templateTypes(
+		return $this->implements ??= array_map(
+			fn (NamedType $type) => TypeProjector::templateTypes(
 				$type,
 				$this->resolvedTypeParameterMap,
 				$this->staticType,
-			));
+			),
+			$this->definition->implements
+		);
 	}
 
 	public function uses(): UsedTraitsReflection
@@ -160,19 +162,20 @@ final class NpdClassReflection extends NpdTypeReflection implements ClassReflect
 	}
 
 	/**
-	 * @return Collection<int, PropertyReflection<ReflectableType, $this>>
+	 * @return list<PropertyReflection<ReflectableType, $this>>
 	 */
-	public function declaredProperties(): Collection
+	public function declaredProperties(): array
 	{
-		return $this->declaredProperties ??= $this->definition
-			->properties
-			->map(fn (PropertyDefinition $property) => new NpdPropertyReflection($property, $this, $this->staticType, $this->resolvedTypeParameterMap));
+		return $this->declaredProperties ??= array_map(
+			fn (PropertyDefinition $property) => new NpdPropertyReflection($property, $this, $this->staticType, $this->resolvedTypeParameterMap),
+			$this->definition->properties,
+		);
 	}
 
 	/**
-	 * @return Collection<int, PropertyReflection<ReflectableType, HasProperties<ReflectableType>>>
+	 * @return list<PropertyReflection<ReflectableType, HasProperties<ReflectableType>>>
 	 */
-	public function properties(): Collection
+	public function properties(): array
 	{
 		return $this->properties ??= collect([
 			...$this->propertiesFromTraits($this->uses(), $this->staticType, $this->reflector),
@@ -180,23 +183,25 @@ final class NpdClassReflection extends NpdTypeReflection implements ClassReflect
 			...$this->declaredProperties(),
 		])
 			->keyBy(fn (PropertyReflection $property) => $property->name())
-			->values();
+			->values()
+			->all();
 	}
 
 	/**
-	 * @return Collection<int, MethodReflection<ReflectableType, $this>>
+	 * @return list<MethodReflection<ReflectableType, $this>>
 	 */
-	public function declaredMethods(): Collection
+	public function declaredMethods(): array
 	{
-		return $this->declaredMethods ??= $this->definition
-			->methods
-			->map(fn (MethodDefinition $method) => new NpdMethodReflection($method, $this, $this->staticType, $this->resolvedTypeParameterMap));
+		return $this->declaredMethods ??= array_map(
+			fn (MethodDefinition $method) => new NpdMethodReflection($method, $this, $this->staticType, $this->resolvedTypeParameterMap),
+			$this->definition->methods,
+		);
 	}
 
 	/**
-	 * @return Collection<int, MethodReflection<ReflectableType, HasMethods<ReflectableType>>>
+	 * @return list<MethodReflection<ReflectableType, HasMethods<ReflectableType>>>
 	 */
-	public function methods(): Collection
+	public function methods(): array
 	{
 		return $this->methods ??= collect([
 			...$this->methodsFromTypes($this->implements(), $this->staticType, $this->reflector),
@@ -205,7 +210,8 @@ final class NpdClassReflection extends NpdTypeReflection implements ClassReflect
 			...$this->declaredMethods(),
 		])
 			->keyBy(fn (MethodReflection $method) => $method->name())
-			->values();
+			->values()
+			->all();
 	}
 
 	/**
@@ -213,9 +219,10 @@ final class NpdClassReflection extends NpdTypeReflection implements ClassReflect
 	 */
 	public function constructor(): ?MethodReflection
 	{
-		return $this
-			->methods()
-			->first(fn (MethodReflection $reflection) => $reflection->name() === '__construct');
+		return Arr::first(
+			$this->methods(),
+			fn (MethodReflection $reflection) => $reflection->name() === '__construct'
+		);
 	}
 
 	public function isAnonymous(): bool

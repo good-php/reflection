@@ -4,18 +4,17 @@ namespace GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition;
 
 use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition;
 use GoodPhp\Reflection\Type\Type;
-use Illuminate\Support\Collection;
 
 final class SpecialTypeDefinition extends TypeDefinition
 {
 	/**
-	 * @param Collection<int, TypeParameterDefinition> $typeParameters
-	 * @param Collection<int, Type>                    $superTypes
+	 * @param list<TypeParameterDefinition> $typeParameters
+	 * @param list<Type>                    $superTypes
 	 */
 	public function __construct(
 		string $qualifiedName,
-		public readonly Collection $typeParameters = new Collection(),
-		public readonly Collection $superTypes = new Collection(),
+		public readonly array $typeParameters = [],
+		public readonly array $superTypes = [],
 	) {
 		parent::__construct(
 			$qualifiedName,

@@ -7,6 +7,7 @@ use GoodPhp\Reflection\Type\Combinatorial\TupleType;
 use GoodPhp\Reflection\Type\Special\StaticType;
 use GoodPhp\Reflection\Type\Template\TemplateType;
 use GoodPhp\Reflection\Type\Template\TypeParameterMap;
+use Illuminate\Support\Arr;
 
 class TypeProjector
 {
@@ -39,8 +40,9 @@ class TypeProjector
 			if ($type instanceof NamedType) {
 				$changed = false;
 
-				$arguments = $type->arguments
-					->flatMap(function (Type $type) use (&$changed) {
+				/** @var list<Type> $arguments */
+				$arguments = Arr::flatten(
+					array_map(function (Type $type) use (&$changed) {
 						if ($type instanceof ExpandedType && $type->innerType instanceof TupleType) {
 							$changed = true;
 
@@ -48,7 +50,9 @@ class TypeProjector
 						}
 
 						return [$type];
-					});
+					}, $type->arguments),
+					1
+				);
 
 				if ($changed) {
 					$type = new NamedType($type->name, $arguments);

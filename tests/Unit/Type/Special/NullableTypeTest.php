@@ -7,7 +7,6 @@ use GoodPhp\Reflection\Type\Combinatorial\UnionType;
 use GoodPhp\Reflection\Type\PrimitiveType;
 use GoodPhp\Reflection\Type\Special\NullableType;
 use GoodPhp\Reflection\Type\Type;
-use Illuminate\Support\Collection;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
@@ -64,18 +63,18 @@ class NullableTypeTest extends TestCase
 
 		yield 'intersection' => [
 			'?(int&float)',
-			new IntersectionType(new Collection([
+			new IntersectionType([
 				PrimitiveType::integer(),
 				PrimitiveType::float(),
-			])),
+			]),
 		];
 
 		yield 'union' => [
 			'int|float|null',
-			new UnionType(new Collection([
+			new UnionType([
 				PrimitiveType::integer(),
 				PrimitiveType::float(),
-			])),
+			]),
 		];
 	}
 }

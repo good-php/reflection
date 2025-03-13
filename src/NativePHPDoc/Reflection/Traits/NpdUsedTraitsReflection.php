@@ -7,12 +7,11 @@ use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\UsedTraitsDefiniti
 use GoodPhp\Reflection\Reflection\Traits\UsedTraitsReflection;
 use GoodPhp\Reflection\Type\NamedType;
 use GoodPhp\Reflection\Type\Template\TypeParameterMap;
-use Illuminate\Support\Collection;
 
 final class NpdUsedTraitsReflection implements UsedTraitsReflection
 {
-	/** @var Collection<int, NpdUsedTraitReflection> */
-	private readonly Collection $traits;
+	/** @var list<NpdUsedTraitReflection> */
+	private readonly array $traits;
 
 	public function __construct(
 		private readonly UsedTraitsDefinition $definition,
@@ -21,19 +20,20 @@ final class NpdUsedTraitsReflection implements UsedTraitsReflection
 	) {}
 
 	/**
-	 * @return Collection<int, NpdUsedTraitReflection>
+	 * @return list<NpdUsedTraitReflection>
 	 */
-	public function traits(): Collection
+	public function traits(): array
 	{
-		return $this->traits ??= $this->definition
-			->traits
-			->map(fn (UsedTraitDefinition $trait) => new NpdUsedTraitReflection($trait, $this->resolvedTypeParameterMap, $this->staticType));
+		return $this->traits ??= array_map(
+			fn (UsedTraitDefinition $trait) => new NpdUsedTraitReflection($trait, $this->resolvedTypeParameterMap, $this->staticType),
+			$this->definition->traits,
+		);
 	}
 
 	/**
-	 * @return Collection<class-string, Collection<int, string>>
+	 * @return array<class-string, list<string>>
 	 */
-	public function excludedTraitMethods(): Collection
+	public function excludedTraitMethods(): array
 	{
 		return $this->definition->excludedTraitMethods;
 	}

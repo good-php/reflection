@@ -10,7 +10,6 @@ use GoodPhp\Reflection\Reflection\TypeParameters\TypeParameterReflection;
 use GoodPhp\Reflection\Type\NamedType;
 use GoodPhp\Reflection\Type\Template\TypeParameterMap;
 use GoodPhp\Reflection\Type\Type;
-use Illuminate\Support\Collection;
 
 /**
  * @template ReflectableType
@@ -23,8 +22,8 @@ final class NpdSpecialTypeReflection extends NpdTypeReflection implements Specia
 
 	private NamedType $staticType;
 
-	/** @var Collection<int, TypeParameterReflection<$this>> */
-	private readonly Collection $typeParameters;
+	/** @var list<TypeParameterReflection<$this>> */
+	private readonly array $typeParameters;
 
 	public function __construct(
 		private readonly SpecialTypeDefinition $definition,
@@ -63,19 +62,20 @@ final class NpdSpecialTypeReflection extends NpdTypeReflection implements Specia
 	}
 
 	/**
-	 * @return Collection<int, TypeParameterReflection<$this>>
+	 * @return list<TypeParameterReflection<$this>>
 	 */
-	public function typeParameters(): Collection
+	public function typeParameters(): array
 	{
-		return $this->typeParameters ??= $this->definition
-			->typeParameters
-			->map(fn (TypeParameterDefinition $parameter) => new NpdTypeParameterReflection($parameter, $this, $this->type));
+		return $this->typeParameters ??= array_map(
+			fn (TypeParameterDefinition $parameter) => new NpdTypeParameterReflection($parameter, $this, $this->type),
+			$this->definition->typeParameters
+		);
 	}
 
 	/**
-	 * @return Collection<int, Type>
+	 * @return list<Type>
 	 */
-	public function superTypes(): Collection
+	public function superTypes(): array
 	{
 		return $this->definition->superTypes;
 	}

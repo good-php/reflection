@@ -2,15 +2,13 @@
 
 namespace GoodPhp\Reflection\NativePHPDoc\Definition\NativePHPDoc\File\FileClassLikeContext;
 
-use Illuminate\Support\Collection;
-
 final class TraitsUse
 {
 	/**
-	 * @param Collection<int, TraitUse> $traits
+	 * @param list<TraitUse> $traits
 	 */
 	public function __construct(
-		public readonly Collection $traits,
+		public readonly array $traits,
 		public readonly ?string $docComment = null,
 	) {}
 }

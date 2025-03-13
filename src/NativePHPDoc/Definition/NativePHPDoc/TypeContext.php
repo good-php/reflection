@@ -5,31 +5,33 @@ namespace GoodPhp\Reflection\NativePHPDoc\Definition\NativePHPDoc;
 use GoodPhp\Reflection\NativePHPDoc\Definition\NativePHPDoc\File\FileClassLikeContext;
 use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\TypeParameterDefinition;
 use GoodPhp\Reflection\Type\NamedType;
-use Illuminate\Support\Collection;
 use GoodPhp\Reflection\Util\Lazy\Lazy;
 
 class TypeContext
 {
 	/**
-	 * @param Collection<string, Lazy<TypeParameterDefinition>> $typeParameters
+	 * @param array<string, Lazy<TypeParameterDefinition>> $typeParameters
 	 */
 	public function __construct(
 		public readonly ?FileClassLikeContext $fileClassLikeContext,
 		public readonly NamedType $declaringType,
 		public readonly ?NamedType $declaringTypeParent,
-		public readonly Collection $typeParameters
+		public readonly array $typeParameters
 	) {}
 
 	/**
-	 * @param Collection<string, Lazy<TypeParameterDefinition>> $parameters
+	 * @param array<string, Lazy<TypeParameterDefinition>> $parameters
 	 */
-	public function withMergedTypeParameters(Collection $parameters): self
+	public function withMergedTypeParameters(array $parameters): self
 	{
 		return new self(
 			fileClassLikeContext: $this->fileClassLikeContext,
 			declaringType: $this->declaringType,
 			declaringTypeParent: $this->declaringTypeParent,
-			typeParameters: (clone $this->typeParameters)->merge($parameters)
+			typeParameters: [
+				...$this->typeParameters,
+				...$parameters,
+			],
 		);
 	}
 }

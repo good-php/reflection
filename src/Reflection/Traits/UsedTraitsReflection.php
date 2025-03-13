@@ -2,17 +2,15 @@
 
 namespace GoodPhp\Reflection\Reflection\Traits;
 
-use Illuminate\Support\Collection;
-
 interface UsedTraitsReflection
 {
 	/**
-	 * @return Collection<int, UsedTraitReflection>
+	 * @return list<UsedTraitReflection>
 	 */
-	public function traits(): Collection;
+	public function traits(): array;
 
 	/**
-	 * @return Collection<class-string, Collection<int, string>>
+	 * @return array<class-string, list<string>>
 	 */
-	public function excludedTraitMethods(): Collection;
+	public function excludedTraitMethods(): array;
 }

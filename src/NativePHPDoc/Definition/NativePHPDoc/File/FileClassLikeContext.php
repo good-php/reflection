@@ -3,25 +3,24 @@
 namespace GoodPhp\Reflection\NativePHPDoc\Definition\NativePHPDoc\File;
 
 use GoodPhp\Reflection\NativePHPDoc\Definition\NativePHPDoc\File\FileClassLikeContext\TraitsUse;
-use Illuminate\Support\Collection;
 
 class FileClassLikeContext
 {
 	/**
-	 * @param Collection<int, string>                           $implementsInterfaces
-	 * @param Collection<string, string>                        $uses
-	 * @param Collection<int, TraitsUse>                        $traitsUses
-	 * @param Collection<class-string, Collection<int, string>> $excludedTraitMethods
-	 * @param Collection<int, string>                           $declaredProperties
-	 * @param Collection<int, string>                           $declaredMethods
+	 * @param list<string>                      $implementsInterfaces
+	 * @param array<string, string>             $uses
+	 * @param list<TraitsUse>                   $traitsUses
+	 * @param array<class-string, list<string>> $excludedTraitMethods
+	 * @param list<string>                      $declaredProperties
+	 * @param list<string>                      $declaredMethods
 	 */
 	public function __construct(
 		public readonly ?string $namespace,
-		public readonly Collection $implementsInterfaces,
-		public readonly Collection $uses,
-		public readonly Collection $traitsUses,
-		public readonly Collection $excludedTraitMethods,
-		public readonly Collection $declaredProperties,
-		public readonly Collection $declaredMethods,
+		public readonly array $implementsInterfaces,
+		public readonly array $uses,
+		public readonly array $traitsUses,
+		public readonly array $excludedTraitMethods,
+		public readonly array $declaredProperties,
+		public readonly array $declaredMethods,
 	) {}
 }

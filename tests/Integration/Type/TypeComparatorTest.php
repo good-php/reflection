@@ -10,7 +10,6 @@ use GoodPhp\Reflection\Type\PrimitiveType;
 use GoodPhp\Reflection\Type\Special\NullableType;
 use GoodPhp\Reflection\Type\Type;
 use GoodPhp\Reflection\Type\TypeComparator;
-use Illuminate\Support\Collection;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\Integration\IntegrationTestCase;
 use Tests\Stubs\Classes\ClassStub;
@@ -110,48 +109,48 @@ class TypeComparatorTest extends IntegrationTestCase
 		yield '?string <= string|int|null' => [
 			false,
 			new NullableType(PrimitiveType::string()),
-			new NullableType(new UnionType(new Collection([PrimitiveType::string(), PrimitiveType::integer()]))),
+			new NullableType(new UnionType([PrimitiveType::string(), PrimitiveType::integer()])),
 		];
 
 		yield 'string|int|null <= string' => [
 			true,
-			new NullableType(new UnionType(new Collection([PrimitiveType::string(), PrimitiveType::integer()]))),
+			new NullableType(new UnionType([PrimitiveType::string(), PrimitiveType::integer()])),
 			new NullableType(PrimitiveType::string()),
 		];
 
 		yield '?string <= (?string)|int' => [
 			false,
 			new NullableType(PrimitiveType::string()),
-			new UnionType(new Collection([new NullableType(PrimitiveType::string()), PrimitiveType::integer()])),
+			new UnionType([new NullableType(PrimitiveType::string()), PrimitiveType::integer()]),
 		];
 
 		yield '(?string)|int <= ?string' => [
 			true,
-			new UnionType(new Collection([new NullableType(PrimitiveType::string()), PrimitiveType::integer()])),
+			new UnionType([new NullableType(PrimitiveType::string()), PrimitiveType::integer()]),
 			new NullableType(PrimitiveType::string()),
 		];
 
 		yield '?string <= ?(string&integer)' => [
 			true,
 			new NullableType(PrimitiveType::string()),
-			new NullableType(new IntersectionType(new Collection([PrimitiveType::string(), PrimitiveType::integer()]))),
+			new NullableType(new IntersectionType([PrimitiveType::string(), PrimitiveType::integer()])),
 		];
 
 		yield '?(string&integer) <= ?string' => [
 			false,
-			new NullableType(new IntersectionType(new Collection([PrimitiveType::string(), PrimitiveType::integer()]))),
+			new NullableType(new IntersectionType([PrimitiveType::string(), PrimitiveType::integer()])),
 			new NullableType(PrimitiveType::string()),
 		];
 
 		yield '?string <= (?string)&integer' => [
 			true,
 			new NullableType(PrimitiveType::string()),
-			new IntersectionType(new Collection([new NullableType(PrimitiveType::string()), PrimitiveType::integer()])),
+			new IntersectionType([new NullableType(PrimitiveType::string()), PrimitiveType::integer()]),
 		];
 
 		yield '(?string)&integer <= ?string' => [
 			false,
-			new IntersectionType(new Collection([new NullableType(PrimitiveType::string()), PrimitiveType::integer()])),
+			new IntersectionType([new NullableType(PrimitiveType::string()), PrimitiveType::integer()]),
 			new NullableType(PrimitiveType::string()),
 		];
 	}
@@ -193,38 +192,38 @@ class TypeComparatorTest extends IntegrationTestCase
 
 		yield 'ClassStub<SomeStub> <= ClassStub<SomeStub>' => [
 			true,
-			new NamedType(ClassStub::class, new Collection([
+			new NamedType(ClassStub::class, [
 				new NamedType(SomeStub::class),
 				PrimitiveType::integer(),
-			])),
-			new NamedType(ClassStub::class, new Collection([
+			]),
+			new NamedType(ClassStub::class, [
 				new NamedType(SomeStub::class),
 				PrimitiveType::integer(),
-			])),
+			]),
 		];
 
 		yield 'callable(int): float <= Closure(float): int' => [
 			true,
-			new NamedType('callable', new Collection([
+			new NamedType('callable', [
 				PrimitiveType::float(),
 				PrimitiveType::integer(),
-			])),
-			new NamedType(Closure::class, new Collection([
+			]),
+			new NamedType(Closure::class, [
 				PrimitiveType::integer(),
 				PrimitiveType::float(),
-			])),
+			]),
 		];
 
 		yield 'callable(float): int <= Closure(int): float' => [
 			false,
-			new NamedType('callable', new Collection([
+			new NamedType('callable', [
 				PrimitiveType::integer(),
 				PrimitiveType::float(),
-			])),
-			new NamedType(Closure::class, new Collection([
+			]),
+			new NamedType(Closure::class, [
 				PrimitiveType::float(),
 				PrimitiveType::integer(),
-			])),
+			]),
 		];
 	}
 }

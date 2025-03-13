@@ -8,8 +8,8 @@ use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\TypeParameterDefin
 use GoodPhp\Reflection\Type\NamedType;
 use GoodPhp\Reflection\Type\Template\TemplateType;
 use GoodPhp\Reflection\Type\Template\TemplateTypeVariance;
-use Illuminate\Support\Collection;
 use GoodPhp\Reflection\Util\Lazy\Lazy;
+
 use function GoodPhp\Reflection\Util\Lazy\lazy;
 
 class BuiltInSpecialsDefinitionProvider implements DefinitionProvider
@@ -28,10 +28,9 @@ class BuiltInSpecialsDefinitionProvider implements DefinitionProvider
 			)),
 			'int' => lazy(fn () => new SpecialTypeDefinition(
 				'int',
-				new Collection(),
-				new Collection([
+				superTypes: [
 					new NamedType('float'),
-				])
+				]
 			)),
 			'float' => lazy(fn () => new SpecialTypeDefinition(
 				'float',
@@ -41,7 +40,7 @@ class BuiltInSpecialsDefinitionProvider implements DefinitionProvider
 			)),
 			'iterable' => lazy(fn () => new SpecialTypeDefinition(
 				'iterable',
-				new Collection([
+				[
 					new TypeParameterDefinition(
 						name: 'TKey',
 						variadic: false,
@@ -54,11 +53,11 @@ class BuiltInSpecialsDefinitionProvider implements DefinitionProvider
 						upperBound: null,
 						variance: TemplateTypeVariance::COVARIANT
 					),
-				])
+				]
 			)),
 			'array' => lazy(fn () => new SpecialTypeDefinition(
 				'array',
-				new Collection([
+				[
 					new TypeParameterDefinition(
 						name: 'TKey',
 						variadic: false,
@@ -71,21 +70,21 @@ class BuiltInSpecialsDefinitionProvider implements DefinitionProvider
 						upperBound: null,
 						variance: TemplateTypeVariance::INVARIANT
 					),
-				]),
-				new Collection([
-					new NamedType('iterable', new Collection([
+				],
+				[
+					new NamedType('iterable', [
 						new TemplateType(
 							name: 'TKey',
 						),
 						new TemplateType(
 							name: 'TValue',
 						),
-					])),
-				])
+					]),
+				]
 			)),
 			'callable' => lazy(fn () => new SpecialTypeDefinition(
 				'callable',
-				new Collection([
+				[
 					new TypeParameterDefinition(
 						name: 'TReturn',
 						variadic: false,
@@ -98,7 +97,7 @@ class BuiltInSpecialsDefinitionProvider implements DefinitionProvider
 						upperBound: null,
 						variance: TemplateTypeVariance::CONTRAVARIANT
 					),
-				])
+				]
 			)),
 		];
 	}

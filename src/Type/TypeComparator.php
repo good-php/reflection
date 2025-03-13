@@ -21,7 +21,6 @@ use GoodPhp\Reflection\Type\Special\StaticType;
 use GoodPhp\Reflection\Type\Special\VoidType;
 use GoodPhp\Reflection\Type\Template\TemplateType;
 use GoodPhp\Reflection\Type\Template\TemplateTypeVariance;
-use Illuminate\Support\Collection;
 use InvalidArgumentException;
 use Tests\Integration\Type\TypeComparatorTest;
 
@@ -43,10 +42,10 @@ class TypeComparator
 			$b instanceof VoidType                             => false,
 			$a instanceof MixedType                            => true,
 			$b instanceof MixedType                            => false,
-			$a instanceof IntersectionType                     => $a->types->every(fn (Type $type) => $this->accepts($type, $b)),
-			$b instanceof IntersectionType                     => $b->types->some(fn (Type $type) => $this->accepts($a, $type)),
-			$a instanceof UnionType                            => $a->types->some(fn (Type $type) => $this->accepts($type, $b)),
-			$b instanceof UnionType                            => $b->types->every(fn (Type $type) => $this->accepts($a, $type)),
+			$a instanceof IntersectionType                     => collect($a->types)->every(fn (Type $type) => $this->accepts($type, $b)),
+			$b instanceof IntersectionType                     => collect($b->types)->some(fn (Type $type) => $this->accepts($a, $type)),
+			$a instanceof UnionType                            => collect($a->types)->some(fn (Type $type) => $this->accepts($type, $b)),
+			$b instanceof UnionType                            => collect($b->types)->every(fn (Type $type) => $this->accepts($a, $type)),
 			$a instanceof NullableType                         => $this->accepts($a->innerType, $b instanceof NullableType ? $b->innerType : $b),
 			$b instanceof NullableType                         => false,
 			// `static` type is very much like a template type - in a sense that it should have been replaced with another
@@ -80,12 +79,12 @@ class TypeComparator
 
 		$aReflection = $this->reflector->forNamedType($a);
 
-		$typeParameters = $aReflection instanceof HasTypeParameters ? $aReflection->typeParameters() : new Collection();
+		$typeParameters = $aReflection instanceof HasTypeParameters ? $aReflection->typeParameters() : [];
 
 		/** @var list<array{TypeParameterReflection<ClassReflection<object>|TraitReflection<object>|TraitReflection<object>>, Type, Type}> $pairs */
 		$pairs = [];
-		$aArguments = clone $a->arguments;
-		$bArguments = clone $b->arguments;
+		$aArguments = $a->arguments;
+		$bArguments = $b->arguments;
 
 		foreach ($typeParameters as $i => $typeParameter) {
 			if ($typeParameter->variadic()) {
@@ -95,9 +94,9 @@ class TypeComparator
 			}
 
 			/** @var Type|null $aArgument */
-			$aArgument = $aArguments->shift();
+			$aArgument = array_shift($aArguments);
 			/** @var Type|null $bArgument */
-			$bArgument = $bArguments->shift();
+			$bArgument = array_shift($bArguments);
 
 			if (!$aArgument || !$bArgument) {
 				throw new InvalidArgumentException('Missing type argument #' . ($i + 1) . " {$typeParameter} when comparing named types '{$a}' and '{$b}'");
@@ -123,9 +122,21 @@ class TypeComparator
 
 	private function acceptsTuple(TupleType $a, Type $b): bool
 	{
-		return $b instanceof TupleType &&
-			$b->types->count() >= $a->types->count() &&
-			$a->types->every(fn (Type $type, int $i) => $this->accepts($type, $b->types[$i]));
+		if (!$b instanceof TupleType) {
+			return false;
+		}
+
+		if (count($b->types) < count($a->types)) {
+			return false;
+		}
+
+		foreach ($a->types as $i => $type) {
+			if (!$this->accepts($type, $b->types[$i])) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	private function findDescendant(NamedType $a, string $className): ?NamedType
@@ -134,13 +145,13 @@ class TypeComparator
 
 		/** @var list<NamedType> $descendants */
 		$descendants = match (true) {
-			$aReflection instanceof ClassReflection => $aReflection
-				->implements()
-				->concat($aReflection->extends() ? [$aReflection->extends()] : [])
-				->filter(),
+			$aReflection instanceof ClassReflection => [
+				...$aReflection->implements(),
+				...($aReflection->extends() ? [$aReflection->extends()] : []),
+			],
 			$aReflection instanceof InterfaceReflection => $aReflection
 				->extends(),
-			$aReflection instanceof TraitReflection => new Collection(),
+			$aReflection instanceof TraitReflection => [],
 			$aReflection instanceof EnumReflection  => $aReflection
 				->implements(),
 			$aReflection instanceof SpecialTypeReflection => $aReflection
