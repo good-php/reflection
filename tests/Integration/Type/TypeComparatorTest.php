@@ -30,7 +30,7 @@ class TypeComparatorTest extends IntegrationTestCase
 		$this->comparator = $this->reflector->typeComparator();
 	}
 
-	#[DataProvider('acceptsIntersectionProvider')]
+	#[DataProvider('acceptsProvider')]
 	#[DataProvider('acceptsUnionProvider')]
 	#[DataProvider('acceptsErrorProvider')]
 	#[DataProvider('acceptsMixedProvider')]
@@ -49,7 +49,7 @@ class TypeComparatorTest extends IntegrationTestCase
 		);
 	}
 
-	public static function acceptsIntersectionProvider(): iterable
+	public static function acceptsProvider(): iterable
 	{
 		yield from [];
 	}

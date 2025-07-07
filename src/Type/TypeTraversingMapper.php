@@ -42,11 +42,11 @@ class TypeTraversingMapper
 
 	public function mapInternal(Type $type): Type
 	{
-		return ($this->callback)($type, [$this, 'traverseInternal']);
+		return ($this->callback)($type, $this->traverseInternal(...));
 	}
 
 	public function traverseInternal(Type $type): Type
 	{
-		return $type->traverse([$this, 'mapInternal']);
+		return $type->traverse($this->mapInternal(...));
 	}
 }

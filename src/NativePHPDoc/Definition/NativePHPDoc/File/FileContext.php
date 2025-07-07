@@ -16,7 +16,7 @@ class FileContext
 	) {}
 
 	/**
-	 * @param ReflectionClass<object> $reflection
+	 * @param ReflectionClass<covariant object> $reflection
 	 */
 	public function forClassLike(ReflectionClass $reflection): FileClassLikeContext
 	{

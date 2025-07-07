@@ -159,7 +159,7 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 	}
 
 	/**
-	 * @param ReflectionClass<object> $reflection
+	 * @param ReflectionClass<covariant object> $reflection
 	 */
 	private function createTypeContext(ReflectionClass $reflection, PhpDocNode $phpDoc): TypeContext
 	{
@@ -178,7 +178,7 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 	}
 
 	/**
-	 * @param ReflectionClass<object> $reflection
+	 * @param ReflectionClass<covariant object> $reflection
 	 *
 	 * @return ($reflection is ReflectionEnum<UnitEnum> ? class-string<UnitEnum> : class-string<object>)
 	 */
@@ -188,7 +188,7 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 	}
 
 	/**
-	 * @param ReflectionClass<object> $reflection
+	 * @param ReflectionClass<covariant object> $reflection
 	 */
 	private function fileName(ReflectionClass $reflection): ?string
 	{
@@ -242,7 +242,7 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 	}
 
 	/**
-	 * @param ReflectionClass<object> $reflection
+	 * @param ReflectionClass<covariant object> $reflection
 	 *
 	 * @return list<MethodDefinition>
 	 */
@@ -394,7 +394,7 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 	}
 
 	/**
-	 * @param ReflectionClass<object> $reflection
+	 * @param ReflectionClass<covariant object> $reflection
 	 *
 	 * @return list<NamedType>
 	 */
@@ -428,7 +428,7 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 	}
 
 	/**
-	 * @param ReflectionClass<object> $reflection
+	 * @param ReflectionClass<covariant object> $reflection
 	 */
 	private function traits(ReflectionClass $reflection, TypeContext $context): UsedTraitsDefinition
 	{
