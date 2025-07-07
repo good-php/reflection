@@ -9,7 +9,7 @@ jobs:
         strategy:
             fail-fast: true
             matrix:
-                php: [ 8.2 ]
+                php: [ 8.2, 8.3, 8.4 ]
 
         steps:
             -   name: Checkout code
@@ -50,7 +50,7 @@ jobs:
             -   name: Setup PHP
                 uses: shivammathur/setup-php@v2
                 with:
-                    php-version: 8.2
+                    php-version: 8.4
                     extensions: dom, curl, libxml, mbstring, zip
                     tools: composer:v2
                     coverage: none
@@ -76,7 +76,7 @@ jobs:
         strategy:
             fail-fast: true
             matrix:
-                php: [ 8.2 ]
+                php: [ 8.2, 8.3, 8.4 ]
         steps:
             -   name: Checkout code
                 uses: actions/checkout@v3
