@@ -5,7 +5,7 @@ namespace GoodPhp\Reflection\Type;
 class TypeTraversingMapper
 {
 	/**
-	 * @param callable(Type $type, callable(Type): Type $traverse): Type $callback
+	 * @param callable(Type, callable(Type): Type): Type $callback
 	 */
 	private function __construct(private readonly mixed $callback) {}
 
