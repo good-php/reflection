@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/good-php/reflection/compare/v1.0.2...v1.1.0) (2025-07-08)
+
+
+### Features
+
+* Update deps, remove dependencies ([#11](https://github.com/good-php/reflection/issues/11)) ([c77d054](https://github.com/good-php/reflection/commit/c77d05491e574c756080a8d60ff96ab073a1b419))
+
 ## [1.0.2](https://github.com/good-php/reflection/compare/v1.0.1...v1.0.2) (2024-05-15)
 
 
