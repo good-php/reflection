@@ -1,6 +1,23 @@
 # [2.0.0](https://github.com/good-php/reflection/compare/v1.0.2...v2.0.0) (2025-07-08)
 
 
+### chore
+
+* Release 2.x ([#12](https://github.com/good-php/reflection/issues/12)) ([024d861](https://github.com/good-php/reflection/commit/024d861b281703e0bc4045cb2043a0c66cb24d5d))
+
+
+### Features
+
+* Update deps, remove dependencies ([#11](https://github.com/good-php/reflection/issues/11)) ([c77d054](https://github.com/good-php/reflection/commit/c77d05491e574c756080a8d60ff96ab073a1b419))
+
+
+### BREAKING CHANGES
+
+* removed Collections
+
+# [2.0.0](https://github.com/good-php/reflection/compare/v1.0.2...v2.0.0) (2025-07-08)
+
+
 ### Features
 
 * Update deps, remove dependencies ([#11](https://github.com/good-php/reflection/issues/11)) ([c77d054](https://github.com/good-php/reflection/commit/c77d05491e574c756080a8d60ff96ab073a1b419))
