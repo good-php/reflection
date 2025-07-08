@@ -3,18 +3,17 @@
 namespace GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition;
 
 use GoodPhp\Reflection\Type\Type;
-use Illuminate\Support\Collection;
 
 final class MethodDefinition
 {
 	/**
-	 * @param Collection<int, TypeParameterDefinition>     $typeParameters
-	 * @param Collection<int, FunctionParameterDefinition> $parameters
+	 * @param list<TypeParameterDefinition>     $typeParameters
+	 * @param list<FunctionParameterDefinition> $parameters
 	 */
 	public function __construct(
 		public readonly string $name,
-		public readonly Collection $typeParameters,
-		public readonly Collection $parameters,
+		public readonly array $typeParameters,
+		public readonly array $parameters,
 		public readonly ?Type $returnType,
 	) {}
 }

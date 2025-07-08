@@ -4,7 +4,6 @@ namespace GoodPhp\Reflection\Reflection;
 
 use GoodPhp\Reflection\Reflection\TypeParameters\HasTypeParameters;
 use GoodPhp\Reflection\Type\Type;
-use Illuminate\Support\Collection;
 
 /**
  * @template ReflectableType
@@ -15,7 +14,7 @@ use Illuminate\Support\Collection;
 interface SpecialTypeReflection extends TypeReflection, HasTypeParameters
 {
 	/**
-	 * @return Collection<int, Type>
+	 * @return list<Type>
 	 */
-	public function superTypes(): Collection;
+	public function superTypes(): array;
 }

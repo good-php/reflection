@@ -7,7 +7,6 @@ use GoodPhp\Reflection\NativePHPDoc\Definition\Cache\FileModificationCacheDefini
 use GoodPhp\Reflection\NativePHPDoc\Definition\DefinitionProvider;
 use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\ClassTypeDefinition;
 use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\UsedTraitsDefinition;
-use Illuminate\Support\Collection;
 use Phake;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Component\Cache\Psr16Cache;
@@ -37,12 +36,12 @@ class FileModificationCacheDefinitionProviderTest extends IntegrationTestCase
 				anonymous: false,
 				final: true,
 				abstract: false,
-				typeParameters: new Collection(),
+				typeParameters: [],
 				extends: null,
-				implements: new Collection(),
+				implements: [],
 				uses: new UsedTraitsDefinition(),
-				properties: new Collection(),
-				methods: new Collection()
+				properties: [],
+				methods: []
 			));
 
 		$this->definitionProvider = new FileModificationCacheDefinitionProvider(

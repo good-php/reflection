@@ -7,7 +7,6 @@ use GoodPhp\Reflection\Reflection\MethodReflection;
 use GoodPhp\Reflection\Reflection\Methods\HasMethods;
 use GoodPhp\Reflection\Type\NamedType;
 use GoodPhp\Reflection\Type\Type;
-use Illuminate\Support\Collection;
 
 /**
  * @template-contravariant ReflectableType of object
@@ -46,12 +45,12 @@ final class TraitAliasesMethodReflection implements MethodReflection
 		return $this->method->attributes();
 	}
 
-	public function typeParameters(): Collection
+	public function typeParameters(): array
 	{
 		return $this->method->typeParameters();
 	}
 
-	public function parameters(): Collection
+	public function parameters(): array
 	{
 		return $this->method->parameters();
 	}

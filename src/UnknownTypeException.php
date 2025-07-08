@@ -7,7 +7,7 @@ use Throwable;
 
 class UnknownTypeException extends RuntimeException
 {
-	public function __construct(string $type, Throwable $previous = null)
+	public function __construct(string $type, ?Throwable $previous = null)
 	{
 		parent::__construct("Unable to reflect type '{$type}'.", 0, $previous);
 	}

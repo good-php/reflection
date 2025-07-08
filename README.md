@@ -64,36 +64,66 @@ full Native PHP reflection and Roave/BetterReflection are generally faster, but 
 mind this also has to parse AST and DocBlocks to extract generics and types. Still,
 I believe it to be fast enough to actually be used in production if you enable the cache.
 
-Here is a reference benchmark, performed on an M1 MacBook Pro with OpCache:
+Here is a reference benchmark, performed on an M1 MacBook Pro with OpCache and JIT:
 
 ```
+~/Projects/Personal/good-php/reflection> docker run -it --rm -v $"($env.PWD):/app" -v $"($env.PWD)/misc/opcache.ini:/usr/local/etc/php/conf.d/docker-php-ext-opcache.ini" -w /app chialab/php-dev:8.2 composer benchmark 
+> Composer\Config::disableProcessTimeout
+> vendor/bin/phpbench run tests/Benchmark
+PHPBench (1.4.0) running benchmarks... #standwithukraine
+with configuration file: /app/phpbench.json
+with PHP version 8.2.27, xdebug ✔, opcache ✔
+
 \Tests\Benchmark\ThisReflectionBench
 
-    benchWarmWithMemoryCache # only name....I49 - Mo0.011ms (±15.06%) [3.856mb / 4.779mb]
-    benchWarmWithMemoryCache # everything...I49 - Mo0.137ms (±5.25%) [9.970mb / 9.988mb]
-    benchWarmWithFileCache # only name......I49 - Mo0.047ms (±11.98%) [6.917mb / 6.958mb]
-    benchWarmWithFileCache # everything.....I49 - Mo0.172ms (±4.64%) [13.097mb / 13.114mb]
-    benchCold # only name...................I199 - Mo2.384ms (±12.80%) [2.143mb / 4.779mb]
-    benchCold # everything..................I199 - Mo2.506ms (±18.67%) [2.276mb / 4.779mb]
-    benchColdIncludingInitializationAndAuto.I199 - Mo74.279ms (±18.78%) [2.092mb / 4.779mb]
-    benchColdIncludingInitializationAndAuto.I199 - Mo72.901ms (±4.37%) [2.188mb / 4.779mb]
-
-\Tests\Benchmark\BetterReflectionBench
-
-    benchWarmWithMemoryCache # only name....I49 - Mo0.005ms (±8.26%) [3.085mb / 4.779mb]
-    benchWarmWithMemoryCache # everything...I49 - Mo0.016ms (±5.70%) [3.093mb / 4.779mb]
-    benchCold # only name...................I199 - Mo1.693ms (±6.13%) [3.104mb / 4.779mb]
-    benchCold # everything..................I199 - Mo2.299ms (±14.67%) [3.116mb / 4.779mb]
-    benchColdIncludingInitializationAndAuto.I199 - Mo59.184ms (±5.79%) [3.084mb / 4.779mb]
-    benchColdIncludingInitializationAndAuto.I199 - Mo63.590ms (±18.52%) [3.092mb / 4.779mb]
+    benchWarmWithMemoryCache # only name....I49 - Mo0.009ms (±4.68%) [2.149mb / 4.911mb]
+    benchWarmWithMemoryCache # everything...I49 - Mo0.038ms (±4.53%) [3.487mb / 4.911mb]
+    benchWarmWithFileCache # only name......I49 - Mo0.033ms (±2.12%) [2.229mb / 4.911mb]
+    benchWarmWithFileCache # everything.....I49 - Mo0.068ms (±3.02%) [6.352mb / 6.385mb]
+    benchCold # only name...................I199 - Mo2.519ms (±15.44%) [2.166mb / 4.911mb]
+    benchCold # everything..................I199 - Mo2.701ms (±12.87%) [2.267mb / 4.911mb]
+    benchColdIncludingInitializationAndAuto.I199 - Mo72.206ms (±3.00%) [2.132mb / 4.911mb]
+    benchColdIncludingInitializationAndAuto.I199 - Mo77.608ms (±10.01%) [2.217mb / 4.911mb]
 
 \Tests\Benchmark\NativeReflectionBench
 
-    benchWarm # only name...................I49 - Mo0.001ms (±9.11%) [517.504kb / 4.778mb]
-    benchWarm # everything..................I49 - Mo0.004ms (±6.08%) [517.568kb / 4.778mb]
-    benchCold # only name...................I199 - Mo0.009ms (±55.16%) [518.488kb / 4.779mb]
-    benchCold # everything..................I199 - Mo0.022ms (±23.29%) [518.488kb / 4.779mb]
+    benchWarm # only name...................I49 - Mo0.001ms (±13.48%) [575.552kb / 4.910mb]
+    benchWarm # everything..................I49 - Mo0.002ms (±9.02%) [575.616kb / 4.910mb]
+    benchCold # only name...................I199 - Mo0.005ms (±39.39%) [576.376kb / 4.911mb]
+    benchCold # everything..................I199 - Mo0.013ms (±32.23%) [576.376kb / 4.911mb]
+
+\Tests\Benchmark\BetterReflectionBench
+
+    benchWarmWithMemoryCache # only name....I49 - Mo0.003ms (±4.81%) [3.096mb / 4.911mb]
+    benchWarmWithMemoryCache # everything...I49 - Mo0.010ms (±3.97%) [3.137mb / 4.911mb]
+    benchCold # only name...................I199 - Mo1.265ms (±17.02%) [3.116mb / 4.911mb]
+    benchCold # everything..................I199 - Mo1.797ms (±13.45%) [3.103mb / 4.911mb]
+    benchColdIncludingInitializationAndAuto.I199 - Mo58.146ms (±9.89%) [3.095mb / 4.911mb]
+    benchColdIncludingInitializationAndAuto.I199 - Mo61.066ms (±3.91%) [3.074mb / 4.911mb]
+
+Subjects: 9, Assertions: 0, Failures: 0, Errors: 0
+~/Projects/Personal/good-php/reflection> docker run -it --rm -v $"($env.PWD)/benchmark/typhoon:/app" -v $"($env.PWD)/misc/opcache.ini:/usr/local/etc/php/conf.d/docker-php-ext-opcache.ini" -v $"($env.PWD)/tests/Stubs:/app/tests/Stubs" -w /app chialab/php-dev:8.2 composer benchmark riant everything 
+> Composer\Config::disableProcessTimeout
+> vendor/bin/phpbench run src
+PHPBench (1.4.0) running benchmarks... #standwithukraine
+with configuration file: /app/phpbench.json
+with PHP version 8.2.27, xdebug ✔, opcache ✔
+
+\TyphoonReflectionBench
+
+    benchWarmWithMemoryCache # only name....I49 - Mo0.006ms (±10.36%) [1.975mb / 4.841mb]
+    benchWarmWithMemoryCache # everything...I49 - Mo0.018ms (±3.40%) [2.042mb / 4.841mb]
+    benchWarmWithFileCache # only name......I49 - Mo0.135ms (±2.14%) [2.031mb / 4.841mb]
+    benchWarmWithFileCache # everything.....I49 - Mo0.148ms (±2.74%) [2.033mb / 4.841mb]
+    benchCold # only name...................I199 - Mo6.987ms (±9.90%) [1.904mb / 4.840mb]
+    benchCold # everything..................I199 - Mo7.288ms (±10.82%) [1.971mb / 4.840mb]
+    benchColdIncludingInitializationAndAuto.I199 - Mo96.134ms (±8.41%) [1.900mb / 4.841mb]
+    benchColdIncludingInitializationAndAuto.I199 - Mo96.932ms (±11.23%) [1.967mb / 4.841mb]
+
+Subjects: 4, Assertions: 0, Failures: 0, Errors: 0
 ```
+
+With cache, it's the slowest of them all. But the difference is in __nanoseconds__.
 
 ### How does it work
 

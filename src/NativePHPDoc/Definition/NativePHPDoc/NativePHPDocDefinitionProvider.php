@@ -27,10 +27,10 @@ use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\UsedTraitsDefiniti
 use GoodPhp\Reflection\Type\NamedType;
 use GoodPhp\Reflection\Type\Template\TemplateTypeVariance;
 use GoodPhp\Reflection\Type\Type;
-use GoodPhp\Reflection\Util\LateInitLazy;
+use GoodPhp\Reflection\Util\Lazy\LateInitLazy;
+use GoodPhp\Reflection\Util\Lazy\Lazy;
 use GoodPhp\Reflection\Util\ReflectionAssert;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use PHPStan\PhpDocParser\Ast\PhpDoc\ExtendsTagValueNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\ImplementsTagValueNode;
@@ -48,11 +48,10 @@ use ReflectionMethod;
 use ReflectionParameter;
 use ReflectionProperty;
 use ReflectionType;
-use TenantCloud\Standard\Lazy\Lazy;
 use UnitEnum;
 use Webmozart\Assert\Assert;
 
-use function TenantCloud\Standard\Lazy\lazy;
+use function GoodPhp\Reflection\Util\Lazy\lazy;
 
 class NativePHPDocDefinitionProvider implements DefinitionProvider
 {
@@ -152,7 +151,7 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 			fileName: $this->fileName($reflection),
 			builtIn: !$reflection->isUserDefined(),
 			backingType: $backingType,
-			implements: $this->interfaces($reflection, $phpDoc, $context)->concat($implicitInterfaces),
+			implements: [...$this->interfaces($reflection, $phpDoc, $context), ...$implicitInterfaces],
 			uses: $this->traits($reflection, $context),
 			cases: $this->enumCases($reflection),
 			methods: $this->methods($reflection, $context),
@@ -160,7 +159,7 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 	}
 
 	/**
-	 * @param ReflectionClass<object> $reflection
+	 * @param ReflectionClass<covariant object> $reflection
 	 */
 	private function createTypeContext(ReflectionClass $reflection, PhpDocNode $phpDoc): TypeContext
 	{
@@ -170,7 +169,7 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 				?->forClassLike($reflection),
 			declaringType: new NamedType($reflection->getName()),
 			declaringTypeParent: $reflection->getParentClass() ? new NamedType($reflection->getParentClass()->getName()) : null,
-			typeParameters: new Collection()
+			typeParameters: []
 		);
 
 		$lazyTypeParameters = $this->lazyTypeParameters($phpDoc, $context);
@@ -179,7 +178,7 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 	}
 
 	/**
-	 * @param ReflectionClass<object> $reflection
+	 * @param ReflectionClass<covariant object> $reflection
 	 *
 	 * @return ($reflection is ReflectionEnum<UnitEnum> ? class-string<UnitEnum> : class-string<object>)
 	 */
@@ -189,7 +188,7 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 	}
 
 	/**
-	 * @param ReflectionClass<object> $reflection
+	 * @param ReflectionClass<covariant object> $reflection
 	 */
 	private function fileName(ReflectionClass $reflection): ?string
 	{
@@ -199,16 +198,16 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 	/**
 	 * @param ReflectionClass<object> $reflection
 	 *
-	 * @return Collection<int, PropertyDefinition>
+	 * @return list<PropertyDefinition>
 	 */
-	private function properties(ReflectionClass $reflection, TypeContext $context): Collection
+	private function properties(ReflectionClass $reflection, TypeContext $context): array
 	{
 		$constructorPhpDoc = $this->phpDocStringParser->parse(
 			$reflection->getConstructor()?->getDocComment() ?: ''
 		);
 
-		return Collection::make($reflection->getProperties())
-			->filter(fn (ReflectionProperty $property) => !$context->fileClassLikeContext || $context->fileClassLikeContext->declaredProperties->contains($property->getName()))
+		return collect($reflection->getProperties())
+			->filter(fn (ReflectionProperty $property) => !$context->fileClassLikeContext || in_array($property->getName(), $context->fileClassLikeContext->declaredProperties, true))
 			->map(function (ReflectionProperty $property) use ($context, $constructorPhpDoc) {
 				$phpDoc = $this->phpDocStringParser->parse($property);
 
@@ -238,18 +237,19 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 					hasDefaultValue: $property->hasDefaultValue(),
 					isPromoted: $property->isPromoted(),
 				);
-			});
+			})
+			->all();
 	}
 
 	/**
-	 * @param ReflectionClass<object> $reflection
+	 * @param ReflectionClass<covariant object> $reflection
 	 *
-	 * @return Collection<int, MethodDefinition>
+	 * @return list<MethodDefinition>
 	 */
-	private function methods(ReflectionClass $reflection, TypeContext $context): Collection
+	private function methods(ReflectionClass $reflection, TypeContext $context): array
 	{
-		return Collection::make($reflection->getMethods())
-			->filter(fn (ReflectionMethod $method) => !$context->fileClassLikeContext || $context->fileClassLikeContext->declaredMethods->contains($method->getName()))
+		return collect($reflection->getMethods())
+			->filter(fn (ReflectionMethod $method) => !$context->fileClassLikeContext || in_array($method->getName(), $context->fileClassLikeContext->declaredMethods, true))
 			->map(function (ReflectionMethod $method) use ($context) {
 				$phpDoc = $this->phpDocStringParser->parse($method);
 
@@ -269,16 +269,17 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 						$context,
 					)
 				);
-			});
+			})
+			->all();
 	}
 
 	/**
-	 * @return Collection<string, Lazy<TypeParameterDefinition>>
+	 * @return array<string, Lazy<TypeParameterDefinition>>
 	 */
-	private function lazyTypeParameters(PhpDocNode $phpDoc, TypeContext $context): Collection
+	private function lazyTypeParameters(PhpDocNode $phpDoc, TypeContext $context): array
 	{
-		/** @var Collection<string, Lazy<TypeParameterDefinition>> $lazyTypeParametersMap */
-		$lazyTypeParametersMap = new Collection();
+		/** @var array<string, Lazy<TypeParameterDefinition>> $lazyTypeParametersMap */
+		$lazyTypeParametersMap = [];
 		/** @var LateInitLazy<TypeContext> $temporaryContext */
 		$temporaryContext = new LateInitLazy();
 
@@ -319,23 +320,23 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 	}
 
 	/**
-	 * @return Collection<int, TypeParameterDefinition>
+	 * @return list<TypeParameterDefinition>
 	 */
-	private function typeParameters(PhpDocNode $phpDoc, TypeContext $context): Collection
+	private function typeParameters(PhpDocNode $phpDoc, TypeContext $context): array
 	{
 		// The types are properly defined, but for whatever reason ->map() breaks it all.
-		/** @var Collection<int, TypeParameterDefinition> */
-		return $this->lazyTypeParameters($phpDoc, $context)
-			->values()
-			->map(fn (Lazy $lazy) => $lazy->value());
+		return array_map(
+			fn (Lazy $lazy) => $lazy->value(),
+			array_values($this->lazyTypeParameters($phpDoc, $context))
+		);
 	}
 
 	/**
-	 * @return Collection<int, FunctionParameterDefinition>
+	 * @return list<FunctionParameterDefinition>
 	 */
-	private function functionParameters(ReflectionMethod $reflection, PhpDocNode $phpDoc, TypeContext $context): Collection
+	private function functionParameters(ReflectionMethod $reflection, PhpDocNode $phpDoc, TypeContext $context): array
 	{
-		return Collection::make($reflection->getParameters())
+		return collect($reflection->getParameters())
 			->map(function (ReflectionParameter $parameter) use ($context, $phpDoc) {
 				/** @var ParamTagValueNode|null $phpDocType */
 				$phpDocType = Arr::first(
@@ -352,7 +353,8 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 					),
 					hasDefaultValue: $parameter->isDefaultValueAvailable(),
 				);
-			});
+			})
+			->all();
 	}
 
 	/**
@@ -392,14 +394,14 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 	}
 
 	/**
-	 * @param ReflectionClass<object> $reflection
+	 * @param ReflectionClass<covariant object> $reflection
 	 *
-	 * @return Collection<int, NamedType>
+	 * @return list<NamedType>
 	 */
-	private function interfaces(ReflectionClass $reflection, PhpDocNode $phpDoc, TypeContext $context): Collection
+	private function interfaces(ReflectionClass $reflection, PhpDocNode $phpDoc, TypeContext $context): array
 	{
-		return Collection::make($reflection->getInterfaceNames())
-			->filter(fn (string $className) => !$context->fileClassLikeContext || $context->fileClassLikeContext->implementsInterfaces->contains($className))
+		return collect($reflection->getInterfaceNames())
+			->filter(fn (string $className) => !$context->fileClassLikeContext || in_array($className, $context->fileClassLikeContext->implementsInterfaces, true))
 			->map(function (string $className) use ($reflection, $context, $phpDoc) {
 				/** @var PhpDocTagNode|null $tag */
 				$tag = Arr::first(
@@ -421,11 +423,12 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 				ReflectionAssert::namedType($type, 'mapping `implements` types for [' . $reflection->getName() . ']');
 
 				return $type;
-			});
+			})
+			->all();
 	}
 
 	/**
-	 * @param ReflectionClass<object> $reflection
+	 * @param ReflectionClass<covariant object> $reflection
 	 */
 	private function traits(ReflectionClass $reflection, TypeContext $context): UsedTraitsDefinition
 	{
@@ -434,69 +437,73 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 				->fileClassLikeContext
 				->traitsUses;
 		} else {
-			$traitsUses = collect([
+			$traitsUses = [
 				new TraitsUse(
-					collect($reflection->getTraitNames())->map(fn (string $className) => new TraitUse($className))
+					array_map(
+						fn (string $className) => new TraitUse($className),
+						$reflection->getTraitNames()
+					)
 				),
-			]);
+			];
 		}
 
-		$traits = $traitsUses
+		$traits = collect($traitsUses)
 			->flatMap(function (TraitsUse $traitsUse) use ($reflection, $context) {
 				$phpDoc = $this->phpDocStringParser->parse($traitsUse->docComment);
 
-				return $traitsUse
-					->traits
-					->map(function (TraitUse $traitUse) use ($reflection, $context, $phpDoc) {
-						$qualifiedName = $this->typeAliasResolver->resolve($traitUse->qualifiedName, $context->fileClassLikeContext);
-						/** @var PhpDocTagNode|null $tag */
-						$tag = Arr::first(
-							$phpDoc->getTags(),
-							fn (PhpDocTagNode $node) => $node->value instanceof UsesTagValueNode &&
-								$qualifiedName === $this->typeAliasResolver->resolve($node->value->type->type->name, $context->fileClassLikeContext)
-						);
+				return array_map(function (TraitUse $traitUse) use ($reflection, $context, $phpDoc) {
+					$qualifiedName = $this->typeAliasResolver->resolve($traitUse->qualifiedName, $context->fileClassLikeContext);
+					/** @var PhpDocTagNode|null $tag */
+					$tag = Arr::first(
+						$phpDoc->getTags(),
+						fn (PhpDocTagNode $node) => $node->value instanceof UsesTagValueNode &&
+							$qualifiedName === $this->typeAliasResolver->resolve($node->value->type->type->name, $context->fileClassLikeContext)
+					);
 
-						/** @var UsesTagValueNode|null $tagValue */
-						$tagValue = $tag?->value;
+					/** @var UsesTagValueNode|null $tagValue */
+					$tagValue = $tag?->value;
 
-						$type = $this->map(
-							$qualifiedName,
-							$tagValue?->type,
-							$context
-						);
+					$type = $this->map(
+						$qualifiedName,
+						$tagValue?->type,
+						$context
+					);
 
-						Assert::notNull($type);
-						ReflectionAssert::namedType($type, 'mapping trait `use` for [' . $reflection->getName() . ']');
+					Assert::notNull($type);
+					ReflectionAssert::namedType($type, 'mapping trait `use` for [' . $reflection->getName() . ']');
 
-						return [$type, $traitUse->aliases];
-					});
+					return [$type, $traitUse->aliases];
+				}, $traitsUse->traits);
 			})
 			->map(fn (array $data) => new UsedTraitDefinition(
 				trait: $data[0],
-				aliases: $data[1]->map(fn (array $aliasData) => new UsedTraitAliasDefinition(
+				aliases: array_map(fn (array $aliasData) => new UsedTraitAliasDefinition(
 					name: $aliasData[0],
 					newName: $aliasData[1],
 					newModifier: $aliasData[2],
-				))
-			));
+				), $data[1])
+			))
+			->all();
 
 		return new UsedTraitsDefinition(
 			traits: $traits,
-			excludedTraitMethods: $context->fileClassLikeContext?->excludedTraitMethods ?? collect(),
+			excludedTraitMethods: $context->fileClassLikeContext?->excludedTraitMethods ?? [],
 		);
 	}
 
 	/**
 	 * @param ReflectionEnum<UnitEnum> $reflection
 	 *
-	 * @return Collection<int, EnumCaseDefinition>
+	 * @return list<EnumCaseDefinition>
 	 */
-	private function enumCases(ReflectionEnum $reflection): Collection
+	private function enumCases(ReflectionEnum $reflection): array
 	{
-		return Collection::make($reflection->getCases())
-			->map(fn (ReflectionEnumUnitCase $case) => new EnumCaseDefinition(
+		return array_map(
+			fn (ReflectionEnumUnitCase $case) => new EnumCaseDefinition(
 				name: $case->getName(),
 				backingValue: $case instanceof ReflectionEnumBackedCase ? $case->getBackingValue() : null,
-			));
+			),
+			$reflection->getCases()
+		);
 	}
 }

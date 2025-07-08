@@ -2,22 +2,21 @@
 
 namespace GoodPhp\Reflection\NativePHPDoc\Definition\NativePHPDoc\File;
 
-use Illuminate\Support\Collection;
 use ReflectionClass;
 
 class FileContext
 {
 	/**
-	 * @param Collection<string, FileClassLikeContext> $classLikes
-	 * @param Collection<string, FileClassLikeContext> $anonymousClassLikes
+	 * @param array<string, FileClassLikeContext> $classLikes
+	 * @param array<int, FileClassLikeContext>    $anonymousClassLikes
 	 */
 	public function __construct(
-		public readonly Collection $classLikes,
-		public readonly Collection $anonymousClassLikes,
+		public readonly array $classLikes,
+		public readonly array $anonymousClassLikes,
 	) {}
 
 	/**
-	 * @param ReflectionClass<object> $reflection
+	 * @param ReflectionClass<covariant object> $reflection
 	 */
 	public function forClassLike(ReflectionClass $reflection): FileClassLikeContext
 	{

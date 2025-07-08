@@ -5,7 +5,7 @@ namespace GoodPhp\Reflection\Type\Template;
 use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\TypeParameterDefinition;
 use GoodPhp\Reflection\Type\Combinatorial\TupleType;
 use GoodPhp\Reflection\Type\Type;
-use Illuminate\Support\Collection;
+use Illuminate\Support\Arr;
 use Webmozart\Assert\Assert;
 
 final class TypeParameterMap
@@ -18,17 +18,21 @@ final class TypeParameterMap
 	) {}
 
 	/**
-	 * @param Type[]                            $arguments
+	 * @param list<Type>                        $arguments
 	 * @param iterable<TypeParameterDefinition> $typeParameters
 	 */
 	public static function fromArguments(array $arguments, iterable $typeParameters): self
 	{
+		if (!$arguments) {
+			return self::empty();
+		}
+
 		$map = [];
 		$i = 0;
 
 		foreach ($typeParameters as $parameter) {
 			if ($parameter->variadic) {
-				$map[$parameter->name] = new TupleType(collect(array_slice($arguments, $i)));
+				$map[$parameter->name] = new TupleType(array_slice($arguments, $i));
 
 				break;
 			}
@@ -46,24 +50,25 @@ final class TypeParameterMap
 
 	public static function empty(): self
 	{
-		static $map;
-
-		if (!$map) {
-			$map = new self([]);
-		}
+		/** @var self $map */
+		static $map = new self([]);
 
 		return $map;
 	}
 
 	/**
-	 * @param iterable<int, TypeParameterDefinition> $typeParameters
+	 * @param list<TypeParameterDefinition> $typeParameters
 	 *
-	 * @return Collection<int, Type>
+	 * @return list<Type>
 	 */
-	public function toArguments(iterable $typeParameters): Collection
+	public function toArguments(array $typeParameters): array
 	{
-		return Collection::wrap($typeParameters)
-			->flatMap(function (TypeParameterDefinition $parameter) {
+		if (!$this->types) {
+			return [];
+		}
+
+		return Arr::flatten(
+			array_map(function (TypeParameterDefinition $parameter) {
 				$type = $this->types[$parameter->name] ?? null;
 
 				if (!$type) {
@@ -77,6 +82,8 @@ final class TypeParameterMap
 				}
 
 				return [$type];
-			});
+			}, $typeParameters),
+			depth: 1
+		);
 	}
 }

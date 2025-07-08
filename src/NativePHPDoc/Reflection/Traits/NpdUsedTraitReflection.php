@@ -8,14 +8,13 @@ use GoodPhp\Reflection\Reflection\Traits\UsedTraitReflection;
 use GoodPhp\Reflection\Type\NamedType;
 use GoodPhp\Reflection\Type\Template\TypeParameterMap;
 use GoodPhp\Reflection\Type\TypeProjector;
-use Illuminate\Support\Collection;
 
 final class NpdUsedTraitReflection implements UsedTraitReflection
 {
 	private readonly NamedType $trait;
 
-	/** @var Collection<int, NpdUsedTraitAliasReflection> */
-	private readonly Collection $aliases;
+	/** @var list<NpdUsedTraitAliasReflection> */
+	private readonly array $aliases;
 
 	public function __construct(
 		private readonly UsedTraitDefinition $definition,
@@ -33,12 +32,13 @@ final class NpdUsedTraitReflection implements UsedTraitReflection
 	}
 
 	/**
-	 * @return Collection<int, NpdUsedTraitAliasReflection>
+	 * @return list<NpdUsedTraitAliasReflection>
 	 */
-	public function aliases(): Collection
+	public function aliases(): array
 	{
-		return $this->aliases ??= $this->definition
-			->aliases
-			->map(fn (UsedTraitAliasDefinition $alias) => new NpdUsedTraitAliasReflection($alias));
+		return $this->aliases ??= array_map(
+			fn (UsedTraitAliasDefinition $alias) => new NpdUsedTraitAliasReflection($alias),
+			$this->definition->aliases,
+		);
 	}
 }

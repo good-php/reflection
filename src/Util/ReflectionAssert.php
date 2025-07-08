@@ -16,7 +16,7 @@ class ReflectionAssert
 		Assert::isInstanceOf(
 			$type,
 			NamedType::class,
-			'Expected a named type (int, \stdClass, Collection<string, string>), but [' . $type . '] given' . ($when ? " {$when}" : '') . '.'
+			'Expected a named type (int, \stdClass, array<string, string>), but [' . $type . '] given' . ($when ? " {$when}" : '') . '.'
 		);
 	}
 }

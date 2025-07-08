@@ -17,7 +17,7 @@ class FileContextParser
 	public function __construct(private readonly Parser $phpParser) {}
 
 	/**
-	 * @param ReflectionClass<object>|ReflectionFunction $reflection
+	 * @param ReflectionClass<covariant object>|ReflectionFunction $reflection
 	 */
 	public function parse(ReflectionClass|ReflectionFunction $reflection): ?FileContext
 	{

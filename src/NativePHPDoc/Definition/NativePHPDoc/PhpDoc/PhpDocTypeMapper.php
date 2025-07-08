@@ -18,7 +18,6 @@ use GoodPhp\Reflection\Type\Special\VoidType;
 use GoodPhp\Reflection\Type\Template\TemplateType;
 use GoodPhp\Reflection\Type\Type;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Collection;
 use PHPStan\PhpDocParser\Ast\Type\ArrayShapeItemNode;
 use PHPStan\PhpDocParser\Ast\Type\ArrayShapeNode;
 use PHPStan\PhpDocParser\Ast\Type\ArrayTypeNode;
@@ -40,14 +39,14 @@ class PhpDocTypeMapper
 	) {}
 
 	/**
-	 * @param TypeNode|iterable<int, TypeNode> $node
+	 * @param TypeNode|list<TypeNode> $node
 	 *
-	 * @return ($node is TypeNode ? Type : Collection<int, Type>)
+	 * @return ($node is TypeNode ? Type : list<Type>)
 	 */
-	public function map(TypeNode|iterable $node, TypeContext $context): Type|Collection
+	public function map(TypeNode|array $node, TypeContext $context): Type|array
 	{
 		if (!$node instanceof TypeNode) {
-			return Collection::wrap($node)->map(fn (TypeNode $node) => $this->map($node, $context));
+			return array_map(fn (TypeNode $node) => $this->map($node, $context), $node);
 		}
 
 		try {
@@ -56,17 +55,20 @@ class PhpDocTypeMapper
 					$this->map($node->type, $context)
 				),
 				$node instanceof ArrayShapeNode => new TupleType(
-					collect($node->items)->map(fn (ArrayShapeItemNode $node) => $this->map($node->valueType, $context))
+					array_map(
+						fn (ArrayShapeItemNode $node) => $this->map($node->valueType, $context),
+						$node->items
+					)
 				),
 				$node instanceof CallableTypeNode => $this->mapNamed(
 					$node->identifier->name,
-					new Collection([
+					[
 						$this->map($node->returnType, $context),
 						...array_map(
 							fn (CallableTypeParameterNode $parameterNode) => $this->map($parameterNode->type, $context),
 							$node->parameters
 						),
-					]),
+					],
 					$context,
 				),
 				$node instanceof GenericTypeNode => $this->mapNamed(
@@ -76,7 +78,7 @@ class PhpDocTypeMapper
 				),
 				$node instanceof IdentifierTypeNode => $this->mapNamed(
 					$node->name,
-					new Collection(),
+					[],
 					$context,
 				),
 				$node instanceof IntersectionTypeNode => new IntersectionType(
@@ -97,9 +99,9 @@ class PhpDocTypeMapper
 	}
 
 	/**
-	 * @param Collection<int, Type> $arguments
+	 * @param list<Type> $arguments
 	 */
-	public function mapNamed(string $type, Collection $arguments, TypeContext $context): Type
+	public function mapNamed(string $type, array $arguments, TypeContext $context): Type
 	{
 		if ($context->typeParameters[$type] ?? null) {
 			return new TemplateType(
@@ -124,34 +126,34 @@ class PhpDocTypeMapper
 			'never', 'never-return', 'never-returns', 'no-return', 'noreturn' => NeverType::get(),
 			'void' => VoidType::get(),
 			'int', 'integer', 'positive-int', 'negative-int', 'int-mask', 'int-mask-of' => PrimitiveType::integer(),
-			'number' => new UnionType(new Collection([
+			'number' => new UnionType([
 				PrimitiveType::integer(),
 				PrimitiveType::float(),
-			])),
+			]),
 			'float', 'double' => PrimitiveType::float(),
 			'string', 'numeric-string', 'literal-string', 'class-string',
 			'interface-string', 'trait-string', 'callable-string', 'non-empty-string' => PrimitiveType::string(),
 			'bool', 'boolean', 'true', 'false' => PrimitiveType::boolean(),
-			'array-key' => new UnionType(new Collection([
+			'array-key' => new UnionType([
 				PrimitiveType::integer(),
 				PrimitiveType::string(),
-			])),
+			]),
 			'callable', 'iterable', 'resource', 'object' => new NamedType($type, $arguments),
-			'array', 'non-empty-array' => match ($arguments->count()) {
+			'array', 'non-empty-array' => match (count($arguments)) {
 				1       => PrimitiveType::array($arguments[0]),
 				default => new NamedType('array', $arguments)
 			},
 			'associative-array' => new NamedType('array', $arguments),
-			'list', 'non-empty-list' => new NamedType('array', new Collection([
+			'list', 'non-empty-list' => new NamedType('array', [
 				PrimitiveType::integer(),
 				...$arguments,
-			])),
-			'scalar' => new UnionType(new Collection([
+			]),
+			'scalar' => new UnionType([
 				PrimitiveType::integer(),
 				PrimitiveType::float(),
 				PrimitiveType::string(),
 				PrimitiveType::boolean(),
-			])),
+			]),
 			'self'   => new NamedType($context->declaringType->name, $arguments),
 			'static' => new StaticType($context->declaringType),
 			default  => null,

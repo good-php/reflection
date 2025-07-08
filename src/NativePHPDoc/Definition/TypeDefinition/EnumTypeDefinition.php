@@ -4,7 +4,6 @@ namespace GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition;
 
 use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition;
 use GoodPhp\Reflection\Type\NamedType;
-use Illuminate\Support\Collection;
 
 /**
  * @template-covariant T of \UnitEnum
@@ -15,20 +14,20 @@ final class EnumTypeDefinition extends TypeDefinition
 	public readonly string $qualifiedName;
 
 	/**
-	 * @param class-string<T>                     $qualifiedName
-	 * @param Collection<int, NamedType>          $implements
-	 * @param Collection<int, EnumCaseDefinition> $cases
-	 * @param Collection<int, MethodDefinition>   $methods
+	 * @param class-string<T>          $qualifiedName
+	 * @param list<NamedType>          $implements
+	 * @param list<EnumCaseDefinition> $cases
+	 * @param list<MethodDefinition>   $methods
 	 */
 	public function __construct(
 		string $qualifiedName,
 		?string $fileName,
 		public readonly bool $builtIn,
 		public readonly ?NamedType $backingType,
-		public readonly Collection $implements,
+		public readonly array $implements,
 		public readonly UsedTraitsDefinition $uses,
-		public readonly Collection $cases,
-		public readonly Collection $methods,
+		public readonly array $cases,
+		public readonly array $methods,
 	) {
 		parent::__construct(
 			$qualifiedName,

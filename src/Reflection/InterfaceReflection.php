@@ -6,7 +6,6 @@ use GoodPhp\Reflection\Reflection\Attributes\HasAttributes;
 use GoodPhp\Reflection\Reflection\Methods\HasMethods;
 use GoodPhp\Reflection\Reflection\TypeParameters\HasTypeParameters;
 use GoodPhp\Reflection\Type\NamedType;
-use Illuminate\Support\Collection;
 
 /**
  * @template ReflectableType of object
@@ -20,9 +19,9 @@ interface InterfaceReflection extends TypeReflection, HasAttributes, HasTypePara
 	public function withStaticType(NamedType $staticType): static;
 
 	/**
-	 * @return Collection<int, NamedType>
+	 * @return list<NamedType>
 	 */
-	public function extends(): Collection;
+	public function extends(): array;
 
 	public function isBuiltIn(): bool;
 }

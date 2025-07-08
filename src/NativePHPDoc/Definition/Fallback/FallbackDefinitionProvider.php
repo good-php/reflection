@@ -8,7 +8,7 @@ use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition;
 class FallbackDefinitionProvider implements DefinitionProvider
 {
 	/**
-	 * @param DefinitionProvider[] $providers
+	 * @param list<DefinitionProvider> $providers
 	 */
 	public function __construct(
 		private readonly array $providers

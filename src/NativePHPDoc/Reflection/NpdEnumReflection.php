@@ -15,7 +15,6 @@ use GoodPhp\Reflection\Reflection\Traits\UsedTraitsReflection;
 use GoodPhp\Reflection\Reflector;
 use GoodPhp\Reflection\Type\NamedType;
 use GoodPhp\Reflection\Type\Template\TypeParameterMap;
-use Illuminate\Support\Collection;
 use ReflectionEnum;
 
 /**
@@ -39,11 +38,11 @@ final class NpdEnumReflection extends NpdTypeReflection implements EnumReflectio
 
 	private UsedTraitsReflection $uses;
 
-	/** @var Collection<int, MethodReflection<ReflectableType, $this>> */
-	private readonly Collection $declaredMethods;
+	/** @var list<MethodReflection<ReflectableType, $this>> */
+	private array $declaredMethods;
 
-	/** @var Collection<int, MethodReflection<ReflectableType, HasMethods<ReflectableType>>> */
-	private readonly Collection $methods;
+	/** @var list<MethodReflection<ReflectableType, HasMethods<ReflectableType>>> */
+	private array $methods;
 
 	/**
 	 * @param EnumTypeDefinition<ReflectableType> $definition
@@ -92,9 +91,9 @@ final class NpdEnumReflection extends NpdTypeReflection implements EnumReflectio
 	}
 
 	/**
-	 * @return Collection<int, NamedType>
+	 * @return list<NamedType>
 	 */
-	public function implements(): Collection
+	public function implements(): array
 	{
 		return $this->definition->implements;
 	}
@@ -105,19 +104,20 @@ final class NpdEnumReflection extends NpdTypeReflection implements EnumReflectio
 	}
 
 	/**
-	 * @return Collection<int, MethodReflection<ReflectableType, $this>>
+	 * @return list<MethodReflection<ReflectableType, $this>>
 	 */
-	public function declaredMethods(): Collection
+	public function declaredMethods(): array
 	{
-		return $this->declaredMethods ??= $this->definition
-			->methods
-			->map(fn (MethodDefinition $method) => new NpdMethodReflection($method, $this, $this->staticType, TypeParameterMap::empty()));
+		return $this->declaredMethods ??= array_map(
+			fn (MethodDefinition $method) => new NpdMethodReflection($method, $this, $this->staticType, TypeParameterMap::empty()),
+			$this->definition->methods,
+		);
 	}
 
 	/**
-	 * @return Collection<int, MethodReflection<ReflectableType, HasMethods<ReflectableType>>>
+	 * @return list<MethodReflection<ReflectableType, HasMethods<ReflectableType>>>
 	 */
-	public function methods(): Collection
+	public function methods(): array
 	{
 		return $this->methods ??= collect([
 			...$this->methodsFromTypes($this->implements(), $this->staticType, $this->reflector),
@@ -125,7 +125,8 @@ final class NpdEnumReflection extends NpdTypeReflection implements EnumReflectio
 			...$this->declaredMethods(),
 		])
 			->keyBy(fn (MethodReflection $method) => $method->name())
-			->values();
+			->values()
+			->all();
 	}
 
 	public function isBuiltIn(): bool

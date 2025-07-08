@@ -21,7 +21,6 @@ use GoodPhp\Reflection\Reflection\TypeParameters\TypeParameterReflection;
 use GoodPhp\Reflection\Reflector;
 use GoodPhp\Reflection\Type\NamedType;
 use GoodPhp\Reflection\Type\Template\TypeParameterMap;
-use Illuminate\Support\Collection;
 use ReflectionClass;
 
 /**
@@ -41,24 +40,24 @@ final class NpdTraitReflection extends NpdTypeReflection implements TraitReflect
 	/** @var ReflectionClass<ReflectableType> */
 	private readonly ReflectionClass $nativeReflection;
 
-	/** @var Collection<int, TypeParameterReflection<$this>> */
-	private readonly Collection $typeParameters;
+	/** @var list<TypeParameterReflection<$this>> */
+	private array $typeParameters;
 
 	private readonly Attributes $attributes;
 
 	private UsedTraitsReflection $uses;
 
-	/** @var Collection<int, PropertyReflection<ReflectableType, $this>> */
-	private Collection $declaredProperties;
+	/** @var list<PropertyReflection<ReflectableType, $this>> */
+	private array $declaredProperties;
 
-	/** @var Collection<int, PropertyReflection<ReflectableType, HasProperties<ReflectableType>>> */
-	private Collection $properties;
+	/** @var list<PropertyReflection<ReflectableType, HasProperties<ReflectableType>>> */
+	private array $properties;
 
-	/** @var Collection<int, MethodReflection<ReflectableType, $this>> */
-	private Collection $declaredMethods;
+	/** @var list<MethodReflection<ReflectableType, $this>> */
+	private array $declaredMethods;
 
-	/** @var Collection<int, MethodReflection<ReflectableType, HasMethods<ReflectableType>>> */
-	private Collection $methods;
+	/** @var list<MethodReflection<ReflectableType, HasMethods<ReflectableType>>> */
+	private array $methods;
 
 	/**
 	 * @param TraitTypeDefinition<ReflectableType> $definition
@@ -108,13 +107,14 @@ final class NpdTraitReflection extends NpdTypeReflection implements TraitReflect
 	}
 
 	/**
-	 * @return Collection<int, TypeParameterReflection<$this>>
+	 * @return list<TypeParameterReflection<$this>>
 	 */
-	public function typeParameters(): Collection
+	public function typeParameters(): array
 	{
-		return $this->typeParameters ??= $this->definition
-			->typeParameters
-			->map(fn (TypeParameterDefinition $parameter) => new NpdTypeParameterReflection($parameter, $this, $this->staticType));
+		return $this->typeParameters ??= array_map(
+			fn (TypeParameterDefinition $parameter) => new NpdTypeParameterReflection($parameter, $this, $this->staticType),
+			$this->definition->typeParameters
+		);
 	}
 
 	public function uses(): UsedTraitsReflection
@@ -123,49 +123,53 @@ final class NpdTraitReflection extends NpdTypeReflection implements TraitReflect
 	}
 
 	/**
-	 * @return Collection<int, PropertyReflection<ReflectableType, $this>>
+	 * @return list<PropertyReflection<ReflectableType, $this>>
 	 */
-	public function declaredProperties(): Collection
+	public function declaredProperties(): array
 	{
-		return $this->declaredProperties ??= $this->definition
-			->properties
-			->map(fn (PropertyDefinition $property) => new NpdPropertyReflection($property, $this, $this->staticType, $this->resolvedTypeParameterMap));
+		return $this->declaredProperties ??= array_map(
+			fn (PropertyDefinition $property) => new NpdPropertyReflection($property, $this, $this->staticType, $this->resolvedTypeParameterMap),
+			$this->definition->properties,
+		);
 	}
 
 	/**
-	 * @return Collection<int, PropertyReflection<ReflectableType, HasProperties<ReflectableType>>>
+	 * @return list<PropertyReflection<ReflectableType, HasProperties<ReflectableType>>>
 	 */
-	public function properties(): Collection
+	public function properties(): array
 	{
 		return $this->properties ??= collect([
 			...$this->propertiesFromTraits($this->uses(), $this->staticType, $this->reflector),
 			...$this->declaredProperties(),
 		])
 			->keyBy(fn (PropertyReflection $property) => $property->name())
-			->values();
+			->values()
+			->all();
 	}
 
 	/**
-	 * @return Collection<int, MethodReflection<ReflectableType, $this>>
+	 * @return list<MethodReflection<ReflectableType, $this>>
 	 */
-	public function declaredMethods(): Collection
+	public function declaredMethods(): array
 	{
-		return $this->declaredMethods ??= $this->definition
-			->methods
-			->map(fn (MethodDefinition $method) => new NpdMethodReflection($method, $this, $this->staticType, $this->resolvedTypeParameterMap));
+		return $this->declaredMethods ??= array_map(
+			fn (MethodDefinition $method) => new NpdMethodReflection($method, $this, $this->staticType, $this->resolvedTypeParameterMap),
+			$this->definition->methods
+		);
 	}
 
 	/**
-	 * @return Collection<int, MethodReflection<ReflectableType, HasMethods<ReflectableType>>>
+	 * @return list<MethodReflection<ReflectableType, HasMethods<ReflectableType>>>
 	 */
-	public function methods(): Collection
+	public function methods(): array
 	{
 		return $this->methods ??= collect([
 			...$this->methodsFromTraits($this->uses(), $this->staticType, $this->reflector),
 			...$this->declaredMethods(),
 		])
 			->keyBy(fn (MethodReflection $method) => $method->name())
-			->values();
+			->values()
+			->all();
 	}
 
 	public function isBuiltIn(): bool

@@ -41,6 +41,8 @@ use PHPStan\PhpDocParser\Lexer\Lexer;
 use PHPStan\PhpDocParser\Parser\ConstExprParser;
 use PHPStan\PhpDocParser\Parser\PhpDocParser;
 use PHPStan\PhpDocParser\Parser\TypeParser;
+use PHPStan\PhpDocParser\ParserConfig;
+use PHPUnit\Framework\Attributes\DataProvider;
 use ReflectionMethod;
 use Tests\Integration\IntegrationTestCase;
 use Tests\Stubs\Classes\AllMissingTypes;
@@ -73,11 +75,14 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 	{
 		parent::setUp();
 
+		$parserConfig = new ParserConfig(usedAttributes: []);
+
 		$this->definitionProvider = new NativePHPDocDefinitionProvider(
 			new PhpDocStringParser(
-				new Lexer(),
+				new Lexer($parserConfig),
 				new PhpDocParser(
-					new TypeParser($constExprParser = new ConstExprParser()),
+					$parserConfig,
+					new TypeParser($parserConfig, $constExprParser = new ConstExprParser($parserConfig)),
 					$constExprParser,
 				),
 			),
@@ -103,7 +108,7 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 				anonymous: false,
 				final: true,
 				abstract: false,
-				typeParameters: new Collection([
+				typeParameters: [
 					new TypeParameterDefinition(
 						name: 'T',
 						variadic: false,
@@ -116,39 +121,39 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 						upperBound: PrimitiveType::integer(),
 						variance: TemplateTypeVariance::COVARIANT,
 					),
-				]),
-				extends: new NamedType(ParentClassStub::class, collect([
+				],
+				extends: new NamedType(ParentClassStub::class, [
 					new TemplateType(
 						name: 'T'
 					),
 					new NamedType(SomeStub::class),
-				])),
-				implements: new Collection([
-					new NamedType(ParentInterfaceStub::class, collect([
+				]),
+				implements: [
+					new NamedType(ParentInterfaceStub::class, [
 						new TemplateType(
 							name: 'S'
 						),
 						new NamedType(SomeStub::class),
-					])),
-				]),
+					]),
+				],
 				uses: new UsedTraitsDefinition(
-					traits: new Collection([
+					traits: [
 						new UsedTraitDefinition(
 							trait: NamedType::wrap(ParentTraitStub::class, [
 								new TemplateType('T'),
 								SomeStub::class,
 							]),
-							aliases: new Collection([
+							aliases: [
 								new UsedTraitAliasDefinition('traitMethod', null, ReflectionMethod::IS_PRIVATE),
 								new UsedTraitAliasDefinition('traitMethod', 'traitMethodTwo', ReflectionMethod::IS_PROTECTED),
-							])
+							]
 						),
 						new UsedTraitDefinition(
 							trait: NamedType::wrap(ParentTraitStub::class)
 						),
-					])
+					]
 				),
-				properties: new Collection([
+				properties: [
 					new PropertyDefinition(
 						name: 'factories',
 						type: PrimitiveType::array(new NamedType(SomeStub::class)),
@@ -157,12 +162,12 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 					),
 					new PropertyDefinition(
 						name: 'generic',
-						type: new NamedType(DoubleTemplateType::class, collect([
+						type: new NamedType(DoubleTemplateType::class, [
 							new NamedType(DateTime::class),
 							new TemplateType(
 								name: 'T'
 							),
-						])),
+						]),
 						hasDefaultValue: false,
 						isPromoted: false,
 					),
@@ -172,54 +177,54 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 						hasDefaultValue: false,
 						isPromoted: true,
 					),
-				]),
-				methods: new Collection([
+				],
+				methods: [
 					new MethodDefinition(
 						name: '__construct',
-						typeParameters: collect(),
-						parameters: collect([
+						typeParameters: [],
+						parameters: [
 							new FunctionParameterDefinition(
 								name: 'promoted',
 								type: new TemplateType('T'),
 								hasDefaultValue: false,
 							),
-						]),
+						],
 						returnType: null,
 					),
 					new MethodDefinition(
 						name: 'method',
-						typeParameters: collect([
+						typeParameters: [
 							new TypeParameterDefinition(
 								name: 'G',
 								variadic: false,
 								upperBound: null,
 								variance: TemplateTypeVariance::INVARIANT,
 							),
-						]),
-						parameters: collect([
+						],
+						parameters: [
 							new FunctionParameterDefinition(
 								name: 'param',
-								type: new NamedType(DoubleTemplateType::class, collect([
+								type: new NamedType(DoubleTemplateType::class, [
 									new NamedType(SomeStub::class),
 									new TemplateType(
 										name: 'T'
 									),
-								])),
+								]),
 								hasDefaultValue: false,
 							),
-						]),
-						returnType: new NamedType(Collection::class, collect([
+						],
+						returnType: new NamedType(Collection::class, [
 							new TemplateType(
 								name: 'S'
 							),
 							new TemplateType(
 								name: 'G'
 							),
-						]))
+						])
 					),
 					new MethodDefinition(
 						name: 'methodTwo',
-						typeParameters: collect([
+						typeParameters: [
 							new TypeParameterDefinition(
 								name: 'KValue',
 								variadic: false,
@@ -229,15 +234,15 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 							new TypeParameterDefinition(
 								name: 'K',
 								variadic: false,
-								upperBound: new NamedType(SingleTemplateType::class, collect([
+								upperBound: new NamedType(SingleTemplateType::class, [
 									new TemplateType(
 										name: 'KValue'
 									),
-								])),
+								]),
 								variance: TemplateTypeVariance::INVARIANT,
 							),
-						]),
-						parameters: collect([
+						],
+						parameters: [
 							new FunctionParameterDefinition(
 								name: 'param',
 								type: new TemplateType(
@@ -245,15 +250,15 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 								),
 								hasDefaultValue: false,
 							),
-						]),
+						],
 						returnType: new TemplateType(
 							name: 'KValue'
 						)
 					),
 					new MethodDefinition(
 						name: 'self',
-						typeParameters: collect([]),
-						parameters: collect([
+						typeParameters: [],
+						parameters: [
 							new FunctionParameterDefinition(
 								name: 'parent',
 								type: NamedType::wrap(ParentClassStub::class, [
@@ -262,12 +267,12 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 								]),
 								hasDefaultValue: false,
 							),
-						]),
+						],
 						returnType: new StaticType(
 							new NamedType(ClassStub::class)
 						)
 					),
-				]),
+				],
 			),
 		];
 
@@ -280,13 +285,13 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 				anonymous: false,
 				final: false,
 				abstract: false,
-				typeParameters: new Collection(),
+				typeParameters: [],
 				extends: new NamedType(SomeStub::class),
-				implements: new Collection([
+				implements: [
 					new NamedType(SingleTemplateType::class),
-				]),
+				],
 				uses: new UsedTraitsDefinition(),
-				properties: new Collection([
+				properties: [
 					new PropertyDefinition(
 						name: 'property',
 						type: null,
@@ -305,12 +310,12 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 						hasDefaultValue: false,
 						isPromoted: true,
 					),
-				]),
-				methods: new Collection([
+				],
+				methods: [
 					new MethodDefinition(
 						name: '__construct',
-						typeParameters: new Collection(),
-						parameters: new Collection([
+						typeParameters: [],
+						parameters: [
 							new FunctionParameterDefinition(
 								name: 'promoted',
 								type: null,
@@ -321,22 +326,22 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 								type: new NullableType(PrimitiveType::integer()),
 								hasDefaultValue: true,
 							),
-						]),
+						],
 						returnType: null
 					),
 					new MethodDefinition(
 						name: 'test',
-						typeParameters: new Collection(),
-						parameters: new Collection([
+						typeParameters: [],
+						parameters: [
 							new FunctionParameterDefinition(
 								name: 'something',
 								type: null,
 								hasDefaultValue: false,
 							),
-						]),
+						],
 						returnType: null
 					),
-				]),
+				],
 			),
 		];
 
@@ -349,16 +354,16 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 				anonymous: false,
 				final: false,
 				abstract: false,
-				typeParameters: new Collection(),
+				typeParameters: [],
 				extends: null,
-				implements: new Collection(),
+				implements: [],
 				uses: new UsedTraitsDefinition(),
-				properties: new Collection(),
-				methods: new Collection([
+				properties: [],
+				methods: [
 					new MethodDefinition(
 						name: 'f1',
-						typeParameters: new Collection(),
-						parameters: new Collection([
+						typeParameters: [],
+						parameters: [
 							new FunctionParameterDefinition(
 								name: 'p1',
 								type: PrimitiveType::integer(),
@@ -404,13 +409,13 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 								type: MixedType::get(),
 								hasDefaultValue: false,
 							),
-						]),
+						],
 						returnType: VoidType::get(),
 					),
 					new MethodDefinition(
 						name: 'f2',
-						typeParameters: new Collection(),
-						parameters: new Collection([
+						typeParameters: [],
+						parameters: [
 							new FunctionParameterDefinition(
 								name: 'p1',
 								type: new NullableType(PrimitiveType::integer()),
@@ -419,27 +424,27 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 							new FunctionParameterDefinition(
 								name: 'p2',
 								type: new NullableType(
-									new UnionType(new Collection([
+									new UnionType([
 										PrimitiveType::string(),
 										PrimitiveType::float(),
-									]))
+									])
 								),
 								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p3',
-								type: new UnionType(new Collection([
+								type: new UnionType([
 									PrimitiveType::string(),
 									PrimitiveType::float(),
-								])),
+								]),
 								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p4',
-								type: new UnionType(new Collection([
+								type: new UnionType([
 									PrimitiveType::string(),
 									PrimitiveType::boolean(),
-								])),
+								]),
 								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
@@ -447,18 +452,18 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 								type: new NamedType(AllNativeTypes::class),
 								hasDefaultValue: false,
 							),
-						]),
+						],
 						returnType: NeverType::get(),
 					),
 					new MethodDefinition(
 						name: 'f3',
-						typeParameters: new Collection(),
-						parameters: new Collection(),
+						typeParameters: [],
+						parameters: [],
 						returnType: new StaticType(
 							new NamedType(AllNativeTypes::class)
 						),
 					),
-				]),
+				],
 			),
 		];
 
@@ -471,16 +476,16 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 				anonymous: false,
 				final: false,
 				abstract: false,
-				typeParameters: new Collection(),
+				typeParameters: [],
 				extends: null,
-				implements: new Collection(),
+				implements: [],
 				uses: new UsedTraitsDefinition(),
-				properties: new Collection(),
-				methods: new Collection([
+				properties: [],
+				methods: [
 					new MethodDefinition(
 						name: 'f1',
-						typeParameters: new Collection(),
-						parameters: new Collection([
+						typeParameters: [],
+						parameters: [
 							new FunctionParameterDefinition(
 								name: 'p1',
 								type: PrimitiveType::integer(),
@@ -518,10 +523,10 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 							),
 							new FunctionParameterDefinition(
 								name: 'p8',
-								type: new UnionType(new Collection([
+								type: new UnionType([
 									PrimitiveType::integer(),
 									PrimitiveType::float(),
-								])),
+								]),
 								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
@@ -539,13 +544,13 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 								type: PrimitiveType::float(),
 								hasDefaultValue: false,
 							),
-						]),
+						],
 						returnType: VoidType::get(),
 					),
 					new MethodDefinition(
 						name: 'f2',
-						typeParameters: new Collection(),
-						parameters: new Collection([
+						typeParameters: [],
+						parameters: [
 							new FunctionParameterDefinition(
 								name: 'p1',
 								type: PrimitiveType::string(),
@@ -586,13 +591,13 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 								type: PrimitiveType::string(),
 								hasDefaultValue: false,
 							),
-						]),
+						],
 						returnType: NeverType::get(),
 					),
 					new MethodDefinition(
 						name: 'f3',
-						typeParameters: new Collection(),
-						parameters: new Collection([
+						typeParameters: [],
+						parameters: [
 							new FunctionParameterDefinition(
 								name: 'p1',
 								type: PrimitiveType::boolean(),
@@ -613,30 +618,30 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 								type: PrimitiveType::boolean(),
 								hasDefaultValue: false,
 							),
-						]),
+						],
 						returnType: NeverType::get(),
 					),
 					new MethodDefinition(
 						name: 'f4',
-						typeParameters: new Collection(),
-						parameters: new Collection([
+						typeParameters: [],
+						parameters: [
 							new FunctionParameterDefinition(
 								name: 'p1',
-								type: new NamedType('array', new Collection([
-									new UnionType(new Collection([
+								type: new NamedType('array', [
+									new UnionType([
 										PrimitiveType::integer(),
 										PrimitiveType::string(),
-									])),
+									]),
 									PrimitiveType::string(),
-								])),
+								]),
 								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p2',
-								type: new UnionType(new Collection([
+								type: new UnionType([
 									PrimitiveType::integer(),
 									PrimitiveType::string(),
-								])),
+								]),
 								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
@@ -646,42 +651,42 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 							),
 							new FunctionParameterDefinition(
 								name: 'p4',
-								type: new NamedType('array', new Collection([
+								type: new NamedType('array', [
 									PrimitiveType::string(),
 									PrimitiveType::string(),
-								])),
+								]),
 								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p5',
-								type: new NamedType('array', new Collection([
+								type: new NamedType('array', [
 									PrimitiveType::integer(),
 									PrimitiveType::string(),
-								])),
+								]),
 								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p6',
-								type: new NamedType('array', new Collection([
+								type: new NamedType('array', [
 									PrimitiveType::integer(),
-								])),
+								]),
 								hasDefaultValue: false,
 							),
-						]),
+						],
 						returnType: NeverType::get(),
 					),
 					new MethodDefinition(
 						name: 'f5',
-						typeParameters: new Collection(),
-						parameters: new Collection([
+						typeParameters: [],
+						parameters: [
 							new FunctionParameterDefinition(
 								name: 'p1',
-								type: new UnionType(new Collection([
+								type: new UnionType([
 									PrimitiveType::integer(),
 									PrimitiveType::float(),
 									PrimitiveType::string(),
 									PrimitiveType::boolean(),
-								])),
+								]),
 								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
@@ -714,38 +719,38 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 								type: new NamedType('object'),
 								hasDefaultValue: false,
 							),
-						]),
+						],
 						returnType: NeverType::get(),
 					),
 					new MethodDefinition(
 						name: 'f6',
-						typeParameters: new Collection(),
-						parameters: new Collection(),
+						typeParameters: [],
+						parameters: [],
 						returnType: NeverType::get(),
 					),
 					new MethodDefinition(
 						name: 'f7',
-						typeParameters: new Collection(),
-						parameters: new Collection(),
+						typeParameters: [],
+						parameters: [],
 						returnType: new StaticType(
 							new NamedType(AllPhpDocTypes::class)
 						),
 					),
 					new MethodDefinition(
 						name: 'f8',
-						typeParameters: new Collection(),
-						parameters: new Collection(),
+						typeParameters: [],
+						parameters: [],
 						returnType: new NamedType(AllPhpDocTypes::class),
 					),
 					new MethodDefinition(
 						name: 'f9',
-						typeParameters: new Collection(),
-						parameters: new Collection(),
+						typeParameters: [],
+						parameters: [],
 						returnType: new StaticType(
 							new NamedType(AllPhpDocTypes::class)
 						),
 					),
-				]),
+				],
 			),
 		];
 
@@ -758,19 +763,19 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 				anonymous: false,
 				final: false,
 				abstract: false,
-				typeParameters: new Collection([
+				typeParameters: [
 					new TypeParameterDefinition(
 						name: 'T',
 						variadic: false,
 						upperBound: null,
 						variance: TemplateTypeVariance::INVARIANT,
 					),
-				]),
+				],
 				extends: null,
-				implements: new Collection(),
+				implements: [],
 				uses: new UsedTraitsDefinition(),
-				properties: new Collection(),
-				methods: new Collection(),
+				properties: [],
+				methods: [],
 			),
 		];
 
@@ -783,19 +788,19 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 				anonymous: false,
 				final: false,
 				abstract: false,
-				typeParameters: new Collection([
+				typeParameters: [
 					new TypeParameterDefinition(
 						name: 'T',
 						variadic: false,
 						upperBound: null,
 						variance: TemplateTypeVariance::CONTRAVARIANT,
 					),
-				]),
+				],
 				extends: null,
-				implements: new Collection(),
+				implements: [],
 				uses: new UsedTraitsDefinition(),
-				properties: new Collection(),
-				methods: new Collection(),
+				properties: [],
+				methods: [],
 			),
 		];
 
@@ -808,19 +813,19 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 				anonymous: false,
 				final: false,
 				abstract: false,
-				typeParameters: new Collection([
+				typeParameters: [
 					new TypeParameterDefinition(
 						name: 'T',
 						variadic: false,
 						upperBound: null,
 						variance: TemplateTypeVariance::COVARIANT,
 					),
-				]),
+				],
 				extends: null,
-				implements: new Collection(),
+				implements: [],
 				uses: new UsedTraitsDefinition(),
-				properties: new Collection(),
-				methods: new Collection(),
+				properties: [],
+				methods: [],
 			),
 		];
 
@@ -830,22 +835,22 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 				qualifiedName: NonGenericInterface::class,
 				fileName: realpath(__DIR__ . '/../../Stubs/Interfaces/NonGenericInterface.php'),
 				builtIn: false,
-				typeParameters: new Collection(),
-				extends: new Collection(),
-				methods: new Collection([
+				typeParameters: [],
+				extends: [],
+				methods: [
 					new MethodDefinition(
 						name: 'function',
-						typeParameters: new Collection(),
-						parameters: new Collection([
+						typeParameters: [],
+						parameters: [
 							new FunctionParameterDefinition(
 								name: 'i',
 								type: PrimitiveType::string(),
 								hasDefaultValue: false,
 							),
-						]),
+						],
 						returnType: MixedType::get(),
 					),
-				]),
+				],
 			),
 		];
 
@@ -855,16 +860,16 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 				qualifiedName: SingleTemplateType::class,
 				fileName: realpath(__DIR__ . '/../../Stubs/Interfaces/SingleTemplateType.php'),
 				builtIn: false,
-				typeParameters: new Collection([
+				typeParameters: [
 					new TypeParameterDefinition(
 						name: 'T',
 						variadic: false,
 						upperBound: null,
 						variance: TemplateTypeVariance::INVARIANT,
 					),
-				]),
-				extends: new Collection(),
-				methods: new Collection(),
+				],
+				extends: [],
+				methods: [],
 			),
 		];
 
@@ -874,17 +879,17 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 				qualifiedName: TraitWithoutProperties::class,
 				fileName: realpath(__DIR__ . '/../../Stubs/Traits/TraitWithoutProperties.php'),
 				builtIn: false,
-				typeParameters: new Collection(),
+				typeParameters: [],
 				uses: new UsedTraitsDefinition(),
-				properties: new Collection(),
-				methods: new Collection([
+				properties: [],
+				methods: [
 					new MethodDefinition(
 						name: 'otherFunction',
-						typeParameters: new Collection(),
-						parameters: new Collection(),
+						typeParameters: [],
+						parameters: [],
 						returnType: new NamedType(Generator::class),
 					),
-				]),
+				],
 			),
 		];
 
@@ -895,14 +900,14 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 				fileName: realpath(__DIR__ . '/../../Stubs/Enums/BackedEnum.php'),
 				builtIn: false,
 				backingType: PrimitiveType::string(),
-				implements: new Collection([
-					new NamedType(SingleGenericInterface::class, new Collection([
+				implements: [
+					new NamedType(SingleGenericInterface::class, [
 						PrimitiveType::string(),
-					])),
+					]),
 					new NamedType(\BackedEnum::class),
-				]),
+				],
 				uses: new UsedTraitsDefinition(),
-				cases: new Collection([
+				cases: [
 					new EnumCaseDefinition(
 						name: 'FIRST',
 						backingValue: 'first',
@@ -911,8 +916,8 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 						name: 'SECOND',
 						backingValue: 'second',
 					),
-				]),
-				methods: new Collection(),
+				],
+				methods: [],
 			),
 		];
 
@@ -923,24 +928,24 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 				fileName: realpath(__DIR__ . '/../../Stubs/Enums/UnitEnum.php'),
 				builtIn: false,
 				backingType: null,
-				implements: new Collection([
+				implements: [
 					new NamedType(NonGenericInterface::class),
 					new NamedType(\UnitEnum::class),
-				]),
+				],
 				uses: new UsedTraitsDefinition(
-					traits: new Collection([
+					traits: [
 						new UsedTraitDefinition(
 							trait: NamedType::wrap(TraitWithoutProperties::class),
 						),
 						new UsedTraitDefinition(
 							trait: NamedType::wrap(TraitWithoutProperties::class),
-							aliases: new Collection([
+							aliases: [
 								new UsedTraitAliasDefinition('otherFunction', 'otherOtherFunction'),
-							])
+							]
 						),
-					])
+					]
 				),
-				cases: new Collection([
+				cases: [
 					new EnumCaseDefinition(
 						name: 'FIRST',
 						backingValue: null,
@@ -949,28 +954,26 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 						name: 'SECOND',
 						backingValue: null,
 					),
-				]),
-				methods: new Collection([
+				],
+				methods: [
 					new MethodDefinition(
 						name: 'function',
-						typeParameters: new Collection(),
-						parameters: new Collection([
+						typeParameters: [],
+						parameters: [
 							new FunctionParameterDefinition(
 								name: 'i',
 								type: PrimitiveType::string(),
 								hasDefaultValue: false,
 							),
-						]),
+						],
 						returnType: MixedType::get(),
 					),
-				]),
+				],
 			),
 		];
 	}
 
-	/**
-	 * @dataProvider providesDefinitionForTypeProvider
-	 */
+	#[DataProvider('providesDefinitionForTypeProvider')]
 	public function testProvidesDefinitionForType(string $type, TypeDefinition $expected): void
 	{
 		$actual = $this->definitionProvider->forType($type);

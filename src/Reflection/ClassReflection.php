@@ -8,7 +8,6 @@ use GoodPhp\Reflection\Reflection\Properties\HasProperties;
 use GoodPhp\Reflection\Reflection\Traits\UsedTraitsReflection;
 use GoodPhp\Reflection\Reflection\TypeParameters\HasTypeParameters;
 use GoodPhp\Reflection\Type\NamedType;
-use Illuminate\Support\Collection;
 
 /**
  * @template ReflectableType of object
@@ -25,9 +24,9 @@ interface ClassReflection extends TypeReflection, HasAttributes, HasTypeParamete
 	public function extends(): ?NamedType;
 
 	/**
-	 * @return Collection<int, NamedType>
+	 * @return list<NamedType>
 	 */
-	public function implements(): Collection;
+	public function implements(): array;
 
 	public function uses(): UsedTraitsReflection;
 

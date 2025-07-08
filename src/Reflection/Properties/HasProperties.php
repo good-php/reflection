@@ -4,7 +4,6 @@ namespace GoodPhp\Reflection\Reflection\Properties;
 
 use GoodPhp\Reflection\Reflection\HasName;
 use GoodPhp\Reflection\Reflection\PropertyReflection;
-use Illuminate\Support\Collection;
 
 /**
  * @template ReflectableType of object
@@ -12,12 +11,12 @@ use Illuminate\Support\Collection;
 interface HasProperties extends HasName
 {
 	/**
-	 * @return Collection<int, PropertyReflection<ReflectableType, $this>>
+	 * @return list<PropertyReflection<ReflectableType, $this>>
 	 */
-	public function declaredProperties(): Collection;
+	public function declaredProperties(): array;
 
 	/**
-	 * @return Collection<int, PropertyReflection<ReflectableType, self<ReflectableType>>>
+	 * @return list<PropertyReflection<ReflectableType, self<ReflectableType>>>
 	 */
-	public function properties(): Collection;
+	public function properties(): array;
 }

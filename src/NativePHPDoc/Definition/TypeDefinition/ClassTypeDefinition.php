@@ -4,7 +4,6 @@ namespace GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition;
 
 use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition;
 use GoodPhp\Reflection\Type\NamedType;
-use Illuminate\Support\Collection;
 
 /**
  * @template-covariant T of object
@@ -15,11 +14,11 @@ final class ClassTypeDefinition extends TypeDefinition
 	public readonly string $qualifiedName;
 
 	/**
-	 * @param class-string<T>                          $qualifiedName
-	 * @param Collection<int, TypeParameterDefinition> $typeParameters
-	 * @param Collection<int, NamedType>               $implements
-	 * @param Collection<int, PropertyDefinition>      $properties
-	 * @param Collection<int, MethodDefinition>        $methods
+	 * @param class-string<T>               $qualifiedName
+	 * @param list<TypeParameterDefinition> $typeParameters
+	 * @param list<NamedType>               $implements
+	 * @param list<PropertyDefinition>      $properties
+	 * @param list<MethodDefinition>        $methods
 	 */
 	public function __construct(
 		string $qualifiedName,
@@ -28,12 +27,12 @@ final class ClassTypeDefinition extends TypeDefinition
 		public readonly bool $anonymous,
 		public readonly bool $final,
 		public readonly bool $abstract,
-		public readonly Collection $typeParameters,
+		public readonly array $typeParameters,
 		public readonly ?NamedType $extends,
-		public readonly Collection $implements,
+		public readonly array $implements,
 		public readonly UsedTraitsDefinition $uses,
-		public readonly Collection $properties,
-		public readonly Collection $methods,
+		public readonly array $properties,
+		public readonly array $methods,
 	) {
 		parent::__construct(
 			$qualifiedName,

@@ -2,15 +2,13 @@
 
 namespace GoodPhp\Reflection\Reflection\TypeParameters;
 
-use Illuminate\Support\Collection;
-
 /**
  * @template-covariant DeclaringStructureReflection of HasTypeParameters
  */
 interface HasTypeParameters
 {
 	/**
-	 * @return Collection<int, TypeParameterReflection<DeclaringStructureReflection>>
+	 * @return list<TypeParameterReflection<DeclaringStructureReflection>>
 	 */
-	public function typeParameters(): Collection;
+	public function typeParameters(): array;
 }

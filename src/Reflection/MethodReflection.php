@@ -7,7 +7,6 @@ use GoodPhp\Reflection\Reflection\Methods\HasMethods;
 use GoodPhp\Reflection\Reflection\TypeParameters\HasTypeParameters;
 use GoodPhp\Reflection\Type\NamedType;
 use GoodPhp\Reflection\Type\Type;
-use Illuminate\Support\Collection;
 use Stringable;
 
 /**
@@ -24,9 +23,9 @@ interface MethodReflection extends Stringable, HasAttributes, HasTypeParameters
 	public function name(): string;
 
 	/**
-	 * @return Collection<int, FunctionParameterReflection<self<ReflectableType, DeclaringTypeReflection>>>
+	 * @return list<FunctionParameterReflection<self<ReflectableType, DeclaringTypeReflection>>>
 	 */
-	public function parameters(): Collection;
+	public function parameters(): array;
 
 	public function returnType(): ?Type;
 

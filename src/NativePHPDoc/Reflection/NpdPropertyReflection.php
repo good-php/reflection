@@ -15,6 +15,7 @@ use GoodPhp\Reflection\Type\NamedType;
 use GoodPhp\Reflection\Type\Template\TypeParameterMap;
 use GoodPhp\Reflection\Type\Type;
 use GoodPhp\Reflection\Type\TypeProjector;
+use Illuminate\Support\Arr;
 use ReflectionProperty;
 use Webmozart\Assert\Assert;
 
@@ -31,10 +32,10 @@ final class NpdPropertyReflection implements PropertyReflection
 
 	private readonly Attributes $attributes;
 
-	private readonly ?Type $type;
+	private ?Type $type;
 
 	/** @var FunctionParameterReflection<MethodReflection<object, HasMethods<object>>>|null */
-	private readonly ?FunctionParameterReflection $promotedParameter;
+	private ?FunctionParameterReflection $promotedParameter;
 
 	/**
 	 * @param DeclaringTypeReflection $declaringType
@@ -106,7 +107,7 @@ final class NpdPropertyReflection implements PropertyReflection
 	 *
 	 * @return FunctionParameterReflection<MethodReflection<object, HasMethods<object>>>|null
 	 */
-	public function promotedParameter(): FunctionParameterReflection|null
+	public function promotedParameter(): ?FunctionParameterReflection
 	{
 		if (isset($this->promotedParameter)) {
 			return $this->promotedParameter;
@@ -120,7 +121,8 @@ final class NpdPropertyReflection implements PropertyReflection
 
 		Assert::notNull($constructor);
 
-		return $this->promotedParameter ??= $constructor->parameters()->first(
+		return $this->promotedParameter ??= Arr::first(
+			$constructor->parameters(),
 			fn (FunctionParameterReflection $parameter) => $this->definition->name === $parameter->name()
 		);
 	}

@@ -20,11 +20,10 @@ use GoodPhp\Reflection\Type\Special\NullableType;
 use GoodPhp\Reflection\Type\Special\VoidType;
 use GoodPhp\Reflection\Type\Template\TemplateType;
 use GoodPhp\Reflection\Type\Template\TemplateTypeVariance;
-use Illuminate\Support\Collection;
-use TenantCloud\Standard\Lazy\Lazy;
+use GoodPhp\Reflection\Util\Lazy\Lazy;
 use Traversable;
 
-use function TenantCloud\Standard\Lazy\lazy;
+use function GoodPhp\Reflection\Util\Lazy\lazy;
 
 class BuiltInCoreDefinitionProvider implements DefinitionProvider
 {
@@ -38,22 +37,22 @@ class BuiltInCoreDefinitionProvider implements DefinitionProvider
 				qualifiedName: Countable::class,
 				fileName: null,
 				builtIn: true,
-				typeParameters: new Collection(),
-				extends: new Collection(),
-				methods: new Collection([
+				typeParameters: [],
+				extends: [],
+				methods: [
 					new MethodDefinition(
 						name: 'count',
-						typeParameters: new Collection(),
-						parameters: new Collection(),
+						typeParameters: [],
+						parameters: [],
 						returnType: PrimitiveType::integer(),
 					),
-				])
+				]
 			)),
 			ArrayAccess::class => lazy(fn () => new InterfaceTypeDefinition(
 				qualifiedName: ArrayAccess::class,
 				fileName: null,
 				builtIn: true,
-				typeParameters: new Collection([
+				typeParameters: [
 					new TypeParameterDefinition(
 						name: 'TKey',
 						variadic: false,
@@ -66,13 +65,13 @@ class BuiltInCoreDefinitionProvider implements DefinitionProvider
 						upperBound: null,
 						variance: TemplateTypeVariance::INVARIANT
 					),
-				]),
-				extends: new Collection(),
-				methods: new Collection([
+				],
+				extends: [],
+				methods: [
 					new MethodDefinition(
 						name: 'offsetExists',
-						typeParameters: new Collection(),
-						parameters: new Collection([
+						typeParameters: [],
+						parameters: [
 							new FunctionParameterDefinition(
 								name: 'offset',
 								type: new TemplateType(
@@ -80,13 +79,13 @@ class BuiltInCoreDefinitionProvider implements DefinitionProvider
 								),
 								hasDefaultValue: false,
 							),
-						]),
+						],
 						returnType: PrimitiveType::boolean(),
 					),
 					new MethodDefinition(
 						name: 'offsetGet',
-						typeParameters: new Collection(),
-						parameters: new Collection([
+						typeParameters: [],
+						parameters: [
 							new FunctionParameterDefinition(
 								name: 'offset',
 								type: new TemplateType(
@@ -94,7 +93,7 @@ class BuiltInCoreDefinitionProvider implements DefinitionProvider
 								),
 								hasDefaultValue: false,
 							),
-						]),
+						],
 						returnType: new NullableType(
 							new TemplateType(
 								name: 'TValue',
@@ -103,8 +102,8 @@ class BuiltInCoreDefinitionProvider implements DefinitionProvider
 					),
 					new MethodDefinition(
 						name: 'offsetSet',
-						typeParameters: new Collection(),
-						parameters: new Collection([
+						typeParameters: [],
+						parameters: [
 							new FunctionParameterDefinition(
 								name: 'offset',
 								type: new NullableType(
@@ -121,13 +120,13 @@ class BuiltInCoreDefinitionProvider implements DefinitionProvider
 								),
 								hasDefaultValue: false,
 							),
-						]),
+						],
 						returnType: VoidType::get(),
 					),
 					new MethodDefinition(
 						name: 'offsetUnset',
-						typeParameters: new Collection(),
-						parameters: new Collection([
+						typeParameters: [],
+						parameters: [
 							new FunctionParameterDefinition(
 								name: 'offset',
 								type: new TemplateType(
@@ -135,16 +134,16 @@ class BuiltInCoreDefinitionProvider implements DefinitionProvider
 								),
 								hasDefaultValue: false,
 							),
-						]),
+						],
 						returnType: VoidType::get(),
 					),
-				])
+				]
 			)),
 			Traversable::class => lazy(fn () => new InterfaceTypeDefinition(
 				qualifiedName: Traversable::class,
 				fileName: null,
 				builtIn: true,
-				typeParameters: new Collection([
+				typeParameters: [
 					new TypeParameterDefinition(
 						name: 'TKey',
 						variadic: false,
@@ -157,25 +156,25 @@ class BuiltInCoreDefinitionProvider implements DefinitionProvider
 						upperBound: null,
 						variance: TemplateTypeVariance::COVARIANT,
 					),
-				]),
-				extends: new Collection([
-					new NamedType('iterable', new Collection([
+				],
+				extends: [
+					new NamedType('iterable', [
 						new TemplateType(
 							name: 'TKey',
 						),
 						new TemplateType(
 							name: 'TValue',
 						),
-					])),
-				]),
-				methods: new Collection([
+					]),
+				],
+				methods: [
 					new MethodDefinition(
 						name: 'count',
-						typeParameters: new Collection(),
-						parameters: new Collection(),
+						typeParameters: [],
+						parameters: [],
 						returnType: PrimitiveType::integer(),
 					),
-				])
+				]
 			)),
 			Closure::class => lazy(fn () => new ClassTypeDefinition(
 				qualifiedName: Closure::class,
@@ -184,7 +183,7 @@ class BuiltInCoreDefinitionProvider implements DefinitionProvider
 				anonymous: false,
 				final: true,
 				abstract: false,
-				typeParameters: new Collection([
+				typeParameters: [
 					new TypeParameterDefinition(
 						name: 'TReturn',
 						variadic: false,
@@ -197,10 +196,10 @@ class BuiltInCoreDefinitionProvider implements DefinitionProvider
 						upperBound: null,
 						variance: TemplateTypeVariance::CONTRAVARIANT
 					),
-				]),
+				],
 				extends: null,
-				implements: new Collection([
-					new NamedType('callable', new Collection([
+				implements: [
+					new NamedType('callable', [
 						new TemplateType(
 							name: 'TReturn',
 						),
@@ -209,11 +208,11 @@ class BuiltInCoreDefinitionProvider implements DefinitionProvider
 								name: 'TParameter',
 							)
 						),
-					])),
-				]),
+					]),
+				],
 				uses: new UsedTraitsDefinition(),
-				properties: new Collection(),
-				methods: new Collection(),
+				properties: [],
+				methods: [],
 			)),
 		];
 	}

@@ -4,11 +4,11 @@ namespace GoodPhp\Reflection\NativePHPDoc\Reflection\Attributes;
 
 use GoodPhp\Reflection\Reflection\Attributes\ArrayAttributes;
 use GoodPhp\Reflection\Reflection\Attributes\Attributes;
+use GoodPhp\Reflection\Util\Lazy\Lazy;
 use Illuminate\Support\Collection;
 use ReflectionAttribute;
-use TenantCloud\Standard\Lazy\Lazy;
 
-use function TenantCloud\Standard\Lazy\lazy;
+use function GoodPhp\Reflection\Util\Lazy\lazy;
 
 final class NativeAttributes implements Attributes
 {
@@ -16,9 +16,9 @@ final class NativeAttributes implements Attributes
 	private readonly Lazy $delegate;
 
 	/**
-	 * @param callable(): ReflectionAttribute<object>[]|null $makeAttributes
+	 * @param callable(): list<ReflectionAttribute<object>>|null $makeAttributes
 	 */
-	public function __construct(callable $makeAttributes = null)
+	public function __construct(?callable $makeAttributes = null)
 	{
 		$makeAttributes ??= fn () => [];
 
@@ -39,7 +39,7 @@ final class NativeAttributes implements Attributes
 	/**
 	 * @param class-string<object>|null $className
 	 */
-	public function has(string $className = null): bool
+	public function has(?string $className = null): bool
 	{
 		return $this->delegate->value()->has($className);
 	}
@@ -49,9 +49,9 @@ final class NativeAttributes implements Attributes
 	 *
 	 * @param class-string<AttributeType>|null $className
 	 *
-	 * @return ($className is null ? Collection<int, object> : Collection<int, AttributeType>)
+	 * @return ($className is null ? list<object> : list<AttributeType>)
 	 */
-	public function all(string $className = null): Collection
+	public function all(?string $className = null): array
 	{
 		return $this->delegate->value()->all($className);
 	}

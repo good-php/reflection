@@ -4,7 +4,6 @@ namespace GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition;
 
 use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition;
 use GoodPhp\Reflection\Type\NamedType;
-use Illuminate\Support\Collection;
 
 /**
  * @template-covariant T of object
@@ -15,18 +14,18 @@ final class InterfaceTypeDefinition extends TypeDefinition
 	public readonly string $qualifiedName;
 
 	/**
-	 * @param class-string<T>                          $qualifiedName
-	 * @param Collection<int, TypeParameterDefinition> $typeParameters
-	 * @param Collection<int, NamedType>               $extends
-	 * @param Collection<int, MethodDefinition>        $methods
+	 * @param class-string<T>               $qualifiedName
+	 * @param list<TypeParameterDefinition> $typeParameters
+	 * @param list<NamedType>               $extends
+	 * @param list<MethodDefinition>        $methods
 	 */
 	public function __construct(
 		string $qualifiedName,
 		?string $fileName,
 		public readonly bool $builtIn,
-		public readonly Collection $typeParameters,
-		public readonly Collection $extends,
-		public readonly Collection $methods,
+		public readonly array $typeParameters,
+		public readonly array $extends,
+		public readonly array $methods,
 	) {
 		parent::__construct(
 			$qualifiedName,

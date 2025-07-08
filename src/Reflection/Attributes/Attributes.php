@@ -2,7 +2,6 @@
 
 namespace GoodPhp\Reflection\Reflection\Attributes;
 
-use Illuminate\Support\Collection;
 use Stringable;
 
 interface Attributes extends Stringable
@@ -10,16 +9,16 @@ interface Attributes extends Stringable
 	/**
 	 * @param class-string<object>|null $className
 	 */
-	public function has(string $className = null): bool;
+	public function has(?string $className = null): bool;
 
 	/**
 	 * @template AttributeType of object
 	 *
 	 * @param class-string<AttributeType>|null $className
 	 *
-	 * @return ($className is null ? Collection<int, object> : Collection<int, AttributeType>)
+	 * @return ($className is null ? list<object> : list<AttributeType>)
 	 */
-	public function all(string $className = null): Collection;
+	public function all(?string $className = null): array;
 
 	/**
 	 * @template AttributeType of object

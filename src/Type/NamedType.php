@@ -2,7 +2,6 @@
 
 namespace GoodPhp\Reflection\Type;
 
-use Illuminate\Support\Collection;
 use Webmozart\Assert\Assert;
 
 class NamedType implements Type
@@ -10,12 +9,12 @@ class NamedType implements Type
 	use TypeExtensions;
 
 	/**
-	 * @param class-string|string   $name
-	 * @param Collection<int, Type> $arguments
+	 * @param class-string|string $name
+	 * @param list<Type>          $arguments
 	 */
 	public function __construct(
 		public readonly string $name,
-		public readonly Collection $arguments = new Collection(),
+		public readonly array $arguments = [],
 	) {
 		Assert::false(
 			in_array($name, [
@@ -33,9 +32,9 @@ class NamedType implements Type
 	}
 
 	/**
-	 * @param array<int, Type|string>|Collection<int, Type|string>|null $arguments
+	 * @param list<Type|string>|null $arguments
 	 */
-	public static function wrap(string|self $name, array|Collection $arguments = null): self
+	public static function wrap(string|self $name, ?array $arguments = null): self
 	{
 		if ($name instanceof self) {
 			Assert::null($arguments, 'Arguments must be null when a NamedType instance is given.');
@@ -45,8 +44,9 @@ class NamedType implements Type
 
 		return new self(
 			$name,
-			Collection::wrap($arguments ?? [])->map(
-				fn (Type|string $type) => is_string($type) ? new self($type) : $type
+			array_map(
+				fn (Type|string $type) => is_string($type) ? new self($type) : $type,
+				$arguments ?? []
 			)
 		);
 	}
@@ -62,16 +62,15 @@ class NamedType implements Type
 	{
 		$changed = false;
 
-		$types = $this->arguments
-			->map(function (Type $type) use ($callback, &$changed) {
-				$newType = $callback($type);
+		$types = array_map(function (Type $type) use ($callback, &$changed) {
+			$newType = $callback($type);
 
-				if ($type !== $newType) {
-					$changed = true;
-				}
+			if ($type !== $newType) {
+				$changed = true;
+			}
 
-				return $newType;
-			});
+			return $newType;
+		}, $this->arguments);
 
 		if ($changed) {
 			return new self($this->name, $types);
@@ -82,10 +81,11 @@ class NamedType implements Type
 
 	public function __toString(): string
 	{
-		$arguments = $this->arguments
-			->map(fn (Type $type) => (string) $type)
-			->join(', ');
+		$arguments = array_map(
+			fn (Type $type) => (string) $type,
+			$this->arguments
+		);
 
-		return $this->name . ($arguments ? '<' . $arguments . '>' : '');
+		return $this->name . ($arguments ? '<' . implode(', ', $arguments) . '>' : '');
 	}
 }

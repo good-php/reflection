@@ -15,7 +15,6 @@ use GoodPhp\Reflection\Type\Special\StaticType;
 use GoodPhp\Reflection\Type\Special\VoidType;
 use GoodPhp\Reflection\Type\Type;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Collection;
 use ReflectionIntersectionType;
 use ReflectionNamedType;
 use ReflectionType;
@@ -25,14 +24,14 @@ use Webmozart\Assert\Assert;
 class NativeTypeMapper
 {
 	/**
-	 * @param ReflectionType|string|iterable<int, ReflectionType|string> $type
+	 * @param ReflectionType|string|list<ReflectionType|string> $type
 	 *
-	 * @return ($type is ReflectionType|string ? Type : Collection<int, Type>)
+	 * @return ($type is ReflectionType|string ? Type : list<Type>)
 	 */
-	public function map(ReflectionType|string|iterable $type, TypeContext $context): Type|Collection
+	public function map(ReflectionType|string|array $type, TypeContext $context): Type|array
 	{
-		if (is_iterable($type)) {
-			return Collection::wrap($type)->map(fn (ReflectionType|string $type) => $this->map($type, $context));
+		if (is_array($type)) {
+			return array_map(fn (ReflectionType|string $type) => $this->map($type, $context), $type);
 		}
 
 		$isNull = fn (ReflectionType $isNullType) => $isNullType instanceof ReflectionNamedType && $isNullType->getName() === 'null';

@@ -25,25 +25,22 @@ use Webmozart\Assert\Assert;
 
 class ClassLikeContextParsingVisitor extends NodeVisitorAbstract
 {
-	/** @var Collection<string, FileClassLikeContext> */
-	public Collection $classLikes;
+	/** @var array<string, FileClassLikeContext> */
+	public array $classLikes = [];
 
-	/** @var Collection<string, FileClassLikeContext> */
-	public Collection $anonymousClassLikes;
+	/** @var array<int, FileClassLikeContext> */
+	public array $anonymousClassLikes = [];
 
 	public function __construct(
 		private readonly NameResolver $nameResolverVisitor,
-	) {
-		$this->classLikes = new Collection();
-		$this->anonymousClassLikes = new Collection();
-	}
+	) {}
 
 	public function enterNode(Node $node)
 	{
 		if (
-			!$node instanceof Node\Stmt\Class_ &&
+			!$node instanceof Class_ &&
 			!$node instanceof Interface_ &&
-			!$node instanceof Node\Stmt\Trait_ &&
+			!$node instanceof Trait_ &&
 			!$node instanceof Enum_
 		) {
 			return null;
@@ -65,7 +62,7 @@ class ClassLikeContextParsingVisitor extends NodeVisitorAbstract
 			$this->classLikes[(string) $node->namespacedName] = $context;
 		} else {
 			Assert::keyNotExists(
-				$this->anonymousClassLikes->all(),
+				$this->anonymousClassLikes,
 				$node->getStartLine(),
 				'Only one anonymous class-like can be defined within a single line due to PHPs limitations.'
 			);
@@ -77,30 +74,32 @@ class ClassLikeContextParsingVisitor extends NodeVisitorAbstract
 	}
 
 	/**
-	 * @return Collection<class-string, Collection<int, string>>
+	 * @return array<class-string, list<string>>
 	 */
-	public function excludedTraitMethods(ClassLike $classLike): Collection
+	public function excludedTraitMethods(ClassLike $classLike): array
 	{
+		/** @var array<class-string, list<string>> */
 		return collect($classLike->getTraitUses())
 			->flatMap(
 				fn (Node\Stmt\TraitUse $traitUseNode) => collect($traitUseNode->adaptations)->whereInstanceOf(Precedence::class)
 			)
-			->reduce(function (Collection $carry, Precedence $precedence) {
+			->reduce(function (array $carry, Precedence $precedence) {
 				foreach ($precedence->insteadof as $insteadof) {
-					/** @var Collection<string, Collection<int, string>> $carry */
-					$carry[(string) $insteadof] ??= collect();
-					$carry[(string) $insteadof]->push((string) $precedence->method);
+					/** @var array<string, list<string>> $carry */
+					$carry[(string) $insteadof] ??= [];
+					$carry[(string) $insteadof][] = (string) $precedence->method;
 				}
 
 				return $carry;
-			}, collect());
+			}, []);
 	}
 
 	/**
-	 * @return Collection<int, string>
+	 * @return list<string>
 	 */
-	private function implementsInterfaces(ClassLike $classLike): Collection
+	private function implementsInterfaces(ClassLike $classLike): array
 	{
+		/** @var list<Name> $nameNodes */
 		$nameNodes = match (true) {
 			$classLike instanceof Class_     => $classLike->implements,
 			$classLike instanceof Interface_ => $classLike->extends,
@@ -108,14 +107,13 @@ class ClassLikeContextParsingVisitor extends NodeVisitorAbstract
 			default                          => [],
 		};
 
-		return collect($nameNodes)
-			->map(fn (Name $name) => (string) $name);
+		return array_map(fn (Name $name) => (string) $name, $nameNodes);
 	}
 
 	/**
-	 * @return Collection<string, string>
+	 * @return array<string, string>
 	 */
-	private function uses(NameContext $nameContext): Collection
+	private function uses(NameContext $nameContext): array
 	{
 		static $aliasesProperty;
 
@@ -124,16 +122,16 @@ class ClassLikeContextParsingVisitor extends NodeVisitorAbstract
 		}
 
 		/** @var array<string, Name> $uses */
+		/** @phpstan-ignore-next-line */
 		$uses = $aliasesProperty->getValue($nameContext)[Node\Stmt\Use_::TYPE_NORMAL] ?? [];
 
-		return collect($uses)
-			->map(fn (Name $name) => (string) $name);
+		return array_map(fn (Name $name) => (string) $name, $uses);
 	}
 
 	/**
-	 * @return Collection<int, TraitsUse>
+	 * @return list<TraitsUse>
 	 */
-	private function traitsUses(ClassLike $classLike): Collection
+	private function traitsUses(ClassLike $classLike): array
 	{
 		// You don't wanna know how much time I spent researching how these stupid traits work in PHP.
 		// What's crazy here is that even Roave/BetterReflection currently gets it wrong and doesn't
@@ -143,54 +141,55 @@ class ClassLikeContextParsingVisitor extends NodeVisitorAbstract
 		// by aliases (which doesn't actually remove the "original" method, just adds a new one on top)
 		// and even remove methods from used traits with "precedence".
 		// After __halt_compiler, this is definitely the most useless feature of PHP.
-		return collect($classLike->getTraitUses())
-			->map(function (Node\Stmt\TraitUse $traitUseNode) {
-				// Aliases keyed by trait class name
-				$aliasNodes = collect($traitUseNode->adaptations)
-					->whereInstanceOf(Alias::class)
-					->groupBy(fn (Alias $alias) => (string) ($alias->trait ?? end($traitUseNode->traits)));
+		return array_map(function (Node\Stmt\TraitUse $traitUseNode) {
+			// Aliases keyed by trait class name
+			$aliasNodes = collect($traitUseNode->adaptations)
+				->whereInstanceOf(Alias::class)
+				->groupBy(fn (Alias $alias) => (string) ($alias->trait ?? end($traitUseNode->traits)))
+				->map(
+					fn (Collection $attributes) => $attributes->all()
+				)
+				->all();
 
-				return new TraitsUse(
-					traits: collect($traitUseNode->traits)
-						->map(function (Name $name) use ($aliasNodes) {
-							$name = (string) $name;
-							$aliasNodesForTrait = $aliasNodes[$name] ?? collect();
+			return new TraitsUse(
+				traits: array_map(function (Name $name) use ($aliasNodes) {
+					$name = (string) $name;
+					$aliasNodesForTrait = $aliasNodes[$name] ?? [];
 
-							$aliases = $aliasNodesForTrait
-								->map(fn (Alias $alias) => [
-									(string) $alias->method,
-									((string) $alias->newName) ?: null,
-									$alias->newModifier ?: null,
-								])
-								->values();
+					$aliases = array_map(fn (Alias $alias) => [
+						(string) $alias->method,
+						((string) $alias->newName) ?: null,
+						$alias->newModifier ?: null,
+					], $aliasNodesForTrait);
 
-							return new TraitUse($name, $aliases);
-						}),
-					docComment: ((string) $traitUseNode->getDocComment()) ?: null,
-				);
-			});
+					return new TraitUse($name, array_values($aliases));
+				}, $traitUseNode->traits),
+				docComment: ((string) $traitUseNode->getDocComment()) ?: null,
+			);
+		}, $classLike->getTraitUses());
 	}
 
 	/**
-	 * @return Collection<int, string>
+	 * @return list<string>
 	 */
-	private function properties(ClassLike $classLike): Collection
+	private function properties(ClassLike $classLike): array
 	{
 		if (!$classLike instanceof Class_ && !$classLike instanceof Trait_) {
-			return collect();
+			return [];
 		}
 
 		$properties = collect($classLike->stmts)
 			->whereInstanceOf(Property::class)
 			->flatMap(fn (Property $node) => $node->props)
-			->map(fn (PropertyItem $property) => (string) $property->name);
+			->map(fn (PropertyItem $property) => (string) $property->name)
+			->all();
 
 		/** @var ClassMethod|null $constructor */
 		$constructor = collect($classLike->stmts)
 			->first(fn (Node $node) => $node instanceof ClassMethod && (string) $node->name === '__construct');
 
 		if (!$constructor) {
-			return $properties;
+			return array_values($properties);
 		}
 
 		$promoted = collect($constructor->params)
@@ -202,16 +201,17 @@ class ClassLikeContextParsingVisitor extends NodeVisitorAbstract
 				return $node->var->name;
 			});
 
-		return $properties->concat($promoted);
+		return [...$properties, ...$promoted];
 	}
 
 	/**
-	 * @return Collection<int, string>
+	 * @return list<string>
 	 */
-	private function methods(ClassLike $classLike): Collection
+	private function methods(ClassLike $classLike): array
 	{
 		return collect($classLike->stmts)
 			->whereInstanceOf(ClassMethod::class)
-			->map(fn (ClassMethod $method) => (string) $method->name);
+			->map(fn (ClassMethod $method) => (string) $method->name)
+			->all();
 	}
 }

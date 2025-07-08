@@ -1,0 +1,6 @@
+{
+  	"$schema":"./vendor/phpbench/phpbench/phpbench.schema.json",
+  	"runner.bootstrap": "vendor/autoload.php",
+	"runner.time_unit": "ms",
+	"runner.progress_summary_variant_format": "label(\"Mo\") ~ display_as_time(mode(variant.time.avg), coalesce(subject.time_unit,\"time\"), subject.time_precision, subject.time_mode) ~ \n\" (\" ~ rstdev(variant.time.avg) ~ \")\" ~ \" [\" ~ mode(variant.mem.final) as memory ~ \" / \" ~ mode(variant.mem.peak) as memory ~ \"]\""
+}

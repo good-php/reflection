@@ -3,9 +3,6 @@
 namespace GoodPhp\Reflection\Reflection\Attributes;
 
 use Illuminate\Support\Arr;
-use Illuminate\Support\Collection;
-use Illuminate\Support\ItemNotFoundException;
-use Illuminate\Support\MultipleItemsFoundException;
 
 class ArrayAttributes implements Attributes
 {
@@ -19,7 +16,7 @@ class ArrayAttributes implements Attributes
 	/**
 	 * @param class-string<object>|null $className
 	 */
-	public function has(string $className = null): bool
+	public function has(?string $className = null): bool
 	{
 		$attributes = $className ? $this->attributes[$className] ?? [] : $this->attributes;
 
@@ -31,11 +28,11 @@ class ArrayAttributes implements Attributes
 	 *
 	 * @param class-string<AttributeType>|null $className
 	 *
-	 * @return ($className is null ? Collection<int, object> : Collection<int, AttributeType>)
+	 * @return ($className is null ? list<object> : list<AttributeType>)
 	 */
-	public function all(string $className = null): Collection
+	public function all(?string $className = null): array
 	{
-		/** @var Collection<int, AttributeType> */
+		/** @var list<AttributeType> */
 		return $this->resolveAttributesFiltered($className);
 	}
 
@@ -48,13 +45,15 @@ class ArrayAttributes implements Attributes
 	 */
 	public function sole(string $className): ?object
 	{
-		try {
-			return $this->resolveAttributesFiltered($className)->sole();
-		} catch (MultipleItemsFoundException) {
-			throw new MultipleAttributesFoundException($className);
-		} catch (ItemNotFoundException) {
-			return null;
-		}
+		$attributes = $this->resolveAttributesFiltered($className);
+
+		$count = count($attributes);
+
+		return match ($count) {
+			0       => null,
+			1       => $attributes[0],
+			default => throw new MultipleAttributesFoundException($className),
+		};
 	}
 
 	public function allEqual(Attributes $attributes): bool
@@ -62,7 +61,7 @@ class ArrayAttributes implements Attributes
 		$thisAttributes = $this->all();
 		$otherAttributes = $attributes->all();
 
-		if ($thisAttributes->count() !== $otherAttributes->count()) {
+		if (count($thisAttributes) !== count($otherAttributes)) {
 			return false;
 		}
 
@@ -83,7 +82,7 @@ class ArrayAttributes implements Attributes
 				return false;
 			}
 
-			$otherAttributes->forget($otherAttributeKey);
+			unset($otherAttributes[$otherAttributeKey]);
 		}
 
 		return true;
@@ -94,13 +93,14 @@ class ArrayAttributes implements Attributes
 	 *
 	 * @param class-string<AttributeType>|null $className
 	 *
-	 * @return Collection<int, AttributeType>
+	 * @return list<AttributeType>
 	 */
-	private function resolveAttributesFiltered(string $className = null): Collection
+	private function resolveAttributesFiltered(?string $className = null): array
 	{
 		$attributes = $className ? $this->attributes[$className] ?? [] : Arr::flatten($this->attributes);
 
-		return collect(
+		/* @phpstan-ignore return.type */
+		return array_values(
 			is_array($attributes) ? $attributes : $attributes()
 		);
 	}

@@ -10,7 +10,22 @@ parameters:
 	paths:
 		- src
 
+	reportUnmatchedIgnoredErrors: false
 	ignoreErrors:
+		- '#Call-site variance of covariant object in generic type ReflectionClass<covariant object> in PHPDoc tag \@param for parameter \$reflection is redundant, template type T of object of class ReflectionClass has the same variance.#'
+		# PHPStan doesn't understand that Collection::values() produces a list
+		- '#Method .*::.* should return list<(.*)> but returns array<(int, )?\1>.#i'
+		- '#Parameter [\$|\#].* of .* expects list<(.*)>(|.*)?, (array|non-empty-array)<(int, )?\1> given.#i'
+		- '#Property .*::\$.* \(list<(.*)>\) does not accept (array|non-empty-array)<(int, )?\1>.#i'
+		- '#Parameter \#1 \$type of method GoodPhp\\Reflection\\NativePHPDoc\\Definition\\NativePHPDoc\\Native\\NativeTypeMapper::map\(\) expects list<ReflectionType\|string>\|ReflectionType\|string, array<ReflectionType> given.#i'
+		- '#Method GoodPhp\\Reflection\\NativePHPDoc\\Definition\\NativePHPDoc\\File\\ClassLikeContextParsingVisitor::methods\(\) should return list<string> but returns array<non-empty-string>.#i'
+		# Missing template types
+		- '#Method GoodPhp\\Reflection\\Type\\Template\\TypeParameterMap::toArguments\(\) should return list<GoodPhp\\Reflection\\Type\\Type> but returns array.#i'
+		# The return types are correct, but PHPStan complains even if types are specified explicitly.
+		- '#Method GoodPhp\\Reflection\\NativePHPDoc\\Reflection\\Npd.*Reflection::.* should return list<GoodPhp\\Reflection\\Reflection\\(.*)Reflection<ReflectableType of (object|UnitEnum), .*>> but returns array<int, GoodPhp\\Reflection\\Reflection\\\1Reflection<object, .*>>.#i'
+		# Intentionally left as nullable. If there was a solid way of checking if a property is initialized
+		# in PHP, then these would in fact be assigned nulls if definitions contain null types.
+		- '#Property GoodPhp\\Reflection\\NativePHPDoc\\Reflection\\Npd.*::.* \(GoodPhp\\Reflection\\Type\\(NamedType|Type)\|null\) is never assigned null so it can be removed from the property type.#i'
 		# It is in fact nullable. Probably a bug in PHPStan.
 		- '#Using nullsafe property access \"\?->excludedTraitMethods\" on left side of \?\? is unnecessary. Use -> instead.#i'
 		# It's not a native type. Bug in PHPStan.
@@ -18,14 +33,12 @@ parameters:
 		# Bug with inherited readonly properties
 		- '#Readonly property [a-z\\]+::\$[a-z0-9]+ is assigned outside of the constructor.#i'
 		- '#Class [a-z\\]+ has an uninitialized readonly property \$[a-z0-9]+\. Assign it in the constructor.#i'
-		# Wrongly inferred types
-		- '#Property GoodPhp\\Reflection\\Type\\Combinatorial\\(IntersectionType|UnionType)::\$types \(Illuminate\\Support\\Collection<int, GoodPhp\\Reflection\\Type\\Type>\) does not accept Illuminate\\Support\\Collection<\(int\|string\), mixed>.#i'
 		# We expect proper error handling, in which case file_get_contents() will never return `false`
 		-
 			message: '#Parameter \#1 \$code of method PhpParser\\Parser::parse\(\) expects string, string\|false given\.#i'
 			path: 'src/NativePHPDoc/Definition/NativePHPDoc/File/FileContextParser.php'
 		-
-			message: '#Parameter \#2 \$aliases of class GoodPhp\\Reflection\\NativePHPDoc\\Definition\\NativePHPDoc\\File\\FileClassLikeContext\\TraitUse constructor expects Illuminate\\Support\\Collection<int, array{string, string\|null, [\d\|]+null}>, Illuminate\\Support\\Collection<int, array{string, string\|null, int\|null}> given\.#i'
+			message: '#Parameter \#2 \$aliases of class GoodPhp\\Reflection\\NativePHPDoc\\Definition\\NativePHPDoc\\File\\FileClassLikeContext\\TraitUse constructor expects list<array{string, string\|null, [\d\|]+null}>, list<array{non-empty-string, non-falsy-string\|null, int<min, -1>\|int<1, max>\|null}> given\.#i'
 			path: 'src/NativePHPDoc/Definition/NativePHPDoc/File/ClassLikeContextParsingVisitor.php'
 		# This, again, I'm not sure how to approach
 		-
