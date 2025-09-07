@@ -22,6 +22,4 @@ interface TraitReflection extends TypeReflection, HasAttributes, HasTypeParamete
 	public function withStaticType(NamedType $staticType): static;
 
 	public function uses(): UsedTraitsReflection;
-
-	public function isBuiltIn(): bool;
 }

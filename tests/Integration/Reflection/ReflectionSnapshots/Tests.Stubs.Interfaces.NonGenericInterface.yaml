@@ -1,0 +1,51 @@
+type: Tests\Stubs\Interfaces\NonGenericInterface
+qualifiedName: Tests\Stubs\Interfaces\NonGenericInterface
+shortName: NonGenericInterface
+location: Tests\Stubs\Interfaces\NonGenericInterface
+asString: NonGenericInterface
+isBuiltIn: false
+attributes:
+    asString: '#[]'
+    all: {  }
+typeParameters: {  }
+extends: {  }
+declaredMethods:
+    -
+        asString: function()
+        name: function
+        location: 'Tests\Stubs\Interfaces\NonGenericInterface::function()'
+        declaringType: Tests\Stubs\Interfaces\NonGenericInterface
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters:
+            -
+                asString: 'arg $i'
+                name: i
+                location: 'Tests\Stubs\Interfaces\NonGenericInterface::function() arg $i'
+                declaringMethod: function()
+                type: string
+                hasDefaultValue: false
+                defaultValue: null
+        returnType: mixed
+methods:
+    -
+        asString: function()
+        name: function
+        location: 'Tests\Stubs\Interfaces\NonGenericInterface::function()'
+        declaringType: Tests\Stubs\Interfaces\NonGenericInterface
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters:
+            -
+                asString: 'arg $i'
+                name: i
+                location: 'Tests\Stubs\Interfaces\NonGenericInterface::function() arg $i'
+                declaringMethod: function()
+                type: string
+                hasDefaultValue: false
+                defaultValue: null
+        returnType: mixed

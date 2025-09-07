@@ -1,0 +1,796 @@
+type: Tests\Stubs\Classes\AllPhpDocTypes
+qualifiedName: Tests\Stubs\Classes\AllPhpDocTypes
+shortName: AllPhpDocTypes
+location: Tests\Stubs\Classes\AllPhpDocTypes
+asString: AllPhpDocTypes
+isBuiltIn: false
+isAnonymous: false
+isAbstract: false
+isFinal: false
+attributes:
+    asString: '#[]'
+    all: {  }
+typeParameters: {  }
+extends: null
+implements: {  }
+uses:
+    traits: {  }
+    excludedTraitMethods: {  }
+declaredProperties: {  }
+properties: {  }
+declaredMethods:
+    -
+        asString: f1()
+        name: f1
+        location: 'Tests\Stubs\Classes\AllPhpDocTypes::f1()'
+        declaringType: Tests\Stubs\Classes\AllPhpDocTypes
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters:
+            -
+                asString: 'arg $p1'
+                name: p1
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f1() arg $p1'
+                declaringMethod: f1()
+                type: int
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p2'
+                name: p2
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f1() arg $p2'
+                declaringMethod: f1()
+                type: int
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p3'
+                name: p3
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f1() arg $p3'
+                declaringMethod: f1()
+                type: int
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p4'
+                name: p4
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f1() arg $p4'
+                declaringMethod: f1()
+                type: int
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p5'
+                name: p5
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f1() arg $p5'
+                declaringMethod: f1()
+                type: int
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p6'
+                name: p6
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f1() arg $p6'
+                declaringMethod: f1()
+                type: int
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p7'
+                name: p7
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f1() arg $p7'
+                declaringMethod: f1()
+                type: int
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p8'
+                name: p8
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f1() arg $p8'
+                declaringMethod: f1()
+                type: int|float
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p9'
+                name: p9
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f1() arg $p9'
+                declaringMethod: f1()
+                type: error<numeric>
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p10'
+                name: p10
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f1() arg $p10'
+                declaringMethod: f1()
+                type: float
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p11'
+                name: p11
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f1() arg $p11'
+                declaringMethod: f1()
+                type: float
+                hasDefaultValue: false
+                defaultValue: null
+        returnType: void
+    -
+        asString: f2()
+        name: f2
+        location: 'Tests\Stubs\Classes\AllPhpDocTypes::f2()'
+        declaringType: Tests\Stubs\Classes\AllPhpDocTypes
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters:
+            -
+                asString: 'arg $p1'
+                name: p1
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f2() arg $p1'
+                declaringMethod: f2()
+                type: string
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p2'
+                name: p2
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f2() arg $p2'
+                declaringMethod: f2()
+                type: string
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p3'
+                name: p3
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f2() arg $p3'
+                declaringMethod: f2()
+                type: string
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p4'
+                name: p4
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f2() arg $p4'
+                declaringMethod: f2()
+                type: string
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p5'
+                name: p5
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f2() arg $p5'
+                declaringMethod: f2()
+                type: string
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p6'
+                name: p6
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f2() arg $p6'
+                declaringMethod: f2()
+                type: string
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p7'
+                name: p7
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f2() arg $p7'
+                declaringMethod: f2()
+                type: string
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p8'
+                name: p8
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f2() arg $p8'
+                declaringMethod: f2()
+                type: string
+                hasDefaultValue: false
+                defaultValue: null
+        returnType: never
+    -
+        asString: f3()
+        name: f3
+        location: 'Tests\Stubs\Classes\AllPhpDocTypes::f3()'
+        declaringType: Tests\Stubs\Classes\AllPhpDocTypes
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters:
+            -
+                asString: 'arg $p1'
+                name: p1
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f3() arg $p1'
+                declaringMethod: f3()
+                type: bool
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p2'
+                name: p2
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f3() arg $p2'
+                declaringMethod: f3()
+                type: bool
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p3'
+                name: p3
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f3() arg $p3'
+                declaringMethod: f3()
+                type: bool
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p4'
+                name: p4
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f3() arg $p4'
+                declaringMethod: f3()
+                type: bool
+                hasDefaultValue: false
+                defaultValue: null
+        returnType: never
+    -
+        asString: f4()
+        name: f4
+        location: 'Tests\Stubs\Classes\AllPhpDocTypes::f4()'
+        declaringType: Tests\Stubs\Classes\AllPhpDocTypes
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters:
+            -
+                asString: 'arg $p1'
+                name: p1
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f4() arg $p1'
+                declaringMethod: f4()
+                type: 'array<int|string, string>'
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p2'
+                name: p2
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f4() arg $p2'
+                declaringMethod: f4()
+                type: int|string
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p3'
+                name: p3
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f4() arg $p3'
+                declaringMethod: f4()
+                type: array
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p4'
+                name: p4
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f4() arg $p4'
+                declaringMethod: f4()
+                type: 'array<string, string>'
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p5'
+                name: p5
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f4() arg $p5'
+                declaringMethod: f4()
+                type: 'array<int, string>'
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p6'
+                name: p6
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f4() arg $p6'
+                declaringMethod: f4()
+                type: array<int>
+                hasDefaultValue: false
+                defaultValue: null
+        returnType: never
+    -
+        asString: f5()
+        name: f5
+        location: 'Tests\Stubs\Classes\AllPhpDocTypes::f5()'
+        declaringType: Tests\Stubs\Classes\AllPhpDocTypes
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters:
+            -
+                asString: 'arg $p1'
+                name: p1
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f5() arg $p1'
+                declaringMethod: f5()
+                type: int|float|string|bool
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p2'
+                name: p2
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f5() arg $p2'
+                declaringMethod: f5()
+                type: error<null>
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p3'
+                name: p3
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f5() arg $p3'
+                declaringMethod: f5()
+                type: iterable
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p4'
+                name: p4
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f5() arg $p4'
+                declaringMethod: f5()
+                type: callable
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p5'
+                name: p5
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f5() arg $p5'
+                declaringMethod: f5()
+                type: resource
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p6'
+                name: p6
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f5() arg $p6'
+                declaringMethod: f5()
+                type: mixed
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p7'
+                name: p7
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f5() arg $p7'
+                declaringMethod: f5()
+                type: object
+                hasDefaultValue: false
+                defaultValue: null
+        returnType: never
+    -
+        asString: f6()
+        name: f6
+        location: 'Tests\Stubs\Classes\AllPhpDocTypes::f6()'
+        declaringType: Tests\Stubs\Classes\AllPhpDocTypes
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters: {  }
+        returnType: never
+    -
+        asString: f7()
+        name: f7
+        location: 'Tests\Stubs\Classes\AllPhpDocTypes::f7()'
+        declaringType: Tests\Stubs\Classes\AllPhpDocTypes
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters: {  }
+        returnType: static<Tests\Stubs\Classes\AllPhpDocTypes>
+    -
+        asString: f8()
+        name: f8
+        location: 'Tests\Stubs\Classes\AllPhpDocTypes::f8()'
+        declaringType: Tests\Stubs\Classes\AllPhpDocTypes
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters: {  }
+        returnType: Tests\Stubs\Classes\AllPhpDocTypes
+    -
+        asString: f9()
+        name: f9
+        location: 'Tests\Stubs\Classes\AllPhpDocTypes::f9()'
+        declaringType: Tests\Stubs\Classes\AllPhpDocTypes
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters: {  }
+        returnType: static<Tests\Stubs\Classes\AllPhpDocTypes>
+methods:
+    -
+        asString: f1()
+        name: f1
+        location: 'Tests\Stubs\Classes\AllPhpDocTypes::f1()'
+        declaringType: Tests\Stubs\Classes\AllPhpDocTypes
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters:
+            -
+                asString: 'arg $p1'
+                name: p1
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f1() arg $p1'
+                declaringMethod: f1()
+                type: int
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p2'
+                name: p2
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f1() arg $p2'
+                declaringMethod: f1()
+                type: int
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p3'
+                name: p3
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f1() arg $p3'
+                declaringMethod: f1()
+                type: int
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p4'
+                name: p4
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f1() arg $p4'
+                declaringMethod: f1()
+                type: int
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p5'
+                name: p5
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f1() arg $p5'
+                declaringMethod: f1()
+                type: int
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p6'
+                name: p6
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f1() arg $p6'
+                declaringMethod: f1()
+                type: int
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p7'
+                name: p7
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f1() arg $p7'
+                declaringMethod: f1()
+                type: int
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p8'
+                name: p8
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f1() arg $p8'
+                declaringMethod: f1()
+                type: int|float
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p9'
+                name: p9
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f1() arg $p9'
+                declaringMethod: f1()
+                type: error<numeric>
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p10'
+                name: p10
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f1() arg $p10'
+                declaringMethod: f1()
+                type: float
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p11'
+                name: p11
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f1() arg $p11'
+                declaringMethod: f1()
+                type: float
+                hasDefaultValue: false
+                defaultValue: null
+        returnType: void
+    -
+        asString: f2()
+        name: f2
+        location: 'Tests\Stubs\Classes\AllPhpDocTypes::f2()'
+        declaringType: Tests\Stubs\Classes\AllPhpDocTypes
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters:
+            -
+                asString: 'arg $p1'
+                name: p1
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f2() arg $p1'
+                declaringMethod: f2()
+                type: string
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p2'
+                name: p2
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f2() arg $p2'
+                declaringMethod: f2()
+                type: string
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p3'
+                name: p3
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f2() arg $p3'
+                declaringMethod: f2()
+                type: string
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p4'
+                name: p4
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f2() arg $p4'
+                declaringMethod: f2()
+                type: string
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p5'
+                name: p5
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f2() arg $p5'
+                declaringMethod: f2()
+                type: string
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p6'
+                name: p6
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f2() arg $p6'
+                declaringMethod: f2()
+                type: string
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p7'
+                name: p7
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f2() arg $p7'
+                declaringMethod: f2()
+                type: string
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p8'
+                name: p8
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f2() arg $p8'
+                declaringMethod: f2()
+                type: string
+                hasDefaultValue: false
+                defaultValue: null
+        returnType: never
+    -
+        asString: f3()
+        name: f3
+        location: 'Tests\Stubs\Classes\AllPhpDocTypes::f3()'
+        declaringType: Tests\Stubs\Classes\AllPhpDocTypes
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters:
+            -
+                asString: 'arg $p1'
+                name: p1
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f3() arg $p1'
+                declaringMethod: f3()
+                type: bool
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p2'
+                name: p2
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f3() arg $p2'
+                declaringMethod: f3()
+                type: bool
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p3'
+                name: p3
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f3() arg $p3'
+                declaringMethod: f3()
+                type: bool
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p4'
+                name: p4
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f3() arg $p4'
+                declaringMethod: f3()
+                type: bool
+                hasDefaultValue: false
+                defaultValue: null
+        returnType: never
+    -
+        asString: f4()
+        name: f4
+        location: 'Tests\Stubs\Classes\AllPhpDocTypes::f4()'
+        declaringType: Tests\Stubs\Classes\AllPhpDocTypes
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters:
+            -
+                asString: 'arg $p1'
+                name: p1
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f4() arg $p1'
+                declaringMethod: f4()
+                type: 'array<int|string, string>'
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p2'
+                name: p2
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f4() arg $p2'
+                declaringMethod: f4()
+                type: int|string
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p3'
+                name: p3
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f4() arg $p3'
+                declaringMethod: f4()
+                type: array
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p4'
+                name: p4
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f4() arg $p4'
+                declaringMethod: f4()
+                type: 'array<string, string>'
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p5'
+                name: p5
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f4() arg $p5'
+                declaringMethod: f4()
+                type: 'array<int, string>'
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p6'
+                name: p6
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f4() arg $p6'
+                declaringMethod: f4()
+                type: array<int>
+                hasDefaultValue: false
+                defaultValue: null
+        returnType: never
+    -
+        asString: f5()
+        name: f5
+        location: 'Tests\Stubs\Classes\AllPhpDocTypes::f5()'
+        declaringType: Tests\Stubs\Classes\AllPhpDocTypes
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters:
+            -
+                asString: 'arg $p1'
+                name: p1
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f5() arg $p1'
+                declaringMethod: f5()
+                type: int|float|string|bool
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p2'
+                name: p2
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f5() arg $p2'
+                declaringMethod: f5()
+                type: error<null>
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p3'
+                name: p3
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f5() arg $p3'
+                declaringMethod: f5()
+                type: iterable
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p4'
+                name: p4
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f5() arg $p4'
+                declaringMethod: f5()
+                type: callable
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p5'
+                name: p5
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f5() arg $p5'
+                declaringMethod: f5()
+                type: resource
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p6'
+                name: p6
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f5() arg $p6'
+                declaringMethod: f5()
+                type: mixed
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p7'
+                name: p7
+                location: 'Tests\Stubs\Classes\AllPhpDocTypes::f5() arg $p7'
+                declaringMethod: f5()
+                type: object
+                hasDefaultValue: false
+                defaultValue: null
+        returnType: never
+    -
+        asString: f6()
+        name: f6
+        location: 'Tests\Stubs\Classes\AllPhpDocTypes::f6()'
+        declaringType: Tests\Stubs\Classes\AllPhpDocTypes
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters: {  }
+        returnType: never
+    -
+        asString: f7()
+        name: f7
+        location: 'Tests\Stubs\Classes\AllPhpDocTypes::f7()'
+        declaringType: Tests\Stubs\Classes\AllPhpDocTypes
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters: {  }
+        returnType: static<Tests\Stubs\Classes\AllPhpDocTypes>
+    -
+        asString: f8()
+        name: f8
+        location: 'Tests\Stubs\Classes\AllPhpDocTypes::f8()'
+        declaringType: Tests\Stubs\Classes\AllPhpDocTypes
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters: {  }
+        returnType: Tests\Stubs\Classes\AllPhpDocTypes
+    -
+        asString: f9()
+        name: f9
+        location: 'Tests\Stubs\Classes\AllPhpDocTypes::f9()'
+        declaringType: Tests\Stubs\Classes\AllPhpDocTypes
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters: {  }
+        returnType: static<Tests\Stubs\Classes\AllPhpDocTypes>

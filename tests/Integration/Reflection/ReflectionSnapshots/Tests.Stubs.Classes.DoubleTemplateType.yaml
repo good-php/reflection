@@ -1,0 +1,34 @@
+type: Tests\Stubs\Classes\DoubleTemplateType
+qualifiedName: Tests\Stubs\Classes\DoubleTemplateType
+shortName: DoubleTemplateType
+location: Tests\Stubs\Classes\DoubleTemplateType
+asString: DoubleTemplateType
+isBuiltIn: false
+isAnonymous: false
+isAbstract: false
+isFinal: false
+attributes:
+    asString: '#[]'
+    all: {  }
+typeParameters:
+    -
+        name: TOne
+        variadic: false
+        upperBound: mixed
+        variance: INVARIANT
+        asString: TOne
+    -
+        name: TTwo
+        variadic: false
+        upperBound: mixed
+        variance: INVARIANT
+        asString: TTwo
+extends: null
+implements: {  }
+uses:
+    traits: {  }
+    excludedTraitMethods: {  }
+declaredProperties: {  }
+properties: {  }
+declaredMethods: {  }
+methods: {  }

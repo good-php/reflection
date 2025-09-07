@@ -1,0 +1,120 @@
+type: Tests\Stubs\Classes\ParentClassStub
+qualifiedName: Tests\Stubs\Classes\ParentClassStub
+shortName: ParentClassStub
+location: Tests\Stubs\Classes\ParentClassStub
+asString: ParentClassStub
+isBuiltIn: false
+isAnonymous: false
+isAbstract: false
+isFinal: false
+attributes:
+    asString: '#[]'
+    all: {  }
+typeParameters:
+    -
+        name: O
+        variadic: false
+        upperBound: mixed
+        variance: INVARIANT
+        asString: O
+    -
+        name: U
+        variadic: false
+        upperBound: mixed
+        variance: INVARIANT
+        asString: U
+extends: null
+implements: {  }
+uses:
+    traits: {  }
+    excludedTraitMethods: {  }
+declaredProperties:
+    -
+        asString: $parentProperty
+        name: parentProperty
+        location: 'Tests\Stubs\Classes\ParentClassStub::$parentProperty'
+        declaringType: Tests\Stubs\Classes\ParentClassStub
+        attributes:
+            asString: '#[]'
+            all: {  }
+        type: O
+        hasDefaultValue: true
+        defaultValue: N;
+        isPromoted: false
+        promotedParameter: null
+properties:
+    -
+        asString: $parentProperty
+        name: parentProperty
+        location: 'Tests\Stubs\Classes\ParentClassStub::$parentProperty'
+        declaringType: Tests\Stubs\Classes\ParentClassStub
+        attributes:
+            asString: '#[]'
+            all: {  }
+        type: O
+        hasDefaultValue: true
+        defaultValue: N;
+        isPromoted: false
+        promotedParameter: null
+declaredMethods:
+    -
+        asString: parentMethod()
+        name: parentMethod
+        location: 'Tests\Stubs\Classes\ParentClassStub::parentMethod()'
+        declaringType: Tests\Stubs\Classes\ParentClassStub
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters: {  }
+        returnType: U
+    -
+        asString: test()
+        name: test
+        location: 'Tests\Stubs\Classes\ParentClassStub::test()'
+        declaringType: Tests\Stubs\Classes\ParentClassStub
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters:
+            -
+                asString: 'arg $str'
+                name: str
+                location: 'Tests\Stubs\Classes\ParentClassStub::test() arg $str'
+                declaringMethod: test()
+                type: '?string'
+                hasDefaultValue: true
+                defaultValue: N;
+        returnType: static<Tests\Stubs\Classes\ParentClassStub>
+methods:
+    -
+        asString: parentMethod()
+        name: parentMethod
+        location: 'Tests\Stubs\Classes\ParentClassStub::parentMethod()'
+        declaringType: Tests\Stubs\Classes\ParentClassStub
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters: {  }
+        returnType: U
+    -
+        asString: test()
+        name: test
+        location: 'Tests\Stubs\Classes\ParentClassStub::test()'
+        declaringType: Tests\Stubs\Classes\ParentClassStub
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters:
+            -
+                asString: 'arg $str'
+                name: str
+                location: 'Tests\Stubs\Classes\ParentClassStub::test() arg $str'
+                declaringMethod: test()
+                type: '?string'
+                hasDefaultValue: true
+                defaultValue: N;
+        returnType: static<Tests\Stubs\Classes\ParentClassStub>

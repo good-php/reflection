@@ -1,0 +1,312 @@
+type: Tests\Stubs\Classes\AllNativeTypes
+qualifiedName: Tests\Stubs\Classes\AllNativeTypes
+shortName: AllNativeTypes
+location: Tests\Stubs\Classes\AllNativeTypes
+asString: AllNativeTypes
+isBuiltIn: false
+isAnonymous: false
+isAbstract: false
+isFinal: false
+attributes:
+    asString: '#[]'
+    all: {  }
+typeParameters: {  }
+extends: null
+implements: {  }
+uses:
+    traits: {  }
+    excludedTraitMethods: {  }
+declaredProperties: {  }
+properties: {  }
+declaredMethods:
+    -
+        asString: f1()
+        name: f1
+        location: 'Tests\Stubs\Classes\AllNativeTypes::f1()'
+        declaringType: Tests\Stubs\Classes\AllNativeTypes
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters:
+            -
+                asString: 'arg $p1'
+                name: p1
+                location: 'Tests\Stubs\Classes\AllNativeTypes::f1() arg $p1'
+                declaringMethod: f1()
+                type: int
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p2'
+                name: p2
+                location: 'Tests\Stubs\Classes\AllNativeTypes::f1() arg $p2'
+                declaringMethod: f1()
+                type: string
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p3'
+                name: p3
+                location: 'Tests\Stubs\Classes\AllNativeTypes::f1() arg $p3'
+                declaringMethod: f1()
+                type: float
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p4'
+                name: p4
+                location: 'Tests\Stubs\Classes\AllNativeTypes::f1() arg $p4'
+                declaringMethod: f1()
+                type: bool
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p5'
+                name: p5
+                location: 'Tests\Stubs\Classes\AllNativeTypes::f1() arg $p5'
+                declaringMethod: f1()
+                type: array
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p6'
+                name: p6
+                location: 'Tests\Stubs\Classes\AllNativeTypes::f1() arg $p6'
+                declaringMethod: f1()
+                type: object
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p7'
+                name: p7
+                location: 'Tests\Stubs\Classes\AllNativeTypes::f1() arg $p7'
+                declaringMethod: f1()
+                type: callable
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p8'
+                name: p8
+                location: 'Tests\Stubs\Classes\AllNativeTypes::f1() arg $p8'
+                declaringMethod: f1()
+                type: iterable
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p9'
+                name: p9
+                location: 'Tests\Stubs\Classes\AllNativeTypes::f1() arg $p9'
+                declaringMethod: f1()
+                type: mixed
+                hasDefaultValue: false
+                defaultValue: null
+        returnType: void
+    -
+        asString: f2()
+        name: f2
+        location: 'Tests\Stubs\Classes\AllNativeTypes::f2()'
+        declaringType: Tests\Stubs\Classes\AllNativeTypes
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters:
+            -
+                asString: 'arg $p1'
+                name: p1
+                location: 'Tests\Stubs\Classes\AllNativeTypes::f2() arg $p1'
+                declaringMethod: f2()
+                type: '?int'
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p2'
+                name: p2
+                location: 'Tests\Stubs\Classes\AllNativeTypes::f2() arg $p2'
+                declaringMethod: f2()
+                type: string|float|null
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p3'
+                name: p3
+                location: 'Tests\Stubs\Classes\AllNativeTypes::f2() arg $p3'
+                declaringMethod: f2()
+                type: string|float
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p4'
+                name: p4
+                location: 'Tests\Stubs\Classes\AllNativeTypes::f2() arg $p4'
+                declaringMethod: f2()
+                type: string|bool
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p5'
+                name: p5
+                location: 'Tests\Stubs\Classes\AllNativeTypes::f2() arg $p5'
+                declaringMethod: f2()
+                type: Tests\Stubs\Classes\AllNativeTypes
+                hasDefaultValue: false
+                defaultValue: null
+        returnType: never
+    -
+        asString: f3()
+        name: f3
+        location: 'Tests\Stubs\Classes\AllNativeTypes::f3()'
+        declaringType: Tests\Stubs\Classes\AllNativeTypes
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters: {  }
+        returnType: static<Tests\Stubs\Classes\AllNativeTypes>
+methods:
+    -
+        asString: f1()
+        name: f1
+        location: 'Tests\Stubs\Classes\AllNativeTypes::f1()'
+        declaringType: Tests\Stubs\Classes\AllNativeTypes
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters:
+            -
+                asString: 'arg $p1'
+                name: p1
+                location: 'Tests\Stubs\Classes\AllNativeTypes::f1() arg $p1'
+                declaringMethod: f1()
+                type: int
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p2'
+                name: p2
+                location: 'Tests\Stubs\Classes\AllNativeTypes::f1() arg $p2'
+                declaringMethod: f1()
+                type: string
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p3'
+                name: p3
+                location: 'Tests\Stubs\Classes\AllNativeTypes::f1() arg $p3'
+                declaringMethod: f1()
+                type: float
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p4'
+                name: p4
+                location: 'Tests\Stubs\Classes\AllNativeTypes::f1() arg $p4'
+                declaringMethod: f1()
+                type: bool
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p5'
+                name: p5
+                location: 'Tests\Stubs\Classes\AllNativeTypes::f1() arg $p5'
+                declaringMethod: f1()
+                type: array
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p6'
+                name: p6
+                location: 'Tests\Stubs\Classes\AllNativeTypes::f1() arg $p6'
+                declaringMethod: f1()
+                type: object
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p7'
+                name: p7
+                location: 'Tests\Stubs\Classes\AllNativeTypes::f1() arg $p7'
+                declaringMethod: f1()
+                type: callable
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p8'
+                name: p8
+                location: 'Tests\Stubs\Classes\AllNativeTypes::f1() arg $p8'
+                declaringMethod: f1()
+                type: iterable
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p9'
+                name: p9
+                location: 'Tests\Stubs\Classes\AllNativeTypes::f1() arg $p9'
+                declaringMethod: f1()
+                type: mixed
+                hasDefaultValue: false
+                defaultValue: null
+        returnType: void
+    -
+        asString: f2()
+        name: f2
+        location: 'Tests\Stubs\Classes\AllNativeTypes::f2()'
+        declaringType: Tests\Stubs\Classes\AllNativeTypes
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters:
+            -
+                asString: 'arg $p1'
+                name: p1
+                location: 'Tests\Stubs\Classes\AllNativeTypes::f2() arg $p1'
+                declaringMethod: f2()
+                type: '?int'
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p2'
+                name: p2
+                location: 'Tests\Stubs\Classes\AllNativeTypes::f2() arg $p2'
+                declaringMethod: f2()
+                type: string|float|null
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p3'
+                name: p3
+                location: 'Tests\Stubs\Classes\AllNativeTypes::f2() arg $p3'
+                declaringMethod: f2()
+                type: string|float
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p4'
+                name: p4
+                location: 'Tests\Stubs\Classes\AllNativeTypes::f2() arg $p4'
+                declaringMethod: f2()
+                type: string|bool
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $p5'
+                name: p5
+                location: 'Tests\Stubs\Classes\AllNativeTypes::f2() arg $p5'
+                declaringMethod: f2()
+                type: Tests\Stubs\Classes\AllNativeTypes
+                hasDefaultValue: false
+                defaultValue: null
+        returnType: never
+    -
+        asString: f3()
+        name: f3
+        location: 'Tests\Stubs\Classes\AllNativeTypes::f3()'
+        declaringType: Tests\Stubs\Classes\AllNativeTypes
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters: {  }
+        returnType: static<Tests\Stubs\Classes\AllNativeTypes>

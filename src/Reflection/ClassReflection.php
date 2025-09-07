@@ -41,8 +41,6 @@ interface ClassReflection extends TypeReflection, HasAttributes, HasTypeParamete
 
 	public function isFinal(): bool;
 
-	public function isBuiltIn(): bool;
-
 	/**
 	 * @return ReflectableType
 	 */

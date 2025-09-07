@@ -1,0 +1,45 @@
+type: Tests\Stubs\Classes\CollectionStub
+qualifiedName: Tests\Stubs\Classes\CollectionStub
+shortName: CollectionStub
+location: Tests\Stubs\Classes\CollectionStub
+asString: CollectionStub
+isBuiltIn: false
+isAnonymous: false
+isAbstract: false
+isFinal: false
+attributes:
+    asString: '#[]'
+    all: {  }
+typeParameters: {  }
+extends: null
+implements:
+    - IteratorAggregate
+uses:
+    traits: {  }
+    excludedTraitMethods: {  }
+declaredProperties: {  }
+properties: {  }
+declaredMethods:
+    -
+        asString: getIterator()
+        name: getIterator
+        location: 'Tests\Stubs\Classes\CollectionStub::getIterator()'
+        declaringType: Tests\Stubs\Classes\CollectionStub
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters: {  }
+        returnType: Traversable
+methods:
+    -
+        asString: getIterator()
+        name: getIterator
+        location: 'Tests\Stubs\Classes\CollectionStub::getIterator()'
+        declaringType: Tests\Stubs\Classes\CollectionStub
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters: {  }
+        returnType: Traversable

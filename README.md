@@ -42,6 +42,15 @@ Here are some of the features supported (or would be welcomed):
 - [ ] Extensions reflection (spl, zip, ds, dom etc)
 - [ ] Template types inference for functions
 
+### What not to expect
+
+Unlikely to have support:
+- "static" reflection (not executing PHP files that are being reflected)
+- reflecting non-PHP or invalid PHP files
+
+Unfortunately these creep into the territory of `roave/better-reflection`, which is just
+way too slow for runtime use. 
+
 ### How reliable is this?
 
 It's in alpha, so this is de-facto not stable. However, we do take measures to avoid

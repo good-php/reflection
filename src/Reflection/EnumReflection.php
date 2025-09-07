@@ -23,6 +23,4 @@ interface EnumReflection extends TypeReflection, HasAttributes, HasMethods
 	public function implements(): array;
 
 	public function uses(): UsedTraitsReflection;
-
-	public function isBuiltIn(): bool;
 }

@@ -1,0 +1,19 @@
+type: Tests\Stubs\Interfaces\SingleGenericInterface
+qualifiedName: Tests\Stubs\Interfaces\SingleGenericInterface
+shortName: SingleGenericInterface
+location: Tests\Stubs\Interfaces\SingleGenericInterface
+asString: SingleGenericInterface
+isBuiltIn: false
+attributes:
+    asString: '#[]'
+    all: {  }
+typeParameters:
+    -
+        name: T
+        variadic: false
+        upperBound: mixed
+        variance: COVARIANT
+        asString: 'covariant T'
+extends: {  }
+declaredMethods: {  }
+methods: {  }

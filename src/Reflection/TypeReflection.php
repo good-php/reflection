@@ -21,4 +21,6 @@ interface TypeReflection extends HasName, Stringable
 	public function withStaticType(NamedType $staticType): static;
 
 	public function type(): NamedType;
+
+	public function isBuiltIn(): bool;
 }

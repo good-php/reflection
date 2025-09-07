@@ -61,6 +61,11 @@ final class NpdSpecialTypeReflection extends NpdTypeReflection implements Specia
 		return $this->definition->fileName;
 	}
 
+	public function isBuiltIn(): bool
+	{
+		return true;
+	}
+
 	/**
 	 * @return list<TypeParameterReflection<$this>>
 	 */
