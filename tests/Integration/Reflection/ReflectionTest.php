@@ -330,4 +330,45 @@ class ReflectionTest extends IntegrationTestCase
 
 		$assertReflection($actual);
 	}
+
+	public static function reflectsAnonymousTypeProvider(): iterable
+	{
+		yield 'empty class' => [
+			new class {},
+			function (ClassReflection $reflection) {
+				$expectedClassName = 'class@anonymous ' . __FILE__ . ':522$108';
+
+				self::assertEquals(NamedType::wrap($expectedClassName), $reflection->type());
+				self::assertSame(__FILE__, $reflection->fileName());
+				self::assertSame($expectedClassName, $reflection->qualifiedName());
+				self::assertSame($expectedClassName, $reflection->shortName());
+				self::assertSame($expectedClassName, $reflection->location());
+				self::assertSame($expectedClassName, (string) $reflection);
+				self::assertTrue($reflection->isAnonymous());
+				self::assertFalse($reflection->isAbstract());
+				self::assertFalse($reflection->isFinal());
+				self::assertFalse($reflection->isBuiltIn());
+				self::assertEmpty($reflection->attributes()->all());
+				self::assertFalse($reflection->attributes()->has());
+				self::assertEquals('#[]', (string) $reflection->attributes());
+
+				self::assertEmpty($reflection->typeParameters());
+				self::assertNull($reflection->extends());
+				self::assertEmpty($reflection->implements());
+				self::assertEmpty($reflection->uses()->traits());
+				self::assertEmpty($reflection->declaredProperties());
+				self::assertEmpty($reflection->properties());
+				self::assertEmpty($reflection->declaredMethods());
+				self::assertEmpty($reflection->methods());
+			},
+		];
+	}
+
+	#[DataProvider('reflectsAnonymousTypeProvider')]
+	public function testReflectsAnonymousType(object $object, callable $assertReflection): void
+	{
+		$actual = $this->reflector->forType($object::class);
+
+		$assertReflection($actual);
+	}
 }

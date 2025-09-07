@@ -16,7 +16,7 @@ class StaticCacheDefinitionProvider implements DefinitionProvider
 
 	public function forType(string $type): ?TypeDefinition
 	{
-		$key = 'type.' . str_replace('\\', '.', $type);
+		$key = 'type.' . CacheUtils::normalizeTypeName($type);
 
 		if ($definition = $this->cache->get($key)) {
 			Assert::isInstanceOf($definition, TypeDefinition::class);
