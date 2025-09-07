@@ -18,7 +18,7 @@ class FileModificationCacheDefinitionProvider implements DefinitionProvider
 	public function forType(string $type): ?TypeDefinition
 	{
 		return $this->verifiedCache->remember(
-			'type.' . str_replace('\\', '.', $type),
+			'type.' . CacheUtils::normalizeTypeName($type),
 			fn (TypeDefinition $definition) => $definition->fileName ? (string) $this->fileModificationTime($definition->fileName) : null,
 			fn ()                           => $this->delegate->forType($type),
 		);

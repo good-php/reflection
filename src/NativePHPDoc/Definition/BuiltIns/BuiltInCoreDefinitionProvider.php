@@ -167,14 +167,7 @@ class BuiltInCoreDefinitionProvider implements DefinitionProvider
 						),
 					]),
 				],
-				methods: [
-					new MethodDefinition(
-						name: 'count',
-						typeParameters: [],
-						parameters: [],
-						returnType: PrimitiveType::integer(),
-					),
-				]
+				methods: []
 			)),
 			Closure::class => lazy(fn () => new ClassTypeDefinition(
 				qualifiedName: Closure::class,

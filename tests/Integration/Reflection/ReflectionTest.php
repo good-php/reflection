@@ -20,24 +20,27 @@ use GoodPhp\Reflection\Type\Special\VoidType;
 use GoodPhp\Reflection\Type\Template\TemplateType;
 use GoodPhp\Reflection\Type\Template\TemplateTypeVariance;
 use Illuminate\Support\Collection;
+use IteratorAggregate;
 use PHPUnit\Framework\Attributes\DataProvider;
 use ReflectionMethod;
 use stdClass;
 use Tests\Integration\IntegrationTestCase;
 use Tests\Stubs\AttributeStub;
 use Tests\Stubs\Classes\ClassStub;
+use Tests\Stubs\Classes\CollectionStub;
 use Tests\Stubs\Classes\DoubleTemplateType;
 use Tests\Stubs\Classes\ParentClassStub;
 use Tests\Stubs\Classes\SomeStub;
 use Tests\Stubs\Interfaces\ParentInterfaceStub;
 use Tests\Stubs\Interfaces\SingleTemplateType;
 use Tests\Stubs\Traits\ParentTraitStub;
+use Traversable;
 
 class ReflectionTest extends IntegrationTestCase
 {
 	public static function reflectsNamedTypeProvider(): iterable
 	{
-		yield [
+		yield 'ClassStub<stdClass>' => [
 			NamedType::wrap(ClassStub::class, [stdClass::class]),
 			function (ClassReflection $reflection) {
 				self::assertEquals(NamedType::wrap(ClassStub::class, [stdClass::class]), $reflection->type());
@@ -317,6 +320,57 @@ class ReflectionTest extends IntegrationTestCase
 				});
 			},
 		];
+
+		yield 'CollectionStub' => [
+			CollectionStub::class,
+			function (ClassReflection $reflection) {
+				self::assertEquals(NamedType::wrap(CollectionStub::class), $reflection->type());
+				self::assertSame(CollectionStub::class, $reflection->qualifiedName());
+				self::assertSame('CollectionStub', $reflection->shortName());
+				self::assertSame(CollectionStub::class, $reflection->location());
+				self::assertSame('CollectionStub', (string) $reflection);
+
+				self::assertFalse($reflection->isAnonymous());
+				self::assertFalse($reflection->isAbstract());
+				self::assertFalse($reflection->isFinal());
+				self::assertFalse($reflection->isBuiltIn());
+
+				self::assertEmpty($reflection->attributes()->all());
+				self::assertFalse($reflection->attributes()->has());
+
+				self::assertEmpty($reflection->typeParameters());
+				self::assertNull($reflection->extends());
+
+				self::assertCount(1, $reflection->implements());
+				self::assertEquals(
+					NamedType::wrap(IteratorAggregate::class),
+					$reflection->implements()[0]
+				);
+
+				self::assertEmpty($reflection->uses()->traits());
+				self::assertEmpty($reflection->declaredProperties());
+				self::assertEmpty($reflection->properties());
+
+				with($reflection->declaredMethods(), function (array $methods) use ($reflection) {
+					self::assertCount(1, $methods);
+					self::assertContainsOnlyInstancesOf(MethodReflection::class, $methods);
+
+					self::assertSame('getIterator', $methods[0]->name());
+				});
+
+				with($reflection->methods(), function (array $methods) use ($reflection) {
+					self::assertCount(1, $methods);
+					self::assertContainsOnlyInstancesOf(MethodReflection::class, $methods);
+
+					self::assertSame('getIterator', $methods[0]->name());
+					self::assertEmpty($methods[0]->attributes()->all());
+					self::assertEmpty($methods[0]->typeParameters());
+					self::assertEmpty($methods[0]->parameters());
+					self::assertEquals(new NamedType(Traversable::class), $methods[0]->returnType());
+					self::assertSame('getIterator()', (string) $methods[0]);
+				});
+			},
+		];
 	}
 
 	#[DataProvider('reflectsNamedTypeProvider')]
@@ -327,6 +381,49 @@ class ReflectionTest extends IntegrationTestCase
 		}
 
 		$actual = $this->reflector->forNamedType($type);
+
+		$assertReflection($actual);
+	}
+
+	public static function reflectsAnonymousTypeProvider(): iterable
+	{
+		yield 'empty class' => [
+			new class () {},
+			function (ClassReflection $reflection) {
+				self::assertStringStartsWith('class@anonymous ' . __FILE__ . ':', $reflection->qualifiedName());
+
+				$expectedClassName = $reflection->qualifiedName();
+
+				self::assertEquals(NamedType::wrap($expectedClassName), $reflection->type());
+				self::assertSame(__FILE__, $reflection->fileName());
+				self::assertSame($expectedClassName, $reflection->qualifiedName());
+				self::assertSame($expectedClassName, $reflection->shortName());
+				self::assertSame($expectedClassName, $reflection->location());
+				self::assertSame($expectedClassName, (string) $reflection);
+				self::assertTrue($reflection->isAnonymous());
+				self::assertFalse($reflection->isAbstract());
+				self::assertFalse($reflection->isFinal());
+				self::assertFalse($reflection->isBuiltIn());
+				self::assertEmpty($reflection->attributes()->all());
+				self::assertFalse($reflection->attributes()->has());
+				self::assertEquals('#[]', (string) $reflection->attributes());
+
+				self::assertEmpty($reflection->typeParameters());
+				self::assertNull($reflection->extends());
+				self::assertEmpty($reflection->implements());
+				self::assertEmpty($reflection->uses()->traits());
+				self::assertEmpty($reflection->declaredProperties());
+				self::assertEmpty($reflection->properties());
+				self::assertEmpty($reflection->declaredMethods());
+				self::assertEmpty($reflection->methods());
+			},
+		];
+	}
+
+	#[DataProvider('reflectsAnonymousTypeProvider')]
+	public function testReflectsAnonymousType(object $object, callable $assertReflection): void
+	{
+		$actual = $this->reflector->forType($object::class);
 
 		$assertReflection($actual);
 	}

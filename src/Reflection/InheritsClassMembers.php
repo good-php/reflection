@@ -28,7 +28,9 @@ trait InheritsClassMembers
 			->flatMap(function (NamedType $type) use ($staticType, $reflector) {
 				$reflection = $reflector->forNamedType($type);
 
-				Assert::isInstanceOf($reflection, HasProperties::class);
+				if (!$reflection instanceof HasProperties) {
+					return [];
+				}
 
 				return $reflection
 					->withStaticType($staticType)
@@ -63,7 +65,9 @@ trait InheritsClassMembers
 			->flatMap(function (NamedType $type) use ($staticType, $reflector) {
 				$reflection = $reflector->forNamedType($type);
 
-				Assert::isInstanceOf($reflection, HasMethods::class);
+				if (!$reflection instanceof HasMethods) {
+					return [];
+				}
 
 				return $reflection
 					->withStaticType($staticType)
