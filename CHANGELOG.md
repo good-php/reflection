@@ -1,3 +1,10 @@
+## [2.0.1](https://github.com/good-php/reflection/compare/v2.0.0...v2.0.1) (2025-09-07)
+
+
+### Bug Fixes
+
+* Reflecting iterable implementing classes ([#14](https://github.com/good-php/reflection/issues/14)) ([e218e0b](https://github.com/good-php/reflection/commit/e218e0bfd177fd2b79ef09a3b7c3432701b3793a))
+
 # [2.0.0](https://github.com/good-php/reflection/compare/v1.0.2...v2.0.0) (2025-07-08)
 
 
