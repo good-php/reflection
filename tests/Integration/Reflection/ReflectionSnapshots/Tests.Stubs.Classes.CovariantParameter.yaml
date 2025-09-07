@@ -1,0 +1,28 @@
+type: Tests\Stubs\Classes\CovariantParameter
+qualifiedName: Tests\Stubs\Classes\CovariantParameter
+shortName: CovariantParameter
+location: Tests\Stubs\Classes\CovariantParameter
+asString: CovariantParameter
+isBuiltIn: false
+isAnonymous: false
+isAbstract: false
+isFinal: false
+attributes:
+    asString: '#[]'
+    all: {  }
+typeParameters:
+    -
+        name: T
+        variadic: false
+        upperBound: mixed
+        variance: COVARIANT
+        asString: 'covariant T'
+extends: null
+implements: {  }
+uses:
+    traits: {  }
+    excludedTraitMethods: {  }
+declaredProperties: {  }
+properties: {  }
+declaredMethods: {  }
+methods: {  }

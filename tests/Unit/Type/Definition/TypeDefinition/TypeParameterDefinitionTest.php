@@ -35,7 +35,7 @@ class TypeParameterDefinitionTest extends TestCase
 		];
 
 		yield [
-			'in T',
+			'contravariant T',
 			new TypeParameterDefinition(
 				name: 'T',
 				variadic: false,
@@ -45,7 +45,7 @@ class TypeParameterDefinitionTest extends TestCase
 		];
 
 		yield [
-			'out T',
+			'covariant T',
 			new TypeParameterDefinition(
 				name: 'T',
 				variadic: false,
@@ -65,7 +65,7 @@ class TypeParameterDefinitionTest extends TestCase
 		];
 
 		yield [
-			'in ...T',
+			'contravariant ...T',
 			new TypeParameterDefinition(
 				name: 'T',
 				variadic: true,
@@ -85,7 +85,7 @@ class TypeParameterDefinitionTest extends TestCase
 		];
 
 		yield [
-			'out ...T of int',
+			'covariant ...T of int',
 			new TypeParameterDefinition(
 				name: 'T',
 				variadic: true,

@@ -23,8 +23,8 @@ final class TypeParameterDefinition implements Stringable
 		$result = [
 			match ($this->variance) {
 				TemplateTypeVariance::INVARIANT     => '',
-				TemplateTypeVariance::CONTRAVARIANT => 'in',
-				TemplateTypeVariance::COVARIANT     => 'out',
+				TemplateTypeVariance::CONTRAVARIANT => 'contravariant',
+				TemplateTypeVariance::COVARIANT     => 'covariant',
 			},
 			($this->variadic ? '...' : '') . $this->name,
 			$this->upperBound ? "of {$this->upperBound}" : '',

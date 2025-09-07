@@ -1,0 +1,425 @@
+type: Tests\Stubs\Classes\ClassStub
+qualifiedName: Tests\Stubs\Classes\ClassStub
+shortName: ClassStub
+location: Tests\Stubs\Classes\ClassStub
+asString: ClassStub
+isBuiltIn: false
+isAnonymous: false
+isAbstract: false
+isFinal: true
+attributes:
+    asString: '#[\Tests\Stubs\AttributeStub(...)]'
+    all:
+        - 'O:25:"Tests\Stubs\AttributeStub":1:{s:9:"something";s:3:"123";}'
+typeParameters:
+    -
+        name: T
+        variadic: false
+        upperBound: mixed
+        variance: INVARIANT
+        asString: T
+    -
+        name: S
+        variadic: false
+        upperBound: int
+        variance: COVARIANT
+        asString: 'covariant S of int'
+extends: 'Tests\Stubs\Classes\ParentClassStub<T, Tests\Stubs\Classes\SomeStub>'
+implements:
+    - 'Tests\Stubs\Interfaces\ParentInterfaceStub<S, Tests\Stubs\Classes\SomeStub>'
+uses:
+    traits:
+        -
+            trait: 'Tests\Stubs\Traits\ParentTraitStub<T, Tests\Stubs\Classes\SomeStub>'
+            aliases:
+                -
+                    name: traitMethod
+                    newName: null
+                    newModifier: 4
+                -
+                    name: traitMethod
+                    newName: traitMethodTwo
+                    newModifier: 2
+        -
+            trait: Tests\Stubs\Traits\ParentTraitStub
+            aliases: {  }
+    excludedTraitMethods: {  }
+declaredProperties:
+    -
+        asString: $factories
+        name: factories
+        location: 'Tests\Stubs\Classes\ClassStub::$factories'
+        declaringType: Tests\Stubs\Classes\ClassStub
+        attributes:
+            asString: '#[\Tests\Stubs\AttributeStub(...)]'
+            all:
+                - 'O:25:"Tests\Stubs\AttributeStub":1:{s:9:"something";s:1:"4";}'
+        type: 'array<int|string, Tests\Stubs\Classes\SomeStub>'
+        hasDefaultValue: false
+        defaultValue: null
+        isPromoted: false
+        promotedParameter: null
+    -
+        asString: $generic
+        name: generic
+        location: 'Tests\Stubs\Classes\ClassStub::$generic'
+        declaringType: Tests\Stubs\Classes\ClassStub
+        attributes:
+            asString: '#[]'
+            all: {  }
+        type: 'Tests\Stubs\Classes\DoubleTemplateType<DateTime, T>'
+        hasDefaultValue: false
+        defaultValue: null
+        isPromoted: false
+        promotedParameter: null
+    -
+        asString: $promoted
+        name: promoted
+        location: 'Tests\Stubs\Classes\ClassStub::$promoted'
+        declaringType: Tests\Stubs\Classes\ClassStub
+        attributes:
+            asString: '#[\Tests\Stubs\AttributeStub(...)]'
+            all:
+                - 'O:25:"Tests\Stubs\AttributeStub":1:{s:9:"something";s:1:"6";}'
+        type: T
+        hasDefaultValue: false
+        defaultValue: null
+        isPromoted: true
+        promotedParameter:
+            asString: 'arg $promoted'
+            name: promoted
+            location: 'Tests\Stubs\Classes\ClassStub::__construct() arg $promoted'
+            declaringMethod: __construct()
+            type: T
+            hasDefaultValue: false
+            defaultValue: null
+properties:
+    -
+        asString: $prop
+        name: prop
+        location: 'Tests\Stubs\Traits\ParentTraitStub::$prop'
+        declaringType: Tests\Stubs\Traits\ParentTraitStub
+        attributes:
+            asString: '#[]'
+            all: {  }
+        type: int
+        hasDefaultValue: false
+        defaultValue: null
+        isPromoted: false
+        promotedParameter: null
+    -
+        asString: $parentProperty
+        name: parentProperty
+        location: 'Tests\Stubs\Classes\ParentClassStub::$parentProperty'
+        declaringType: 'Tests\Stubs\Classes\ParentClassStub<T, Tests\Stubs\Classes\SomeStub>'
+        attributes:
+            asString: '#[]'
+            all: {  }
+        type: T
+        hasDefaultValue: true
+        defaultValue: N;
+        isPromoted: false
+        promotedParameter: null
+    -
+        asString: $factories
+        name: factories
+        location: 'Tests\Stubs\Classes\ClassStub::$factories'
+        declaringType: Tests\Stubs\Classes\ClassStub
+        attributes:
+            asString: '#[\Tests\Stubs\AttributeStub(...)]'
+            all:
+                - 'O:25:"Tests\Stubs\AttributeStub":1:{s:9:"something";s:1:"4";}'
+        type: 'array<int|string, Tests\Stubs\Classes\SomeStub>'
+        hasDefaultValue: false
+        defaultValue: null
+        isPromoted: false
+        promotedParameter: null
+    -
+        asString: $generic
+        name: generic
+        location: 'Tests\Stubs\Classes\ClassStub::$generic'
+        declaringType: Tests\Stubs\Classes\ClassStub
+        attributes:
+            asString: '#[]'
+            all: {  }
+        type: 'Tests\Stubs\Classes\DoubleTemplateType<DateTime, T>'
+        hasDefaultValue: false
+        defaultValue: null
+        isPromoted: false
+        promotedParameter: null
+    -
+        asString: $promoted
+        name: promoted
+        location: 'Tests\Stubs\Classes\ClassStub::$promoted'
+        declaringType: Tests\Stubs\Classes\ClassStub
+        attributes:
+            asString: '#[\Tests\Stubs\AttributeStub(...)]'
+            all:
+                - 'O:25:"Tests\Stubs\AttributeStub":1:{s:9:"something";s:1:"6";}'
+        type: T
+        hasDefaultValue: false
+        defaultValue: null
+        isPromoted: true
+        promotedParameter:
+            asString: 'arg $promoted'
+            name: promoted
+            location: 'Tests\Stubs\Classes\ClassStub::__construct() arg $promoted'
+            declaringMethod: __construct()
+            type: T
+            hasDefaultValue: false
+            defaultValue: null
+declaredMethods:
+    -
+        asString: __construct()
+        name: __construct
+        location: 'Tests\Stubs\Classes\ClassStub::__construct()'
+        declaringType: Tests\Stubs\Classes\ClassStub
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters:
+            -
+                asString: 'arg $promoted'
+                name: promoted
+                location: 'Tests\Stubs\Classes\ClassStub::__construct() arg $promoted'
+                declaringMethod: __construct()
+                type: T
+                hasDefaultValue: false
+                defaultValue: null
+        returnType: null
+    -
+        asString: method()
+        name: method
+        location: 'Tests\Stubs\Classes\ClassStub::method()'
+        declaringType: Tests\Stubs\Classes\ClassStub
+        attributes:
+            asString: '#[\Tests\Stubs\AttributeStub(...)]'
+            all:
+                - 'O:25:"Tests\Stubs\AttributeStub":1:{s:9:"something";s:1:"5";}'
+        typeParameters:
+            -
+                name: G
+                variadic: false
+                upperBound: mixed
+                variance: INVARIANT
+                asString: G
+        parameters:
+            -
+                asString: 'arg $param'
+                name: param
+                location: 'Tests\Stubs\Classes\ClassStub::method() arg $param'
+                declaringMethod: method()
+                type: 'Tests\Stubs\Classes\DoubleTemplateType<Tests\Stubs\Classes\SomeStub, T>'
+                hasDefaultValue: false
+                defaultValue: null
+        returnType: 'Illuminate\Support\Collection<S, G>'
+    -
+        asString: methodTwo()
+        name: methodTwo
+        location: 'Tests\Stubs\Classes\ClassStub::methodTwo()'
+        declaringType: Tests\Stubs\Classes\ClassStub
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters:
+            -
+                name: KValue
+                variadic: false
+                upperBound: mixed
+                variance: INVARIANT
+                asString: KValue
+            -
+                name: K
+                variadic: false
+                upperBound: Tests\Stubs\Interfaces\SingleTemplateType<KValue>
+                variance: INVARIANT
+                asString: 'K of Tests\Stubs\Interfaces\SingleTemplateType<KValue>'
+        parameters:
+            -
+                asString: 'arg $param'
+                name: param
+                location: 'Tests\Stubs\Classes\ClassStub::methodTwo() arg $param'
+                declaringMethod: methodTwo()
+                type: K
+                hasDefaultValue: false
+                defaultValue: null
+        returnType: KValue
+    -
+        asString: self()
+        name: self
+        location: 'Tests\Stubs\Classes\ClassStub::self()'
+        declaringType: Tests\Stubs\Classes\ClassStub
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters:
+            -
+                asString: 'arg $parent'
+                name: parent
+                location: 'Tests\Stubs\Classes\ClassStub::self() arg $parent'
+                declaringMethod: self()
+                type: 'Tests\Stubs\Classes\ParentClassStub<int, int>'
+                hasDefaultValue: false
+                defaultValue: null
+        returnType: static<Tests\Stubs\Classes\ClassStub>
+methods:
+    -
+        asString: test()
+        name: test
+        location: 'Tests\Stubs\Classes\ParentClassStub::test()'
+        declaringType: 'Tests\Stubs\Classes\ParentClassStub<T, Tests\Stubs\Classes\SomeStub>'
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters:
+            -
+                asString: 'arg $str'
+                name: str
+                location: 'Tests\Stubs\Classes\ParentClassStub::test() arg $str'
+                declaringMethod: test()
+                type: '?string'
+                hasDefaultValue: true
+                defaultValue: N;
+        returnType: static<Tests\Stubs\Classes\ClassStub>
+    -
+        asString: otherFunction()
+        name: otherFunction
+        location: 'Tests\Stubs\Traits\TraitWithoutProperties::otherFunction()'
+        declaringType: Tests\Stubs\Traits\TraitWithoutProperties
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters: {  }
+        returnType: Generator
+    -
+        asString: traitMethod()
+        name: traitMethod
+        location: 'Tests\Stubs\Traits\ParentTraitStub::traitMethod()'
+        declaringType: Tests\Stubs\Traits\ParentTraitStub
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters: {  }
+        returnType: void
+    -
+        asString: traitMethodTwo()
+        name: traitMethodTwo
+        location: 'Tests\Stubs\Traits\ParentTraitStub::traitMethod()'
+        declaringType: 'Tests\Stubs\Traits\ParentTraitStub<T, Tests\Stubs\Classes\SomeStub>'
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters: {  }
+        returnType: void
+    -
+        asString: parentMethod()
+        name: parentMethod
+        location: 'Tests\Stubs\Classes\ParentClassStub::parentMethod()'
+        declaringType: 'Tests\Stubs\Classes\ParentClassStub<T, Tests\Stubs\Classes\SomeStub>'
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters: {  }
+        returnType: Tests\Stubs\Classes\SomeStub
+    -
+        asString: __construct()
+        name: __construct
+        location: 'Tests\Stubs\Classes\ClassStub::__construct()'
+        declaringType: Tests\Stubs\Classes\ClassStub
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters:
+            -
+                asString: 'arg $promoted'
+                name: promoted
+                location: 'Tests\Stubs\Classes\ClassStub::__construct() arg $promoted'
+                declaringMethod: __construct()
+                type: T
+                hasDefaultValue: false
+                defaultValue: null
+        returnType: null
+    -
+        asString: method()
+        name: method
+        location: 'Tests\Stubs\Classes\ClassStub::method()'
+        declaringType: Tests\Stubs\Classes\ClassStub
+        attributes:
+            asString: '#[\Tests\Stubs\AttributeStub(...)]'
+            all:
+                - 'O:25:"Tests\Stubs\AttributeStub":1:{s:9:"something";s:1:"5";}'
+        typeParameters:
+            -
+                name: G
+                variadic: false
+                upperBound: mixed
+                variance: INVARIANT
+                asString: G
+        parameters:
+            -
+                asString: 'arg $param'
+                name: param
+                location: 'Tests\Stubs\Classes\ClassStub::method() arg $param'
+                declaringMethod: method()
+                type: 'Tests\Stubs\Classes\DoubleTemplateType<Tests\Stubs\Classes\SomeStub, T>'
+                hasDefaultValue: false
+                defaultValue: null
+        returnType: 'Illuminate\Support\Collection<S, G>'
+    -
+        asString: methodTwo()
+        name: methodTwo
+        location: 'Tests\Stubs\Classes\ClassStub::methodTwo()'
+        declaringType: Tests\Stubs\Classes\ClassStub
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters:
+            -
+                name: KValue
+                variadic: false
+                upperBound: mixed
+                variance: INVARIANT
+                asString: KValue
+            -
+                name: K
+                variadic: false
+                upperBound: Tests\Stubs\Interfaces\SingleTemplateType<KValue>
+                variance: INVARIANT
+                asString: 'K of Tests\Stubs\Interfaces\SingleTemplateType<KValue>'
+        parameters:
+            -
+                asString: 'arg $param'
+                name: param
+                location: 'Tests\Stubs\Classes\ClassStub::methodTwo() arg $param'
+                declaringMethod: methodTwo()
+                type: K
+                hasDefaultValue: false
+                defaultValue: null
+        returnType: KValue
+    -
+        asString: self()
+        name: self
+        location: 'Tests\Stubs\Classes\ClassStub::self()'
+        declaringType: Tests\Stubs\Classes\ClassStub
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters:
+            -
+                asString: 'arg $parent'
+                name: parent
+                location: 'Tests\Stubs\Classes\ClassStub::self() arg $parent'
+                declaringMethod: self()
+                type: 'Tests\Stubs\Classes\ParentClassStub<int, int>'
+                hasDefaultValue: false
+                defaultValue: null
+        returnType: static<Tests\Stubs\Classes\ClassStub>

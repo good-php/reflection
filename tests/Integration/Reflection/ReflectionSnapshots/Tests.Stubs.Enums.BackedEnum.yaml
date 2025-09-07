@@ -1,0 +1,66 @@
+type: Tests\Stubs\Enums\BackedEnum
+qualifiedName: Tests\Stubs\Enums\BackedEnum
+shortName: BackedEnum
+location: Tests\Stubs\Enums\BackedEnum
+asString: BackedEnum
+isBuiltIn: false
+attributes:
+    asString: '#[]'
+    all: {  }
+implements:
+    - Tests\Stubs\Interfaces\SingleGenericInterface<string>
+    - BackedEnum
+uses:
+    traits: {  }
+    excludedTraitMethods: {  }
+declaredMethods: {  }
+methods:
+    -
+        asString: cases()
+        name: cases
+        location: 'BackedEnum::cases()'
+        declaringType: BackedEnum
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters: {  }
+        returnType: array
+    -
+        asString: from()
+        name: from
+        location: 'BackedEnum::from()'
+        declaringType: BackedEnum
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters:
+            -
+                asString: 'arg $value'
+                name: value
+                location: 'BackedEnum::from() arg $value'
+                declaringMethod: from()
+                type: string|int
+                hasDefaultValue: false
+                defaultValue: null
+        returnType: static<Tests\Stubs\Enums\BackedEnum>
+    -
+        asString: tryFrom()
+        name: tryFrom
+        location: 'BackedEnum::tryFrom()'
+        declaringType: BackedEnum
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters:
+            -
+                asString: 'arg $value'
+                name: value
+                location: 'BackedEnum::tryFrom() arg $value'
+                declaringMethod: tryFrom()
+                type: string|int
+                hasDefaultValue: false
+                defaultValue: null
+        returnType: '?static<Tests\Stubs\Enums\BackedEnum>'

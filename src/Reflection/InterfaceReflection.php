@@ -22,6 +22,4 @@ interface InterfaceReflection extends TypeReflection, HasAttributes, HasTypePara
 	 * @return list<NamedType>
 	 */
 	public function extends(): array;
-
-	public function isBuiltIn(): bool;
 }

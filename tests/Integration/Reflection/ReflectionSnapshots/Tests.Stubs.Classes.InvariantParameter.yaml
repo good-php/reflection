@@ -1,0 +1,28 @@
+type: Tests\Stubs\Classes\InvariantParameter
+qualifiedName: Tests\Stubs\Classes\InvariantParameter
+shortName: InvariantParameter
+location: Tests\Stubs\Classes\InvariantParameter
+asString: InvariantParameter
+isBuiltIn: false
+isAnonymous: false
+isAbstract: false
+isFinal: false
+attributes:
+    asString: '#[]'
+    all: {  }
+typeParameters:
+    -
+        name: T
+        variadic: false
+        upperBound: mixed
+        variance: INVARIANT
+        asString: T
+extends: null
+implements: {  }
+uses:
+    traits: {  }
+    excludedTraitMethods: {  }
+declaredProperties: {  }
+properties: {  }
+declaredMethods: {  }
+methods: {  }

@@ -1,0 +1,22 @@
+type: Tests\Stubs\Classes\SomeStub
+qualifiedName: Tests\Stubs\Classes\SomeStub
+shortName: SomeStub
+location: Tests\Stubs\Classes\SomeStub
+asString: SomeStub
+isBuiltIn: false
+isAnonymous: false
+isAbstract: false
+isFinal: false
+attributes:
+    asString: '#[]'
+    all: {  }
+typeParameters: {  }
+extends: null
+implements: {  }
+uses:
+    traits: {  }
+    excludedTraitMethods: {  }
+declaredProperties: {  }
+properties: {  }
+declaredMethods: {  }
+methods: {  }

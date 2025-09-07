@@ -1,0 +1,39 @@
+type: Tests\Stubs\Traits\TraitWithoutProperties
+qualifiedName: Tests\Stubs\Traits\TraitWithoutProperties
+shortName: TraitWithoutProperties
+location: Tests\Stubs\Traits\TraitWithoutProperties
+asString: TraitWithoutProperties
+isBuiltIn: false
+attributes:
+    asString: '#[]'
+    all: {  }
+typeParameters: {  }
+uses:
+    traits: {  }
+    excludedTraitMethods: {  }
+declaredProperties: {  }
+properties: {  }
+declaredMethods:
+    -
+        asString: otherFunction()
+        name: otherFunction
+        location: 'Tests\Stubs\Traits\TraitWithoutProperties::otherFunction()'
+        declaringType: Tests\Stubs\Traits\TraitWithoutProperties
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters: {  }
+        returnType: Generator
+methods:
+    -
+        asString: otherFunction()
+        name: otherFunction
+        location: 'Tests\Stubs\Traits\TraitWithoutProperties::otherFunction()'
+        declaringType: Tests\Stubs\Traits\TraitWithoutProperties
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters: {  }
+        returnType: Generator

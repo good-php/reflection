@@ -1,0 +1,221 @@
+type: Tests\Stubs\Classes\AllMissingTypes
+qualifiedName: Tests\Stubs\Classes\AllMissingTypes
+shortName: AllMissingTypes
+location: Tests\Stubs\Classes\AllMissingTypes
+asString: AllMissingTypes
+isBuiltIn: false
+isAnonymous: false
+isAbstract: false
+isFinal: false
+attributes:
+    asString: '#[]'
+    all: {  }
+typeParameters: {  }
+extends: Tests\Stubs\Classes\SomeStub
+implements:
+    - Tests\Stubs\Interfaces\SingleTemplateType
+uses:
+    traits: {  }
+    excludedTraitMethods: {  }
+declaredProperties:
+    -
+        asString: $property
+        name: property
+        location: 'Tests\Stubs\Classes\AllMissingTypes::$property'
+        declaringType: Tests\Stubs\Classes\AllMissingTypes
+        attributes:
+            asString: '#[]'
+            all: {  }
+        type: null
+        hasDefaultValue: true
+        defaultValue: 'i:123;'
+        isPromoted: false
+        promotedParameter: null
+    -
+        asString: $promoted
+        name: promoted
+        location: 'Tests\Stubs\Classes\AllMissingTypes::$promoted'
+        declaringType: Tests\Stubs\Classes\AllMissingTypes
+        attributes:
+            asString: '#[]'
+            all: {  }
+        type: null
+        hasDefaultValue: true
+        defaultValue: N;
+        isPromoted: true
+        promotedParameter:
+            asString: 'arg $promoted'
+            name: promoted
+            location: 'Tests\Stubs\Classes\AllMissingTypes::__construct() arg $promoted'
+            declaringMethod: __construct()
+            type: null
+            hasDefaultValue: true
+            defaultValue: 'b:1;'
+    -
+        asString: $promotedDefault
+        name: promotedDefault
+        location: 'Tests\Stubs\Classes\AllMissingTypes::$promotedDefault'
+        declaringType: Tests\Stubs\Classes\AllMissingTypes
+        attributes:
+            asString: '#[]'
+            all: {  }
+        type: '?int'
+        hasDefaultValue: false
+        defaultValue: null
+        isPromoted: true
+        promotedParameter:
+            asString: 'arg $promotedDefault'
+            name: promotedDefault
+            location: 'Tests\Stubs\Classes\AllMissingTypes::__construct() arg $promotedDefault'
+            declaringMethod: __construct()
+            type: '?int'
+            hasDefaultValue: true
+            defaultValue: N;
+properties:
+    -
+        asString: $property
+        name: property
+        location: 'Tests\Stubs\Classes\AllMissingTypes::$property'
+        declaringType: Tests\Stubs\Classes\AllMissingTypes
+        attributes:
+            asString: '#[]'
+            all: {  }
+        type: null
+        hasDefaultValue: true
+        defaultValue: 'i:123;'
+        isPromoted: false
+        promotedParameter: null
+    -
+        asString: $promoted
+        name: promoted
+        location: 'Tests\Stubs\Classes\AllMissingTypes::$promoted'
+        declaringType: Tests\Stubs\Classes\AllMissingTypes
+        attributes:
+            asString: '#[]'
+            all: {  }
+        type: null
+        hasDefaultValue: true
+        defaultValue: N;
+        isPromoted: true
+        promotedParameter:
+            asString: 'arg $promoted'
+            name: promoted
+            location: 'Tests\Stubs\Classes\AllMissingTypes::__construct() arg $promoted'
+            declaringMethod: __construct()
+            type: null
+            hasDefaultValue: true
+            defaultValue: 'b:1;'
+    -
+        asString: $promotedDefault
+        name: promotedDefault
+        location: 'Tests\Stubs\Classes\AllMissingTypes::$promotedDefault'
+        declaringType: Tests\Stubs\Classes\AllMissingTypes
+        attributes:
+            asString: '#[]'
+            all: {  }
+        type: '?int'
+        hasDefaultValue: false
+        defaultValue: null
+        isPromoted: true
+        promotedParameter:
+            asString: 'arg $promotedDefault'
+            name: promotedDefault
+            location: 'Tests\Stubs\Classes\AllMissingTypes::__construct() arg $promotedDefault'
+            declaringMethod: __construct()
+            type: '?int'
+            hasDefaultValue: true
+            defaultValue: N;
+declaredMethods:
+    -
+        asString: __construct()
+        name: __construct
+        location: 'Tests\Stubs\Classes\AllMissingTypes::__construct()'
+        declaringType: Tests\Stubs\Classes\AllMissingTypes
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters:
+            -
+                asString: 'arg $promoted'
+                name: promoted
+                location: 'Tests\Stubs\Classes\AllMissingTypes::__construct() arg $promoted'
+                declaringMethod: __construct()
+                type: null
+                hasDefaultValue: true
+                defaultValue: 'b:1;'
+            -
+                asString: 'arg $promotedDefault'
+                name: promotedDefault
+                location: 'Tests\Stubs\Classes\AllMissingTypes::__construct() arg $promotedDefault'
+                declaringMethod: __construct()
+                type: '?int'
+                hasDefaultValue: true
+                defaultValue: N;
+        returnType: null
+    -
+        asString: test()
+        name: test
+        location: 'Tests\Stubs\Classes\AllMissingTypes::test()'
+        declaringType: Tests\Stubs\Classes\AllMissingTypes
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters:
+            -
+                asString: 'arg $something'
+                name: something
+                location: 'Tests\Stubs\Classes\AllMissingTypes::test() arg $something'
+                declaringMethod: test()
+                type: null
+                hasDefaultValue: false
+                defaultValue: null
+        returnType: null
+methods:
+    -
+        asString: __construct()
+        name: __construct
+        location: 'Tests\Stubs\Classes\AllMissingTypes::__construct()'
+        declaringType: Tests\Stubs\Classes\AllMissingTypes
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters:
+            -
+                asString: 'arg $promoted'
+                name: promoted
+                location: 'Tests\Stubs\Classes\AllMissingTypes::__construct() arg $promoted'
+                declaringMethod: __construct()
+                type: null
+                hasDefaultValue: true
+                defaultValue: 'b:1;'
+            -
+                asString: 'arg $promotedDefault'
+                name: promotedDefault
+                location: 'Tests\Stubs\Classes\AllMissingTypes::__construct() arg $promotedDefault'
+                declaringMethod: __construct()
+                type: '?int'
+                hasDefaultValue: true
+                defaultValue: N;
+        returnType: null
+    -
+        asString: test()
+        name: test
+        location: 'Tests\Stubs\Classes\AllMissingTypes::test()'
+        declaringType: Tests\Stubs\Classes\AllMissingTypes
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters:
+            -
+                asString: 'arg $something'
+                name: something
+                location: 'Tests\Stubs\Classes\AllMissingTypes::test() arg $something'
+                declaringMethod: test()
+                type: null
+                hasDefaultValue: false
+                defaultValue: null
+        returnType: null

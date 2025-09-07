@@ -1,0 +1,29 @@
+type: Tests\Stubs\Classes\SingleTemplateTypeImpl
+qualifiedName: Tests\Stubs\Classes\SingleTemplateTypeImpl
+shortName: SingleTemplateTypeImpl
+location: Tests\Stubs\Classes\SingleTemplateTypeImpl
+asString: SingleTemplateTypeImpl
+isBuiltIn: false
+isAnonymous: false
+isAbstract: false
+isFinal: false
+attributes:
+    asString: '#[]'
+    all: {  }
+typeParameters:
+    -
+        name: T
+        variadic: false
+        upperBound: mixed
+        variance: INVARIANT
+        asString: T
+extends: null
+implements:
+    - Tests\Stubs\Interfaces\SingleTemplateType<T>
+uses:
+    traits: {  }
+    excludedTraitMethods: {  }
+declaredProperties: {  }
+properties: {  }
+declaredMethods: {  }
+methods: {  }

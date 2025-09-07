@@ -1,0 +1,91 @@
+type: Tests\Stubs\Traits\ParentTraitStub
+qualifiedName: Tests\Stubs\Traits\ParentTraitStub
+shortName: ParentTraitStub
+location: Tests\Stubs\Traits\ParentTraitStub
+asString: ParentTraitStub
+isBuiltIn: false
+attributes:
+    asString: '#[]'
+    all: {  }
+typeParameters:
+    -
+        name: O
+        variadic: false
+        upperBound: mixed
+        variance: INVARIANT
+        asString: O
+    -
+        name: U
+        variadic: false
+        upperBound: mixed
+        variance: INVARIANT
+        asString: U
+uses:
+    traits:
+        -
+            trait: Tests\Stubs\Traits\TraitWithoutProperties
+            aliases: {  }
+    excludedTraitMethods: {  }
+declaredProperties:
+    -
+        asString: $prop
+        name: prop
+        location: 'Tests\Stubs\Traits\ParentTraitStub::$prop'
+        declaringType: Tests\Stubs\Traits\ParentTraitStub
+        attributes:
+            asString: '#[]'
+            all: {  }
+        type: int
+        hasDefaultValue: false
+        defaultValue: null
+        isPromoted: false
+        promotedParameter: null
+properties:
+    -
+        asString: $prop
+        name: prop
+        location: 'Tests\Stubs\Traits\ParentTraitStub::$prop'
+        declaringType: Tests\Stubs\Traits\ParentTraitStub
+        attributes:
+            asString: '#[]'
+            all: {  }
+        type: int
+        hasDefaultValue: false
+        defaultValue: null
+        isPromoted: false
+        promotedParameter: null
+declaredMethods:
+    -
+        asString: traitMethod()
+        name: traitMethod
+        location: 'Tests\Stubs\Traits\ParentTraitStub::traitMethod()'
+        declaringType: Tests\Stubs\Traits\ParentTraitStub
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters: {  }
+        returnType: void
+methods:
+    -
+        asString: otherFunction()
+        name: otherFunction
+        location: 'Tests\Stubs\Traits\TraitWithoutProperties::otherFunction()'
+        declaringType: Tests\Stubs\Traits\TraitWithoutProperties
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters: {  }
+        returnType: Generator
+    -
+        asString: traitMethod()
+        name: traitMethod
+        location: 'Tests\Stubs\Traits\ParentTraitStub::traitMethod()'
+        declaringType: Tests\Stubs\Traits\ParentTraitStub
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters: {  }
+        returnType: void

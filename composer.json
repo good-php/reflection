@@ -19,17 +19,19 @@
 		"webmozart/assert": "^1.11"
 	},
 	"require-dev": {
+		"jiripudil/phpstan-sealed-classes": "^1.1",
+		"kcs/class-finder": "^0.6.1",
 		"pestphp/pest": "^3.0",
-		"php-cs-fixer/shim": "~3.80.0",
-		"tenantcloud/php-cs-fixer-rule-sets": "~3.4.1",
-		"phpstan/phpstan": "~2.1.0",
 		"phake/phake": "^4.2",
+		"php-cs-fixer/shim": "~3.80.0",
+		"phpbench/phpbench": "^1.2",
+		"phpstan/phpstan": "~2.1.0",
+		"phpstan/phpstan-mockery": "^2.0",
 		"phpstan/phpstan-phpunit": "^2.0",
 		"phpstan/phpstan-webmozart-assert": "^2.0",
-		"phpstan/phpstan-mockery": "^2.0",
-		"phpbench/phpbench": "^1.2",
 		"roave/better-reflection": "^6.36",
-		"jiripudil/phpstan-sealed-classes": "^1.1"
+		"symfony/yaml": "^7.3",
+		"tenantcloud/php-cs-fixer-rule-sets": "~3.4.1"
 	},
 	"autoload": {
 		"psr-4": {

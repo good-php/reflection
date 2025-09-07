@@ -1,0 +1,19 @@
+type: Tests\Stubs\Interfaces\SingleTemplateType
+qualifiedName: Tests\Stubs\Interfaces\SingleTemplateType
+shortName: SingleTemplateType
+location: Tests\Stubs\Interfaces\SingleTemplateType
+asString: SingleTemplateType
+isBuiltIn: false
+attributes:
+    asString: '#[]'
+    all: {  }
+typeParameters:
+    -
+        name: T
+        variadic: false
+        upperBound: mixed
+        variance: INVARIANT
+        asString: T
+extends: {  }
+declaredMethods: {  }
+methods: {  }

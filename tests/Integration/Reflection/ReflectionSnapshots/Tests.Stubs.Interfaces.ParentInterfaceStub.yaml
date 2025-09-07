@@ -1,0 +1,63 @@
+type: Tests\Stubs\Interfaces\ParentInterfaceStub
+qualifiedName: Tests\Stubs\Interfaces\ParentInterfaceStub
+shortName: ParentInterfaceStub
+location: Tests\Stubs\Interfaces\ParentInterfaceStub
+asString: ParentInterfaceStub
+isBuiltIn: false
+attributes:
+    asString: '#[]'
+    all: {  }
+typeParameters:
+    -
+        name: O
+        variadic: false
+        upperBound: mixed
+        variance: INVARIANT
+        asString: O
+    -
+        name: U
+        variadic: false
+        upperBound: mixed
+        variance: INVARIANT
+        asString: U
+extends: {  }
+declaredMethods:
+    -
+        asString: test()
+        name: test
+        location: 'Tests\Stubs\Interfaces\ParentInterfaceStub::test()'
+        declaringType: Tests\Stubs\Interfaces\ParentInterfaceStub
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters:
+            -
+                asString: 'arg $str'
+                name: str
+                location: 'Tests\Stubs\Interfaces\ParentInterfaceStub::test() arg $str'
+                declaringMethod: test()
+                type: string
+                hasDefaultValue: false
+                defaultValue: null
+        returnType: static<Tests\Stubs\Interfaces\ParentInterfaceStub>
+methods:
+    -
+        asString: test()
+        name: test
+        location: 'Tests\Stubs\Interfaces\ParentInterfaceStub::test()'
+        declaringType: Tests\Stubs\Interfaces\ParentInterfaceStub
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters:
+            -
+                asString: 'arg $str'
+                name: str
+                location: 'Tests\Stubs\Interfaces\ParentInterfaceStub::test() arg $str'
+                declaringMethod: test()
+                type: string
+                hasDefaultValue: false
+                defaultValue: null
+        returnType: static<Tests\Stubs\Interfaces\ParentInterfaceStub>

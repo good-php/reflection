@@ -1,0 +1,98 @@
+type: Tests\Stubs\Enums\UnitEnum
+qualifiedName: Tests\Stubs\Enums\UnitEnum
+shortName: UnitEnum
+location: Tests\Stubs\Enums\UnitEnum
+asString: UnitEnum
+isBuiltIn: false
+attributes:
+    asString: '#[]'
+    all: {  }
+implements:
+    - Tests\Stubs\Interfaces\NonGenericInterface
+    - UnitEnum
+uses:
+    traits:
+        -
+            trait: Tests\Stubs\Traits\TraitWithoutProperties
+            aliases: {  }
+        -
+            trait: Tests\Stubs\Traits\TraitWithoutProperties
+            aliases:
+                -
+                    name: otherFunction
+                    newName: otherOtherFunction
+                    newModifier: null
+    excludedTraitMethods: {  }
+declaredMethods:
+    -
+        asString: function()
+        name: function
+        location: 'Tests\Stubs\Enums\UnitEnum::function()'
+        declaringType: Tests\Stubs\Enums\UnitEnum
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters:
+            -
+                asString: 'arg $i'
+                name: i
+                location: 'Tests\Stubs\Enums\UnitEnum::function() arg $i'
+                declaringMethod: function()
+                type: string
+                hasDefaultValue: false
+                defaultValue: null
+        returnType: mixed
+methods:
+    -
+        asString: function()
+        name: function
+        location: 'Tests\Stubs\Enums\UnitEnum::function()'
+        declaringType: Tests\Stubs\Enums\UnitEnum
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters:
+            -
+                asString: 'arg $i'
+                name: i
+                location: 'Tests\Stubs\Enums\UnitEnum::function() arg $i'
+                declaringMethod: function()
+                type: string
+                hasDefaultValue: false
+                defaultValue: null
+        returnType: mixed
+    -
+        asString: cases()
+        name: cases
+        location: 'UnitEnum::cases()'
+        declaringType: UnitEnum
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters: {  }
+        returnType: array
+    -
+        asString: otherFunction()
+        name: otherFunction
+        location: 'Tests\Stubs\Traits\TraitWithoutProperties::otherFunction()'
+        declaringType: Tests\Stubs\Traits\TraitWithoutProperties
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters: {  }
+        returnType: Generator
+    -
+        asString: otherOtherFunction()
+        name: otherOtherFunction
+        location: 'Tests\Stubs\Traits\TraitWithoutProperties::otherFunction()'
+        declaringType: Tests\Stubs\Traits\TraitWithoutProperties
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters: {  }
+        returnType: Generator
