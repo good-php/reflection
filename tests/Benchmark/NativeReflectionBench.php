@@ -3,6 +3,7 @@
 namespace Tests\Benchmark;
 
 use PhpBench\Attributes\BeforeMethods;
+use PhpBench\Attributes\Groups;
 use PhpBench\Attributes\Iterations;
 use PhpBench\Attributes\ParamProviders;
 use PhpBench\Attributes\Revs;
@@ -14,7 +15,7 @@ use ReflectionProperty;
 use Tests\Stubs\AttributeStub;
 use Tests\Stubs\Classes\ClassStub;
 
-class NativeReflectionBench
+class NativeReflectionBench extends ReflectionBench
 {
 	public function setUp(): void
 	{
@@ -27,42 +28,31 @@ class NativeReflectionBench
 		class_exists(ReflectionMethod::class);
 	}
 
-	#[Iterations(50)]
-	#[Revs(200)]
+	#[Iterations(ReflectionBench::ITERATIONS_WITH_CACHE)]
+	#[Revs(ReflectionBench::REVS_WITH_CACHE)]
 	#[Warmup(1)]
-	#[ParamProviders('hardnessProvider')]
+	#[ParamProviders('scopeProvider')]
+	#[Groups([ReflectionBench::GROUP_WARM_CACHE])]
 	public function benchWarm(array $params): void
 	{
-		$this->callMethods($params['hardness'], new ReflectionClass(ClassStub::class));
+		$this->callMethods($params['scope'], new ReflectionClass(ClassStub::class));
 	}
 
-	#[Iterations(200)]
+	#[Iterations(ReflectionBench::ITERATIONS_WITHOUT_CACHE)]
 	#[BeforeMethods('setUp')]
-	#[ParamProviders('hardnessProvider')]
+	#[ParamProviders('scopeProvider')]
+	#[Groups([ReflectionBench::GROUP_COLD_CACHE])]
 	public function benchCold(array $params): void
 	{
-		$this->callMethods($params['hardness'], new ReflectionClass(ClassStub::class));
+		$this->callMethods($params['scope'], new ReflectionClass(ClassStub::class));
 	}
 
-	public function hardnessProvider(): iterable
+	private function callMethods(string $scope, ReflectionClass $reflection): void
 	{
-		yield 'only name' => [
-			'hardness' => ['name' => true, 'everything' => false],
-		];
+		$reflection->getFileName();
+		$reflection->getName();
 
-		yield 'everything' => [
-			'hardness' => ['name' => true, 'everything' => true],
-		];
-	}
-
-	private function callMethods(array $hardness, ReflectionClass $reflection): void
-	{
-		if ($hardness['name']) {
-			$reflection->getFileName();
-			$reflection->getName();
-		}
-
-		if ($hardness['everything']) {
+		if ($scope === 'everything') {
 			array_map(fn (ReflectionAttribute $attribute) => $attribute->newInstance(), $reflection->getAttributes());
 			$reflection->getParentClass();
 			$reflection->getInterfaceNames();
