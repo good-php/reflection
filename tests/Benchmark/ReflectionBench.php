@@ -4,15 +4,10 @@ namespace Tests\Benchmark;
 
 abstract class ReflectionBench
 {
-//	public const ITERATIONS_WITH_CACHE = 50;
-//	public const REVS_WITH_CACHE = 200;
-//
-//	public const ITERATIONS_WITHOUT_CACHE = 200;
+	public const ITERATIONS_WITH_CACHE = 5;
+	public const REVS_WITH_CACHE = 50;
 
-	public const ITERATIONS_WITH_CACHE = 2;
-	public const REVS_WITH_CACHE = 2;
-
-	public const ITERATIONS_WITHOUT_CACHE = 2;
+	public const ITERATIONS_WITHOUT_CACHE = 50;
 
 	public const GROUP_INITIALIZATION = 'initialization';
 	public const GROUP_COLD_CACHE = 'cold_cache';

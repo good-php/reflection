@@ -4,6 +4,7 @@ namespace GoodPhp\Reflection;
 
 use Composer\InstalledVersions;
 use DateInterval;
+use GoodPhp\Reflection\Cache\StaticCacheReflector;
 use GoodPhp\Reflection\Cache\Verified\VerifiedCache;
 use GoodPhp\Reflection\NativePHPDoc\Definition\BuiltIns\BuiltInCoreDefinitionProvider;
 use GoodPhp\Reflection\NativePHPDoc\Definition\BuiltIns\BuiltInSpecialsDefinitionProvider;
@@ -24,15 +25,19 @@ use PHPStan\PhpDocParser\Parser\ConstExprParser;
 use PHPStan\PhpDocParser\Parser\PhpDocParser;
 use PHPStan\PhpDocParser\Parser\TypeParser;
 use PHPStan\PhpDocParser\ParserConfig;
+use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Component\Cache\Adapter\PhpFilesAdapter;
 use Symfony\Component\Cache\Psr16Cache;
+use Symfony\Contracts\Cache\NamespacedPoolInterface;
 
 class ReflectorBuilder
 {
 	private ?DefinitionProvider $innerDefinitionProvider = null;
 
 	private ?DefinitionProvider $definitionProvider = null;
+
+	private (CacheItemPoolInterface&NamespacedPoolInterface)|null $inMemoryCache = null;
 
 	public function withFileCache(?string $path = null, ?DateInterval $ttl = null): self
 	{
@@ -54,19 +59,30 @@ class ReflectorBuilder
 
 	public function withMemoryCache(int $maxItems = 100, ?DateInterval $ttl = null): self
 	{
+		$this->inMemoryCache = new ArrayAdapter(
+			defaultLifetime: (int) $ttl?->format('s'),
+			storeSerialized: false,
+			maxItems: $maxItems,
+		);
+
 		return $this->withDefinitionProvider(new StaticCacheDefinitionProvider(
 			$this->definitionProvider(),
-			new Psr16Cache(new ArrayAdapter(
-				defaultLifetime: (int) $ttl?->format('s'),
-				storeSerialized: false,
-				maxItems: $maxItems,
-			))
+			new Psr16Cache($this->inMemoryCache->withSubNamespace('definitions'))
 		));
 	}
 
 	public function build(): Reflector
 	{
-		return new DefinitionProviderReflector($this->definitionProvider());
+		$reflector = new DefinitionProviderReflector($this->definitionProvider());
+
+		if ($this->inMemoryCache) {
+			$reflector = new StaticCacheReflector(
+				$reflector,
+				new Psr16Cache($this->inMemoryCache->withSubNamespace('reflections'))
+			);
+		}
+
+		return $reflector;
 	}
 
 	public function withInnerDefinitionProvider(DefinitionProvider $provider): self
