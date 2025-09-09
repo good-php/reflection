@@ -1,7 +1,9 @@
 <?php
 
-namespace Tests\Benchmark;
+namespace Benchmark;
 
+use Benchmark\Stubs\AttributeStub;
+use Benchmark\Stubs\Classes\ClassStub;
 use PhpBench\Attributes\BeforeMethods;
 use PhpBench\Attributes\Groups;
 use PhpBench\Attributes\Iterations;
@@ -12,8 +14,6 @@ use ReflectionAttribute;
 use ReflectionClass;
 use ReflectionMethod;
 use ReflectionProperty;
-use Tests\Stubs\AttributeStub;
-use Tests\Stubs\Classes\ClassStub;
 
 class NativeReflectionBench extends ReflectionBench
 {
@@ -32,7 +32,7 @@ class NativeReflectionBench extends ReflectionBench
 	#[Revs(ReflectionBench::REVS_WITH_CACHE)]
 	#[Warmup(1)]
 	#[ParamProviders('scopeProvider')]
-	#[Groups([ReflectionBench::GROUP_WARM_CACHE])]
+	#[Groups([ReflectionBench::GROUP_MEMORY_CACHE])]
 	public function benchWarm(array $params): void
 	{
 		$this->callMethods($params['scope'], new ReflectionClass(ClassStub::class));
@@ -41,7 +41,7 @@ class NativeReflectionBench extends ReflectionBench
 	#[Iterations(ReflectionBench::ITERATIONS_WITHOUT_CACHE)]
 	#[BeforeMethods('setUp')]
 	#[ParamProviders('scopeProvider')]
-	#[Groups([ReflectionBench::GROUP_COLD_CACHE])]
+	#[Groups([ReflectionBench::GROUP_NO_CACHE])]
 	public function benchCold(array $params): void
 	{
 		$this->callMethods($params['scope'], new ReflectionClass(ClassStub::class));

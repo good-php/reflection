@@ -1,7 +1,8 @@
 <?php
 
-namespace Tests\Benchmark;
+namespace Benchmark;
 
+use Benchmark\Stubs\Classes\ClassStub;
 use PhpBench\Attributes\BeforeMethods;
 use PhpBench\Attributes\Groups;
 use PhpBench\Attributes\Iterations;
@@ -12,7 +13,6 @@ use Roave\BetterReflection\BetterReflection;
 use Roave\BetterReflection\Reflection\ReflectionAttribute;
 use Roave\BetterReflection\Reflection\ReflectionClass;
 use Roave\BetterReflection\Reflector\Reflector;
-use Tests\Stubs\Classes\ClassStub;
 
 class BetterReflectionBench extends ReflectionBench
 {
@@ -42,7 +42,7 @@ class BetterReflectionBench extends ReflectionBench
 	#[Warmup(1)]
 	#[BeforeMethods('setUpWithMemoryCache')]
 	#[ParamProviders('scopeProvider')]
-	#[Groups([ReflectionBench::GROUP_WARM_CACHE])]
+	#[Groups([ReflectionBench::GROUP_MEMORY_CACHE])]
 	public function benchWarmWithMemoryCache(array $params): void
 	{
 		$this->callMethods($params['scope'], $this->reflector->reflectClass(ClassStub::class));
@@ -52,7 +52,7 @@ class BetterReflectionBench extends ReflectionBench
 	#[Warmup(1)]
 	#[BeforeMethods('setUpWithoutCache')]
 	#[ParamProviders('scopeProvider')]
-	#[Groups([ReflectionBench::GROUP_COLD_CACHE])]
+	#[Groups([ReflectionBench::GROUP_NO_CACHE])]
 	public function benchCold(array $params): void
 	{
 		$this->callMethods($params['scope'], $this->reflector->reflectClass(ClassStub::class));
@@ -60,7 +60,7 @@ class BetterReflectionBench extends ReflectionBench
 
 	#[Iterations(ReflectionBench::ITERATIONS_WITHOUT_CACHE)]
 	#[ParamProviders('scopeProvider')]
-	#[Groups([ReflectionBench::GROUP_COLD_CACHE, ReflectionBench::GROUP_INITIALIZATION])]
+	#[Groups([ReflectionBench::GROUP_NO_CACHE, ReflectionBench::GROUP_INITIALIZATION])]
 	public function benchColdIncludingInitializationAndAutoLoad(array $params): void
 	{
 		$this->setUpWithoutCache();

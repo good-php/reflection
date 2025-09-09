@@ -1,0 +1,148 @@
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>All Your Benchmark Are Belong to Us</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    </head>
+    <body class="container">
+                <h1>All Your Benchmark Are Belong to Us</h1>
+        <hr/>
+                    <div>
+            <h2>Warm in-memory cache</h2>
+                <p>After the first time given class was reflected by this process.</p>
+                            <div id="phpbench-component-4" width="400" height="100"></div>
+<script>
+var data = [
+        {
+        x: ["Scope: name","Scope: everything"],
+        name: 'TyphoonReflectionBench',
+        y: [6.757945205479389,20.722896281800953],
+        type: 'bar',
+            },
+    ]
+var layout = {
+    barmode: 'group',
+    yaxis: {
+        tickmode: 'array',
+        tickvals: [0,2.072289628180095,4.14457925636019,6.216868884540285,8.28915851272038,10.361448140900475,12.43373776908057,14.506027397260667,16.57831702544076,18.650606653620855,20.72289628180095],
+        ticktext: ["0.000<span style=\"color: #555; font-weight: bold;\">\u03bcs<\/span>\n","2.072<span style=\"color: #555; font-weight: bold;\">\u03bcs<\/span>\n","4.145<span style=\"color: #555; font-weight: bold;\">\u03bcs<\/span>\n","6.217<span style=\"color: #555; font-weight: bold;\">\u03bcs<\/span>\n","8.289<span style=\"color: #555; font-weight: bold;\">\u03bcs<\/span>\n","10.361<span style=\"color: #555; font-weight: bold;\">\u03bcs<\/span>\n","12.434<span style=\"color: #555; font-weight: bold;\">\u03bcs<\/span>\n","14.506<span style=\"color: #555; font-weight: bold;\">\u03bcs<\/span>\n","16.578<span style=\"color: #555; font-weight: bold;\">\u03bcs<\/span>\n","18.651<span style=\"color: #555; font-weight: bold;\">\u03bcs<\/span>\n","20.723<span style=\"color: #555; font-weight: bold;\">\u03bcs<\/span>\n"]    },
+    xaxis: {
+        tickmode: 'array',
+        tickvals: ["Scope: name","Scope: everything"],
+        ticktext: ["Scope: name","Scope: everything"],
+    }
+};
+Plotly.newPlot(document.getElementById('phpbench-component-4'), data, layout);
+</script>
+            </div>
+    <div>
+            <h2>Warm file cache</h2>
+                <p>After the first time given class was reflected.</p>
+                            <div id="phpbench-component-8" width="400" height="100"></div>
+<script>
+var data = [
+        {
+        x: ["Scope: name","Scope: everything"],
+        name: 'TyphoonReflectionBench',
+        y: [156.29884540117072,149.95495107632155],
+        type: 'bar',
+            },
+    ]
+var layout = {
+    barmode: 'group',
+    yaxis: {
+        tickmode: 'array',
+        tickvals: [0,15.629884540117072,31.259769080234143,46.88965362035121,62.51953816046829,78.14942270058536,93.77930724070242,109.4091917808195,125.03907632093657,140.66896086105365,156.29884540117072],
+        ticktext: ["0.000<span style=\"color: #555; font-weight: bold;\">\u03bcs<\/span>\n","15.630<span style=\"color: #555; font-weight: bold;\">\u03bcs<\/span>\n","31.260<span style=\"color: #555; font-weight: bold;\">\u03bcs<\/span>\n","46.890<span style=\"color: #555; font-weight: bold;\">\u03bcs<\/span>\n","62.520<span style=\"color: #555; font-weight: bold;\">\u03bcs<\/span>\n","78.149<span style=\"color: #555; font-weight: bold;\">\u03bcs<\/span>\n","93.779<span style=\"color: #555; font-weight: bold;\">\u03bcs<\/span>\n","109.409<span style=\"color: #555; font-weight: bold;\">\u03bcs<\/span>\n","125.039<span style=\"color: #555; font-weight: bold;\">\u03bcs<\/span>\n","140.669<span style=\"color: #555; font-weight: bold;\">\u03bcs<\/span>\n","156.299<span style=\"color: #555; font-weight: bold;\">\u03bcs<\/span>\n"]    },
+    xaxis: {
+        tickmode: 'array',
+        tickvals: ["Scope: name","Scope: everything"],
+        ticktext: ["Scope: name","Scope: everything"],
+    }
+};
+Plotly.newPlot(document.getElementById('phpbench-component-8'), data, layout);
+</script>
+            </div>
+    <div>
+            <h2>No cache</h2>
+                <p>The first time reflecting a class.</p>
+                            <div id="phpbench-component-10" width="400" height="100"></div>
+<script>
+var data = [
+        {
+        x: ["Scope: name","Scope: everything"],
+        name: 'TyphoonReflectionBench',
+        y: [7434.303326810201,8439.894324853249],
+        type: 'bar',
+            },
+    ]
+var layout = {
+    barmode: 'group',
+    yaxis: {
+        tickmode: 'array',
+        tickvals: [0,843.9894324853249,1687.9788649706497,2531.9682974559746,3375.9577299412995,4219.947162426624,5063.936594911949,5907.926027397274,6751.915459882599,7595.904892367924,8439.894324853249],
+        ticktext: ["0.000<span style=\"color: #555; font-weight: bold;\">\u03bcs<\/span>\n","843.989<span style=\"color: #555; font-weight: bold;\">\u03bcs<\/span>\n","1.688<span style=\"color: #555; font-weight: bold;\">ms<\/span>\n","2.532<span style=\"color: #555; font-weight: bold;\">ms<\/span>\n","3.376<span style=\"color: #555; font-weight: bold;\">ms<\/span>\n","4.220<span style=\"color: #555; font-weight: bold;\">ms<\/span>\n","5.064<span style=\"color: #555; font-weight: bold;\">ms<\/span>\n","5.908<span style=\"color: #555; font-weight: bold;\">ms<\/span>\n","6.752<span style=\"color: #555; font-weight: bold;\">ms<\/span>\n","7.596<span style=\"color: #555; font-weight: bold;\">ms<\/span>\n","8.440<span style=\"color: #555; font-weight: bold;\">ms<\/span>\n"]    },
+    xaxis: {
+        tickmode: 'array',
+        tickvals: ["Scope: name","Scope: everything"],
+        ticktext: ["Scope: name","Scope: everything"],
+    }
+};
+Plotly.newPlot(document.getElementById('phpbench-component-10'), data, layout);
+</script>
+            </div>
+    <div>
+            <h2>No cache + initialization</h2>
+                <p>Autoloading and the first time reflecting a class.</p>
+                            <div id="phpbench-component-14" width="400" height="100"></div>
+<script>
+var data = [
+        {
+        x: ["Scope: name","Scope: everything"],
+        name: 'TyphoonReflectionBench',
+        y: [129829.14285714235,128105.68884540116],
+        type: 'bar',
+            },
+    ]
+var layout = {
+    barmode: 'group',
+    yaxis: {
+        tickmode: 'array',
+        tickvals: [0,12982.914285714234,25965.82857142847,38948.7428571427,51931.65714285694,64914.57142857117,77897.4857142854,90880.39999999964,103863.31428571387,116846.2285714281,129829.14285714235],
+        ticktext: ["0.000<span style=\"color: #555; font-weight: bold;\">\u03bcs<\/span>\n","12.983<span style=\"color: #555; font-weight: bold;\">ms<\/span>\n","25.966<span style=\"color: #555; font-weight: bold;\">ms<\/span>\n","38.949<span style=\"color: #555; font-weight: bold;\">ms<\/span>\n","51.932<span style=\"color: #555; font-weight: bold;\">ms<\/span>\n","64.915<span style=\"color: #555; font-weight: bold;\">ms<\/span>\n","77.897<span style=\"color: #555; font-weight: bold;\">ms<\/span>\n","90.880<span style=\"color: #555; font-weight: bold;\">ms<\/span>\n","103.863<span style=\"color: #555; font-weight: bold;\">ms<\/span>\n","116.846<span style=\"color: #555; font-weight: bold;\">ms<\/span>\n","129.829<span style=\"color: #555; font-weight: bold;\">ms<\/span>\n"]    },
+    xaxis: {
+        tickmode: 'array',
+        tickvals: ["Scope: name","Scope: everything"],
+        ticktext: ["Scope: name","Scope: everything"],
+    }
+};
+Plotly.newPlot(document.getElementById('phpbench-component-14'), data, layout);
+</script>
+            </div>
+    </body>
+    <footer>
+        <center>
+        Generated by <a href="https://github.com/phpbench/phpbench">PHPBench</a>
+        </center>
+    </footer>
+    <script type="text/javascript">
+    /**
+     * Resize Plots when tab is activated
+     */
+    (function () {
+        var tabEls = document.querySelectorAll('button[data-bs-toggle="tab"]')
+        tabEls.forEach(function (tabEl) {
+            tabEl.addEventListener('shown.bs.tab', function (event) {
+console.log(event);
+                var docs = event.target.parentNode.parentNode.parentNode.querySelectorAll('.tab-pane.active .js-plotly-plot');
+                docs.forEach(function (plotEl) {
+                    Plotly.relayout(plotEl, {autosize: true});
+                });
+            });
+        });
+    })();
+    </script>
+</html>

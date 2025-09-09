@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Benchmark;
+namespace Benchmark;
 
 abstract class ReflectionBench
 {
@@ -10,8 +10,9 @@ abstract class ReflectionBench
 	public const ITERATIONS_WITHOUT_CACHE = 100;
 
 	public const GROUP_INITIALIZATION = 'initialization';
-	public const GROUP_COLD_CACHE = 'cold_cache';
-	public const GROUP_WARM_CACHE = 'warm_cache';
+	public const GROUP_MEMORY_CACHE = 'memory_cache';
+	public const GROUP_FILE_CACHE = 'file_cache';
+	public const GROUP_NO_CACHE = 'no_cache';
 
 	public function scopeProvider(): iterable
 	{

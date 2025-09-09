@@ -1,0 +1,31 @@
+{
+	"require": {
+		"php": ">=8.2",
+		"phpbench/phpbench": "^1.2",
+		"kcs/class-finder": "^0.6.1",
+		"good-php/reflection": "*",
+		"roave/better-reflection": "^6.36"
+	},
+	"repositories": [
+		{
+			"type": "path",
+			"url": "../"
+		}
+	],
+	"autoload": {
+		"psr-4": {
+			"Benchmark\\": "src/"
+		}
+	},
+	"scripts": {
+		"benchmark": [
+			"Composer\\Config::disableProcessTimeout",
+			"vendor/bin/phpbench run src"
+		]
+	},
+	"minimum-stability": "dev",
+	"prefer-stable": true,
+	"config": {
+		"sort-packages": true
+	}
+}

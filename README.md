@@ -2,6 +2,33 @@
 
 Reflection that accounts for features that are in static analysers, but aren't in the language yet.
 
+```php
+$reflector = new ReflectorBuilder()
+	->withFileCache()
+	->withMemoryCache()
+	->build();
+
+// Reflect a Collection class with generic types: Collection<int, \DateTime>
+$reflection = $reflector->forType(\Illuminate\Support\Collection::class, [
+	PrimitiveType::integer(), // TKey
+	\DateTime::class, // TValue
+]);
+
+// array<int, \DateTime>
+$reflection->property('items')->type();
+
+// \DateTime
+$reflection->method('prepend')->parameter('value')->type();
+
+// Traversable<int, \DateTime>
+$reflection->method('getIterator')->returnType();
+```
+
+### Who is it for?
+
+If you've used reflection and missed having PHPDoc-parsed types and other information - this
+is for you.
+
 ### Why?
 
 PHP is in a state where some very vital features only exist in userland (i.e. PHPStan),
@@ -9,27 +36,21 @@ like generics, tuple types, conditional types, type aliases and more. When you n
 reflection, you usually also need it to work with all of those userland features. Obviously,
 PHP's built in reflection doesn't do that.
 
-While custom reflection libraries do exist (like `roave/better-reflection`), none
-of them are capable of parsing or understanding PHPDoc based types and features
-from modern-day PHP. Furthermore, not all of them are performant enough to be used
-in runtime (e.g. outside of tooling).
+### Can I use it in runtime?
 
-This library aims to be both runtime-ready (using some performant caching and lazy resolving)
-and to cover the entire set of features of both built-in reflection and PHPStan features.
+Yes! That's the point - you can and should use it in runtime. 
 
-The perfect scenario here would be for PHPStan to simply extract it's own reflection
-into a package, but this has already [been declined](https://github.com/phpstan/phpstan/discussions/4646) 
-by the project author @ondrejmirtes, and understandably so. I've tried extracting it
-myself by relocating parts of the PHPStan code, but it has proven to be complex,
-unreliable and most importantly - slow to execute. 
+- need to reflect properties of a class for serialization? Done. 
+- need to reflect constructor parameters for dependency injection? Done.
+- need to reflect methods of a class for an auto-mapped HTTP client? Done.
 
-So instead this projects attempts to fill the holes of the native reflection and modernize
-the API in the process. Most of the API is defined with interfaces which you can extend
-to implement things you need done.
+It uses some clever caching and does a lot of computations lazily. While the performance
+is worse than the native reflection, it is still much better than the alternatives,
+and is definitely quick enough for runtime. See benchmarks below.
 
-### What does it do
+### What features are supported?
 
-Here are some of the features supported (or would be welcomed):
+Here are some of the features supported:
 
 - [X] Reflection for classes, traits, interfaces and enums
 - [x] Generics (reflect and substitute)
@@ -42,99 +63,66 @@ Here are some of the features supported (or would be welcomed):
 - [ ] Extensions reflection (spl, zip, ds, dom etc)
 - [ ] Template types inference for functions
 
-### What not to expect
-
-Unlikely to have support:
-- "static" reflection (not executing PHP files that are being reflected)
-- reflecting non-PHP or invalid PHP files
-
-Unfortunately these creep into the territory of `roave/better-reflection`, which is just
-way too slow for runtime use. 
-
 ### How reliable is this?
 
-It's in alpha, so this is de-facto not stable. However, we do take measures to avoid
-as much problems as possible. For example, the entire codebase uses the `max` level
-of PHPStan with little to no ignored errors; it's covered with simple integration
-and unit tests at 90% coverage.
+It's been used in production by a large project for some time. It's somewhat stable.
+
+To avoid as much problems as possible, we aim for:
+- phpstan `max` level with as little ignored errors as possible
+- 90% tests coverage
 
 That said, due to the dynamic nature of PHPDoc and complex type system it provides,
 it's expected to encounter bugs and problems.
 
 ### How fast is this?
 
-As much as possible of reflection information is cached to disk into `.php` files. When
-you request a reflection of a type, it only does `require cache_file_for_something.php`,
-wraps it in a reflection class and (optionally) substitutes template types. No
-heavy parsing is done for previously reflected types.
+Pretty fast - in range of nanoseconds with warm cache. Here is a reference benchmark, 
+performed on an M1 MacBook Pro with OpCache and JIT:
 
-Because of this, it's pretty fast (nanoseconds range) *after* initial caching. Both
-full Native PHP reflection and Roave/BetterReflection are generally faster, but keep in 
-mind this also has to parse AST and DocBlocks to extract generics and types. Still,
-I believe it to be fast enough to actually be used in production if you enable the cache.
+![benchmark](./benchmark/result/screenshot.png)
 
-Here is a reference benchmark, performed on an M1 MacBook Pro with OpCache and JIT:
+It's obviously not the fastest, but it down to nanoseconds with cache, and it does 
+more than it's contenders :)
 
-```
-~/Projects/Personal/good-php/reflection> docker run -it --rm -v $"($env.PWD):/app" -v $"($env.PWD)/misc/opcache.ini:/usr/local/etc/php/conf.d/docker-php-ext-opcache.ini" -w /app chialab/php-dev:8.2 composer benchmark 
-> Composer\Config::disableProcessTimeout
-> vendor/bin/phpbench run tests/Benchmark
-PHPBench (1.4.0) running benchmarks... #standwithukraine
-with configuration file: /app/phpbench.json
-with PHP version 8.2.27, xdebug ✔, opcache ✔
+There's one other alternative I'm aware of - `typhoon-php/reflection`. Here is a separate
+benchmark for it (I couldn't generate it in the same graph because of dependency mismatch):
 
-\Tests\Benchmark\ThisReflectionBench
+![typhoon benchmark](./benchmark/typhoon/result/screenshot.png)
 
-    benchWarmWithMemoryCache # only name....I49 - Mo0.009ms (±4.68%) [2.149mb / 4.911mb]
-    benchWarmWithMemoryCache # everything...I49 - Mo0.038ms (±4.53%) [3.487mb / 4.911mb]
-    benchWarmWithFileCache # only name......I49 - Mo0.033ms (±2.12%) [2.229mb / 4.911mb]
-    benchWarmWithFileCache # everything.....I49 - Mo0.068ms (±3.02%) [6.352mb / 6.385mb]
-    benchCold # only name...................I199 - Mo2.519ms (±15.44%) [2.166mb / 4.911mb]
-    benchCold # everything..................I199 - Mo2.701ms (±12.87%) [2.267mb / 4.911mb]
-    benchColdIncludingInitializationAndAuto.I199 - Mo72.206ms (±3.00%) [2.132mb / 4.911mb]
-    benchColdIncludingInitializationAndAuto.I199 - Mo77.608ms (±10.01%) [2.217mb / 4.911mb]
+It's a bit slower, but still plenty fast.
 
-\Tests\Benchmark\NativeReflectionBench
+### What not to expect?
 
-    benchWarm # only name...................I49 - Mo0.001ms (±13.48%) [575.552kb / 4.910mb]
-    benchWarm # everything..................I49 - Mo0.002ms (±9.02%) [575.616kb / 4.910mb]
-    benchCold # only name...................I199 - Mo0.005ms (±39.39%) [576.376kb / 4.911mb]
-    benchCold # everything..................I199 - Mo0.013ms (±32.23%) [576.376kb / 4.911mb]
+Unlikely to have support:
+- "static" reflection (not executing PHP files that are being reflected)
+- reflecting non-PHP or invalid PHP files
 
-\Tests\Benchmark\BetterReflectionBench
+Unfortunately these creep into the territory of `roave/better-reflection`, which is just
+way too slow for runtime use.
 
-    benchWarmWithMemoryCache # only name....I49 - Mo0.003ms (±4.81%) [3.096mb / 4.911mb]
-    benchWarmWithMemoryCache # everything...I49 - Mo0.010ms (±3.97%) [3.137mb / 4.911mb]
-    benchCold # only name...................I199 - Mo1.265ms (±17.02%) [3.116mb / 4.911mb]
-    benchCold # everything..................I199 - Mo1.797ms (±13.45%) [3.103mb / 4.911mb]
-    benchColdIncludingInitializationAndAuto.I199 - Mo58.146ms (±9.89%) [3.095mb / 4.911mb]
-    benchColdIncludingInitializationAndAuto.I199 - Mo61.066ms (±3.91%) [3.074mb / 4.911mb]
+### Why not just use `roave/better-reflection` or similar?
 
-Subjects: 9, Assertions: 0, Failures: 0, Errors: 0
-~/Projects/Personal/good-php/reflection> docker run -it --rm -v $"($env.PWD)/benchmark/typhoon:/app" -v $"($env.PWD)/misc/opcache.ini:/usr/local/etc/php/conf.d/docker-php-ext-opcache.ini" -v $"($env.PWD)/tests/Stubs:/app/tests/Stubs" -w /app chialab/php-dev:8.2 composer benchmark riant everything 
-> Composer\Config::disableProcessTimeout
-> vendor/bin/phpbench run src
-PHPBench (1.4.0) running benchmarks... #standwithukraine
-with configuration file: /app/phpbench.json
-with PHP version 8.2.27, xdebug ✔, opcache ✔
+While custom reflection libraries do exist (like `roave/better-reflection`), they
+generally aren't suitable for runtime use. That is, they're great at providing a lot
+of information, but they're also resource-hungry and quite slow - because they
+were created for a different purpose.
 
-\TyphoonReflectionBench
+Additionally, many don't provide a type system or nice APIs - they generally built
+upon PHP's native reflection, but that doesn't play well with PHPDoc types.
 
-    benchWarmWithMemoryCache # only name....I49 - Mo0.006ms (±10.36%) [1.975mb / 4.841mb]
-    benchWarmWithMemoryCache # everything...I49 - Mo0.018ms (±3.40%) [2.042mb / 4.841mb]
-    benchWarmWithFileCache # only name......I49 - Mo0.135ms (±2.14%) [2.031mb / 4.841mb]
-    benchWarmWithFileCache # everything.....I49 - Mo0.148ms (±2.74%) [2.033mb / 4.841mb]
-    benchCold # only name...................I199 - Mo6.987ms (±9.90%) [1.904mb / 4.840mb]
-    benchCold # everything..................I199 - Mo7.288ms (±10.82%) [1.971mb / 4.840mb]
-    benchColdIncludingInitializationAndAuto.I199 - Mo96.134ms (±8.41%) [1.900mb / 4.841mb]
-    benchColdIncludingInitializationAndAuto.I199 - Mo96.932ms (±11.23%) [1.967mb / 4.841mb]
+### What about `phpstan`'s reflection?
 
-Subjects: 4, Assertions: 0, Failures: 0, Errors: 0
-```
+The perfect scenario here would be for PHPStan to simply extract it's own reflection
+into a package, but this has already [been declined](https://github.com/phpstan/phpstan/discussions/4646)
+by the project author @ondrejmirtes, and understandably so. I've tried extracting it
+myself by relocating parts of the PHPStan code, but it has proven to be complex,
+unreliable and most importantly - slow to execute.
 
-With cache, it's the slowest of them all. But the difference is in __nanoseconds__.
+So instead this projects attempts to fill the holes of the native reflection and modernize
+the API in the process. Most of the API is defined with interfaces which you can extend
+to implement things you need done.
 
-### How does it work
+### How does it work internally?
 
 Unfortunately, it's not as simple as just using the native reflection and parsing some
 PHPDocs on the side. Although PHP's Reflection is quite powerful, it doesn't provide all

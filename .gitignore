@@ -3,6 +3,8 @@
 !.idea/fileTemplates
 
 # Dependencies
+/benchmark/vendor
+/benchmark/composer.lock
 /benchmark/typhoon/vendor/
 /benchmark/typhoon/composer.lock
 /vendor/

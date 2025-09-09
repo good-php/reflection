@@ -1,7 +1,8 @@
 <?php
 
-namespace Tests\Benchmark;
+namespace Benchmark;
 
+use Benchmark\Stubs\Classes\ClassStub;
 use GoodPhp\Reflection\Reflection\ClassReflection;
 use GoodPhp\Reflection\Reflector;
 use GoodPhp\Reflection\ReflectorBuilder;
@@ -12,7 +13,6 @@ use PhpBench\Attributes\Iterations;
 use PhpBench\Attributes\ParamProviders;
 use PhpBench\Attributes\Revs;
 use PhpBench\Attributes\Warmup;
-use Tests\Stubs\Classes\ClassStub;
 
 class GoodReflectionBench extends ReflectionBench
 {
@@ -42,7 +42,7 @@ class GoodReflectionBench extends ReflectionBench
 	#[Warmup(1)]
 	#[BeforeMethods('setUpWithMemoryCache')]
 	#[ParamProviders('scopeProvider')]
-	#[Groups([ReflectionBench::GROUP_WARM_CACHE])]
+	#[Groups([ReflectionBench::GROUP_MEMORY_CACHE])]
 	public function benchWarmWithMemoryCache(array $params): void
 	{
 		$this->callMethods($params['scope'], $this->reflector->forType(ClassStub::class));
@@ -53,6 +53,7 @@ class GoodReflectionBench extends ReflectionBench
 	#[Warmup(1)]
 	#[BeforeMethods('setUpWithFileCache')]
 	#[ParamProviders('scopeProvider')]
+	#[Groups([ReflectionBench::GROUP_FILE_CACHE])]
 	public function benchWarmWithFileCache(array $params): void
 	{
 		$this->callMethods($params['scope'], $this->reflector->forType(ClassStub::class));
@@ -62,7 +63,7 @@ class GoodReflectionBench extends ReflectionBench
 	#[Warmup(1)]
 	#[BeforeMethods('setUpWithoutCache')]
 	#[ParamProviders('scopeProvider')]
-	#[Groups([ReflectionBench::GROUP_COLD_CACHE])]
+	#[Groups([ReflectionBench::GROUP_NO_CACHE])]
 	public function benchCold(array $params): void
 	{
 		$this->callMethods($params['scope'], $this->reflector->forType(ClassStub::class));
@@ -70,7 +71,7 @@ class GoodReflectionBench extends ReflectionBench
 
 	#[Iterations(ReflectionBench::ITERATIONS_WITHOUT_CACHE)]
 	#[ParamProviders('scopeProvider')]
-	#[Groups([ReflectionBench::GROUP_COLD_CACHE, ReflectionBench::GROUP_INITIALIZATION])]
+	#[Groups([ReflectionBench::GROUP_NO_CACHE, ReflectionBench::GROUP_INITIALIZATION])]
 	public function benchColdIncludingInitializationAndAutoLoad(array $params): void
 	{
 		$this->setUpWithoutCache();
