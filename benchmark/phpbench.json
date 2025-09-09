@@ -1,0 +1,84 @@
+{
+  	"$schema":"./vendor/phpbench/phpbench/phpbench.schema.json",
+  	"runner.bootstrap": "./vendor/autoload.php",
+	"runner.time_unit": "ms",
+	"runner.progress_summary_variant_format": "label(\"Mo\") ~ display_as_time(mode(variant.time.avg), coalesce(subject.time_unit,\"time\"), subject.time_precision, subject.time_mode) ~ \n\" (\" ~ rstdev(variant.time.avg) ~ \")\" ~ \" [\" ~ mode(variant.mem.final) as memory ~ \" / \" ~ mode(variant.mem.peak) as memory ~ \"]\"",
+	"report.outputs": {
+		"html": {
+			"renderer": "html",
+			"path": "./result/result.html",
+			"title": "All Your Benchmark Are Belong to Us"
+		}
+	},
+	"report.generators": {
+		"warm_memory_cache": {
+			"title": "Warm in-memory cache",
+			"description": "After the first time given class was reflected by this process.",
+			"generator": "component",
+			"filter": "contains(subject_groups, 'memory_cache')",
+			"components": [
+				{
+					"component": "bar_chart_aggregate",
+					"x_partition": "'Scope: ' ~ variant_params['scope']",
+					"bar_partition": "benchmark_name",
+					"y_expr": "mode(partition['result_time_avg']) as time",
+					"y_axes_label": "yValue as time"
+				}
+			]
+		},
+		"warm_file_cache": {
+			"title": "Warm file cache",
+			"description": "After the first time given class was reflected.",
+			"generator": "component",
+			"filter": "contains(subject_groups, 'file_cache')",
+			"components": [
+				{
+					"component": "bar_chart_aggregate",
+					"x_partition": "'Scope: ' ~ variant_params['scope']",
+					"bar_partition": "benchmark_name",
+					"y_expr": "mode(partition['result_time_avg']) as time",
+					"y_axes_label": "yValue as time"
+				}
+			]
+		},
+		"no_cache": {
+			"title": "No cache",
+			"description": "The first time reflecting a class.",
+			"generator": "component",
+			"filter": "contains(subject_groups, 'no_cache') and contains(subject_groups, 'initialization') = false",
+			"components": [
+				{
+					"component": "bar_chart_aggregate",
+					"x_partition": "'Scope: ' ~ variant_params['scope']",
+					"bar_partition": "benchmark_name",
+					"y_expr": "mode(partition['result_time_avg']) as time",
+					"y_axes_label": "yValue as time"
+				}
+			]
+		},
+		"no_cache_plus_initialization": {
+			"title": "No cache + initialization",
+			"description": "Autoloading and the first time reflecting a class.",
+			"generator": "component",
+			"filter": "contains(subject_groups, 'no_cache') and contains(subject_groups, 'initialization')",
+			"components": [
+				{
+					"component": "bar_chart_aggregate",
+					"x_partition": "'Scope: ' ~ variant_params['scope']",
+					"bar_partition": "benchmark_name",
+					"y_expr": "mode(partition['result_time_avg']) as time",
+					"y_axes_label": "yValue as time"
+				}
+			]
+		},
+		"all": {
+			"generator": "composite",
+			"reports": [
+				"warm_memory_cache",
+				"warm_file_cache",
+				"no_cache",
+				"no_cache_plus_initialization"
+			]
+		}
+	}
+}

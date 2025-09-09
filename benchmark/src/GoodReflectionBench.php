@@ -1,19 +1,20 @@
 <?php
 
-namespace Tests\Benchmark;
+namespace Benchmark;
 
+use Benchmark\Stubs\Classes\ClassStub;
 use GoodPhp\Reflection\Reflection\ClassReflection;
 use GoodPhp\Reflection\Reflector;
 use GoodPhp\Reflection\ReflectorBuilder;
 use Illuminate\Support\Str;
 use PhpBench\Attributes\BeforeMethods;
+use PhpBench\Attributes\Groups;
 use PhpBench\Attributes\Iterations;
 use PhpBench\Attributes\ParamProviders;
 use PhpBench\Attributes\Revs;
 use PhpBench\Attributes\Warmup;
-use Tests\Stubs\Classes\ClassStub;
 
-class ThisReflectionBench
+class GoodReflectionBench extends ReflectionBench
 {
 	private Reflector $reflector;
 
@@ -36,63 +37,54 @@ class ThisReflectionBench
 		$this->reflector = (new ReflectorBuilder())->build();
 	}
 
-	#[Iterations(50)]
+	#[Iterations(ReflectionBench::ITERATIONS_WITH_CACHE)]
 	#[Revs(200)]
 	#[Warmup(1)]
 	#[BeforeMethods('setUpWithMemoryCache')]
-	#[ParamProviders('hardnessProvider')]
+	#[ParamProviders('scopeProvider')]
+	#[Groups([ReflectionBench::GROUP_MEMORY_CACHE])]
 	public function benchWarmWithMemoryCache(array $params): void
 	{
-		$this->callMethods($params['hardness'], $this->reflector->forType(ClassStub::class));
+		$this->callMethods($params['scope'], $this->reflector->forType(ClassStub::class));
 	}
 
-	#[Iterations(50)]
-	#[Revs(200)]
+	#[Iterations(ReflectionBench::ITERATIONS_WITH_CACHE)]
+	#[Revs(ReflectionBench::REVS_WITH_CACHE)]
 	#[Warmup(1)]
 	#[BeforeMethods('setUpWithFileCache')]
-	#[ParamProviders('hardnessProvider')]
+	#[ParamProviders('scopeProvider')]
+	#[Groups([ReflectionBench::GROUP_FILE_CACHE])]
 	public function benchWarmWithFileCache(array $params): void
 	{
-		$this->callMethods($params['hardness'], $this->reflector->forType(ClassStub::class));
+		$this->callMethods($params['scope'], $this->reflector->forType(ClassStub::class));
 	}
 
-	#[Iterations(200)]
+	#[Iterations(ReflectionBench::ITERATIONS_WITHOUT_CACHE)]
 	#[Warmup(1)]
 	#[BeforeMethods('setUpWithoutCache')]
-	#[ParamProviders('hardnessProvider')]
+	#[ParamProviders('scopeProvider')]
+	#[Groups([ReflectionBench::GROUP_NO_CACHE])]
 	public function benchCold(array $params): void
 	{
-		$this->callMethods($params['hardness'], $this->reflector->forType(ClassStub::class));
+		$this->callMethods($params['scope'], $this->reflector->forType(ClassStub::class));
 	}
 
-	#[Iterations(200)]
-	#[ParamProviders('hardnessProvider')]
+	#[Iterations(ReflectionBench::ITERATIONS_WITHOUT_CACHE)]
+	#[ParamProviders('scopeProvider')]
+	#[Groups([ReflectionBench::GROUP_NO_CACHE, ReflectionBench::GROUP_INITIALIZATION])]
 	public function benchColdIncludingInitializationAndAutoLoad(array $params): void
 	{
 		$this->setUpWithoutCache();
 
-		$this->callMethods($params['hardness'], $this->reflector->forType(ClassStub::class));
+		$this->callMethods($params['scope'], $this->reflector->forType(ClassStub::class));
 	}
 
-	public function hardnessProvider(): iterable
+	private function callMethods(string $scope, ClassReflection $reflection): void
 	{
-		yield 'only name' => [
-			'hardness' => ['name' => true, 'everything' => false],
-		];
+		$reflection->fileName();
+		$reflection->qualifiedName();
 
-		yield 'everything' => [
-			'hardness' => ['name' => true, 'everything' => true],
-		];
-	}
-
-	private function callMethods(array $hardness, ClassReflection $reflection): void
-	{
-		if ($hardness['name']) {
-			$reflection->fileName();
-			$reflection->qualifiedName();
-		}
-
-		if ($hardness['everything']) {
+		if ($scope === 'everything') {
 			$reflection->attributes()->all();
 			$reflection->typeParameters();
 			$reflection->extends();

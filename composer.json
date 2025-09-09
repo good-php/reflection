@@ -24,12 +24,10 @@
 		"pestphp/pest": "^3.0",
 		"phake/phake": "^4.2",
 		"php-cs-fixer/shim": "~3.80.0",
-		"phpbench/phpbench": "^1.2",
 		"phpstan/phpstan": "~2.1.0",
 		"phpstan/phpstan-mockery": "^2.0",
 		"phpstan/phpstan-phpunit": "^2.0",
 		"phpstan/phpstan-webmozart-assert": "^2.0",
-		"roave/better-reflection": "^6.36",
 		"symfony/yaml": "^7.3",
 		"tenantcloud/php-cs-fixer-rule-sets": "~3.4.1"
 	},
@@ -50,11 +48,7 @@
 		"test": "vendor/bin/pest",
 		"coverage": "XDEBUG_MODE=coverage vendor/bin/pest --coverage-html coverage",
 		"cs-fix": "vendor/bin/php-cs-fixer fix -v --show-progress=dots",
-		"phpstan":  "vendor/bin/phpstan analyse --memory-limit=2G",
-		"benchmark": [
-			"Composer\\Config::disableProcessTimeout",
-			"vendor/bin/phpbench run tests/Benchmark"
-		]
+		"phpstan":  "vendor/bin/phpstan analyse --memory-limit=2G"
 	},
 	"minimum-stability": "stable",
 	"prefer-stable": true,

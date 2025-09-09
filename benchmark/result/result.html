@@ -1,0 +1,178 @@
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>All Your Benchmark Are Belong to Us</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    </head>
+    <body class="container">
+                <h1>All Your Benchmark Are Belong to Us</h1>
+        <hr/>
+                    <div>
+            <h2>Warm in-memory cache</h2>
+                <p>After the first time given class was reflected by this process.</p>
+                            <div id="phpbench-component-4" width="400" height="100"></div>
+<script>
+var data = [
+        {
+        x: ["Scope: name","Scope: everything"],
+        name: 'NativeReflectionBench',
+        y: [0.10001956947162427,0.9215655577299412],
+        type: 'bar',
+            },
+        {
+        x: ["Scope: name","Scope: everything"],
+        name: 'GoodReflectionBench',
+        y: [4.857534246575368,8.067671232876767],
+        type: 'bar',
+            },
+        {
+        x: ["Scope: name","Scope: everything"],
+        name: 'BetterReflectionBench',
+        y: [2.3129549902152626,13.768708414873107],
+        type: 'bar',
+            },
+    ]
+var layout = {
+    barmode: 'group',
+    yaxis: {
+        tickmode: 'array',
+        tickvals: [0,1.3768708414873108,2.7537416829746215,4.130612524461933,5.507483365949243,6.884354207436553,8.261225048923865,9.638095890411176,11.014966731898486,12.391837573385796,13.768708414873107],
+        ticktext: ["0.000<span style=\"color: #555; font-weight: bold;\">\u03bcs<\/span>\n","1.377<span style=\"color: #555; font-weight: bold;\">\u03bcs<\/span>\n","2.754<span style=\"color: #555; font-weight: bold;\">\u03bcs<\/span>\n","4.131<span style=\"color: #555; font-weight: bold;\">\u03bcs<\/span>\n","5.507<span style=\"color: #555; font-weight: bold;\">\u03bcs<\/span>\n","6.884<span style=\"color: #555; font-weight: bold;\">\u03bcs<\/span>\n","8.261<span style=\"color: #555; font-weight: bold;\">\u03bcs<\/span>\n","9.638<span style=\"color: #555; font-weight: bold;\">\u03bcs<\/span>\n","11.015<span style=\"color: #555; font-weight: bold;\">\u03bcs<\/span>\n","12.392<span style=\"color: #555; font-weight: bold;\">\u03bcs<\/span>\n","13.769<span style=\"color: #555; font-weight: bold;\">\u03bcs<\/span>\n"]    },
+    xaxis: {
+        tickmode: 'array',
+        tickvals: ["Scope: name","Scope: everything"],
+        ticktext: ["Scope: name","Scope: everything"],
+    }
+};
+Plotly.newPlot(document.getElementById('phpbench-component-4'), data, layout);
+</script>
+            </div>
+    <div>
+            <h2>Warm file cache</h2>
+                <p>After the first time given class was reflected.</p>
+                            <div id="phpbench-component-8" width="400" height="100"></div>
+<script>
+var data = [
+        {
+        x: ["Scope: name","Scope: everything"],
+        name: 'GoodReflectionBench',
+        y: [25.963483365948846,60.16524461839553],
+        type: 'bar',
+            },
+    ]
+var layout = {
+    barmode: 'group',
+    yaxis: {
+        tickmode: 'array',
+        tickvals: [0,6.016524461839554,12.033048923679107,18.049573385518663,24.066097847358215,30.082622309197767,36.099146771037326,42.11567123287688,48.13219569471643,54.14872015655598,60.16524461839553],
+        ticktext: ["0.000<span style=\"color: #555; font-weight: bold;\">\u03bcs<\/span>\n","6.017<span style=\"color: #555; font-weight: bold;\">\u03bcs<\/span>\n","12.033<span style=\"color: #555; font-weight: bold;\">\u03bcs<\/span>\n","18.050<span style=\"color: #555; font-weight: bold;\">\u03bcs<\/span>\n","24.066<span style=\"color: #555; font-weight: bold;\">\u03bcs<\/span>\n","30.083<span style=\"color: #555; font-weight: bold;\">\u03bcs<\/span>\n","36.099<span style=\"color: #555; font-weight: bold;\">\u03bcs<\/span>\n","42.116<span style=\"color: #555; font-weight: bold;\">\u03bcs<\/span>\n","48.132<span style=\"color: #555; font-weight: bold;\">\u03bcs<\/span>\n","54.149<span style=\"color: #555; font-weight: bold;\">\u03bcs<\/span>\n","60.165<span style=\"color: #555; font-weight: bold;\">\u03bcs<\/span>\n"]    },
+    xaxis: {
+        tickmode: 'array',
+        tickvals: ["Scope: name","Scope: everything"],
+        ticktext: ["Scope: name","Scope: everything"],
+    }
+};
+Plotly.newPlot(document.getElementById('phpbench-component-8'), data, layout);
+</script>
+            </div>
+    <div>
+            <h2>No cache</h2>
+                <p>The first time reflecting a class.</p>
+                            <div id="phpbench-component-10" width="400" height="100"></div>
+<script>
+var data = [
+        {
+        x: ["Scope: name","Scope: everything"],
+        name: 'NativeReflectionBench',
+        y: [5.033268101761266,15.583170254403175],
+        type: 'bar',
+            },
+        {
+        x: ["Scope: name","Scope: everything"],
+        name: 'GoodReflectionBench',
+        y: [2631.4363992172075,2792.0645792563664],
+        type: 'bar',
+            },
+        {
+        x: ["Scope: name","Scope: everything"],
+        name: 'BetterReflectionBench',
+        y: [1305.317025440324,2612.565557729942],
+        type: 'bar',
+            },
+    ]
+var layout = {
+    barmode: 'group',
+    yaxis: {
+        tickmode: 'array',
+        tickvals: [0,279.20645792563664,558.4129158512733,837.6193737769099,1116.8258317025466,1396.0322896281832,1675.2387475538198,1954.4452054794565,2233.651663405093,2512.85812133073,2792.0645792563664],
+        ticktext: ["0.000<span style=\"color: #555; font-weight: bold;\">\u03bcs<\/span>\n","279.206<span style=\"color: #555; font-weight: bold;\">\u03bcs<\/span>\n","558.413<span style=\"color: #555; font-weight: bold;\">\u03bcs<\/span>\n","837.619<span style=\"color: #555; font-weight: bold;\">\u03bcs<\/span>\n","1.117<span style=\"color: #555; font-weight: bold;\">ms<\/span>\n","1.396<span style=\"color: #555; font-weight: bold;\">ms<\/span>\n","1.675<span style=\"color: #555; font-weight: bold;\">ms<\/span>\n","1.954<span style=\"color: #555; font-weight: bold;\">ms<\/span>\n","2.234<span style=\"color: #555; font-weight: bold;\">ms<\/span>\n","2.513<span style=\"color: #555; font-weight: bold;\">ms<\/span>\n","2.792<span style=\"color: #555; font-weight: bold;\">ms<\/span>\n"]    },
+    xaxis: {
+        tickmode: 'array',
+        tickvals: ["Scope: name","Scope: everything"],
+        ticktext: ["Scope: name","Scope: everything"],
+    }
+};
+Plotly.newPlot(document.getElementById('phpbench-component-10'), data, layout);
+</script>
+            </div>
+    <div>
+            <h2>No cache + initialization</h2>
+                <p>Autoloading and the first time reflecting a class.</p>
+                            <div id="phpbench-component-14" width="400" height="100"></div>
+<script>
+var data = [
+        {
+        x: ["Scope: name","Scope: everything"],
+        name: 'GoodReflectionBench',
+        y: [102607.77690802357,116047.27397260274],
+        type: 'bar',
+            },
+        {
+        x: ["Scope: name","Scope: everything"],
+        name: 'BetterReflectionBench',
+        y: [84380.83365949235,79504.4853228966],
+        type: 'bar',
+            },
+    ]
+var layout = {
+    barmode: 'group',
+    yaxis: {
+        tickmode: 'array',
+        tickvals: [0,11604.727397260274,23209.45479452055,34814.18219178083,46418.9095890411,58023.63698630137,69628.36438356165,81233.09178082192,92837.8191780822,104442.54657534247,116047.27397260274],
+        ticktext: ["0.000<span style=\"color: #555; font-weight: bold;\">\u03bcs<\/span>\n","11.605<span style=\"color: #555; font-weight: bold;\">ms<\/span>\n","23.209<span style=\"color: #555; font-weight: bold;\">ms<\/span>\n","34.814<span style=\"color: #555; font-weight: bold;\">ms<\/span>\n","46.419<span style=\"color: #555; font-weight: bold;\">ms<\/span>\n","58.024<span style=\"color: #555; font-weight: bold;\">ms<\/span>\n","69.628<span style=\"color: #555; font-weight: bold;\">ms<\/span>\n","81.233<span style=\"color: #555; font-weight: bold;\">ms<\/span>\n","92.838<span style=\"color: #555; font-weight: bold;\">ms<\/span>\n","104.443<span style=\"color: #555; font-weight: bold;\">ms<\/span>\n","116.047<span style=\"color: #555; font-weight: bold;\">ms<\/span>\n"]    },
+    xaxis: {
+        tickmode: 'array',
+        tickvals: ["Scope: name","Scope: everything"],
+        ticktext: ["Scope: name","Scope: everything"],
+    }
+};
+Plotly.newPlot(document.getElementById('phpbench-component-14'), data, layout);
+</script>
+            </div>
+    </body>
+    <footer>
+        <center>
+        Generated by <a href="https://github.com/phpbench/phpbench">PHPBench</a>
+        </center>
+    </footer>
+    <script type="text/javascript">
+    /**
+     * Resize Plots when tab is activated
+     */
+    (function () {
+        var tabEls = document.querySelectorAll('button[data-bs-toggle="tab"]')
+        tabEls.forEach(function (tabEl) {
+            tabEl.addEventListener('shown.bs.tab', function (event) {
+console.log(event);
+                var docs = event.target.parentNode.parentNode.parentNode.querySelectorAll('.tab-pane.active .js-plotly-plot');
+                docs.forEach(function (plotEl) {
+                    Plotly.relayout(plotEl, {autosize: true});
+                });
+            });
+        });
+    })();
+    </script>
+</html>
