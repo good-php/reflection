@@ -2,7 +2,6 @@
 	"require": {
 		"php": ">=8.2",
 		"phpbench/phpbench": "^1.2",
-		"kcs/class-finder": "^0.6.1",
 		"good-php/reflection": "*",
 		"roave/better-reflection": "^6.36"
 	},
