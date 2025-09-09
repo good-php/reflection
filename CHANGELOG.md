@@ -1,3 +1,10 @@
+## [2.0.2](https://github.com/good-php/reflection/compare/v2.0.1...v2.0.2) (2025-09-09)
+
+
+### Bug Fixes
+
+* Support for [@phpstan](https://github.com/phpstan)- and [@psalm](https://github.com/psalm)- prefixed tags with precedence ([#18](https://github.com/good-php/reflection/issues/18)) ([de13796](https://github.com/good-php/reflection/commit/de1379660f381eb38a5a3cad1fac59b7275604a2))
+
 ## [2.0.1](https://github.com/good-php/reflection/compare/v2.0.0...v2.0.1) (2025-09-07)
 
 
