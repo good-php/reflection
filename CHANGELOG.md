@@ -1,3 +1,10 @@
+# [2.1.0](https://github.com/good-php/reflection/compare/v2.0.2...v2.1.0) (2025-09-09)
+
+
+### Features
+
+* Add shorthand methods for fetching single property, method, parameter and type parameter ([#19](https://github.com/good-php/reflection/issues/19)) ([3050a42](https://github.com/good-php/reflection/commit/3050a423b51c12c46b4b4b5af4bcdfb19027aa22))
+
 ## [2.0.2](https://github.com/good-php/reflection/compare/v2.0.1...v2.0.2) (2025-09-09)
 
 
