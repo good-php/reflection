@@ -13,10 +13,13 @@ use GoodPhp\Reflection\Reflection\Attributes\Attributes;
 use GoodPhp\Reflection\Reflection\InheritsClassMembers;
 use GoodPhp\Reflection\Reflection\MethodReflection;
 use GoodPhp\Reflection\Reflection\Methods\HasMethods;
+use GoodPhp\Reflection\Reflection\Methods\HasMethodsDefaults;
 use GoodPhp\Reflection\Reflection\Properties\HasProperties;
+use GoodPhp\Reflection\Reflection\Properties\HasPropertiesDefaults;
 use GoodPhp\Reflection\Reflection\PropertyReflection;
 use GoodPhp\Reflection\Reflection\TraitReflection;
 use GoodPhp\Reflection\Reflection\Traits\UsedTraitsReflection;
+use GoodPhp\Reflection\Reflection\TypeParameters\HasTypeParametersDefaults;
 use GoodPhp\Reflection\Reflection\TypeParameters\TypeParameterReflection;
 use GoodPhp\Reflection\Reflector;
 use GoodPhp\Reflection\Type\NamedType;
@@ -30,6 +33,15 @@ use ReflectionClass;
  */
 final class NpdTraitReflection extends NpdTypeReflection implements TraitReflection
 {
+	/** @use HasMethodsDefaults<ReflectableType> */
+	use HasMethodsDefaults;
+
+	/** @use HasPropertiesDefaults<ReflectableType> */
+	use HasPropertiesDefaults;
+
+	/** @use HasTypeParametersDefaults<$this> */
+	use HasTypeParametersDefaults;
+
 	/** @use InheritsClassMembers<ReflectableType> */
 	use InheritsClassMembers;
 

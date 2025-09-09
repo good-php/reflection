@@ -12,6 +12,8 @@ use GoodPhp\Reflection\Reflection\InheritsClassMembers;
 use GoodPhp\Reflection\Reflection\InterfaceReflection;
 use GoodPhp\Reflection\Reflection\MethodReflection;
 use GoodPhp\Reflection\Reflection\Methods\HasMethods;
+use GoodPhp\Reflection\Reflection\Methods\HasMethodsDefaults;
+use GoodPhp\Reflection\Reflection\TypeParameters\HasTypeParametersDefaults;
 use GoodPhp\Reflection\Reflection\TypeParameters\TypeParameterReflection;
 use GoodPhp\Reflection\Reflector;
 use GoodPhp\Reflection\Type\NamedType;
@@ -26,6 +28,12 @@ use ReflectionClass;
  */
 final class NpdInterfaceReflection extends NpdTypeReflection implements InterfaceReflection
 {
+	/** @use HasMethodsDefaults<ReflectableType> */
+	use HasMethodsDefaults;
+
+	/** @use HasTypeParametersDefaults<$this> */
+	use HasTypeParametersDefaults;
+
 	/** @use InheritsClassMembers<ReflectableType> */
 	use InheritsClassMembers;
 

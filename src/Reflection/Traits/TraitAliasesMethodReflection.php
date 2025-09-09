@@ -3,8 +3,10 @@
 namespace GoodPhp\Reflection\Reflection\Traits;
 
 use GoodPhp\Reflection\Reflection\Attributes\Attributes;
+use GoodPhp\Reflection\Reflection\FunctionParameterReflection;
 use GoodPhp\Reflection\Reflection\MethodReflection;
 use GoodPhp\Reflection\Reflection\Methods\HasMethods;
+use GoodPhp\Reflection\Reflection\TypeParameters\TypeParameterReflection;
 use GoodPhp\Reflection\Type\NamedType;
 use GoodPhp\Reflection\Type\Type;
 
@@ -50,9 +52,19 @@ final class TraitAliasesMethodReflection implements MethodReflection
 		return $this->method->typeParameters();
 	}
 
+	public function typeParameter(string $name): ?TypeParameterReflection
+	{
+		return $this->method->typeParameter($name);
+	}
+
 	public function parameters(): array
 	{
 		return $this->method->parameters();
+	}
+
+	public function parameter(string|int $nameOrIndex): ?FunctionParameterReflection
+	{
+		return $this->method->parameter($nameOrIndex);
 	}
 
 	public function returnType(): ?Type

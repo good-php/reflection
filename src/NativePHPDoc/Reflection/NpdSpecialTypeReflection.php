@@ -6,6 +6,7 @@ use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\SpecialTypeDefinit
 use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\TypeParameterDefinition;
 use GoodPhp\Reflection\NativePHPDoc\Reflection\TypeParameters\NpdTypeParameterReflection;
 use GoodPhp\Reflection\Reflection\SpecialTypeReflection;
+use GoodPhp\Reflection\Reflection\TypeParameters\HasTypeParametersDefaults;
 use GoodPhp\Reflection\Reflection\TypeParameters\TypeParameterReflection;
 use GoodPhp\Reflection\Type\NamedType;
 use GoodPhp\Reflection\Type\Template\TypeParameterMap;
@@ -18,6 +19,9 @@ use GoodPhp\Reflection\Type\Type;
  */
 final class NpdSpecialTypeReflection extends NpdTypeReflection implements SpecialTypeReflection
 {
+	/** @use HasTypeParametersDefaults<$this> */
+	use HasTypeParametersDefaults;
+
 	private readonly NamedType $type;
 
 	private NamedType $staticType;

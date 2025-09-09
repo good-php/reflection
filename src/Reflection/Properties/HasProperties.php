@@ -19,4 +19,9 @@ interface HasProperties extends HasName
 	 * @return list<PropertyReflection<ReflectableType, self<ReflectableType>>>
 	 */
 	public function properties(): array;
+
+	/**
+	 * @return PropertyReflection<ReflectableType, self<ReflectableType>>|null
+	 */
+	public function property(string $name): ?PropertyReflection;
 }

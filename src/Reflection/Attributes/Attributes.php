@@ -21,6 +21,10 @@ interface Attributes extends Stringable
 	public function all(?string $className = null): array;
 
 	/**
+	 * Returns exactly one attribute of specific type, or null.
+	 *
+	 * Throws an exception if there are two or more attributes of specified type.
+	 *
 	 * @template AttributeType of object
 	 *
 	 * @param class-string<AttributeType> $className

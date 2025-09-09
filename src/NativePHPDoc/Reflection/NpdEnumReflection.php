@@ -11,6 +11,7 @@ use GoodPhp\Reflection\Reflection\EnumReflection;
 use GoodPhp\Reflection\Reflection\InheritsClassMembers;
 use GoodPhp\Reflection\Reflection\MethodReflection;
 use GoodPhp\Reflection\Reflection\Methods\HasMethods;
+use GoodPhp\Reflection\Reflection\Methods\HasMethodsDefaults;
 use GoodPhp\Reflection\Reflection\Traits\UsedTraitsReflection;
 use GoodPhp\Reflection\Reflector;
 use GoodPhp\Reflection\Type\NamedType;
@@ -24,6 +25,9 @@ use ReflectionEnum;
  */
 final class NpdEnumReflection extends NpdTypeReflection implements EnumReflection
 {
+	/** @use HasMethodsDefaults<ReflectableType> */
+	use HasMethodsDefaults;
+
 	/** @use InheritsClassMembers<ReflectableType> */
 	use InheritsClassMembers;
 
