@@ -14,15 +14,17 @@ use GoodPhp\Reflection\Reflection\ClassReflection;
 use GoodPhp\Reflection\Reflection\InheritsClassMembers;
 use GoodPhp\Reflection\Reflection\MethodReflection;
 use GoodPhp\Reflection\Reflection\Methods\HasMethods;
+use GoodPhp\Reflection\Reflection\Methods\HasMethodsDefaults;
 use GoodPhp\Reflection\Reflection\Properties\HasProperties;
+use GoodPhp\Reflection\Reflection\Properties\HasPropertiesDefaults;
 use GoodPhp\Reflection\Reflection\PropertyReflection;
 use GoodPhp\Reflection\Reflection\Traits\UsedTraitsReflection;
+use GoodPhp\Reflection\Reflection\TypeParameters\HasTypeParametersDefaults;
 use GoodPhp\Reflection\Reflection\TypeParameters\TypeParameterReflection;
 use GoodPhp\Reflection\Reflector;
 use GoodPhp\Reflection\Type\NamedType;
 use GoodPhp\Reflection\Type\Template\TypeParameterMap;
 use GoodPhp\Reflection\Type\TypeProjector;
-use Illuminate\Support\Arr;
 use ReflectionClass;
 
 /**
@@ -32,6 +34,15 @@ use ReflectionClass;
  */
 final class NpdClassReflection extends NpdTypeReflection implements ClassReflection
 {
+	/** @use HasMethodsDefaults<ReflectableType> */
+	use HasMethodsDefaults;
+
+	/** @use HasPropertiesDefaults<ReflectableType> */
+	use HasPropertiesDefaults;
+
+	/** @use HasTypeParametersDefaults<$this> */
+	use HasTypeParametersDefaults;
+
 	/** @use InheritsClassMembers<ReflectableType> */
 	use InheritsClassMembers;
 
@@ -219,10 +230,7 @@ final class NpdClassReflection extends NpdTypeReflection implements ClassReflect
 	 */
 	public function constructor(): ?MethodReflection
 	{
-		return Arr::first(
-			$this->methods(),
-			fn (MethodReflection $reflection) => $reflection->name() === '__construct'
-		);
+		return $this->method('__construct');
 	}
 
 	public function isAnonymous(): bool

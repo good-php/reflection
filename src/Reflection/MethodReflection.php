@@ -27,6 +27,11 @@ interface MethodReflection extends Stringable, HasAttributes, HasTypeParameters
 	 */
 	public function parameters(): array;
 
+	/**
+	 * @return FunctionParameterReflection<self<ReflectableType, DeclaringTypeReflection>>|null
+	 */
+	public function parameter(string|int $nameOrIndex): ?FunctionParameterReflection;
+
 	public function returnType(): ?Type;
 
 	/**

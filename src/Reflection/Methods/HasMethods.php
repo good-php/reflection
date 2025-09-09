@@ -19,4 +19,9 @@ interface HasMethods extends HasName
 	 * @return list<MethodReflection<ReflectableType, self<ReflectableType>>>
 	 */
 	public function methods(): array;
+
+	/**
+	 * @return MethodReflection<ReflectableType, self<ReflectableType>>|null
+	 */
+	public function method(string $name): ?MethodReflection;
 }

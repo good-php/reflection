@@ -10,7 +10,9 @@ use GoodPhp\Reflection\NativePHPDoc\Reflection\TypeParameters\NpdTypeParameterRe
 use GoodPhp\Reflection\Reflection\Attributes\Attributes;
 use GoodPhp\Reflection\Reflection\FunctionParameterReflection;
 use GoodPhp\Reflection\Reflection\MethodReflection;
+use GoodPhp\Reflection\Reflection\MethodReflectionDefaults;
 use GoodPhp\Reflection\Reflection\Methods\HasMethods;
+use GoodPhp\Reflection\Reflection\TypeParameters\HasTypeParametersDefaults;
 use GoodPhp\Reflection\Reflection\TypeParameters\TypeParameterReflection;
 use GoodPhp\Reflection\Type\NamedType;
 use GoodPhp\Reflection\Type\Template\TypeParameterMap;
@@ -27,6 +29,12 @@ use ReflectionMethod;
  */
 final class NpdMethodReflection implements MethodReflection
 {
+	/** @use HasTypeParametersDefaults<$this> */
+	use HasTypeParametersDefaults;
+
+	/** @use MethodReflectionDefaults<ReflectableType, DeclaringTypeReflection> */
+	use MethodReflectionDefaults;
+
 	private readonly ReflectionMethod $nativeReflection;
 
 	/** @var list<TypeParameterReflection<$this>> */
