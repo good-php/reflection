@@ -2,7 +2,6 @@
 
 namespace GoodPhp\Reflection\NativePHPDoc\Definition\NativePHPDoc\PhpDoc;
 
-use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocNode;
 use PHPStan\PhpDocParser\Lexer\Lexer;
 use PHPStan\PhpDocParser\Parser\PhpDocParser;
 use PHPStan\PhpDocParser\Parser\TokenIterator;
@@ -21,18 +20,18 @@ class PhpDocStringParser
 	/**
 	 * @param string|ReflectionClass<object>|ReflectionProperty|ReflectionMethod|null $input
 	 */
-	public function parse(string|ReflectionClass|ReflectionProperty|ReflectionMethod|null $input): PhpDocNode
+	public function parse(string|ReflectionClass|ReflectionProperty|ReflectionMethod|null $input): ParsedPhpDoc
 	{
 		if ($input instanceof Reflector) {
 			$input = $input->getDocComment() ?: null;
 		}
 
 		if (!$input) {
-			return new PhpDocNode([]);
+			return ParsedPhpDoc::empty();
 		}
 
 		$tokens = new TokenIterator($this->lexer->tokenize($input));
 
-		return $this->phpDocParser->parse($tokens);
+		return new ParsedPhpDoc($this->phpDocParser->parse($tokens));
 	}
 }

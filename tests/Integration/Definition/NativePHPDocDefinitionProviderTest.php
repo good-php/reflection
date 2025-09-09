@@ -44,6 +44,7 @@ use PHPStan\PhpDocParser\Parser\TypeParser;
 use PHPStan\PhpDocParser\ParserConfig;
 use PHPUnit\Framework\Attributes\DataProvider;
 use ReflectionMethod;
+use stdClass;
 use Tests\Integration\IntegrationTestCase;
 use Tests\Stubs\Classes\AllMissingTypes;
 use Tests\Stubs\Classes\AllNativeTypes;
@@ -54,6 +55,8 @@ use Tests\Stubs\Classes\CovariantParameter;
 use Tests\Stubs\Classes\DoubleTemplateType;
 use Tests\Stubs\Classes\InvariantParameter;
 use Tests\Stubs\Classes\ParentClassStub;
+use Tests\Stubs\Classes\PrefixedPhpDocTags;
+use Tests\Stubs\Classes\SingleTemplateTypeImpl;
 use Tests\Stubs\Classes\SomeStub;
 use Tests\Stubs\Enums\BackedEnum;
 use Tests\Stubs\Enums\UnitEnum;
@@ -967,6 +970,68 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 							),
 						],
 						returnType: MixedType::get(),
+					),
+				],
+			),
+		];
+
+		yield PrefixedPhpDocTags::class => [
+			PrefixedPhpDocTags::class,
+			new ClassTypeDefinition(
+				qualifiedName: PrefixedPhpDocTags::class,
+				fileName: realpath(__DIR__ . '/../../Stubs/Classes/PrefixedPhpDocTags.php'),
+				builtIn: false,
+				anonymous: false,
+				final: false,
+				abstract: false,
+				typeParameters: [
+					new TypeParameterDefinition(
+						name: 'TPhpStan',
+						variadic: false,
+						upperBound: null,
+						variance: TemplateTypeVariance::INVARIANT,
+					),
+					new TypeParameterDefinition(
+						name: 'TPsalmCovariant',
+						variadic: false,
+						upperBound: PrimitiveType::integer(),
+						variance: TemplateTypeVariance::COVARIANT,
+					),
+				],
+				extends: new NamedType(SingleTemplateTypeImpl::class, [
+					PrimitiveType::integer(),
+				]),
+				implements: [
+					new NamedType(SingleGenericInterface::class, [
+						PrimitiveType::string(),
+					]),
+				],
+				uses: new UsedTraitsDefinition(),
+				properties: [
+					new PropertyDefinition(
+						name: 'property',
+						type: new NamedType(stdClass::class),
+						hasDefaultValue: false,
+						isPromoted: false,
+					),
+				],
+				methods: [
+					new MethodDefinition(
+						name: 'method',
+						typeParameters: [],
+						parameters: [
+							new FunctionParameterDefinition(
+								name: 'param1',
+								type: PrimitiveType::boolean(),
+								hasDefaultValue: false,
+							),
+							new FunctionParameterDefinition(
+								name: 'param2',
+								type: new NamedType(stdClass::class),
+								hasDefaultValue: false,
+							),
+						],
+						returnType: PrimitiveType::integer(),
 					),
 				],
 			),
