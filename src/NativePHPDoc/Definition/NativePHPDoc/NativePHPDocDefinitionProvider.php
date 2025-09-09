@@ -8,6 +8,7 @@ use GoodPhp\Reflection\NativePHPDoc\Definition\NativePHPDoc\File\FileClassLikeCo
 use GoodPhp\Reflection\NativePHPDoc\Definition\NativePHPDoc\File\FileClassLikeContext\TraitUse;
 use GoodPhp\Reflection\NativePHPDoc\Definition\NativePHPDoc\File\FileContextParser;
 use GoodPhp\Reflection\NativePHPDoc\Definition\NativePHPDoc\Native\NativeTypeMapper;
+use GoodPhp\Reflection\NativePHPDoc\Definition\NativePHPDoc\PhpDoc\ParsedPhpDoc;
 use GoodPhp\Reflection\NativePHPDoc\Definition\NativePHPDoc\PhpDoc\PhpDocStringParser;
 use GoodPhp\Reflection\NativePHPDoc\Definition\NativePHPDoc\PhpDoc\PhpDocTypeMapper;
 use GoodPhp\Reflection\NativePHPDoc\Definition\NativePHPDoc\PhpDoc\TypeAliasResolver;
@@ -30,13 +31,9 @@ use GoodPhp\Reflection\Type\Type;
 use GoodPhp\Reflection\Util\Lazy\LateInitLazy;
 use GoodPhp\Reflection\Util\Lazy\Lazy;
 use GoodPhp\Reflection\Util\ReflectionAssert;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use PHPStan\PhpDocParser\Ast\PhpDoc\ExtendsTagValueNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\ImplementsTagValueNode;
-use PHPStan\PhpDocParser\Ast\PhpDoc\ParamTagValueNode;
-use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocNode;
-use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\TemplateTagValueNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\UsesTagValueNode;
 use PHPStan\PhpDocParser\Ast\Type\TypeNode;
@@ -161,7 +158,7 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 	/**
 	 * @param ReflectionClass<covariant object> $reflection
 	 */
-	private function createTypeContext(ReflectionClass $reflection, PhpDocNode $phpDoc): TypeContext
+	private function createTypeContext(ReflectionClass $reflection, ParsedPhpDoc $phpDoc): TypeContext
 	{
 		$context = new TypeContext(
 			fileClassLikeContext: $this->fileContextParser
@@ -212,19 +209,12 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 				$phpDoc = $this->phpDocStringParser->parse($property);
 
 				// Get first @var tag (if any specified). Works for both regular and promoted properties.
-				/** @var TypeNode|null $phpDocType */
-				$phpDocType = $phpDoc->getVarTagValues()[0]->type ?? null;
+				$phpDocType = $phpDoc->firstVarTagValue()?->type;
 
 				// If none found, fallback to @param tag if it's a promoted property. The check for promoted property
 				// is important because there could be a property with the same name as a parameter, but those being unrelated.
 				if (!$phpDocType && $property->isPromoted()) {
-					/** @var ParamTagValueNode|null $paramNode */
-					$paramNode = Arr::first(
-						$constructorPhpDoc->getParamTagValues(),
-						fn (ParamTagValueNode $node) => Str::after($node->parameterName, '$') === $property->getName()
-					);
-
-					$phpDocType = $paramNode?->type;
+					$phpDocType = $constructorPhpDoc->firstParamTagValue($property->getName())?->type;
 				}
 
 				return new PropertyDefinition(
@@ -238,6 +228,7 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 					isPromoted: $property->isPromoted(),
 				);
 			})
+			->values()
 			->all();
 	}
 
@@ -254,7 +245,8 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 				$phpDoc = $this->phpDocStringParser->parse($method);
 
 				// Get first @return tag (if any specified).
-				$phpDocType = $phpDoc->getReturnTagValues()[0]->type ?? null;
+				$phpDocType = $phpDoc->firstReturnTagValue()?->type;
+
 				$context = $context->withMergedTypeParameters(
 					$this->lazyTypeParameters($phpDoc, $context)
 				);
@@ -270,13 +262,14 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 					)
 				);
 			})
+			->values()
 			->all();
 	}
 
 	/**
 	 * @return array<string, Lazy<TypeParameterDefinition>>
 	 */
-	private function lazyTypeParameters(PhpDocNode $phpDoc, TypeContext $context): array
+	private function lazyTypeParameters(ParsedPhpDoc $phpDoc, TypeContext $context): array
 	{
 		/** @var array<string, Lazy<TypeParameterDefinition>> $lazyTypeParametersMap */
 		$lazyTypeParametersMap = [];
@@ -285,11 +278,7 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 
 		// For whatever reason phpstan/phpdoc-parser doesn't parse the differences between @template and @template-covariant,
 		// so instead of using ->getTemplateTagValues() we'll filter tags manually.
-		foreach ($phpDoc->getTags() as $node) {
-			if (!$node->value instanceof TemplateTagValueNode) {
-				continue;
-			}
-
+		foreach ($phpDoc->templateTags() as $node) {
 			/** @var TemplateTagValueNode $value */
 			$value = $node->value;
 
@@ -322,7 +311,7 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 	/**
 	 * @return list<TypeParameterDefinition>
 	 */
-	private function typeParameters(PhpDocNode $phpDoc, TypeContext $context): array
+	private function typeParameters(ParsedPhpDoc $phpDoc, TypeContext $context): array
 	{
 		// The types are properly defined, but for whatever reason ->map() breaks it all.
 		return array_map(
@@ -334,21 +323,17 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 	/**
 	 * @return list<FunctionParameterDefinition>
 	 */
-	private function functionParameters(ReflectionMethod $reflection, PhpDocNode $phpDoc, TypeContext $context): array
+	private function functionParameters(ReflectionMethod $reflection, ParsedPhpDoc $phpDoc, TypeContext $context): array
 	{
 		return collect($reflection->getParameters())
 			->map(function (ReflectionParameter $parameter) use ($context, $phpDoc) {
-				/** @var ParamTagValueNode|null $phpDocType */
-				$phpDocType = Arr::first(
-					$phpDoc->getParamTagValues(),
-					fn (ParamTagValueNode $node) => Str::after($node->parameterName, '$') === $parameter->getName()
-				);
+				$paramTag = $phpDoc->firstParamTagValue($parameter->getName());
 
 				return new FunctionParameterDefinition(
 					name: $parameter->getName(),
 					type: $this->map(
 						$parameter->getType(),
-						$phpDocType?->type,
+						$paramTag?->type,
 						$context
 					),
 					hasDefaultValue: $parameter->isDefaultValueAvailable(),
@@ -360,7 +345,7 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 	/**
 	 * @param ReflectionClass<object> $reflection
 	 */
-	private function parent(ReflectionClass $reflection, PhpDocNode $phpDoc, TypeContext $context): ?NamedType
+	private function parent(ReflectionClass $reflection, ParsedPhpDoc $phpDoc, TypeContext $context): ?NamedType
 	{
 		$parentClass = $reflection->getParentClass() ? $reflection->getParentClass()->getName() : null;
 
@@ -368,15 +353,9 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 			return null;
 		}
 
-		/** @var PhpDocTagNode|null $tag */
-		$tag = Arr::first(
-			$phpDoc->getTags(),
-			fn (PhpDocTagNode $node) => $node->value instanceof ExtendsTagValueNode &&
-				$parentClass === $this->typeAliasResolver->resolve($node->value->type->type->name, $context->fileClassLikeContext)
+		$tagValue = $phpDoc->firstExtendsTagValue(
+			fn (ExtendsTagValueNode $node) => $parentClass === $this->typeAliasResolver->resolve($node->type->type->name, $context->fileClassLikeContext)
 		);
-
-		/** @var ExtendsTagValueNode|null $tagValue */
-		$tagValue = $tag?->value;
 
 		$type = $this->map(
 			$parentClass,
@@ -398,20 +377,17 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 	 *
 	 * @return list<NamedType>
 	 */
-	private function interfaces(ReflectionClass $reflection, PhpDocNode $phpDoc, TypeContext $context): array
+	private function interfaces(ReflectionClass $reflection, ParsedPhpDoc $phpDoc, TypeContext $context): array
 	{
 		return collect($reflection->getInterfaceNames())
 			->filter(fn (string $className) => !$context->fileClassLikeContext || in_array($className, $context->fileClassLikeContext->implementsInterfaces, true))
 			->map(function (string $className) use ($reflection, $context, $phpDoc) {
-				/** @var PhpDocTagNode|null $tag */
-				$tag = Arr::first(
-					$phpDoc->getTags(),
-					fn (PhpDocTagNode $node) => ($node->value instanceof ImplementsTagValueNode || $node->value instanceof ExtendsTagValueNode) &&
-						$className === $this->typeAliasResolver->resolve($node->value->type->type->name, $context->fileClassLikeContext)
+				$tagValue = $phpDoc->firstImplementsTagValue(
+					fn (ImplementsTagValueNode $node) => $className === $this->typeAliasResolver->resolve($node->type->type->name, $context->fileClassLikeContext)
 				);
-
-				/** @var ImplementsTagValueNode|ExtendsTagValueNode|null $tagValue */
-				$tagValue = $tag?->value;
+				$tagValue ??= $phpDoc->firstExtendsTagValue(
+					fn (ExtendsTagValueNode $node) => $className === $this->typeAliasResolver->resolve($node->type->type->name, $context->fileClassLikeContext)
+				);
 
 				$type = $this->map(
 					$className,
@@ -424,6 +400,7 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 
 				return $type;
 			})
+			->values()
 			->all();
 	}
 
@@ -453,15 +430,10 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 
 				return array_map(function (TraitUse $traitUse) use ($reflection, $context, $phpDoc) {
 					$qualifiedName = $this->typeAliasResolver->resolve($traitUse->qualifiedName, $context->fileClassLikeContext);
-					/** @var PhpDocTagNode|null $tag */
-					$tag = Arr::first(
-						$phpDoc->getTags(),
-						fn (PhpDocTagNode $node) => $node->value instanceof UsesTagValueNode &&
-							$qualifiedName === $this->typeAliasResolver->resolve($node->value->type->type->name, $context->fileClassLikeContext)
-					);
 
-					/** @var UsesTagValueNode|null $tagValue */
-					$tagValue = $tag?->value;
+					$tagValue = $phpDoc->firstUsesTagValue(
+						fn (UsesTagValueNode $node) => $qualifiedName === $this->typeAliasResolver->resolve($node->type->type->name, $context->fileClassLikeContext)
+					);
 
 					$type = $this->map(
 						$qualifiedName,

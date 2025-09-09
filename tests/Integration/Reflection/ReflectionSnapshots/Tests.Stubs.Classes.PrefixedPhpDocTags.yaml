@@ -1,0 +1,115 @@
+type: Tests\Stubs\Classes\PrefixedPhpDocTags
+qualifiedName: Tests\Stubs\Classes\PrefixedPhpDocTags
+shortName: PrefixedPhpDocTags
+location: Tests\Stubs\Classes\PrefixedPhpDocTags
+asString: PrefixedPhpDocTags
+isBuiltIn: false
+isAnonymous: false
+isAbstract: false
+isFinal: false
+attributes:
+    asString: '#[]'
+    all: {  }
+typeParameters:
+    -
+        name: TPhpStan
+        variadic: false
+        upperBound: mixed
+        variance: INVARIANT
+        asString: TPhpStan
+    -
+        name: TPsalmCovariant
+        variadic: false
+        upperBound: int
+        variance: COVARIANT
+        asString: 'covariant TPsalmCovariant of int'
+extends: Tests\Stubs\Classes\SingleTemplateTypeImpl<int>
+implements:
+    - Tests\Stubs\Interfaces\SingleGenericInterface<string>
+uses:
+    traits: {  }
+    excludedTraitMethods: {  }
+declaredProperties:
+    -
+        asString: $property
+        name: property
+        location: 'Tests\Stubs\Classes\PrefixedPhpDocTags::$property'
+        declaringType: Tests\Stubs\Classes\PrefixedPhpDocTags
+        attributes:
+            asString: '#[]'
+            all: {  }
+        type: stdClass
+        hasDefaultValue: false
+        defaultValue: null
+        isPromoted: false
+        promotedParameter: null
+properties:
+    -
+        asString: $property
+        name: property
+        location: 'Tests\Stubs\Classes\PrefixedPhpDocTags::$property'
+        declaringType: Tests\Stubs\Classes\PrefixedPhpDocTags
+        attributes:
+            asString: '#[]'
+            all: {  }
+        type: stdClass
+        hasDefaultValue: false
+        defaultValue: null
+        isPromoted: false
+        promotedParameter: null
+declaredMethods:
+    -
+        asString: method()
+        name: method
+        location: 'Tests\Stubs\Classes\PrefixedPhpDocTags::method()'
+        declaringType: Tests\Stubs\Classes\PrefixedPhpDocTags
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters:
+            -
+                asString: 'arg $param1'
+                name: param1
+                location: 'Tests\Stubs\Classes\PrefixedPhpDocTags::method() arg $param1'
+                declaringMethod: method()
+                type: bool
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $param2'
+                name: param2
+                location: 'Tests\Stubs\Classes\PrefixedPhpDocTags::method() arg $param2'
+                declaringMethod: method()
+                type: stdClass
+                hasDefaultValue: false
+                defaultValue: null
+        returnType: int
+methods:
+    -
+        asString: method()
+        name: method
+        location: 'Tests\Stubs\Classes\PrefixedPhpDocTags::method()'
+        declaringType: Tests\Stubs\Classes\PrefixedPhpDocTags
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters:
+            -
+                asString: 'arg $param1'
+                name: param1
+                location: 'Tests\Stubs\Classes\PrefixedPhpDocTags::method() arg $param1'
+                declaringMethod: method()
+                type: bool
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $param2'
+                name: param2
+                location: 'Tests\Stubs\Classes\PrefixedPhpDocTags::method() arg $param2'
+                declaringMethod: method()
+                type: stdClass
+                hasDefaultValue: false
+                defaultValue: null
+        returnType: int
