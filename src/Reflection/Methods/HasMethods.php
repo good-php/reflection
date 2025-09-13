@@ -6,22 +6,22 @@ use GoodPhp\Reflection\Reflection\HasName;
 use GoodPhp\Reflection\Reflection\MethodReflection;
 
 /**
- * @template ReflectableType of object
+ * @template-contravariant ReflectableType of object
  */
 interface HasMethods extends HasName
 {
 	/**
-	 * @return list<MethodReflection<ReflectableType, $this>>
+	 * @return list<MethodReflection<ReflectableType>>
 	 */
 	public function declaredMethods(): array;
 
 	/**
-	 * @return list<MethodReflection<ReflectableType, self<ReflectableType>>>
+	 * @return list<MethodReflection<ReflectableType>>
 	 */
 	public function methods(): array;
 
 	/**
-	 * @return MethodReflection<ReflectableType, self<ReflectableType>>|null
+	 * @return MethodReflection<ReflectableType>|null
 	 */
 	public function method(string $name): ?MethodReflection;
 }

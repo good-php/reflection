@@ -81,7 +81,7 @@ class TypeComparator
 
 		$typeParameters = $aReflection instanceof HasTypeParameters ? $aReflection->typeParameters() : [];
 
-		/** @var list<array{TypeParameterReflection<ClassReflection<object>|TraitReflection<object>|TraitReflection<object>>, Type, Type}> $pairs */
+		/** @var list<array{TypeParameterReflection, Type, Type}> $pairs */
 		$pairs = [];
 		$aArguments = $a->arguments;
 		$bArguments = $b->arguments;

@@ -12,9 +12,6 @@ parameters:
 
 	reportUnmatchedIgnoredErrors: false
 	ignoreErrors:
-		# Looks like wrong type inferrence in edge cases with traits
-		- '#Return type \(list<GoodPhp\\Reflection\\Reflection\\MethodReflection<ReflectableType of UnitEnum, GoodPhp\\Reflection\\Reflection\\Methods\\HasMethods<ReflectableType of UnitEnum>>>\) of method GoodPhp\\Reflection\\NativePHPDoc\\Reflection\\NpdEnumReflection::methods\(\) should be compatible with return type \(list<GoodPhp\\Reflection\\Reflection\\MethodReflection<object, GoodPhp\\Reflection\\Reflection\\Methods\\HasMethods<object>>>\) of method GoodPhp\\Reflection\\Reflection\\Methods\\HasMethodsDefaults::methods\(\)#'
-		- '#Call-site variance of covariant object in generic type ReflectionClass<covariant object> in PHPDoc tag \@param for parameter \$reflection is redundant, template type T of object of class ReflectionClass has the same variance.#'
 		# PHPStan doesn't understand that Collection::values() produces a list
 		- '#Method .*::.* should return list<(.*)> but returns array<(int, )?\1>.#i'
 		- '#Parameter [\$|\#].* of .* expects list<(.*)>(|.*)?, (array|non-empty-array)<(int, )?\1> given.#i'
@@ -23,15 +20,11 @@ parameters:
 		- '#Method GoodPhp\\Reflection\\NativePHPDoc\\Definition\\NativePHPDoc\\File\\ClassLikeContextParsingVisitor::methods\(\) should return list<string> but returns array<non-empty-string>.#i'
 		# Missing template types
 		- '#Method GoodPhp\\Reflection\\Type\\Template\\TypeParameterMap::toArguments\(\) should return list<GoodPhp\\Reflection\\Type\\Type> but returns array.#i'
-		# The return types are correct, but PHPStan complains even if types are specified explicitly.
-		- '#Method GoodPhp\\Reflection\\NativePHPDoc\\Reflection\\Npd.*Reflection::.* should return list<GoodPhp\\Reflection\\Reflection\\(.*)Reflection<ReflectableType of (object|UnitEnum), .*>> but returns array<int, GoodPhp\\Reflection\\Reflection\\\1Reflection<object, .*>>.#i'
 		# Intentionally left as nullable. If there was a solid way of checking if a property is initialized
 		# in PHP, then these would in fact be assigned nulls if definitions contain null types.
 		- '#Property GoodPhp\\Reflection\\NativePHPDoc\\Reflection\\Npd.*::.* \(GoodPhp\\Reflection\\Type\\(NamedType|Type)\|null\) is never assigned null so it can be removed from the property type.#i'
 		# It is in fact nullable. Probably a bug in PHPStan.
 		- '#Using nullsafe property access \"\?->excludedTraitMethods\" on left side of \?\? is unnecessary. Use -> instead.#i'
-		# It's not a native type. Bug in PHPStan.
-		- '#PHPDoc tag @var with type GoodPhp\\Reflection\\Reflection\\MethodReflection<ReflectableType of UnitEnum, GoodPhp\\Reflection\\Reflection\\Methods\\HasMethods<ReflectableType of UnitEnum>> is not subtype of native type GoodPhp\\Reflection\\Reflection\\MethodReflection<object, GoodPhp\\Reflection\\Reflection\\Methods\\HasMethods<object>>#i'
 		# Bug with inherited readonly properties
 		- '#Readonly property [a-z\\]+::\$[a-z0-9]+ is assigned outside of the constructor.#i'
 		- '#Class [a-z\\]+ has an uninitialized readonly property \$[a-z0-9]+\. Assign it in the constructor.#i'

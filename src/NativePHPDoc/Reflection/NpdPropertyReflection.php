@@ -7,8 +7,6 @@ use GoodPhp\Reflection\NativePHPDoc\Reflection\Attributes\NativeAttributes;
 use GoodPhp\Reflection\Reflection\Attributes\Attributes;
 use GoodPhp\Reflection\Reflection\ClassReflection;
 use GoodPhp\Reflection\Reflection\FunctionParameterReflection;
-use GoodPhp\Reflection\Reflection\MethodReflection;
-use GoodPhp\Reflection\Reflection\Methods\HasMethods;
 use GoodPhp\Reflection\Reflection\Properties\HasProperties;
 use GoodPhp\Reflection\Reflection\PropertyReflection;
 use GoodPhp\Reflection\Type\NamedType;
@@ -22,9 +20,7 @@ use Webmozart\Assert\Assert;
 /**
  * @template-contravariant ReflectableType of object
  *
- * @template-covariant DeclaringTypeReflection of HasProperties<ReflectableType>
- *
- * @implements PropertyReflection<ReflectableType, DeclaringTypeReflection>
+ * @implements PropertyReflection<ReflectableType>
  */
 final class NpdPropertyReflection implements PropertyReflection
 {
@@ -34,11 +30,10 @@ final class NpdPropertyReflection implements PropertyReflection
 
 	private ?Type $type;
 
-	/** @var FunctionParameterReflection<MethodReflection<object, HasMethods<object>>>|null */
 	private ?FunctionParameterReflection $promotedParameter;
 
 	/**
-	 * @param DeclaringTypeReflection $declaringType
+	 * @param HasProperties<ReflectableType> $declaringType
 	 */
 	public function __construct(
 		private readonly PropertyDefinition $definition,
@@ -104,8 +99,6 @@ final class NpdPropertyReflection implements PropertyReflection
 
 	/**
 	 * If property is promoted, it refers to the __construct parameter it was promoted for.
-	 *
-	 * @return FunctionParameterReflection<MethodReflection<object, HasMethods<object>>>|null
 	 */
 	public function promotedParameter(): ?FunctionParameterReflection
 	{
@@ -156,9 +149,6 @@ final class NpdPropertyReflection implements PropertyReflection
 		return $this->declaringType->location() . '::' . $this;
 	}
 
-	/**
-	 * @return DeclaringTypeReflection
-	 */
 	public function declaringType(): HasProperties
 	{
 		return $this->declaringType;

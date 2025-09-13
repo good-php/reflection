@@ -20,10 +20,11 @@ trait InheritsClassMembers
 	/**
 	 * @param list<NamedType>|NamedType $types
 	 *
-	 * @return list<PropertyReflection<ReflectableType, HasProperties<ReflectableType>>>
+	 * @return list<PropertyReflection<ReflectableType>>
 	 */
 	protected function propertiesFromTypes(array|NamedType $types, NamedType $staticType, Reflector $reflector): array
 	{
+		/** @var list<PropertyReflection<ReflectableType>> */
 		return collect(is_array($types) ? $types : [$types])
 			->flatMap(function (NamedType $type) use ($staticType, $reflector) {
 				$reflection = $reflector->forNamedType($type);
@@ -32,6 +33,7 @@ trait InheritsClassMembers
 					return [];
 				}
 
+				/** @var list<PropertyReflection<ReflectableType>> */
 				return $reflection
 					->withStaticType($staticType)
 					->properties();
@@ -42,7 +44,7 @@ trait InheritsClassMembers
 	}
 
 	/**
-	 * @return list<PropertyReflection<ReflectableType, HasProperties<ReflectableType>>>
+	 * @return list<PropertyReflection<ReflectableType>>
 	 */
 	protected function propertiesFromTraits(UsedTraitsReflection $usedTraits, NamedType $staticType, Reflector $reflector): array
 	{
@@ -57,10 +59,11 @@ trait InheritsClassMembers
 	/**
 	 * @param list<NamedType>|NamedType $types
 	 *
-	 * @return list<MethodReflection<ReflectableType, HasMethods<ReflectableType>>>
+	 * @return list<MethodReflection<ReflectableType>>
 	 */
 	protected function methodsFromTypes(array|NamedType $types, NamedType $staticType, Reflector $reflector): array
 	{
+		/** @var list<MethodReflection<ReflectableType>> */
 		return collect(is_array($types) ? $types : [$types])
 			->flatMap(function (NamedType $type) use ($staticType, $reflector) {
 				$reflection = $reflector->forNamedType($type);
@@ -69,6 +72,7 @@ trait InheritsClassMembers
 					return [];
 				}
 
+				/** @var list<MethodReflection<ReflectableType>> */
 				return $reflection
 					->withStaticType($staticType)
 					->methods();
@@ -79,7 +83,7 @@ trait InheritsClassMembers
 	}
 
 	/**
-	 * @return list<MethodReflection<ReflectableType, HasMethods<ReflectableType>>>
+	 * @return list<MethodReflection<ReflectableType>>
 	 */
 	protected function methodsFromTraits(UsedTraitsReflection $usedTraits, NamedType $staticType, Reflector $reflector): array
 	{
@@ -94,10 +98,7 @@ trait InheritsClassMembers
 
 				return collect($reflection->withStaticType($staticType)->methods())
 					->reject(fn (MethodReflection $method) => in_array($method->name(), $traitExcludedMethods, true))
-					->flatMap(function (MethodReflection $method) use ($usedTrait) {
-						/** @var MethodReflection<ReflectableType, HasMethods<ReflectableType>> $method */
-						return $this->aliasMethod($method, $usedTrait->aliases());
-					});
+					->flatMap(fn (MethodReflection $method) => $this->aliasMethod($method, $usedTrait->aliases()));
 			})
 			->keyBy(fn (MethodReflection $method) => $method->name())
 			->values()
@@ -105,10 +106,10 @@ trait InheritsClassMembers
 	}
 
 	/**
-	 * @param MethodReflection<ReflectableType, HasMethods<ReflectableType>> $method
-	 * @param list<UsedTraitAliasReflection>                                 $aliases
+	 * @param MethodReflection<ReflectableType> $method
+	 * @param list<UsedTraitAliasReflection>    $aliases
 	 *
-	 * @return list<MethodReflection<ReflectableType, HasMethods<ReflectableType>>>
+	 * @return list<MethodReflection<ReflectableType>>
 	 */
 	private function aliasMethod(MethodReflection $method, array $aliases): array
 	{

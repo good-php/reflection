@@ -6,9 +6,6 @@ use GoodPhp\Reflection\Reflection\Attributes\HasAttributes;
 use GoodPhp\Reflection\Type\Type;
 use Stringable;
 
-/**
- * @template-covariant DeclaringMethodReflection of MethodReflection
- */
 interface FunctionParameterReflection extends Stringable, HasAttributes
 {
 	public function name(): string;
@@ -22,7 +19,7 @@ interface FunctionParameterReflection extends Stringable, HasAttributes
 	public function location(): string;
 
 	/**
-	 * @return DeclaringMethodReflection
+	 * @return MethodReflection<*>
 	 */
 	public function declaringMethod(): MethodReflection;
 }
