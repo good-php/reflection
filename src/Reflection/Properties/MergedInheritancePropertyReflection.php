@@ -20,24 +20,26 @@ use Webmozart\Assert\Assert;
  *
  * @template-contravariant ReflectableType of object
  *
- * @template-covariant DeclaringTypeReflection of HasProperties<ReflectableType>
- *
- * @implements PropertyReflection<ReflectableType, DeclaringTypeReflection>
+ * @implements PropertyReflection<ReflectableType>
  */
-class MergedInheritancePropertyReflection implements PropertyReflection
+final class MergedInheritancePropertyReflection implements PropertyReflection
 {
-	/** @var PropertyReflection<ReflectableType, DeclaringTypeReflection> */
+	/** @var PropertyReflection<ReflectableType> */
 	private PropertyReflection $typeFromReflection;
 
 	/**
-	 * @param list<PropertyReflection> $reflections
+	 * @param list<PropertyReflection<ReflectableType>> $reflections
 	 */
 	private function __construct(
 		private readonly array $reflections,
 	) {}
 
 	/**
-	 * @param list<PropertyReflection> $reflections
+	 * @template ReflectableTypeScoped of object
+	 *
+	 * @param list<PropertyReflection<ReflectableTypeScoped>> $reflections
+	 *
+	 * @return PropertyReflection<ReflectableTypeScoped>
 	 */
 	public static function merge(array $reflections): PropertyReflection
 	{
@@ -117,13 +119,16 @@ class MergedInheritancePropertyReflection implements PropertyReflection
 		return $this->reflections[0]->location();
 	}
 
+	/**
+	 * @return HasProperties<ReflectableType>
+	 */
 	public function declaringType(): HasProperties
 	{
 		return $this->reflections[0]->declaringType();
 	}
 
 	/**
-	 * @return PropertyReflection<ReflectableType, DeclaringTypeReflection>
+	 * @return PropertyReflection<ReflectableType>
 	 */
 	private function typeFromReflection(): PropertyReflection
 	{

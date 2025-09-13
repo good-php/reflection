@@ -15,15 +15,15 @@ use GoodPhp\Reflection\Type\NamedType;
 use Illuminate\Support\Collection;
 use Webmozart\Assert\Assert;
 
-class ClassMemberInheritanceResolver
+final class ClassMemberInheritanceResolver
 {
 	/**
 	 * @template ReflectableType of object
 	 *
-	 * @param list<PropertyReflection<ReflectableType, HasProperties<ReflectableType>>> $declaredProperties
-	 * @param list<NamedType>                                                           $implements
+	 * @param list<PropertyReflection<ReflectableType>> $declaredProperties
+	 * @param list<NamedType>                           $implements
 	 *
-	 * @return list<PropertyReflection<ReflectableType, HasProperties<ReflectableType>>>
+	 * @return list<PropertyReflection<ReflectableType>>
 	 */
 	public function properties(
 		Reflector $reflector,
@@ -48,10 +48,10 @@ class ClassMemberInheritanceResolver
 	/**
 	 * @template ReflectableType of object
 	 *
-	 * @param list<MethodReflection<ReflectableType, HasMethods<ReflectableType>>> $declaredMethods
-	 * @param list<NamedType>                                                      $implements
+	 * @param list<MethodReflection<ReflectableType>> $declaredMethods
+	 * @param list<NamedType>                         $implements
 	 *
-	 * @return list<MethodReflection<ReflectableType, HasMethods<ReflectableType>>>
+	 * @return list<MethodReflection<ReflectableType>>
 	 */
 	public function methods(
 		Reflector $reflector,
@@ -76,7 +76,7 @@ class ClassMemberInheritanceResolver
 	/**
 	 * @param list<NamedType>|NamedType $types
 	 *
-	 * @return list<PropertyReflection<*, HasProperties<*>>>
+	 * @return list<PropertyReflection<object>>
 	 */
 	protected function propertiesFromTypes(array|NamedType $types, NamedType $staticType, Reflector $reflector): array
 	{
@@ -96,7 +96,7 @@ class ClassMemberInheritanceResolver
 	}
 
 	/**
-	 * @return list<PropertyReflection<*, HasProperties<*>>>
+	 * @return list<PropertyReflection<object>>
 	 */
 	protected function propertiesFromTraits(UsedTraitsReflection $usedTraits, NamedType $staticType, Reflector $reflector): array
 	{
@@ -111,7 +111,7 @@ class ClassMemberInheritanceResolver
 	/**
 	 * @param list<NamedType>|NamedType $types
 	 *
-	 * @return list<MethodReflection<*, HasMethods<*>>>
+	 * @return list<MethodReflection<object>>
 	 */
 	protected function methodsFromTypes(array|NamedType $types, NamedType $staticType, Reflector $reflector): array
 	{
@@ -131,7 +131,7 @@ class ClassMemberInheritanceResolver
 	}
 
 	/**
-	 * @return list<MethodReflection<*, HasMethods<*>>>
+	 * @return list<MethodReflection<object>>
 	 */
 	protected function methodsFromTraits(UsedTraitsReflection $usedTraits, NamedType $staticType, Reflector $reflector): array
 	{
@@ -154,10 +154,10 @@ class ClassMemberInheritanceResolver
 	/**
 	 * @template ReflectableType of object
 	 *
-	 * @param MethodReflection<ReflectableType, HasMethods<ReflectableType>> $method
-	 * @param list<UsedTraitAliasReflection>                                 $aliases
+	 * @param MethodReflection<ReflectableType> $method
+	 * @param list<UsedTraitAliasReflection>    $aliases
 	 *
-	 * @return list<MethodReflection<ReflectableType, HasMethods<ReflectableType>>>
+	 * @return list<MethodReflection<ReflectableType>>
 	 */
 	private function aliasMethod(MethodReflection $method, array $aliases): array
 	{

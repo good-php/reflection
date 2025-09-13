@@ -24,36 +24,36 @@ use Webmozart\Assert\Assert;
  *
  * @template-contravariant ReflectableType of object
  *
- * @template-covariant DeclaringTypeReflection of HasMethods<ReflectableType>
- *
- * @implements MethodReflection<ReflectableType, DeclaringTypeReflection>
+ * @implements MethodReflection<ReflectableType>
  */
-class MergedInheritanceMethodReflection implements MethodReflection
+final class MergedInheritanceMethodReflection implements MethodReflection
 {
-	/** @use HasTypeParametersDefaults<$this> */
 	use HasTypeParametersDefaults;
 
-	/** @use MethodReflectionDefaults<ReflectableType, DeclaringTypeReflection> */
 	use MethodReflectionDefaults;
 
-	/** @var list<TypeParameterReflection<$this>> */
+	/** @var list<TypeParameterReflection> */
 	private array $typeParameters;
 
-	/** @var list<FunctionParameterReflection<$this>> */
+	/** @var list<FunctionParameterReflection> */
 	private array $parameters;
 
-	/** @var MethodReflection<ReflectableType, DeclaringTypeReflection> */
+	/** @var MethodReflection<ReflectableType> */
 	private MethodReflection $returnTypeFromReflection;
 
 	/**
-	 * @param list<MethodReflection> $reflections
+	 * @param list<MethodReflection<ReflectableType>> $reflections
 	 */
 	private function __construct(
 		private readonly array $reflections,
 	) {}
 
 	/**
-	 * @param list<MethodReflection> $reflections
+	 * @template ReflectableTypeScoped of object
+	 *
+	 * @param list<MethodReflection<ReflectableTypeScoped>> $reflections
+	 *
+	 * @return MethodReflection<ReflectableTypeScoped>
 	 */
 	public static function merge(array $reflections): MethodReflection
 	{
@@ -102,8 +102,10 @@ class MergedInheritanceMethodReflection implements MethodReflection
 		}
 
 		return $this->parameters ??= array_map(fn (int $index) => MergedInheritanceFunctionParameterReflection::merge(
-			array_filter(
-				array_map(fn (MethodReflection $method) => $method->parameter($index), $this->reflections)
+			array_values(
+				array_filter(
+					array_map(fn (MethodReflection $method) => $method->parameter($index), $this->reflections)
+				),
 			),
 			$this,
 		), array_keys($this->reflections[0]->parameters()));
@@ -134,13 +136,16 @@ class MergedInheritanceMethodReflection implements MethodReflection
 		return $this->reflections[0]->location();
 	}
 
+	/**
+	 * @return HasMethods<ReflectableType>
+	 */
 	public function declaringType(): HasMethods
 	{
 		return $this->reflections[0]->declaringType();
 	}
 
 	/**
-	 * @return MethodReflection<ReflectableType, DeclaringTypeReflection>
+	 * @return MethodReflection<ReflectableType>
 	 */
 	private function returnTypeFromReflection(): MethodReflection
 	{

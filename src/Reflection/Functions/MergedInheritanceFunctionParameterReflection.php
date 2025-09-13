@@ -10,19 +10,13 @@ use GoodPhp\Reflection\Type\Type;
 use Illuminate\Support\Arr;
 use Webmozart\Assert\Assert;
 
-/**
- * @template-covariant DeclaringMethodReflection of MethodReflection
- *
- * @implements FunctionParameterReflection<DeclaringMethodReflection>
- */
 class MergedInheritanceFunctionParameterReflection implements FunctionParameterReflection
 {
-	/** @var FunctionParameterReflection<DeclaringMethodReflection> */
 	private readonly FunctionParameterReflection $typeFromReflection;
 
 	/**
 	 * @param list<FunctionParameterReflection> $reflections
-	 * @param DeclaringMethodReflection         $declaringMethod
+	 * @param MethodReflection<*> $declaringMethod
 	 */
 	private function __construct(
 		private readonly array $reflections,
@@ -30,12 +24,8 @@ class MergedInheritanceFunctionParameterReflection implements FunctionParameterR
 	) {}
 
 	/**
-	 * @template DeclaringMethodReflectionScoped of MethodReflection
-	 *
 	 * @param list<FunctionParameterReflection> $reflections
-	 * @param DeclaringMethodReflectionScoped   $declaringMethod
-	 *
-	 * @return FunctionParameterReflection<DeclaringMethodReflectionScoped>
+	 * @param MethodReflection<*> $declaringMethod
 	 */
 	public static function merge(array $reflections, MethodReflection $declaringMethod): FunctionParameterReflection
 	{
@@ -88,9 +78,6 @@ class MergedInheritanceFunctionParameterReflection implements FunctionParameterR
 		return $this->declaringMethod;
 	}
 
-	/**
-	 * @return FunctionParameterReflection<DeclaringMethodReflection>
-	 */
 	private function typeFromReflection(): FunctionParameterReflection
 	{
 		if (isset($this->typeFromReflection)) {
