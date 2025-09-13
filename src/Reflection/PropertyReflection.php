@@ -3,7 +3,6 @@
 namespace GoodPhp\Reflection\Reflection;
 
 use GoodPhp\Reflection\Reflection\Attributes\HasAttributes;
-use GoodPhp\Reflection\Reflection\Methods\HasMethods;
 use GoodPhp\Reflection\Reflection\Properties\HasProperties;
 use GoodPhp\Reflection\Type\NamedType;
 use GoodPhp\Reflection\Type\Type;
@@ -11,8 +10,6 @@ use Stringable;
 
 /**
  * @template-contravariant ReflectableType of object
- *
- * @template-covariant DeclaringTypeReflection of HasProperties<ReflectableType>
  */
 interface PropertyReflection extends Stringable, HasAttributes
 {
@@ -30,8 +27,6 @@ interface PropertyReflection extends Stringable, HasAttributes
 
 	/**
 	 * If property is promoted, it refers to the __construct parameter it was promoted for.
-	 *
-	 * @return FunctionParameterReflection<MethodReflection<object, HasMethods<object>>>|null
 	 */
 	public function promotedParameter(): ?FunctionParameterReflection;
 
@@ -57,7 +52,7 @@ interface PropertyReflection extends Stringable, HasAttributes
 	public function location(): string;
 
 	/**
-	 * @return DeclaringTypeReflection
+	 * @return HasProperties<ReflectableType>
 	 */
 	public function declaringType(): HasProperties;
 }

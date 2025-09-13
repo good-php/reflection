@@ -23,32 +23,28 @@ use ReflectionMethod;
 /**
  * @template-contravariant ReflectableType of object
  *
- * @template-covariant DeclaringTypeReflection of HasMethods<ReflectableType>
- *
- * @implements MethodReflection<ReflectableType, DeclaringTypeReflection>
+ * @implements MethodReflection<ReflectableType>
  */
 final class NpdMethodReflection implements MethodReflection
 {
-	/** @use HasTypeParametersDefaults<$this> */
 	use HasTypeParametersDefaults;
 
-	/** @use MethodReflectionDefaults<ReflectableType, DeclaringTypeReflection> */
 	use MethodReflectionDefaults;
 
 	private readonly ReflectionMethod $nativeReflection;
 
-	/** @var list<TypeParameterReflection<$this>> */
+	/** @var list<TypeParameterReflection> */
 	private array $typeParameters;
 
 	private readonly Attributes $attributes;
 
-	/** @var list<FunctionParameterReflection<$this>> */
+	/** @var list<FunctionParameterReflection> */
 	private array $parameters;
 
 	private ?Type $returnType;
 
 	/**
-	 * @param DeclaringTypeReflection $declaringType
+	 * @param HasMethods<ReflectableType> $declaringType
 	 */
 	public function __construct(
 		private readonly MethodDefinition $definition,
@@ -83,7 +79,7 @@ final class NpdMethodReflection implements MethodReflection
 	}
 
 	/**
-	 * @return list<TypeParameterReflection<$this>>
+	 * @return list<TypeParameterReflection>
 	 */
 	public function typeParameters(): array
 	{
@@ -94,7 +90,7 @@ final class NpdMethodReflection implements MethodReflection
 	}
 
 	/**
-	 * @return list<FunctionParameterReflection<$this>>
+	 * @return list<FunctionParameterReflection>
 	 */
 	public function parameters(): array
 	{
@@ -138,9 +134,6 @@ final class NpdMethodReflection implements MethodReflection
 		return $this->declaringType->location() . '::' . $this;
 	}
 
-	/**
-	 * @return DeclaringTypeReflection
-	 */
 	public function declaringType(): HasMethods
 	{
 		return $this->declaringType;

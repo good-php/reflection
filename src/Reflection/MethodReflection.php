@@ -11,10 +11,6 @@ use Stringable;
 
 /**
  * @template-contravariant ReflectableType of object
- *
- * @template-covariant DeclaringTypeReflection of HasMethods<ReflectableType>
- *
- * @extends HasTypeParameters<self<ReflectableType, DeclaringTypeReflection>>
  */
 interface MethodReflection extends Stringable, HasAttributes, HasTypeParameters
 {
@@ -23,13 +19,10 @@ interface MethodReflection extends Stringable, HasAttributes, HasTypeParameters
 	public function name(): string;
 
 	/**
-	 * @return list<FunctionParameterReflection<self<ReflectableType, DeclaringTypeReflection>>>
+	 * @return list<FunctionParameterReflection>
 	 */
 	public function parameters(): array;
 
-	/**
-	 * @return FunctionParameterReflection<self<ReflectableType, DeclaringTypeReflection>>|null
-	 */
 	public function parameter(string|int $nameOrIndex): ?FunctionParameterReflection;
 
 	public function returnType(): ?Type;
@@ -51,7 +44,7 @@ interface MethodReflection extends Stringable, HasAttributes, HasTypeParameters
 	public function location(): string;
 
 	/**
-	 * @return DeclaringTypeReflection
+	 * @return HasMethods<ReflectableType>
 	 */
 	public function declaringType(): HasMethods;
 }
