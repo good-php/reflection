@@ -10,7 +10,7 @@ use GoodPhp\Reflection\Type\Type;
 use Illuminate\Support\Arr;
 use Webmozart\Assert\Assert;
 
-class MergedInheritanceFunctionParameterReflection implements FunctionParameterReflection
+final class MergedInheritanceFunctionParameterReflection implements FunctionParameterReflection
 {
 	private readonly FunctionParameterReflection $typeFromReflection;
 
