@@ -7,6 +7,7 @@ use GoodPhp\Reflection\Reflection\FunctionParameterReflection;
 use GoodPhp\Reflection\Reflection\MethodReflection;
 use GoodPhp\Reflection\Reflection\Methods\HasMethods;
 use GoodPhp\Reflection\Reflection\TypeParameters\TypeParameterReflection;
+use GoodPhp\Reflection\Reflection\TypeSource;
 use GoodPhp\Reflection\Type\NamedType;
 use GoodPhp\Reflection\Type\Type;
 
@@ -68,6 +69,11 @@ final class TraitAliasesMethodReflection implements MethodReflection
 	public function returnType(): ?Type
 	{
 		return $this->method->returnType();
+	}
+
+	public function returnTypeSource(): ?TypeSource
+	{
+		return $this->method->returnTypeSource();
 	}
 
 	public function invoke(object $receiver, mixed ...$args): mixed

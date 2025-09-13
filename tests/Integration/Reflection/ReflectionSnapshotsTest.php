@@ -133,12 +133,12 @@ class ReflectionSnapshotsTest extends IntegrationTestCase
 			];
 		}
 
-		$expectedString = Yaml::dump($expected, inline: 10, flags: Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK);
+		$toYaml = fn (mixed $value) => Yaml::dump($value, inline: 10, flags: Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK);
 
 		if (file_exists($snapshotFilename)) {
-			self::assertStringEqualsFile($snapshotFilename, $expectedString);
+			self::assertSame($toYaml(Yaml::parseFile($snapshotFilename)), $toYaml($expected));
 		} else {
-			\Safe\file_put_contents($snapshotFilename, $expectedString);
+			\Safe\file_put_contents($snapshotFilename, $toYaml($expected));
 		}
 	}
 

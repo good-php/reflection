@@ -25,6 +25,7 @@ use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\TypeParameterDefin
 use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\UsedTraitAliasDefinition;
 use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\UsedTraitDefinition;
 use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\UsedTraitsDefinition;
+use GoodPhp\Reflection\Reflection\TypeSource;
 use GoodPhp\Reflection\Type\NamedType;
 use GoodPhp\Reflection\Type\Template\TemplateTypeVariance;
 use GoodPhp\Reflection\Type\Type;
@@ -70,18 +71,29 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 		};
 	}
 
+	/**
+	 * @return array{ Type|null, TypeSource|null }
+	 */
 	public function map(
 		ReflectionType|string|null $nativeType,
 		?TypeNode $phpDocType,
 		TypeContext $context
-	): ?Type {
-		if (!$nativeType && !$phpDocType) {
-			return null;
+	): array {
+		if ($phpDocType) {
+			return [
+				$this->phpDocTypeMapper->map($phpDocType, $context),
+				TypeSource::PHP_DOC,
+			];
 		}
 
-		return $phpDocType ?
-			$this->phpDocTypeMapper->map($phpDocType, $context) :
-			$this->nativeTypeMapper->map($nativeType, $context);
+		if ($nativeType) {
+			return [
+				$this->nativeTypeMapper->map($nativeType, $context),
+				TypeSource::NATIVE,
+			];
+		}
+
+		return [null, null];
 	}
 
 	/**
@@ -217,13 +229,16 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 					$phpDocType = $constructorPhpDoc->firstParamTagValue($property->getName())?->type;
 				}
 
+				[$type, $typeSource] = $this->map(
+					$property->getType(),
+					$phpDocType,
+					$context
+				);
+
 				return new PropertyDefinition(
 					name: $property->getName(),
-					type: $this->map(
-						$property->getType(),
-						$phpDocType,
-						$context
-					),
+					type: $type,
+					typeSource: $typeSource,
 					hasDefaultValue: $property->hasDefaultValue(),
 					isPromoted: $property->isPromoted(),
 				);
@@ -251,15 +266,18 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 					$this->lazyTypeParameters($phpDoc, $context)
 				);
 
+				[$returnType, $returnTypeSource] = $this->map(
+					$method->getReturnType(),
+					$phpDocType,
+					$context,
+				);
+
 				return new MethodDefinition(
 					name: $method->getName(),
 					typeParameters: $this->typeParameters($phpDoc, $context),
 					parameters: $this->functionParameters($method, $phpDoc, $context),
-					returnType: $this->map(
-						$method->getReturnType(),
-						$phpDocType,
-						$context,
-					)
+					returnType: $returnType,
+					returnTypeSource: $returnTypeSource,
 				);
 			})
 			->values()
@@ -329,13 +347,16 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 			->map(function (ReflectionParameter $parameter) use ($context, $phpDoc) {
 				$paramTag = $phpDoc->firstParamTagValue($parameter->getName());
 
+				[$type, $typeSource] = $this->map(
+					$parameter->getType(),
+					$paramTag?->type,
+					$context
+				);
+
 				return new FunctionParameterDefinition(
 					name: $parameter->getName(),
-					type: $this->map(
-						$parameter->getType(),
-						$paramTag?->type,
-						$context
-					),
+					type: $type,
+					typeSource: $typeSource,
 					hasDefaultValue: $parameter->isDefaultValueAvailable(),
 				);
 			})
@@ -357,7 +378,7 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 			fn (ExtendsTagValueNode $node) => $parentClass === $this->typeAliasResolver->resolve($node->type->type->name, $context->fileClassLikeContext)
 		);
 
-		$type = $this->map(
+		[$type] = $this->map(
 			$parentClass,
 			$tagValue?->type,
 			$context
@@ -389,7 +410,7 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 					fn (ExtendsTagValueNode $node) => $className === $this->typeAliasResolver->resolve($node->type->type->name, $context->fileClassLikeContext)
 				);
 
-				$type = $this->map(
+				[$type] = $this->map(
 					$className,
 					$tagValue?->type,
 					$context
@@ -435,7 +456,7 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 						fn (UsesTagValueNode $node) => $qualifiedName === $this->typeAliasResolver->resolve($node->type->type->name, $context->fileClassLikeContext)
 					);
 
-					$type = $this->map(
+					[$type] = $this->map(
 						$qualifiedName,
 						$tagValue?->type,
 						$context

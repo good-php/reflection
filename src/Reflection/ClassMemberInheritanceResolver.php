@@ -3,28 +3,83 @@
 namespace GoodPhp\Reflection\Reflection;
 
 use GoodPhp\Reflection\Reflection\Methods\HasMethods;
+use GoodPhp\Reflection\Reflection\Methods\MergedInheritanceMethodReflection;
 use GoodPhp\Reflection\Reflection\Properties\HasProperties;
+use GoodPhp\Reflection\Reflection\Properties\MergedInheritancePropertyReflection;
 use GoodPhp\Reflection\Reflection\Traits\TraitAliasesMethodReflection;
 use GoodPhp\Reflection\Reflection\Traits\UsedTraitAliasReflection;
 use GoodPhp\Reflection\Reflection\Traits\UsedTraitReflection;
 use GoodPhp\Reflection\Reflection\Traits\UsedTraitsReflection;
 use GoodPhp\Reflection\Reflector;
 use GoodPhp\Reflection\Type\NamedType;
+use Illuminate\Support\Collection;
 use Webmozart\Assert\Assert;
 
-/**
- * @template ReflectableType of object
- */
-trait InheritsClassMembers
+final class ClassMemberInheritanceResolver
 {
 	/**
-	 * @param list<NamedType>|NamedType $types
+	 * @template ReflectableType of object
+	 *
+	 * @param list<PropertyReflection<ReflectableType>> $declaredProperties
+	 * @param list<NamedType>                           $implements
 	 *
 	 * @return list<PropertyReflection<ReflectableType>>
 	 */
+	public function properties(
+		Reflector $reflector,
+		NamedType $staticType,
+		array $declaredProperties,
+		?NamedType $extends = null,
+		array $implements = [],
+		?UsedTraitsReflection $usedTraits = null,
+	): array {
+		return collect([
+			...$declaredProperties,
+			...($extends ? $this->propertiesFromTypes($extends, $staticType, $reflector) : []),
+			...($usedTraits ? $this->propertiesFromTraits($usedTraits, $staticType, $reflector) : []),
+			...$this->propertiesFromTypes($implements, $staticType, $reflector),
+		])
+			->groupBy(fn (PropertyReflection $property) => $property->name())
+			->map(fn (Collection $sameProperties) => MergedInheritancePropertyReflection::merge($sameProperties->all()))
+			->values()
+			->all();
+	}
+
+	/**
+	 * @template ReflectableType of object
+	 *
+	 * @param list<MethodReflection<ReflectableType>> $declaredMethods
+	 * @param list<NamedType>                         $implements
+	 *
+	 * @return list<MethodReflection<ReflectableType>>
+	 */
+	public function methods(
+		Reflector $reflector,
+		NamedType $staticType,
+		array $declaredMethods,
+		?NamedType $extends = null,
+		array $implements = [],
+		?UsedTraitsReflection $usedTraits = null,
+	): array {
+		return collect([
+			...$declaredMethods,
+			...($extends ? $this->methodsFromTypes($extends, $staticType, $reflector) : []),
+			...($usedTraits ? $this->methodsFromTraits($usedTraits, $staticType, $reflector) : []),
+			...$this->methodsFromTypes($implements, $staticType, $reflector),
+		])
+			->groupBy(fn (MethodReflection $method) => $method->name())
+			->map(fn (Collection $sameMethods) => MergedInheritanceMethodReflection::merge($sameMethods->all()))
+			->values()
+			->all();
+	}
+
+	/**
+	 * @param list<NamedType>|NamedType $types
+	 *
+	 * @return list<PropertyReflection<object>>
+	 */
 	protected function propertiesFromTypes(array|NamedType $types, NamedType $staticType, Reflector $reflector): array
 	{
-		/** @var list<PropertyReflection<ReflectableType>> */
 		return collect(is_array($types) ? $types : [$types])
 			->flatMap(function (NamedType $type) use ($staticType, $reflector) {
 				$reflection = $reflector->forNamedType($type);
@@ -33,18 +88,15 @@ trait InheritsClassMembers
 					return [];
 				}
 
-				/** @var list<PropertyReflection<ReflectableType>> */
 				return $reflection
 					->withStaticType($staticType)
 					->properties();
 			})
-			->keyBy(fn (PropertyReflection $property) => $property->name())
-			->values()
 			->all();
 	}
 
 	/**
-	 * @return list<PropertyReflection<ReflectableType>>
+	 * @return list<PropertyReflection<object>>
 	 */
 	protected function propertiesFromTraits(UsedTraitsReflection $usedTraits, NamedType $staticType, Reflector $reflector): array
 	{
@@ -59,11 +111,10 @@ trait InheritsClassMembers
 	/**
 	 * @param list<NamedType>|NamedType $types
 	 *
-	 * @return list<MethodReflection<ReflectableType>>
+	 * @return list<MethodReflection<object>>
 	 */
 	protected function methodsFromTypes(array|NamedType $types, NamedType $staticType, Reflector $reflector): array
 	{
-		/** @var list<MethodReflection<ReflectableType>> */
 		return collect(is_array($types) ? $types : [$types])
 			->flatMap(function (NamedType $type) use ($staticType, $reflector) {
 				$reflection = $reflector->forNamedType($type);
@@ -72,18 +123,15 @@ trait InheritsClassMembers
 					return [];
 				}
 
-				/** @var list<MethodReflection<ReflectableType>> */
 				return $reflection
 					->withStaticType($staticType)
 					->methods();
 			})
-			->keyBy(fn (MethodReflection $method) => $method->name())
-			->values()
 			->all();
 	}
 
 	/**
-	 * @return list<MethodReflection<ReflectableType>>
+	 * @return list<MethodReflection<object>>
 	 */
 	protected function methodsFromTraits(UsedTraitsReflection $usedTraits, NamedType $staticType, Reflector $reflector): array
 	{
@@ -100,12 +148,12 @@ trait InheritsClassMembers
 					->reject(fn (MethodReflection $method) => in_array($method->name(), $traitExcludedMethods, true))
 					->flatMap(fn (MethodReflection $method) => $this->aliasMethod($method, $usedTrait->aliases()));
 			})
-			->keyBy(fn (MethodReflection $method) => $method->name())
-			->values()
 			->all();
 	}
 
 	/**
+	 * @template ReflectableType of object
+	 *
 	 * @param MethodReflection<ReflectableType> $method
 	 * @param list<UsedTraitAliasReflection>    $aliases
 	 *
