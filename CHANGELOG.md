@@ -1,3 +1,10 @@
+# [2.2.0](https://github.com/good-php/reflection/compare/v2.1.0...v2.2.0) (2025-09-13)
+
+
+### Features
+
+* Inherit phpdoc types ([#22](https://github.com/good-php/reflection/issues/22)) ([0cc54f3](https://github.com/good-php/reflection/commit/0cc54f3fb9ed8ca8f64e32aa1f016a034e509c46))
+
 # [2.1.0](https://github.com/good-php/reflection/compare/v2.0.2...v2.1.0) (2025-09-09)
 
 
