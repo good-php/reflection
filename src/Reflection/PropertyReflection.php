@@ -22,6 +22,8 @@ interface PropertyReflection extends Stringable, HasAttributes
 
 	public function type(): ?Type;
 
+	public function typeSource(): ?TypeSource;
+
 	public function hasDefaultValue(): bool;
 
 	public function defaultValue(): mixed;

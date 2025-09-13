@@ -16,17 +16,6 @@ uses:
 declaredMethods: {  }
 methods:
     -
-        asString: cases()
-        name: cases
-        location: 'BackedEnum::cases()'
-        declaringType: BackedEnum
-        attributes:
-            asString: '#[]'
-            all: {  }
-        typeParameters: {  }
-        parameters: {  }
-        returnType: array
-    -
         asString: from()
         name: from
         location: 'BackedEnum::from()'
@@ -64,3 +53,14 @@ methods:
                 hasDefaultValue: false
                 defaultValue: null
         returnType: '?static<Tests\Stubs\Enums\BackedEnum>'
+    -
+        asString: cases()
+        name: cases
+        location: 'BackedEnum::cases()'
+        declaringType: BackedEnum
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters: {  }
+        returnType: array

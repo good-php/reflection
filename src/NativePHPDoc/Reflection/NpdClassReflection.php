@@ -10,8 +10,8 @@ use GoodPhp\Reflection\NativePHPDoc\Reflection\Attributes\NativeAttributes;
 use GoodPhp\Reflection\NativePHPDoc\Reflection\Traits\NpdUsedTraitsReflection;
 use GoodPhp\Reflection\NativePHPDoc\Reflection\TypeParameters\NpdTypeParameterReflection;
 use GoodPhp\Reflection\Reflection\Attributes\Attributes;
+use GoodPhp\Reflection\Reflection\ClassMemberInheritanceResolver;
 use GoodPhp\Reflection\Reflection\ClassReflection;
-use GoodPhp\Reflection\Reflection\InheritsClassMembers;
 use GoodPhp\Reflection\Reflection\MethodReflection;
 use GoodPhp\Reflection\Reflection\Methods\HasMethods;
 use GoodPhp\Reflection\Reflection\Methods\HasMethodsDefaults;
@@ -42,9 +42,6 @@ final class NpdClassReflection extends NpdTypeReflection implements ClassReflect
 
 	/** @use HasTypeParametersDefaults<$this> */
 	use HasTypeParametersDefaults;
-
-	/** @use InheritsClassMembers<ReflectableType> */
-	use InheritsClassMembers;
 
 	private readonly NamedType $type;
 
@@ -84,6 +81,7 @@ final class NpdClassReflection extends NpdTypeReflection implements ClassReflect
 		private readonly ClassTypeDefinition $definition,
 		private readonly TypeParameterMap $resolvedTypeParameterMap,
 		private readonly Reflector $reflector,
+		private readonly ClassMemberInheritanceResolver $classMemberInheritanceResolver,
 	) {
 		$this->type = new NamedType($this->qualifiedName(), $this->resolvedTypeParameterMap->toArguments($this->definition->typeParameters));
 		$this->staticType = $this->type;
@@ -188,14 +186,14 @@ final class NpdClassReflection extends NpdTypeReflection implements ClassReflect
 	 */
 	public function properties(): array
 	{
-		return $this->properties ??= collect([
-			...$this->propertiesFromTraits($this->uses(), $this->staticType, $this->reflector),
-			...($this->extends() ? $this->propertiesFromTypes($this->extends(), $this->staticType, $this->reflector) : []),
-			...$this->declaredProperties(),
-		])
-			->keyBy(fn (PropertyReflection $property) => $property->name())
-			->values()
-			->all();
+		return $this->properties ??= $this->classMemberInheritanceResolver->properties(
+			reflector: $this->reflector,
+			staticType: $this->staticType,
+			declaredProperties: $this->declaredProperties(),
+			extends: $this->extends(),
+			implements: $this->implements(),
+			usedTraits: $this->uses(),
+		);
 	}
 
 	/**
@@ -214,15 +212,14 @@ final class NpdClassReflection extends NpdTypeReflection implements ClassReflect
 	 */
 	public function methods(): array
 	{
-		return $this->methods ??= collect([
-			...$this->methodsFromTypes($this->implements(), $this->staticType, $this->reflector),
-			...$this->methodsFromTraits($this->uses(), $this->staticType, $this->reflector),
-			...($this->extends() ? $this->methodsFromTypes($this->extends(), $this->staticType, $this->reflector) : []),
-			...$this->declaredMethods(),
-		])
-			->keyBy(fn (MethodReflection $method) => $method->name())
-			->values()
-			->all();
+		return $this->methods ??= $this->classMemberInheritanceResolver->methods(
+			reflector: $this->reflector,
+			staticType: $this->staticType,
+			declaredMethods: $this->declaredMethods(),
+			extends: $this->extends(),
+			implements: $this->implements(),
+			usedTraits: $this->uses(),
+		);
 	}
 
 	/**

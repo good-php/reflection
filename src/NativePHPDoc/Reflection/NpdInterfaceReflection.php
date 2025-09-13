@@ -8,7 +8,7 @@ use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\TypeParameterDefin
 use GoodPhp\Reflection\NativePHPDoc\Reflection\Attributes\NativeAttributes;
 use GoodPhp\Reflection\NativePHPDoc\Reflection\TypeParameters\NpdTypeParameterReflection;
 use GoodPhp\Reflection\Reflection\Attributes\Attributes;
-use GoodPhp\Reflection\Reflection\InheritsClassMembers;
+use GoodPhp\Reflection\Reflection\ClassMemberInheritanceResolver;
 use GoodPhp\Reflection\Reflection\InterfaceReflection;
 use GoodPhp\Reflection\Reflection\MethodReflection;
 use GoodPhp\Reflection\Reflection\Methods\HasMethods;
@@ -33,9 +33,6 @@ final class NpdInterfaceReflection extends NpdTypeReflection implements Interfac
 
 	/** @use HasTypeParametersDefaults<$this> */
 	use HasTypeParametersDefaults;
-
-	/** @use InheritsClassMembers<ReflectableType> */
-	use InheritsClassMembers;
 
 	private readonly NamedType $type;
 
@@ -65,6 +62,7 @@ final class NpdInterfaceReflection extends NpdTypeReflection implements Interfac
 		private readonly InterfaceTypeDefinition $definition,
 		private readonly TypeParameterMap $resolvedTypeParameterMap,
 		private readonly Reflector $reflector,
+		private readonly ClassMemberInheritanceResolver $classMemberInheritanceResolver,
 	) {
 		$this->type = new NamedType($this->qualifiedName(), $this->resolvedTypeParameterMap->toArguments($this->definition->typeParameters));
 		$this->staticType = $this->type;
@@ -144,13 +142,12 @@ final class NpdInterfaceReflection extends NpdTypeReflection implements Interfac
 	 */
 	public function methods(): array
 	{
-		return $this->methods ??= collect([
-			...$this->methodsFromTypes($this->extends(), $this->staticType, $this->reflector),
-			...$this->declaredMethods(),
-		])
-			->keyBy(fn (MethodReflection $method) => $method->name())
-			->values()
-			->all();
+		return $this->methods ??= $this->classMemberInheritanceResolver->methods(
+			reflector: $this->reflector,
+			staticType: $this->staticType,
+			declaredMethods: $this->declaredMethods(),
+			implements: $this->extends(),
+		);
 	}
 
 	public function isBuiltIn(): bool

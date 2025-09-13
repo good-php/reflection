@@ -14,6 +14,7 @@ use GoodPhp\Reflection\Reflection\MethodReflectionDefaults;
 use GoodPhp\Reflection\Reflection\Methods\HasMethods;
 use GoodPhp\Reflection\Reflection\TypeParameters\HasTypeParametersDefaults;
 use GoodPhp\Reflection\Reflection\TypeParameters\TypeParameterReflection;
+use GoodPhp\Reflection\Reflection\TypeSource;
 use GoodPhp\Reflection\Type\NamedType;
 use GoodPhp\Reflection\Type\Template\TypeParameterMap;
 use GoodPhp\Reflection\Type\Type;
@@ -119,6 +120,11 @@ final class NpdMethodReflection implements MethodReflection
 			$this->resolvedTypeParameterMap,
 			$this->staticType,
 		);
+	}
+
+	public function returnTypeSource(): ?TypeSource
+	{
+		return $this->definition->returnTypeSource;
 	}
 
 	public function invoke(object $receiver, mixed ...$args): mixed
