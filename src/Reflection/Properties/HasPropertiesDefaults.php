@@ -11,12 +11,12 @@ use Illuminate\Support\Arr;
 trait HasPropertiesDefaults
 {
 	/**
-	 * @return list<PropertyReflection<ReflectableType, HasProperties<ReflectableType>>>
+	 * @return list<PropertyReflection<ReflectableType>>
 	 */
 	abstract public function properties(): array;
 
 	/**
-	 * @return PropertyReflection<ReflectableType, HasProperties<ReflectableType>>|null
+	 * @return PropertyReflection<ReflectableType>|null
 	 */
 	public function property(string $name): ?PropertyReflection
 	{

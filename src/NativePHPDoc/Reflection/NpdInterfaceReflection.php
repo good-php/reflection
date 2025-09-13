@@ -11,7 +11,6 @@ use GoodPhp\Reflection\Reflection\Attributes\Attributes;
 use GoodPhp\Reflection\Reflection\ClassMemberInheritanceResolver;
 use GoodPhp\Reflection\Reflection\InterfaceReflection;
 use GoodPhp\Reflection\Reflection\MethodReflection;
-use GoodPhp\Reflection\Reflection\Methods\HasMethods;
 use GoodPhp\Reflection\Reflection\Methods\HasMethodsDefaults;
 use GoodPhp\Reflection\Reflection\TypeParameters\HasTypeParametersDefaults;
 use GoodPhp\Reflection\Reflection\TypeParameters\TypeParameterReflection;
@@ -31,14 +30,13 @@ final class NpdInterfaceReflection extends NpdTypeReflection implements Interfac
 	/** @use HasMethodsDefaults<ReflectableType> */
 	use HasMethodsDefaults;
 
-	/** @use HasTypeParametersDefaults<$this> */
 	use HasTypeParametersDefaults;
 
 	private readonly NamedType $type;
 
 	private NamedType $staticType;
 
-	/** @var list<TypeParameterReflection<$this>> */
+	/** @var list<TypeParameterReflection> */
 	private array $typeParameters;
 
 	/** @var ReflectionClass<ReflectableType> */
@@ -49,10 +47,10 @@ final class NpdInterfaceReflection extends NpdTypeReflection implements Interfac
 	/** @var list<NamedType> */
 	private array $extends;
 
-	/** @var list<MethodReflection<ReflectableType, $this>> */
+	/** @var list<MethodReflection<ReflectableType>> */
 	private array $declaredMethods;
 
-	/** @var list<MethodReflection<ReflectableType, HasMethods<ReflectableType>>> */
+	/** @var list<MethodReflection<ReflectableType>> */
 	private array $methods;
 
 	/**
@@ -104,7 +102,7 @@ final class NpdInterfaceReflection extends NpdTypeReflection implements Interfac
 	}
 
 	/**
-	 * @return list<TypeParameterReflection<$this>>
+	 * @return list<TypeParameterReflection>
 	 */
 	public function typeParameters(): array
 	{
@@ -127,7 +125,7 @@ final class NpdInterfaceReflection extends NpdTypeReflection implements Interfac
 	}
 
 	/**
-	 * @return list<MethodReflection<ReflectableType, $this>>
+	 * @return list<MethodReflection<ReflectableType>>
 	 */
 	public function declaredMethods(): array
 	{
@@ -138,7 +136,7 @@ final class NpdInterfaceReflection extends NpdTypeReflection implements Interfac
 	}
 
 	/**
-	 * @return list<MethodReflection<ReflectableType, HasMethods<ReflectableType>>>
+	 * @return list<MethodReflection<ReflectableType>>
 	 */
 	public function methods(): array
 	{

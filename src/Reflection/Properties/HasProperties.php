@@ -6,22 +6,22 @@ use GoodPhp\Reflection\Reflection\HasName;
 use GoodPhp\Reflection\Reflection\PropertyReflection;
 
 /**
- * @template ReflectableType of object
+ * @template-contravariant ReflectableType of object
  */
 interface HasProperties extends HasName
 {
 	/**
-	 * @return list<PropertyReflection<ReflectableType, $this>>
+	 * @return list<PropertyReflection<ReflectableType>>
 	 */
 	public function declaredProperties(): array;
 
 	/**
-	 * @return list<PropertyReflection<ReflectableType, self<ReflectableType>>>
+	 * @return list<PropertyReflection<ReflectableType>>
 	 */
 	public function properties(): array;
 
 	/**
-	 * @return PropertyReflection<ReflectableType, self<ReflectableType>>|null
+	 * @return PropertyReflection<ReflectableType>|null
 	 */
 	public function property(string $name): ?PropertyReflection;
 }

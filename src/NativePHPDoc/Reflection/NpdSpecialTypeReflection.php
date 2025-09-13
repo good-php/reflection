@@ -19,14 +19,13 @@ use GoodPhp\Reflection\Type\Type;
  */
 final class NpdSpecialTypeReflection extends NpdTypeReflection implements SpecialTypeReflection
 {
-	/** @use HasTypeParametersDefaults<$this> */
 	use HasTypeParametersDefaults;
 
 	private readonly NamedType $type;
 
 	private NamedType $staticType;
 
-	/** @var list<TypeParameterReflection<$this>> */
+	/** @var list<TypeParameterReflection> */
 	private array $typeParameters;
 
 	public function __construct(
@@ -71,7 +70,7 @@ final class NpdSpecialTypeReflection extends NpdTypeReflection implements Specia
 	}
 
 	/**
-	 * @return list<TypeParameterReflection<$this>>
+	 * @return list<TypeParameterReflection>
 	 */
 	public function typeParameters(): array
 	{

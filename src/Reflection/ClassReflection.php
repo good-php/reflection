@@ -13,7 +13,6 @@ use GoodPhp\Reflection\Type\NamedType;
  * @template ReflectableType of object
  *
  * @extends TypeReflection<ReflectableType>
- * @extends HasTypeParameters<self<ReflectableType>>
  * @extends HasProperties<ReflectableType>
  * @extends HasMethods<ReflectableType>
  */
@@ -31,7 +30,7 @@ interface ClassReflection extends TypeReflection, HasAttributes, HasTypeParamete
 	public function uses(): UsedTraitsReflection;
 
 	/**
-	 * @return MethodReflection<ReflectableType, $this|self<object>|InterfaceReflection<object>|TraitReflection<object>>|null
+	 * @return MethodReflection<ReflectableType>|null
 	 */
 	public function constructor(): ?MethodReflection;
 

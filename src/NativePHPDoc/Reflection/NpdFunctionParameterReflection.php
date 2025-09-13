@@ -15,11 +15,6 @@ use GoodPhp\Reflection\Type\TypeProjector;
 use ReflectionParameter;
 use Webmozart\Assert\Assert;
 
-/**
- * @template-covariant DeclaringMethodReflection of MethodReflection
- *
- * @implements FunctionParameterReflection<DeclaringMethodReflection>
- */
 final class NpdFunctionParameterReflection implements FunctionParameterReflection
 {
 	private readonly ReflectionParameter $nativeReflection;
@@ -29,7 +24,7 @@ final class NpdFunctionParameterReflection implements FunctionParameterReflectio
 	private readonly ?Type $type;
 
 	/**
-	 * @param DeclaringMethodReflection $declaringMethod
+	 * @param MethodReflection<*> $declaringMethod
 	 */
 	public function __construct(
 		private readonly FunctionParameterDefinition $definition,
@@ -92,9 +87,6 @@ final class NpdFunctionParameterReflection implements FunctionParameterReflectio
 		return $this->declaringMethod->location() . ' ' . $this;
 	}
 
-	/**
-	 * @return DeclaringMethodReflection
-	 */
 	public function declaringMethod(): MethodReflection
 	{
 		return $this->declaringMethod;

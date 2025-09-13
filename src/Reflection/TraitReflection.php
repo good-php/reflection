@@ -13,7 +13,6 @@ use GoodPhp\Reflection\Type\NamedType;
  * @template ReflectableType of object
  *
  * @extends TypeReflection<ReflectableType>
- * @extends HasTypeParameters<self<ReflectableType>>
  * @extends HasProperties<ReflectableType>
  * @extends HasMethods<ReflectableType>
  */

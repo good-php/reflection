@@ -14,14 +14,12 @@ use GoodPhp\Reflection\Type\Type;
 /**
  * @template-contravariant ReflectableType of object
  *
- * @template-covariant DeclaringTypeReflection of HasMethods<ReflectableType>
- *
- * @implements MethodReflection<ReflectableType, DeclaringTypeReflection>
+ * @implements MethodReflection<ReflectableType>
  */
 final class TraitAliasesMethodReflection implements MethodReflection
 {
 	/**
-	 * @param MethodReflection<ReflectableType, DeclaringTypeReflection> $method
+	 * @param MethodReflection<ReflectableType> $method
 	 */
 	public function __construct(
 		private MethodReflection $method,
@@ -93,9 +91,6 @@ final class TraitAliasesMethodReflection implements MethodReflection
 		return $this->method->location();
 	}
 
-	/**
-	 * @return DeclaringTypeReflection
-	 */
 	public function declaringType(): HasMethods
 	{
 		return $this->method->declaringType();

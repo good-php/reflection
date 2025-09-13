@@ -11,7 +11,6 @@ use GoodPhp\Reflection\Type\NamedType;
  * @template ReflectableType of object
  *
  * @extends TypeReflection<ReflectableType>
- * @extends HasTypeParameters<self<ReflectableType>>
  * @extends HasMethods<ReflectableType>
  */
 interface InterfaceReflection extends TypeReflection, HasAttributes, HasTypeParameters, HasMethods

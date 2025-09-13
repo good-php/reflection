@@ -13,9 +13,7 @@ use GoodPhp\Reflection\Reflection\Attributes\Attributes;
 use GoodPhp\Reflection\Reflection\ClassMemberInheritanceResolver;
 use GoodPhp\Reflection\Reflection\ClassReflection;
 use GoodPhp\Reflection\Reflection\MethodReflection;
-use GoodPhp\Reflection\Reflection\Methods\HasMethods;
 use GoodPhp\Reflection\Reflection\Methods\HasMethodsDefaults;
-use GoodPhp\Reflection\Reflection\Properties\HasProperties;
 use GoodPhp\Reflection\Reflection\Properties\HasPropertiesDefaults;
 use GoodPhp\Reflection\Reflection\PropertyReflection;
 use GoodPhp\Reflection\Reflection\Traits\UsedTraitsReflection;
@@ -40,7 +38,6 @@ final class NpdClassReflection extends NpdTypeReflection implements ClassReflect
 	/** @use HasPropertiesDefaults<ReflectableType> */
 	use HasPropertiesDefaults;
 
-	/** @use HasTypeParametersDefaults<$this> */
 	use HasTypeParametersDefaults;
 
 	private readonly NamedType $type;
@@ -50,7 +47,7 @@ final class NpdClassReflection extends NpdTypeReflection implements ClassReflect
 	/** @var ReflectionClass<ReflectableType> */
 	private readonly ReflectionClass $nativeReflection;
 
-	/** @var list<TypeParameterReflection<$this>> */
+	/** @var list<TypeParameterReflection> */
 	private array $typeParameters;
 
 	private readonly Attributes $attributes;
@@ -62,16 +59,16 @@ final class NpdClassReflection extends NpdTypeReflection implements ClassReflect
 
 	private UsedTraitsReflection $uses;
 
-	/** @var list<PropertyReflection<ReflectableType, $this>> */
+	/** @var list<PropertyReflection<ReflectableType>> */
 	private array $declaredProperties;
 
-	/** @var list<PropertyReflection<ReflectableType, HasProperties<ReflectableType>>> */
+	/** @var list<PropertyReflection<ReflectableType>> */
 	private array $properties;
 
-	/** @var list<MethodReflection<ReflectableType, $this>> */
+	/** @var list<MethodReflection<ReflectableType>> */
 	private array $declaredMethods;
 
-	/** @var list<MethodReflection<ReflectableType, HasMethods<ReflectableType>>> */
+	/** @var list<MethodReflection<ReflectableType>> */
 	private array $methods;
 
 	/**
@@ -123,7 +120,7 @@ final class NpdClassReflection extends NpdTypeReflection implements ClassReflect
 	}
 
 	/**
-	 * @return list<TypeParameterReflection<$this>>
+	 * @return list<TypeParameterReflection>
 	 */
 	public function typeParameters(): array
 	{
@@ -171,7 +168,7 @@ final class NpdClassReflection extends NpdTypeReflection implements ClassReflect
 	}
 
 	/**
-	 * @return list<PropertyReflection<ReflectableType, $this>>
+	 * @return list<PropertyReflection<ReflectableType>>
 	 */
 	public function declaredProperties(): array
 	{
@@ -182,7 +179,7 @@ final class NpdClassReflection extends NpdTypeReflection implements ClassReflect
 	}
 
 	/**
-	 * @return list<PropertyReflection<ReflectableType, HasProperties<ReflectableType>>>
+	 * @return list<PropertyReflection<ReflectableType>>
 	 */
 	public function properties(): array
 	{
@@ -197,7 +194,7 @@ final class NpdClassReflection extends NpdTypeReflection implements ClassReflect
 	}
 
 	/**
-	 * @return list<MethodReflection<ReflectableType, $this>>
+	 * @return list<MethodReflection<ReflectableType>>
 	 */
 	public function declaredMethods(): array
 	{
@@ -208,7 +205,7 @@ final class NpdClassReflection extends NpdTypeReflection implements ClassReflect
 	}
 
 	/**
-	 * @return list<MethodReflection<ReflectableType, HasMethods<ReflectableType>>>
+	 * @return list<MethodReflection<ReflectableType>>
 	 */
 	public function methods(): array
 	{
@@ -223,7 +220,7 @@ final class NpdClassReflection extends NpdTypeReflection implements ClassReflect
 	}
 
 	/**
-	 * @return MethodReflection<ReflectableType, HasMethods<ReflectableType>>|null
+	 * @return MethodReflection<ReflectableType>|null
 	 */
 	public function constructor(): ?MethodReflection
 	{

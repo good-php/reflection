@@ -10,7 +10,6 @@ use GoodPhp\Reflection\Reflection\Attributes\Attributes;
 use GoodPhp\Reflection\Reflection\ClassMemberInheritanceResolver;
 use GoodPhp\Reflection\Reflection\EnumReflection;
 use GoodPhp\Reflection\Reflection\MethodReflection;
-use GoodPhp\Reflection\Reflection\Methods\HasMethods;
 use GoodPhp\Reflection\Reflection\Methods\HasMethodsDefaults;
 use GoodPhp\Reflection\Reflection\Traits\UsedTraitsReflection;
 use GoodPhp\Reflection\Reflector;
@@ -39,10 +38,10 @@ final class NpdEnumReflection extends NpdTypeReflection implements EnumReflectio
 
 	private UsedTraitsReflection $uses;
 
-	/** @var list<MethodReflection<ReflectableType, $this>> */
+	/** @var list<MethodReflection<ReflectableType>> */
 	private array $declaredMethods;
 
-	/** @var list<MethodReflection<ReflectableType, HasMethods<ReflectableType>>> */
+	/** @var list<MethodReflection<ReflectableType>> */
 	private array $methods;
 
 	/**
@@ -106,7 +105,7 @@ final class NpdEnumReflection extends NpdTypeReflection implements EnumReflectio
 	}
 
 	/**
-	 * @return list<MethodReflection<ReflectableType, $this>>
+	 * @return list<MethodReflection<ReflectableType>>
 	 */
 	public function declaredMethods(): array
 	{
@@ -117,7 +116,7 @@ final class NpdEnumReflection extends NpdTypeReflection implements EnumReflectio
 	}
 
 	/**
-	 * @return list<MethodReflection<ReflectableType, HasMethods<ReflectableType>>>
+	 * @return list<MethodReflection<ReflectableType>>
 	 */
 	public function methods(): array
 	{

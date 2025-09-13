@@ -11,12 +11,12 @@ use Illuminate\Support\Arr;
 trait HasMethodsDefaults
 {
 	/**
-	 * @return list<MethodReflection<ReflectableType, HasMethods<ReflectableType>>>
+	 * @return list<MethodReflection<ReflectableType>>
 	 */
 	abstract public function methods(): array;
 
 	/**
-	 * @return MethodReflection<ReflectableType, HasMethods<ReflectableType>>|null
+	 * @return MethodReflection<ReflectableType>|null
 	 */
 	public function method(string $name): ?MethodReflection
 	{

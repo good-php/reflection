@@ -12,16 +12,8 @@ use GoodPhp\Reflection\Type\Template\TypeParameterMap;
 use GoodPhp\Reflection\Type\Type;
 use GoodPhp\Reflection\Type\TypeProjector;
 
-/**
- * @template-covariant DeclaringStructureReflection of HasTypeParameters
- *
- * @implements TypeParameterReflection<DeclaringStructureReflection>
- */
 final class NpdTypeParameterReflection implements TypeParameterReflection
 {
-	/**
-	 * @param DeclaringStructureReflection $declaringStructure
-	 */
 	public function __construct(
 		private readonly TypeParameterDefinition $definition,
 		private readonly HasTypeParameters $declaringStructure,
@@ -52,9 +44,6 @@ final class NpdTypeParameterReflection implements TypeParameterReflection
 		return $this->definition->variance;
 	}
 
-	/**
-	 * @return DeclaringStructureReflection
-	 */
 	public function declaringStructure(): HasTypeParameters
 	{
 		return $this->declaringStructure;
