@@ -60,7 +60,6 @@ Here are some of the features supported:
 - 🔴 Support for `strict_types` configurations
 - 🔴 Conditional types
 - 🔴 Type aliases
-- 🔴 Extensions reflection (SPL, Zip, DS, DOM, etc.)
 - 🔴 Template type inference for functions
 
 ### 🐞 How reliable is this?

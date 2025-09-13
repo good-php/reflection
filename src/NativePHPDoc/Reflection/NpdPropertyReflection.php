@@ -9,11 +9,11 @@ use GoodPhp\Reflection\Reflection\ClassReflection;
 use GoodPhp\Reflection\Reflection\FunctionParameterReflection;
 use GoodPhp\Reflection\Reflection\Properties\HasProperties;
 use GoodPhp\Reflection\Reflection\PropertyReflection;
+use GoodPhp\Reflection\Reflection\TypeSource;
 use GoodPhp\Reflection\Type\NamedType;
 use GoodPhp\Reflection\Type\Template\TypeParameterMap;
 use GoodPhp\Reflection\Type\Type;
 use GoodPhp\Reflection\Type\TypeProjector;
-use Illuminate\Support\Arr;
 use ReflectionProperty;
 use Webmozart\Assert\Assert;
 
@@ -77,6 +77,11 @@ final class NpdPropertyReflection implements PropertyReflection
 		);
 	}
 
+	public function typeSource(): ?TypeSource
+	{
+		return $this->definition->typeSource;
+	}
+
 	public function hasDefaultValue(): bool
 	{
 		return $this->definition->hasDefaultValue;
@@ -102,7 +107,7 @@ final class NpdPropertyReflection implements PropertyReflection
 	 */
 	public function promotedParameter(): ?FunctionParameterReflection
 	{
-		if (isset($this->promotedParameter)) {
+		if (isset($this->promotedParameter) || (new ReflectionProperty(self::class, 'promotedParameter'))->isInitialized($this)) {
 			return $this->promotedParameter;
 		}
 
@@ -114,10 +119,7 @@ final class NpdPropertyReflection implements PropertyReflection
 
 		Assert::notNull($constructor);
 
-		return $this->promotedParameter ??= Arr::first(
-			$constructor->parameters(),
-			fn (FunctionParameterReflection $parameter) => $this->definition->name === $parameter->name()
-		);
+		return $this->promotedParameter ??= $constructor->parameter($this->definition->name);
 	}
 
 	public function attributes(): Attributes

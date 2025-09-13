@@ -12,6 +12,9 @@ parameters:
 
 	reportUnmatchedIgnoredErrors: false
 	ignoreErrors:
+		# They do have the type specified. I don't know what PHPStan is on about here.
+		- '#Method GoodPhp\\Reflection\\Reflection\\Methods\\MergedInheritanceMethodReflection::invoke\(\) has parameter \$args with no type specified.#'
+		- '#Method GoodPhp\\Reflection\\Reflection\\Methods\\MergedInheritanceMethodReflection::invokeLax\(\) has parameter \$args with no type specified.#'
 		# PHPStan doesn't understand that Collection::values() produces a list
 		- '#Method .*::.* should return list<(.*)> but returns array<(int, )?\1>.#i'
 		- '#Parameter [\$|\#].* of .* expects list<(.*)>(|.*)?, (array|non-empty-array)<(int, )?\1> given.#i'

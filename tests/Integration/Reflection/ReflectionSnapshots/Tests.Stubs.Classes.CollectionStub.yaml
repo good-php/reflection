@@ -13,7 +13,8 @@ attributes:
 typeParameters: {  }
 extends: null
 implements:
-    - IteratorAggregate
+    - 'IteratorAggregate<string, Tests\Stubs\Classes\SomeStub>'
+    - 'ArrayAccess<string, Tests\Stubs\Classes\SomeStub>'
 uses:
     traits: {  }
     excludedTraitMethods: {  }
@@ -31,6 +32,90 @@ declaredMethods:
         typeParameters: {  }
         parameters: {  }
         returnType: Traversable
+    -
+        asString: offsetExists()
+        name: offsetExists
+        location: 'Tests\Stubs\Classes\CollectionStub::offsetExists()'
+        declaringType: Tests\Stubs\Classes\CollectionStub
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters:
+            -
+                asString: 'arg $offset'
+                name: offset
+                location: 'Tests\Stubs\Classes\CollectionStub::offsetExists() arg $offset'
+                declaringMethod: offsetExists()
+                type: mixed
+                hasDefaultValue: false
+                defaultValue: null
+        returnType: bool
+    -
+        asString: offsetGet()
+        name: offsetGet
+        location: 'Tests\Stubs\Classes\CollectionStub::offsetGet()'
+        declaringType: Tests\Stubs\Classes\CollectionStub
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters:
+            -
+                asString: 'arg $offset'
+                name: offset
+                location: 'Tests\Stubs\Classes\CollectionStub::offsetGet() arg $offset'
+                declaringMethod: offsetGet()
+                type: mixed
+                hasDefaultValue: false
+                defaultValue: null
+        returnType: mixed
+    -
+        asString: offsetSet()
+        name: offsetSet
+        location: 'Tests\Stubs\Classes\CollectionStub::offsetSet()'
+        declaringType: Tests\Stubs\Classes\CollectionStub
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters:
+            -
+                asString: 'arg $offset'
+                name: offset
+                location: 'Tests\Stubs\Classes\CollectionStub::offsetSet() arg $offset'
+                declaringMethod: offsetSet()
+                type: mixed
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $value'
+                name: value
+                location: 'Tests\Stubs\Classes\CollectionStub::offsetSet() arg $value'
+                declaringMethod: offsetSet()
+                type: mixed
+                hasDefaultValue: false
+                defaultValue: null
+        returnType: void
+    -
+        asString: offsetUnset()
+        name: offsetUnset
+        location: 'Tests\Stubs\Classes\CollectionStub::offsetUnset()'
+        declaringType: Tests\Stubs\Classes\CollectionStub
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters:
+            -
+                asString: 'arg $offset'
+                name: offset
+                location: 'Tests\Stubs\Classes\CollectionStub::offsetUnset() arg $offset'
+                declaringMethod: offsetUnset()
+                type: mixed
+                hasDefaultValue: false
+                defaultValue: null
+        returnType: void
 methods:
     -
         asString: getIterator()
@@ -42,4 +127,88 @@ methods:
             all: {  }
         typeParameters: {  }
         parameters: {  }
-        returnType: Traversable
+        returnType: 'Traversable<string, Tests\Stubs\Classes\SomeStub>'
+    -
+        asString: offsetExists()
+        name: offsetExists
+        location: 'Tests\Stubs\Classes\CollectionStub::offsetExists()'
+        declaringType: Tests\Stubs\Classes\CollectionStub
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters:
+            -
+                asString: 'arg $offset'
+                name: offset
+                location: 'Tests\Stubs\Classes\CollectionStub::offsetExists() arg $offset'
+                declaringMethod: offsetExists()
+                type: string
+                hasDefaultValue: false
+                defaultValue: null
+        returnType: bool
+    -
+        asString: offsetGet()
+        name: offsetGet
+        location: 'Tests\Stubs\Classes\CollectionStub::offsetGet()'
+        declaringType: Tests\Stubs\Classes\CollectionStub
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters:
+            -
+                asString: 'arg $offset'
+                name: offset
+                location: 'Tests\Stubs\Classes\CollectionStub::offsetGet() arg $offset'
+                declaringMethod: offsetGet()
+                type: string
+                hasDefaultValue: false
+                defaultValue: null
+        returnType: '?Tests\Stubs\Classes\SomeStub'
+    -
+        asString: offsetSet()
+        name: offsetSet
+        location: 'Tests\Stubs\Classes\CollectionStub::offsetSet()'
+        declaringType: Tests\Stubs\Classes\CollectionStub
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters:
+            -
+                asString: 'arg $offset'
+                name: offset
+                location: 'Tests\Stubs\Classes\CollectionStub::offsetSet() arg $offset'
+                declaringMethod: offsetSet()
+                type: '?string'
+                hasDefaultValue: false
+                defaultValue: null
+            -
+                asString: 'arg $value'
+                name: value
+                location: 'Tests\Stubs\Classes\CollectionStub::offsetSet() arg $value'
+                declaringMethod: offsetSet()
+                type: Tests\Stubs\Classes\SomeStub
+                hasDefaultValue: false
+                defaultValue: null
+        returnType: void
+    -
+        asString: offsetUnset()
+        name: offsetUnset
+        location: 'Tests\Stubs\Classes\CollectionStub::offsetUnset()'
+        declaringType: Tests\Stubs\Classes\CollectionStub
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters:
+            -
+                asString: 'arg $offset'
+                name: offset
+                location: 'Tests\Stubs\Classes\CollectionStub::offsetUnset() arg $offset'
+                declaringMethod: offsetUnset()
+                type: string
+                hasDefaultValue: false
+                defaultValue: null
+        returnType: void

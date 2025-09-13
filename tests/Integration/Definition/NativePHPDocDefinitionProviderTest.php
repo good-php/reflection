@@ -23,6 +23,7 @@ use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\TypeParameterDefin
 use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\UsedTraitAliasDefinition;
 use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\UsedTraitDefinition;
 use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\UsedTraitsDefinition;
+use GoodPhp\Reflection\Reflection\TypeSource;
 use GoodPhp\Reflection\Type\Combinatorial\UnionType;
 use GoodPhp\Reflection\Type\NamedType;
 use GoodPhp\Reflection\Type\PrimitiveType;
@@ -160,6 +161,7 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 					new PropertyDefinition(
 						name: 'factories',
 						type: PrimitiveType::array(new NamedType(SomeStub::class)),
+						typeSource: TypeSource::PHP_DOC,
 						hasDefaultValue: false,
 						isPromoted: false,
 					),
@@ -171,12 +173,14 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 								name: 'T'
 							),
 						]),
+						typeSource: TypeSource::PHP_DOC,
 						hasDefaultValue: false,
 						isPromoted: false,
 					),
 					new PropertyDefinition(
 						name: 'promoted',
 						type: new TemplateType('T'),
+						typeSource: TypeSource::PHP_DOC,
 						hasDefaultValue: false,
 						isPromoted: true,
 					),
@@ -189,10 +193,12 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 							new FunctionParameterDefinition(
 								name: 'promoted',
 								type: new TemplateType('T'),
+								typeSource: TypeSource::PHP_DOC,
 								hasDefaultValue: false,
 							),
 						],
 						returnType: null,
+						returnTypeSource: null,
 					),
 					new MethodDefinition(
 						name: 'method',
@@ -213,6 +219,7 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 										name: 'T'
 									),
 								]),
+								typeSource: TypeSource::PHP_DOC,
 								hasDefaultValue: false,
 							),
 						],
@@ -223,7 +230,8 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 							new TemplateType(
 								name: 'G'
 							),
-						])
+						]),
+						returnTypeSource: TypeSource::PHP_DOC,
 					),
 					new MethodDefinition(
 						name: 'methodTwo',
@@ -251,12 +259,14 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 								type: new TemplateType(
 									name: 'K'
 								),
+								typeSource: TypeSource::PHP_DOC,
 								hasDefaultValue: false,
 							),
 						],
 						returnType: new TemplateType(
 							name: 'KValue'
-						)
+						),
+						returnTypeSource: TypeSource::PHP_DOC,
 					),
 					new MethodDefinition(
 						name: 'self',
@@ -268,12 +278,14 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 									PrimitiveType::integer(),
 									PrimitiveType::integer(),
 								]),
+								typeSource: TypeSource::PHP_DOC,
 								hasDefaultValue: false,
 							),
 						],
 						returnType: new StaticType(
 							new NamedType(ClassStub::class)
-						)
+						),
+						returnTypeSource: TypeSource::NATIVE,
 					),
 				],
 			),
@@ -298,18 +310,21 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 					new PropertyDefinition(
 						name: 'property',
 						type: null,
+						typeSource: null,
 						hasDefaultValue: true,
 						isPromoted: false,
 					),
 					new PropertyDefinition(
 						name: 'promoted',
 						type: null,
+						typeSource: null,
 						hasDefaultValue: true,
 						isPromoted: true,
 					),
 					new PropertyDefinition(
 						name: 'promotedDefault',
 						type: new NullableType(PrimitiveType::integer()),
+						typeSource: TypeSource::NATIVE,
 						hasDefaultValue: false,
 						isPromoted: true,
 					),
@@ -322,15 +337,18 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 							new FunctionParameterDefinition(
 								name: 'promoted',
 								type: null,
+								typeSource: null,
 								hasDefaultValue: true,
 							),
 							new FunctionParameterDefinition(
 								name: 'promotedDefault',
 								type: new NullableType(PrimitiveType::integer()),
+								typeSource: TypeSource::NATIVE,
 								hasDefaultValue: true,
 							),
 						],
-						returnType: null
+						returnType: null,
+						returnTypeSource: null,
 					),
 					new MethodDefinition(
 						name: 'test',
@@ -339,10 +357,12 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 							new FunctionParameterDefinition(
 								name: 'something',
 								type: null,
+								typeSource: null,
 								hasDefaultValue: false,
 							),
 						],
-						returnType: null
+						returnType: null,
+						returnTypeSource: null,
 					),
 				],
 			),
@@ -370,50 +390,60 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 							new FunctionParameterDefinition(
 								name: 'p1',
 								type: PrimitiveType::integer(),
+								typeSource: TypeSource::NATIVE,
 								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p2',
 								type: PrimitiveType::string(),
+								typeSource: TypeSource::NATIVE,
 								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p3',
 								type: PrimitiveType::float(),
+								typeSource: TypeSource::NATIVE,
 								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p4',
 								type: PrimitiveType::boolean(),
+								typeSource: TypeSource::NATIVE,
 								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p5',
 								type: new NamedType('array'),
+								typeSource: TypeSource::NATIVE,
 								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p6',
 								type: PrimitiveType::object(),
+								typeSource: TypeSource::NATIVE,
 								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p7',
 								type: new NamedType('callable'),
+								typeSource: TypeSource::NATIVE,
 								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p8',
 								type: new NamedType('iterable'),
+								typeSource: TypeSource::NATIVE,
 								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p9',
 								type: MixedType::get(),
+								typeSource: TypeSource::NATIVE,
 								hasDefaultValue: false,
 							),
 						],
 						returnType: VoidType::get(),
+						returnTypeSource: TypeSource::NATIVE,
 					),
 					new MethodDefinition(
 						name: 'f2',
@@ -422,6 +452,7 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 							new FunctionParameterDefinition(
 								name: 'p1',
 								type: new NullableType(PrimitiveType::integer()),
+								typeSource: TypeSource::NATIVE,
 								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
@@ -432,6 +463,7 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 										PrimitiveType::float(),
 									])
 								),
+								typeSource: TypeSource::NATIVE,
 								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
@@ -440,6 +472,7 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 									PrimitiveType::string(),
 									PrimitiveType::float(),
 								]),
+								typeSource: TypeSource::NATIVE,
 								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
@@ -448,15 +481,18 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 									PrimitiveType::string(),
 									PrimitiveType::boolean(),
 								]),
+								typeSource: TypeSource::NATIVE,
 								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p5',
 								type: new NamedType(AllNativeTypes::class),
+								typeSource: TypeSource::NATIVE,
 								hasDefaultValue: false,
 							),
 						],
 						returnType: NeverType::get(),
+						returnTypeSource: TypeSource::NATIVE,
 					),
 					new MethodDefinition(
 						name: 'f3',
@@ -465,6 +501,7 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 						returnType: new StaticType(
 							new NamedType(AllNativeTypes::class)
 						),
+						returnTypeSource: TypeSource::NATIVE,
 					),
 				],
 			),
@@ -492,36 +529,43 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 							new FunctionParameterDefinition(
 								name: 'p1',
 								type: PrimitiveType::integer(),
+								typeSource: TypeSource::PHP_DOC,
 								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p2',
 								type: PrimitiveType::integer(),
+								typeSource: TypeSource::PHP_DOC,
 								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p3',
 								type: PrimitiveType::integer(),
+								typeSource: TypeSource::PHP_DOC,
 								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p4',
 								type: PrimitiveType::integer(),
+								typeSource: TypeSource::PHP_DOC,
 								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p5',
 								type: PrimitiveType::integer(),
+								typeSource: TypeSource::PHP_DOC,
 								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p6',
 								type: PrimitiveType::integer(),
+								typeSource: TypeSource::PHP_DOC,
 								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p7',
 								type: PrimitiveType::integer(),
+								typeSource: TypeSource::PHP_DOC,
 								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
@@ -530,25 +574,30 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 									PrimitiveType::integer(),
 									PrimitiveType::float(),
 								]),
+								typeSource: TypeSource::PHP_DOC,
 								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p9',
 								type: new ErrorType('numeric'),
+								typeSource: TypeSource::PHP_DOC,
 								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p10',
 								type: PrimitiveType::float(),
+								typeSource: TypeSource::PHP_DOC,
 								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p11',
 								type: PrimitiveType::float(),
+								typeSource: TypeSource::PHP_DOC,
 								hasDefaultValue: false,
 							),
 						],
 						returnType: VoidType::get(),
+						returnTypeSource: TypeSource::PHP_DOC,
 					),
 					new MethodDefinition(
 						name: 'f2',
@@ -557,45 +606,54 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 							new FunctionParameterDefinition(
 								name: 'p1',
 								type: PrimitiveType::string(),
+								typeSource: TypeSource::PHP_DOC,
 								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p2',
 								type: PrimitiveType::string(),
+								typeSource: TypeSource::PHP_DOC,
 								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p3',
 								type: PrimitiveType::string(),
+								typeSource: TypeSource::PHP_DOC,
 								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p4',
 								type: PrimitiveType::string(),
+								typeSource: TypeSource::PHP_DOC,
 								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p5',
 								type: PrimitiveType::string(),
+								typeSource: TypeSource::PHP_DOC,
 								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p6',
 								type: PrimitiveType::string(),
+								typeSource: TypeSource::PHP_DOC,
 								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p7',
 								type: PrimitiveType::string(),
+								typeSource: TypeSource::PHP_DOC,
 								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p8',
 								type: PrimitiveType::string(),
+								typeSource: TypeSource::PHP_DOC,
 								hasDefaultValue: false,
 							),
 						],
 						returnType: NeverType::get(),
+						returnTypeSource: TypeSource::PHP_DOC,
 					),
 					new MethodDefinition(
 						name: 'f3',
@@ -604,25 +662,30 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 							new FunctionParameterDefinition(
 								name: 'p1',
 								type: PrimitiveType::boolean(),
+								typeSource: TypeSource::PHP_DOC,
 								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p2',
 								type: PrimitiveType::boolean(),
+								typeSource: TypeSource::PHP_DOC,
 								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p3',
 								type: PrimitiveType::boolean(),
+								typeSource: TypeSource::PHP_DOC,
 								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p4',
 								type: PrimitiveType::boolean(),
+								typeSource: TypeSource::PHP_DOC,
 								hasDefaultValue: false,
 							),
 						],
 						returnType: NeverType::get(),
+						returnTypeSource: TypeSource::PHP_DOC,
 					),
 					new MethodDefinition(
 						name: 'f4',
@@ -637,6 +700,7 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 									]),
 									PrimitiveType::string(),
 								]),
+								typeSource: TypeSource::PHP_DOC,
 								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
@@ -645,11 +709,13 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 									PrimitiveType::integer(),
 									PrimitiveType::string(),
 								]),
+								typeSource: TypeSource::PHP_DOC,
 								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p3',
 								type: new NamedType('array'),
+								typeSource: TypeSource::PHP_DOC,
 								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
@@ -658,6 +724,7 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 									PrimitiveType::string(),
 									PrimitiveType::string(),
 								]),
+								typeSource: TypeSource::PHP_DOC,
 								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
@@ -666,6 +733,7 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 									PrimitiveType::integer(),
 									PrimitiveType::string(),
 								]),
+								typeSource: TypeSource::PHP_DOC,
 								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
@@ -673,10 +741,12 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 								type: new NamedType('array', [
 									PrimitiveType::integer(),
 								]),
+								typeSource: TypeSource::PHP_DOC,
 								hasDefaultValue: false,
 							),
 						],
 						returnType: NeverType::get(),
+						returnTypeSource: TypeSource::PHP_DOC,
 					),
 					new MethodDefinition(
 						name: 'f5',
@@ -690,46 +760,55 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 									PrimitiveType::string(),
 									PrimitiveType::boolean(),
 								]),
+								typeSource: TypeSource::PHP_DOC,
 								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p2',
 								type: new ErrorType('null'),
+								typeSource: TypeSource::PHP_DOC,
 								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p3',
 								type: new NamedType('iterable'),
+								typeSource: TypeSource::PHP_DOC,
 								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p4',
 								type: new NamedType('callable'),
+								typeSource: TypeSource::PHP_DOC,
 								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p5',
 								type: new NamedType('resource'),
+								typeSource: TypeSource::PHP_DOC,
 								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p6',
 								type: MixedType::get(),
+								typeSource: TypeSource::PHP_DOC,
 								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'p7',
 								type: new NamedType('object'),
+								typeSource: TypeSource::PHP_DOC,
 								hasDefaultValue: false,
 							),
 						],
 						returnType: NeverType::get(),
+						returnTypeSource: TypeSource::PHP_DOC,
 					),
 					new MethodDefinition(
 						name: 'f6',
 						typeParameters: [],
 						parameters: [],
 						returnType: NeverType::get(),
+						returnTypeSource: TypeSource::PHP_DOC,
 					),
 					new MethodDefinition(
 						name: 'f7',
@@ -738,12 +817,14 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 						returnType: new StaticType(
 							new NamedType(AllPhpDocTypes::class)
 						),
+						returnTypeSource: TypeSource::PHP_DOC,
 					),
 					new MethodDefinition(
 						name: 'f8',
 						typeParameters: [],
 						parameters: [],
 						returnType: new NamedType(AllPhpDocTypes::class),
+						returnTypeSource: TypeSource::PHP_DOC,
 					),
 					new MethodDefinition(
 						name: 'f9',
@@ -752,6 +833,7 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 						returnType: new StaticType(
 							new NamedType(AllPhpDocTypes::class)
 						),
+						returnTypeSource: TypeSource::PHP_DOC,
 					),
 				],
 			),
@@ -848,10 +930,12 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 							new FunctionParameterDefinition(
 								name: 'i',
 								type: PrimitiveType::string(),
+								typeSource: TypeSource::NATIVE,
 								hasDefaultValue: false,
 							),
 						],
 						returnType: MixedType::get(),
+						returnTypeSource: TypeSource::NATIVE,
 					),
 				],
 			),
@@ -891,6 +975,7 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 						typeParameters: [],
 						parameters: [],
 						returnType: new NamedType(Generator::class),
+						returnTypeSource: TypeSource::NATIVE,
 					),
 				],
 			),
@@ -966,10 +1051,12 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 							new FunctionParameterDefinition(
 								name: 'i',
 								type: PrimitiveType::string(),
+								typeSource: TypeSource::NATIVE,
 								hasDefaultValue: false,
 							),
 						],
 						returnType: MixedType::get(),
+						returnTypeSource: TypeSource::NATIVE,
 					),
 				],
 			),
@@ -1011,6 +1098,7 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 					new PropertyDefinition(
 						name: 'property',
 						type: new NamedType(stdClass::class),
+						typeSource: TypeSource::PHP_DOC,
 						hasDefaultValue: false,
 						isPromoted: false,
 					),
@@ -1023,15 +1111,18 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 							new FunctionParameterDefinition(
 								name: 'param1',
 								type: PrimitiveType::boolean(),
+								typeSource: TypeSource::PHP_DOC,
 								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
 								name: 'param2',
 								type: new NamedType(stdClass::class),
+								typeSource: TypeSource::PHP_DOC,
 								hasDefaultValue: false,
 							),
 						],
 						returnType: PrimitiveType::integer(),
+						returnTypeSource: TypeSource::PHP_DOC,
 					),
 				],
 			),

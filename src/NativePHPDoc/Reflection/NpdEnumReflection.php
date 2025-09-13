@@ -7,8 +7,8 @@ use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\MethodDefinition;
 use GoodPhp\Reflection\NativePHPDoc\Reflection\Attributes\NativeAttributes;
 use GoodPhp\Reflection\NativePHPDoc\Reflection\Traits\NpdUsedTraitsReflection;
 use GoodPhp\Reflection\Reflection\Attributes\Attributes;
+use GoodPhp\Reflection\Reflection\ClassMemberInheritanceResolver;
 use GoodPhp\Reflection\Reflection\EnumReflection;
-use GoodPhp\Reflection\Reflection\InheritsClassMembers;
 use GoodPhp\Reflection\Reflection\MethodReflection;
 use GoodPhp\Reflection\Reflection\Methods\HasMethodsDefaults;
 use GoodPhp\Reflection\Reflection\Traits\UsedTraitsReflection;
@@ -26,9 +26,6 @@ final class NpdEnumReflection extends NpdTypeReflection implements EnumReflectio
 {
 	/** @use HasMethodsDefaults<ReflectableType> */
 	use HasMethodsDefaults;
-
-	/** @use InheritsClassMembers<ReflectableType> */
-	use InheritsClassMembers;
 
 	private readonly NamedType $type;
 
@@ -52,7 +49,8 @@ final class NpdEnumReflection extends NpdTypeReflection implements EnumReflectio
 	 */
 	public function __construct(
 		private readonly EnumTypeDefinition $definition,
-		private readonly Reflector $reflector
+		private readonly Reflector $reflector,
+		private readonly ClassMemberInheritanceResolver $classMemberInheritanceResolver,
 	) {
 		$this->type = new NamedType($this->qualifiedName());
 		$this->staticType = $this->type;
@@ -122,14 +120,13 @@ final class NpdEnumReflection extends NpdTypeReflection implements EnumReflectio
 	 */
 	public function methods(): array
 	{
-		return $this->methods ??= collect([
-			...$this->methodsFromTypes($this->implements(), $this->staticType, $this->reflector),
-			...$this->methodsFromTraits($this->uses(), $this->staticType, $this->reflector),
-			...$this->declaredMethods(),
-		])
-			->keyBy(fn (MethodReflection $method) => $method->name())
-			->values()
-			->all();
+		return $this->methods ??= $this->classMemberInheritanceResolver->methods(
+			reflector: $this->reflector,
+			staticType: $this->staticType,
+			declaredMethods: $this->declaredMethods(),
+			implements: $this->implements(),
+			usedTraits: $this->uses(),
+		);
 	}
 
 	public function isBuiltIn(): bool

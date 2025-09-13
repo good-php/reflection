@@ -13,6 +13,7 @@ use GoodPhp\Reflection\NativePHPDoc\Reflection\NpdEnumReflection;
 use GoodPhp\Reflection\NativePHPDoc\Reflection\NpdInterfaceReflection;
 use GoodPhp\Reflection\NativePHPDoc\Reflection\NpdSpecialTypeReflection;
 use GoodPhp\Reflection\NativePHPDoc\Reflection\NpdTraitReflection;
+use GoodPhp\Reflection\Reflection\ClassMemberInheritanceResolver;
 use GoodPhp\Reflection\Reflection\TypeReflection;
 use GoodPhp\Reflection\Reflector;
 use GoodPhp\Reflection\Type\NamedType;
@@ -26,10 +27,13 @@ final class DefinitionProviderReflector implements Reflector
 {
 	private readonly TypeComparator $typeComparator;
 
+	private readonly ClassMemberInheritanceResolver $classMemberInheritanceResolver;
+
 	public function __construct(
 		private readonly DefinitionProvider $definitionProvider,
 	) {
 		$this->typeComparator = new TypeComparator($this);
+		$this->classMemberInheritanceResolver = new ClassMemberInheritanceResolver();
 	}
 
 	public function typeComparator(): TypeComparator
@@ -54,10 +58,10 @@ final class DefinitionProviderReflector implements Reflector
 		};
 
 		return match (true) {
-			$definition instanceof ClassTypeDefinition     => new NpdClassReflection($definition, $resolvedTypeParameterMap, $this),
-			$definition instanceof InterfaceTypeDefinition => new NpdInterfaceReflection($definition, $resolvedTypeParameterMap, $this),
-			$definition instanceof TraitTypeDefinition     => new NpdTraitReflection($definition, $resolvedTypeParameterMap, $this),
-			$definition instanceof EnumTypeDefinition      => new NpdEnumReflection($definition, $this),
+			$definition instanceof ClassTypeDefinition     => new NpdClassReflection($definition, $resolvedTypeParameterMap, $this, $this->classMemberInheritanceResolver),
+			$definition instanceof InterfaceTypeDefinition => new NpdInterfaceReflection($definition, $resolvedTypeParameterMap, $this, $this->classMemberInheritanceResolver),
+			$definition instanceof TraitTypeDefinition     => new NpdTraitReflection($definition, $resolvedTypeParameterMap, $this, $this->classMemberInheritanceResolver),
+			$definition instanceof EnumTypeDefinition      => new NpdEnumReflection($definition, $this, $this->classMemberInheritanceResolver),
 			$definition instanceof SpecialTypeDefinition   => new NpdSpecialTypeReflection($definition, $resolvedTypeParameterMap),
 			default                                        => throw new InvalidArgumentException('Unsupported definition of type ' . $definition::class . ' given.')
 		};

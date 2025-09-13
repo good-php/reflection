@@ -64,17 +64,6 @@ methods:
                 defaultValue: null
         returnType: mixed
     -
-        asString: cases()
-        name: cases
-        location: 'UnitEnum::cases()'
-        declaringType: UnitEnum
-        attributes:
-            asString: '#[]'
-            all: {  }
-        typeParameters: {  }
-        parameters: {  }
-        returnType: array
-    -
         asString: otherFunction()
         name: otherFunction
         location: 'Tests\Stubs\Traits\TraitWithoutProperties::otherFunction()'
@@ -96,3 +85,14 @@ methods:
         typeParameters: {  }
         parameters: {  }
         returnType: Generator
+    -
+        asString: cases()
+        name: cases
+        location: 'UnitEnum::cases()'
+        declaringType: UnitEnum
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters: {  }
+        returnType: array

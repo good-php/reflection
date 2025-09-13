@@ -7,6 +7,7 @@ use GoodPhp\Reflection\NativePHPDoc\Reflection\Attributes\NativeAttributes;
 use GoodPhp\Reflection\Reflection\Attributes\Attributes;
 use GoodPhp\Reflection\Reflection\FunctionParameterReflection;
 use GoodPhp\Reflection\Reflection\MethodReflection;
+use GoodPhp\Reflection\Reflection\TypeSource;
 use GoodPhp\Reflection\Type\NamedType;
 use GoodPhp\Reflection\Type\Template\TypeParameterMap;
 use GoodPhp\Reflection\Type\Type;
@@ -52,6 +53,11 @@ final class NpdFunctionParameterReflection implements FunctionParameterReflectio
 			$this->resolvedTypeParameterMap,
 			$this->staticType,
 		);
+	}
+
+	public function typeSource(): ?TypeSource
+	{
+		return $this->definition->typeSource;
 	}
 
 	public function hasDefaultValue(): bool

@@ -13,6 +13,7 @@ use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\InterfaceTypeDefin
 use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\MethodDefinition;
 use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\TypeParameterDefinition;
 use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\UsedTraitsDefinition;
+use GoodPhp\Reflection\Reflection\TypeSource;
 use GoodPhp\Reflection\Type\Combinatorial\ExpandedType;
 use GoodPhp\Reflection\Type\NamedType;
 use GoodPhp\Reflection\Type\PrimitiveType;
@@ -21,6 +22,7 @@ use GoodPhp\Reflection\Type\Special\VoidType;
 use GoodPhp\Reflection\Type\Template\TemplateType;
 use GoodPhp\Reflection\Type\Template\TemplateTypeVariance;
 use GoodPhp\Reflection\Util\Lazy\Lazy;
+use IteratorAggregate;
 use Traversable;
 
 use function GoodPhp\Reflection\Util\Lazy\lazy;
@@ -45,6 +47,7 @@ class BuiltInCoreDefinitionProvider implements DefinitionProvider
 						typeParameters: [],
 						parameters: [],
 						returnType: PrimitiveType::integer(),
+						returnTypeSource: TypeSource::PHP_DOC,
 					),
 				]
 			)),
@@ -77,10 +80,12 @@ class BuiltInCoreDefinitionProvider implements DefinitionProvider
 								type: new TemplateType(
 									name: 'TKey',
 								),
+								typeSource: TypeSource::PHP_DOC,
 								hasDefaultValue: false,
 							),
 						],
 						returnType: PrimitiveType::boolean(),
+						returnTypeSource: TypeSource::PHP_DOC,
 					),
 					new MethodDefinition(
 						name: 'offsetGet',
@@ -91,6 +96,7 @@ class BuiltInCoreDefinitionProvider implements DefinitionProvider
 								type: new TemplateType(
 									name: 'TKey',
 								),
+								typeSource: TypeSource::PHP_DOC,
 								hasDefaultValue: false,
 							),
 						],
@@ -99,6 +105,7 @@ class BuiltInCoreDefinitionProvider implements DefinitionProvider
 								name: 'TValue',
 							)
 						),
+						returnTypeSource: TypeSource::PHP_DOC,
 					),
 					new MethodDefinition(
 						name: 'offsetSet',
@@ -111,6 +118,7 @@ class BuiltInCoreDefinitionProvider implements DefinitionProvider
 										name: 'TKey',
 									)
 								),
+								typeSource: TypeSource::PHP_DOC,
 								hasDefaultValue: false,
 							),
 							new FunctionParameterDefinition(
@@ -118,10 +126,12 @@ class BuiltInCoreDefinitionProvider implements DefinitionProvider
 								type: new TemplateType(
 									name: 'TValue',
 								),
+								typeSource: TypeSource::PHP_DOC,
 								hasDefaultValue: false,
 							),
 						],
 						returnType: VoidType::get(),
+						returnTypeSource: TypeSource::PHP_DOC,
 					),
 					new MethodDefinition(
 						name: 'offsetUnset',
@@ -132,10 +142,12 @@ class BuiltInCoreDefinitionProvider implements DefinitionProvider
 								type: new TemplateType(
 									name: 'TKey',
 								),
+								typeSource: TypeSource::PHP_DOC,
 								hasDefaultValue: false,
 							),
 						],
 						returnType: VoidType::get(),
+						returnTypeSource: TypeSource::PHP_DOC,
 					),
 				]
 			)),
@@ -148,7 +160,7 @@ class BuiltInCoreDefinitionProvider implements DefinitionProvider
 						name: 'TKey',
 						variadic: false,
 						upperBound: null,
-						variance: TemplateTypeVariance::COVARIANT,
+						variance: TemplateTypeVariance::INVARIANT,
 					),
 					new TypeParameterDefinition(
 						name: 'TValue',
@@ -168,6 +180,51 @@ class BuiltInCoreDefinitionProvider implements DefinitionProvider
 					]),
 				],
 				methods: []
+			)),
+			IteratorAggregate::class => lazy(fn () => new InterfaceTypeDefinition(
+				qualifiedName: IteratorAggregate::class,
+				fileName: null,
+				builtIn: true,
+				typeParameters: [
+					new TypeParameterDefinition(
+						name: 'TKey',
+						variadic: false,
+						upperBound: null,
+						variance: TemplateTypeVariance::INVARIANT,
+					),
+					new TypeParameterDefinition(
+						name: 'TValue',
+						variadic: false,
+						upperBound: null,
+						variance: TemplateTypeVariance::COVARIANT,
+					),
+				],
+				extends: [
+					new NamedType(Traversable::class, [
+						new TemplateType(
+							name: 'TKey',
+						),
+						new TemplateType(
+							name: 'TValue',
+						),
+					]),
+				],
+				methods: [
+					new MethodDefinition(
+						name: 'getIterator',
+						typeParameters: [],
+						parameters: [],
+						returnType: new NamedType(Traversable::class, [
+							new TemplateType(
+								name: 'TKey',
+							),
+							new TemplateType(
+								name: 'TValue',
+							),
+						]),
+						returnTypeSource: TypeSource::PHP_DOC,
+					),
+				]
 			)),
 			Closure::class => lazy(fn () => new ClassTypeDefinition(
 				qualifiedName: Closure::class,

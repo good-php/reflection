@@ -2,6 +2,7 @@
 
 namespace GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition;
 
+use GoodPhp\Reflection\Reflection\TypeSource;
 use GoodPhp\Reflection\Type\Type;
 
 final class MethodDefinition
@@ -15,5 +16,6 @@ final class MethodDefinition
 		public readonly array $typeParameters,
 		public readonly array $parameters,
 		public readonly ?Type $returnType,
+		public readonly ?TypeSource $returnTypeSource,
 	) {}
 }

@@ -68,17 +68,6 @@ declaredMethods:
         returnType: void
 methods:
     -
-        asString: otherFunction()
-        name: otherFunction
-        location: 'Tests\Stubs\Traits\TraitWithoutProperties::otherFunction()'
-        declaringType: Tests\Stubs\Traits\TraitWithoutProperties
-        attributes:
-            asString: '#[]'
-            all: {  }
-        typeParameters: {  }
-        parameters: {  }
-        returnType: Generator
-    -
         asString: traitMethod()
         name: traitMethod
         location: 'Tests\Stubs\Traits\ParentTraitStub::traitMethod()'
@@ -89,3 +78,14 @@ methods:
         typeParameters: {  }
         parameters: {  }
         returnType: void
+    -
+        asString: otherFunction()
+        name: otherFunction
+        location: 'Tests\Stubs\Traits\TraitWithoutProperties::otherFunction()'
+        declaringType: Tests\Stubs\Traits\TraitWithoutProperties
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters: {  }
+        returnType: Generator
