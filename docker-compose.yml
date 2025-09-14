@@ -1,0 +1,33 @@
+x-php-service: &php-service
+    image: chialab/php-dev:8.2
+    restart: 'no'
+    command: /bin/true
+    working_dir: /app
+    volumes:
+        - ./:/app
+    deploy:
+        replicas: 0
+
+services:
+    php:
+        <<: *php-service
+
+    benchmark-php:
+        <<: *php-service
+        working_dir: /app/benchmark
+        volumes:
+            - ./:/app
+            - ./benchmark/opcache.ini:/usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
+
+    docs:
+        build:
+            context: ./
+            dockerfile: ./docs/Dockerfile
+        restart: unless-stopped
+        volumes:
+            - ./docs:/app
+            - /app/.astro/
+            - /app/node_modules/
+            - /app/dist/
+        ports:
+            - '30050:80'

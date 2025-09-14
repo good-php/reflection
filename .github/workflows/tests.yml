@@ -105,3 +105,18 @@ jobs:
 
             -   name: Execute phpstan
                 run: composer phpstan
+
+    docs:
+        name: Documentation
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Checkout code
+                uses: actions/checkout@v3
+
+            -   name: Build and run
+                run: |
+                    docker compose build docs --build-arg CONTAINER_ENV=production
+                    docker compose up -d docs
+
+            -   name: Check they are available
+                run: curl --write-out 'HTTP %{http_code}' --fail --silent --output /dev/null http://localhost:30050/

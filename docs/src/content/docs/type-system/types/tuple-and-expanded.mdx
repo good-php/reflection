@@ -1,0 +1,65 @@
+---
+title: Tuple and Expanded
+sidebar:
+  order: 3
+---
+
+## TupleType
+
+```php
+class TupleType implements Type
+{
+	/**
+	 * @param list<Type> $types
+	 */
+	public function __construct(
+		public array $types,
+	) {}
+}
+```
+
+Represents an array of types: `array{ string, int }`
+
+## ExpandedType
+
+```php
+class ExpandedType implements Type
+{
+	public function __construct(
+		public readonly Type $innerType
+	) {}
+}
+```
+
+Represents an expanded tuple type. Let's take `callable` and `\Closure` as an example:
+
+```php
+/**
+ * @template TReturn
+ * @template ...TParameter
+ */
+interface callable {}
+
+/**
+ * @template TReturn
+ * @template ...TParameter
+ *
+ * @implements callable<TReturn, ...TParameter>
+ */
+class Closure implements callable {}
+```
+
+The above is more or less how `callable` and `\Closure` works in this library. Instead of having a separate type
+for `callable` and it's subtypes, we chose to go another route: variadic type parameters. In this case,
+the `TParameter` is variadic - meaning it accepts unlimited amount of parameters, the same way variadic function
+parameter does. So `callable(string, int, float): bool` maps to `callable<bool, string, int, float>`, even
+though there are only two type parameters - `TReturn` and `TParameter`.
+
+:::note
+`@template ...T` isn't a valid PHPDoc syntax - it's just for demonstration purposes :)
+:::
+
+So what is `ExpandedType`? Well, that's exactly what `...TParameter` is in
+`@implements callable<TReturn, ...TParameter>` - it expands the variadic `TParameter` type,
+the same as you would when calling a function: `func(...$args)`
+

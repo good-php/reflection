@@ -1,0 +1,41 @@
+---
+title: Contributing
+---
+
+import { Steps } from '@astrojs/starlight/components';
+
+<Steps>
+
+	1. Please create an issue first. This way we can discuss it before you spend
+		your time implementing it - it might not be feasible or might not align with the intended purpose
+		of this library.
+
+	2. Fork the repository.
+
+	3. Clone it and install dependencies:
+
+		```bash
+		docker compose run -it --rm php composer i
+		```
+
+	4. Work on your feature/fix. Make sure to add tests that cover your work.
+
+	5. Before committing, make sure you run the tests, PHPStan as well as code style fixer:
+
+		```bash
+		docker compose run -it --rm php composer test
+		docker compose run -it --rm php composer phpstan
+		docker compose run -it --rm php composer cs-fix
+		```
+
+	6. If it is a noticeable feature, don't forget to update the documentation in `docs/src/content`.
+		You can preview your changes locally:
+
+		```bash
+		# Docs will be available at http://localhost:30050
+		docker compose up -d
+		```
+
+	6. Commit, push and create a PR :)
+
+</Steps>

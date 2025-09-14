@@ -1,0 +1,93 @@
+---
+title: Usage
+---
+
+After installation, using it is as simple as the native reflection:
+
+```php
+use GoodPhp\Reflection\Reflection\ClassReflection;
+
+$reflection = $reflector->forType(\Exception::class);
+
+assert($reflection instanceof ClassReflection);
+
+// Throwable|null
+$reflection->constructor()->parameter('previous')->type();
+
+// string
+$reflection->method('getMessage')->returnType();
+
+// Hello!
+$reflection->method('getMessage')->invoke(new \Exception('Hello!'));
+```
+
+### Reflecting with generics
+
+Of course, it also supports generics. That's the whole point:
+
+```php
+use GoodPhp\Reflection\Reflection\ClassReflection;
+
+/**
+ * @template-covariant TValue
+ *
+ * @implements IteratorAggregate<string, TValue>
+ */
+class Collection implements IteratorAggregate
+{
+	public function getIterator(): Traversable
+	{
+		yield from [];
+	}
+}
+
+// Reflect a Collection class with generic types: Collection<\DateTime>
+$reflection = $reflector->forType(Collection::class, [
+	\DateTime::class, // TValue
+]);
+
+assert($reflection instanceof ClassReflection);
+
+// \Traversable<string, \DateTime>
+$reflection->method('getIterator')->returnType();
+```
+
+### Reflecting other class-likes
+
+You may have noticed the `assert($reflection instanceof ClassReflection)` calls in examples above. That's because
+depending on what type you reflect, you'll get one of 5 different reflections:
+
+```php
+use GoodPhp\Reflection\Reflection\ClassReflection;
+use GoodPhp\Reflection\Reflection\EnumReflection;
+use GoodPhp\Reflection\Reflection\InterfaceReflection;
+use GoodPhp\Reflection\Reflection\TraitReflection;
+
+assert($reflector->forType(SomeClass::class) instanceof ClassReflection);
+assert($reflector->forType(SomeEnum::class) instanceof EnumReflection);
+assert($reflector->forType(SomeInterface::class) instanceof InterfaceReflection);
+assert($reflector->forType(SomeTrait::class) instanceof TraitReflection);
+```
+
+They all share the same interface - `TypeReflection`. It's safe and intended for you to call `instanceof` - the
+`TypeReflection` is "sealed", meaning it should never be implemented outside of this library, nor any
+parent added without a breaking change and a new major version.
+
+### Reflecting primitives and other special types
+
+Now you may have noticed I said there were 5 different reflections, but only listed 4. That wasn't a typo -
+there's actually a fifth type called `SpecialTypeReflection`. It represents special, PHP built-in types
+that aren't classes, enums, traits or interfaces:
+
+```php
+use GoodPhp\Reflection\Reflection\SpecialTypeReflection;
+
+assert($reflector->forType('string') instanceof SpecialTypeReflection);
+assert($reflector->forType('array') instanceof SpecialTypeReflection);
+assert($reflector->forType('callable') instanceof SpecialTypeReflection);
+```
+
+This approach allows us to simplify the type system: we no longer need to have separate type for `array`
+just to get it's type parameters. This scales pretty good.
+
+###

@@ -1,0 +1,42 @@
+---
+title: Union and Intersection
+sidebar:
+  order: 1
+---
+
+## UnionType
+
+```php
+class UnionType implements Type
+{
+	/**
+	 * @param list<Type> $types
+	 */
+	public function __construct(
+		public array $types,
+	) {}
+}
+```
+
+Direct alternative of native reflection's `ReflectionUnionType`. Represents any kind of unions:
+- `int|string`, `string|int`, `string|int|float|bool`
+- `\Generator<string, string>|iterable<string, string>`
+- `string|(\Stringable & object)|(callable(): string)`
+
+## IntersectionType
+
+```php
+class IntersectionType implements Type
+{
+	/**
+	 * @param list<Type> $types
+	 */
+	public function __construct(
+		public array $types,
+	) {}
+}
+```
+
+Direct alternative of native reflection's `ReflectionIntersectionType`. Represents any kind of intersections:
+- `\Stringable & \JsonSerializable`
+- `\IteratorAggregate<string, string> & \ArrayAccess<string, string>`

@@ -1,0 +1,76 @@
+---
+title: Template and Static
+sidebar:
+  order: 3
+---
+
+## TemplateType
+
+```php
+class TemplateType implements Type
+{
+	public function __construct(
+		public readonly string $name,
+	) {}
+}
+```
+
+Similar to [NamedType](#namedtype), but refers to a type parameter of a class, method or function. E.g.:
+
+```php
+/**
+ * @template TItem
+ */
+class Collection {
+	/**
+	 * @param TItem $item
+	 */
+	public function add(mixed $item): void {}
+
+	/**
+ 	 * @template TDefault
+ 	 *
+	 * @param TDefault $default
+ 	 *
+ 	 * @return TItem|TDefault
+	 */
+	public function get(int $index, mixed $default): mixed {}
+}
+
+// TemplateType - TItem
+$reflector->forType(Collection::class)->method('add')->parameter('item')->type();
+
+// TemplateType - TDefault
+$reflector->forType(Collection::class)->method('get')->parameter('default')->type();
+
+// UnionType([TemplateType, TemplateType]) - TItem|TDefault
+$reflector->forType(Collection::class)->method('get')->returnType();
+```
+
+## StaticType
+
+```php
+class StaticType implements Type
+{
+	public function __construct(
+		public readonly Type $upperBound,
+	) {}
+}
+```
+
+Represents the `static` type. The `$upperBound` is the class that `static` was defined in - e.g. the narrowest type
+you can get from `static`. During reflection though, the `$upperBound` will be replaced with the class you're reflecting:
+
+```php
+class Test {
+	public function method(): static {}
+}
+
+// StaticType - static<Test>
+$reflector->forType(Child::class)->method('method')->returnType();
+
+class Child extends Test {}
+
+// StaticType - static<Child>
+$reflector->forType(Child::class)->method('method')->returnType();
+```

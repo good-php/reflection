@@ -1,0 +1,58 @@
+---
+title: Special
+sidebar:
+  order: 4
+---
+
+## NullableType
+
+```php
+class NullableType implements Type
+{
+	public function __construct(
+		public readonly Type $innerType
+	) {}
+}
+```
+
+Represents any type that is nullable. This includes nullable `NamedType`, but also literal `null` in unions:
+- `?string`, `string|null`
+- `string|int|null`
+
+## MixedType
+
+```php
+class MixedType implements Type {}
+```
+
+Represents `mixed` type.
+
+## NeverType
+
+```php
+class NeverType implements Type {}
+```
+
+Represents the `never` type.
+
+## VoidType
+
+```php
+class VoidType implements Type {}
+```
+
+Represents the `void` type.
+
+## ErrorType
+
+```php
+class ErrorType implements Type
+{
+	public function __construct(
+		public readonly string $type,
+	) {}
+}
+```
+
+Represents any type that either failed to parse, or isn't supported by the type system yet. It contains
+the string that failed to parse for easier debugging.
