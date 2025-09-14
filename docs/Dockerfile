@@ -17,7 +17,7 @@ COPY --from=alpine/git:2.47.1 /usr/bin/git /usr/bin/git
 
 COPY docs /app/
 
-ARG SITE_URL=""
+ARG SITE_URL="http://localhost"
 
 RUN --mount=type=cache,id=docs-astro,target=/app/.astro yarn build --site "$SITE_URL"
 
