@@ -5,6 +5,8 @@ on:
         workflows: ["Tests"]
         types:
             - completed
+        branches:
+            - master
 
     workflow_dispatch:
 
