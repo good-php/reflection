@@ -10,7 +10,7 @@ export default defineConfig({
 	integrations: [
 		starlight({
 			// Brand
-			title: 'Good PHP reflection',
+			title: 'Good PHP Reflection',
 			logo: {
 				src: './src/assets/logo.png',
 			},

@@ -116,7 +116,7 @@ jobs:
             -   name: Build and run
                 run: |
                     docker compose build docs --build-arg CONTAINER_ENV=production
-                    docker compose up -d docs
+                    docker compose up -d --wait docs
 
             -   name: Check they are available
-                run: curl --write-out 'HTTP %{http_code}' --fail --silent --output /dev/null http://localhost:30050/
+                run: docker compose exec docs wget -O- -q http://localhost | grep "Installation | Good PHP Reflection"

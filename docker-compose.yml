@@ -24,6 +24,11 @@ services:
             context: ./
             dockerfile: ./docs/Dockerfile
         restart: unless-stopped
+        healthcheck:
+            interval: 60s
+            start_interval: 3s
+            start_period: 3s
+            test: wget -O- -q http://localhost
         volumes:
             - ./docs:/app
             - /app/.astro/
