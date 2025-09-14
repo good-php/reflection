@@ -1,0 +1,29 @@
+---
+title: Overview
+sidebar:
+  order: 0
+---
+
+The type system is shipped within the library, but it's completely separate from reflection. It's designed to
+be as simple as possible - you won't find complex inheritance trees like you would in PHPStan's type system.
+
+All types implement a single interface - `Type`. It is "sealed" - meaning it's only meant to be implemented
+by this library, and there is a limited set of inheritors, so it's safe to check for type using
+`$type instanceof UnionType` kind of checks.
+
+## Full list of types
+
+Here's a full of list of types:
+- [NamedType](/type-system/types/named#namedtype)
+- [UnionType](/type-system/types/union-and-intersection#uniontype)
+- [IntersectionType](/type-system/types/union-and-intersection#intersectiontype)
+- [TemplateType](/type-system/types/template-and-static#templatetype)
+- [StaticType](/type-system/types/template-and-static#statictype)
+- [TupleType](/type-system/types/tuple-and-expanded#tupletype)
+- [ExpandedType](/type-system/types/tuple-and-expanded#expandedtype)
+- [NullableType](/type-system/types/special#nullabletype)
+- [MixedType](/type-system/types/special#mixedtype)
+- [NeverType](/type-system/types/special#nevertype)
+- [VoidType](/type-system/types/special#voidtype)
+- [ErrorType](/type-system/types/special#errortype)
+

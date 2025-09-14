@@ -1,9 +1,9 @@
 # Commands
 
 Here are some of the commands that you'll need:
- - install dependencies: `docker run -it --rm -v $PWD:/app -w /app chialab/php-dev:8.2 composer install`
- - run tests with phpunit: `docker run -it --rm -v $PWD:/app -w /app chialab/php-dev:8.2 composer test`
- - reformat using php-cs-fixer: `docker run -it --rm -v $PWD:/app -w /app chialab/php-dev:8.2 composer cs-fix`
- - analyse with phpstan: `docker run -it --rm -v $PWD:/app -w /app chialab/php-dev:8.2 composer phpstan`
- - benchmark: `docker run -it --rm -v $"($env.PWD):/app" -v $"($env.PWD)/benchmark/opcache.ini:/usr/local/etc/php/conf.d/docker-php-ext-opcache.ini" -w /app chialab/php-dev:8.2 composer benchmark -- --output=html --report=all`
- - typhoon benchmark: `docker run -it --rm -v $"($env.PWD):/app" -v $"($env.PWD)/benchmark/opcache.ini:/usr/local/etc/php/conf.d/docker-php-ext-opcache.ini" -w /app/benchmark/typhoon chialab/php-dev:8.2 composer benchmark -- --config=../phpbench.json --bootstrap=/app/benchmark/typhoon/vendor/autoload.php --output=html --report=all`
+ - install dependencies: `docker compose run -it --rm php composer install`
+ - run tests with phpunit: `docker compose run -it --rm php composer test`
+ - reformat using php-cs-fixer: `docker compose run -it --rm php composer cs-fix`
+ - analyse with phpstan: `docker compose run -it --rm php composer phpstan`
+ - benchmark: `docker compose run -it --rm benchmark-php composer benchmark -- --output=html --report=all`
+ - typhoon benchmark: `docker compose run -it --rm -w /app/benchmark/typhoon benchmark-php composer benchmark -- --config=../phpbench.json --bootstrap=/app/benchmark/typhoon/vendor/autoload.php --output=html --report=all`

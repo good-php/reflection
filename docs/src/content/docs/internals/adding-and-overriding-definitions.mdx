@@ -1,0 +1,88 @@
+---
+title: Adding and Overriding Definitions
+---
+
+This reflection is runtime dependent, not static. So just like with native reflection, in order to reflect
+on something - it needs to be loaded. For classes that means autoloading and being a valid `.php` file.
+Because of this, unlike PHPStan and Psalm, it would be impossible to provide stub PHP files to overwrite
+the types or definitions in general - we have no means of parsing them, and it's not the point of this library.
+
+But there is a solution to that - definition providers. For example, this is part of the built-in provider
+that supplies definitions for some of the core classes:
+
+```php
+class BuiltInCoreDefinitionProvider implements DefinitionProvider
+{
+	/** @var array<string, Lazy<TypeDefinition>> */
+	private readonly array $typeDefinitions;
+
+	public function __construct()
+	{
+		$this->typeDefinitions = [
+			Countable::class => lazy(fn () => new InterfaceTypeDefinition(
+				qualifiedName: Countable::class,
+				fileName: null,
+				builtIn: true,
+				typeParameters: [],
+				extends: [],
+				methods: [
+					new MethodDefinition(
+						name: 'count',
+						typeParameters: [],
+						parameters: [],
+						returnType: PrimitiveType::integer(),
+						returnTypeSource: TypeSource::PHP_DOC,
+					),
+				]
+			)),
+			Traversable::class => lazy(fn () => new InterfaceTypeDefinition(
+				qualifiedName: Traversable::class,
+				fileName: null,
+				builtIn: true,
+				typeParameters: [
+					new TypeParameterDefinition(
+						name: 'TKey',
+						variadic: false,
+						upperBound: null,
+						variance: TemplateTypeVariance::INVARIANT,
+					),
+					new TypeParameterDefinition(
+						name: 'TValue',
+						variadic: false,
+						upperBound: null,
+						variance: TemplateTypeVariance::COVARIANT,
+					),
+				],
+				extends: [
+					new NamedType('iterable', [
+						new TemplateType(
+							name: 'TKey',
+						),
+						new TemplateType(
+							name: 'TValue',
+						),
+					]),
+				],
+				methods: []
+			)),
+		];
+	}
+
+	public function forType(string $type): ?TypeDefinition
+	{
+		return ($this->typeDefinitions[$type] ?? null)?->value();
+	}
+}
+```
+
+What it does is it provides metadata for a single type. Of course, it's not limited to PHP types - you can
+provide metadata for any type you want. And by chaining your definition provider before all the others,
+you can effectively override the definition of any type (including PHP internal ones!):
+
+```php
+use GoodPhp\Reflection\ReflectorBuilder;
+
+$reflector = new ReflectorBuilder()
+	->withAddedDefinitionProvider(new YourCustomDefinitionProvider(), prepend: true)
+	->build();
+```

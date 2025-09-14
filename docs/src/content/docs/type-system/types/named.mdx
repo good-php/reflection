@@ -1,0 +1,40 @@
+---
+title: Named
+sidebar:
+  order: 0
+---
+
+## NamedType
+
+```php
+class NamedType implements Type
+{
+	/**
+	 * @param class-string|string $name
+	 * @param list<Type>          $arguments
+	 */
+	public function __construct(
+		public readonly string $name,
+		public readonly array $arguments = [],
+	) {}
+}
+```
+
+This is very similar to native reflection's `ReflectionNamedType`. Just like the native type, it represents
+types that refer to class-likes (e.g. classes, interfaces, traits and enums) and built in primitives.
+All of these are considered a `NamedType`:
+- `int`, `float`, `bool`, `string`, `object`, `resource`
+- `array`, `array<string>`, `array<string, string>`
+- `iterable`, `iterable<string, string>`
+- `\Exception`, `\Your\Class`, `\Generator<string, \Your\Class>`
+- `callable`, `callable(string): int`, `\Closure`, `\Closure(string): int`
+
+However, a few types are handled differently from `ReflectionNamedType`:
+- `self` -> `NamedType` but refers to the actual class name
+- `parent` -> `NamedType` but refers to the actual parent class name
+- `static` -> [StaticType](#statictype)
+- `mixed` -> [MixedType](#mixedtype)
+- `->allowsNull()` -> [NullableType](#nullabletype)
+- `never` -> [NeverType](#nevertype)
+- `void` -> [VoidType](#voidtype)
+

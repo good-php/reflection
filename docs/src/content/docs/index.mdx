@@ -1,0 +1,59 @@
+---
+title: Installation
+---
+
+import { Steps } from '@astrojs/starlight/components';
+
+<Steps>
+
+	1. Install the reflection:
+
+		```bash
+		composer require good-php/reflection
+		```
+
+	2. Build a reflector:
+
+		```php
+		use GoodPhp\Reflection\ReflectorBuilder;
+
+		$reflector = new ReflectorBuilder()
+			->withFileCache()
+			->withMemoryCache()
+			->build();
+		```
+
+		:::caution
+		Building the reflector is expensive. Make sure you only build it once per process lifetime :)
+		:::
+
+</Steps>
+
+## Customizing cache
+
+It's crucial that you use some kind of cache. Out of the box, we support file-based cache and in-memory cache.
+They work together - file cache allows faster startup times, while in-memory cache allows accessing the
+same reflections repeatedly during the PHP process lifetime.
+
+By default, `->withFileCache()` stores it's cache in `/tmp/good-php-reflection` without any expiration. This
+is configurable:
+
+```php
+new ReflectorBuilder()
+	->withFileCache(
+		path: '/other/directory',
+		ttl: \DateInterval::createFromDateString('1 hour')
+	);
+```
+
+There are also defaults for `->withMemoryCache()` - it stores at most 100 types, again without any expiration.
+Configure it with:
+
+```php
+new ReflectorBuilder()
+	->withMemoryCache(
+		// 500 types metadata
+		maxItems: 500,
+		ttl: \DateInterval::createFromDateString('1 hour')
+	);
+```

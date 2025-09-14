@@ -1,0 +1,33 @@
+---
+title: Comparing Types
+---
+
+Sometimes you need to know if a `Collection<Cat>` is a subtype of `Collection<Animal>` - and for that
+the `TypeComparator` exists. It's pretty rudimentary, but it should work. You can access it through
+`->typeComparator()` on the reflector instance:
+
+```php
+$typeComparator = new ReflectorBuilder()
+	->build()
+	->typeComparator();
+
+// true
+$typeComparator->accepts(new NamedType(\Throwable::class), new NamedType(\Exception::class));
+$typeComparator->accepts(MixedType::get(), new NamedType(\Exception::class));
+
+// false
+$typeComparator->accepts(new NamedType(\Generator::class), new NamedType(\Exception::class));
+
+// true
+$typeComparator->accepts(
+	new UnionType([
+		new NamedType(\Throwable::class),
+		PrimitiveType::bool(),
+	]),
+	new NamedType(\Exception::class)
+);
+```
+
+You get the point. You can feed it any types.
+
+
