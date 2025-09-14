@@ -37,6 +37,7 @@ jobs:
                         -f docs/Dockerfile \
                         --build-arg CONTAINER_ENV=production \
                         --build-arg SITE_URL="${{ steps.pages.outputs.origin }}" \
+                        --build-arg BASE_PREFIX="${{ steps.pages.outputs.base_path }}" \
                         --tag docs .
                     mkdir -p docs/dist
                     CONTAINER_ID=$(docker create docs)
