@@ -1,3 +1,10 @@
+## [2.2.1](https://github.com/good-php/reflection/compare/v2.2.0...v2.2.1) (2025-09-14)
+
+
+### Bug Fixes
+
+* Add base /reflection prefix for GH pages ([#28](https://github.com/good-php/reflection/issues/28)) ([4c4764e](https://github.com/good-php/reflection/commit/4c4764ed26a0c19a89d318ae93b5d23aeebf53b1))
+
 # [2.2.0](https://github.com/good-php/reflection/compare/v2.1.0...v2.2.0) (2025-09-13)
 
 
