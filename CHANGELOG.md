@@ -1,3 +1,10 @@
+# [2.5.0](https://github.com/good-php/reflection/compare/v2.4.0...v2.5.0) (2025-09-15)
+
+
+### Features
+
+* Support for [@template](https://github.com/template) default types ([#34](https://github.com/good-php/reflection/issues/34)) ([32a8634](https://github.com/good-php/reflection/commit/32a8634d838a2070d762b6ba27ba4e3adf27b2c4))
+
 # [2.4.0](https://github.com/good-php/reflection/compare/v2.3.0...v2.4.0) (2025-09-15)
 
 
