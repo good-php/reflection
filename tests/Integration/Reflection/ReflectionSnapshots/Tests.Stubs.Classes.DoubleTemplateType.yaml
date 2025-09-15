@@ -1,4 +1,4 @@
-type: Tests\Stubs\Classes\DoubleTemplateType
+type: Tests\Stubs\Classes\DoubleTemplateType<int>
 qualifiedName: Tests\Stubs\Classes\DoubleTemplateType
 shortName: DoubleTemplateType
 location: Tests\Stubs\Classes\DoubleTemplateType
@@ -22,7 +22,7 @@ typeParameters:
         variadic: false
         upperBound: mixed
         variance: INVARIANT
-        asString: TTwo
+        asString: 'TTwo = int'
 extends: null
 implements: {  }
 uses:
@@ -30,5 +30,27 @@ uses:
     excludedTraitMethods: {  }
 declaredProperties: {  }
 properties: {  }
-declaredMethods: {  }
-methods: {  }
+declaredMethods:
+    -
+        asString: something()
+        name: something
+        location: 'Tests\Stubs\Classes\DoubleTemplateType::something()'
+        declaringType: Tests\Stubs\Classes\DoubleTemplateType<int>
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters: {  }
+        returnType: int
+methods:
+    -
+        asString: something()
+        name: something
+        location: 'Tests\Stubs\Classes\DoubleTemplateType::something()'
+        declaringType: Tests\Stubs\Classes\DoubleTemplateType<int>
+        attributes:
+            asString: '#[]'
+            all: {  }
+        typeParameters: {  }
+        parameters: {  }
+        returnType: int

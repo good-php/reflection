@@ -315,7 +315,13 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 							Str::endsWith($node->name, '-covariant')     => TemplateTypeVariance::COVARIANT,
 							Str::endsWith($node->name, '-contravariant') => TemplateTypeVariance::CONTRAVARIANT,
 							default                                      => TemplateTypeVariance::INVARIANT
-						}
+						},
+						default: $value->default ?
+							$this->phpDocTypeMapper->map(
+								$value->default,
+								$temporaryContext->value(),
+							) :
+							null,
 					);
 				}
 			);

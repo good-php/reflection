@@ -4,6 +4,7 @@ namespace Tests\Unit\Type\Definition\TypeDefinition;
 
 use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\TypeParameterDefinition;
 use GoodPhp\Reflection\Type\PrimitiveType;
+use GoodPhp\Reflection\Type\Special\MixedType;
 use GoodPhp\Reflection\Type\Template\TemplateTypeVariance;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
@@ -91,6 +92,17 @@ class TypeParameterDefinitionTest extends TestCase
 				variadic: true,
 				upperBound: PrimitiveType::integer(),
 				variance: TemplateTypeVariance::COVARIANT,
+			),
+		];
+
+		yield [
+			'covariant T of mixed = int',
+			new TypeParameterDefinition(
+				name: 'T',
+				variadic: false,
+				upperBound: MixedType::get(),
+				variance: TemplateTypeVariance::COVARIANT,
+				default: PrimitiveType::integer(),
 			),
 		];
 	}
