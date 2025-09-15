@@ -16,6 +16,7 @@ final class TypeParameterDefinition implements Stringable
 		public readonly bool $variadic,
 		public readonly ?Type $upperBound,
 		public readonly TemplateTypeVariance $variance,
+		public readonly ?Type $default = null,
 	) {}
 
 	public function __toString(): string
@@ -28,6 +29,7 @@ final class TypeParameterDefinition implements Stringable
 			},
 			($this->variadic ? '...' : '') . $this->name,
 			$this->upperBound ? "of {$this->upperBound}" : '',
+			$this->default ? "= {$this->default}" : '',
 		];
 
 		return implode(' ', array_filter($result));

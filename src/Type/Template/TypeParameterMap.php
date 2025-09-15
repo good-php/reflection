@@ -23,7 +23,7 @@ final class TypeParameterMap
 	 */
 	public static function fromArguments(array $arguments, iterable $typeParameters): self
 	{
-		if (!$arguments) {
+		if (!$typeParameters) {
 			return self::empty();
 		}
 
@@ -37,8 +37,10 @@ final class TypeParameterMap
 				break;
 			}
 
-			if (!$argument = $arguments[$i] ?? null) {
-				break;
+			$argument = $arguments[$i] ?? $parameter->default;
+
+			if (!$argument) {
+				continue;
 			}
 
 			$map[$parameter->name] = $argument;
