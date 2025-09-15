@@ -1,3 +1,10 @@
+# [2.3.0](https://github.com/good-php/reflection/compare/v2.2.1...v2.3.0) (2025-09-15)
+
+
+### Features
+
+* Easy adding of custom definition providers ([#31](https://github.com/good-php/reflection/issues/31)) ([d4ba238](https://github.com/good-php/reflection/commit/d4ba23879d63f81d021a16a527951b7d45697c9a))
+
 ## [2.2.1](https://github.com/good-php/reflection/compare/v2.2.0...v2.2.1) (2025-09-14)
 
 
