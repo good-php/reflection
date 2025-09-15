@@ -1,3 +1,10 @@
+# [2.4.0](https://github.com/good-php/reflection/compare/v2.3.0...v2.4.0) (2025-09-15)
+
+
+### Features
+
+* PHPStan extension ([#32](https://github.com/good-php/reflection/issues/32)) ([245a713](https://github.com/good-php/reflection/commit/245a71369daded611010520d825e9d885715c9a2))
+
 # [2.3.0](https://github.com/good-php/reflection/compare/v2.2.1...v2.3.0) (2025-09-15)
 
 
