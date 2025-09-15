@@ -14,6 +14,7 @@ use IteratorAggregate;
 use PHPStan\Type\Traits\ObjectTypeTrait;
 use PHPUnit\Architecture\Enums\Visibility;
 
+use function PHPStan\Testing\assertSuperType;
 use function PHPStan\Testing\assertType;
 
 /** @var Reflector $reflector */
@@ -28,8 +29,8 @@ assertType(EnumReflection::class . '<PHPUnit\Architecture\Enums\Visibility>', $r
 /** @var IteratorAggregate $iterator */
 assertType(InterfaceReflection::class . '<IteratorAggregate>', $reflector->forType($iterator::class));
 
-// Anonymous class
-assertType(ClassReflection::class . '<AnonymousClass44b4903afe4abfb163d6766f8a9d626b>', $reflector->forType(new class () {}));
+// Anonymous class. It's class name is random, so we can't use assertType()
+assertSuperType(ClassReflection::class, $reflector->forType(new class () {}));
 
 // Special types
 assertType(SpecialTypeReflection::class . '<object>', $reflector->forType('object'));
