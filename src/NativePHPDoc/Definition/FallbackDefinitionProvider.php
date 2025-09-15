@@ -1,9 +1,6 @@
 <?php
 
-namespace GoodPhp\Reflection\NativePHPDoc\Definition\Fallback;
-
-use GoodPhp\Reflection\NativePHPDoc\Definition\DefinitionProvider;
-use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition;
+namespace GoodPhp\Reflection\NativePHPDoc\Definition;
 
 class FallbackDefinitionProvider implements DefinitionProvider
 {
