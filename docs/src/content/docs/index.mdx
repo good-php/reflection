@@ -29,6 +29,18 @@ import { Steps } from '@astrojs/starlight/components';
 
 </Steps>
 
+## PHPStan extension
+
+Upon installation, if you're using `phpstan/extension-installer`, an extension will be enabled automatically.
+Alternatively, you can enable it manually in your `phpstan.neon`:
+
+```neon
+includes:
+	- vendor/good-php/reflection/phpstan-extension.neon
+```
+
+It improves some type inference, so we recommend keeping it on, but it's not required :)
+
 ## Customizing cache
 
 It's crucial that you use some kind of cache. Out of the box, we support file-based cache and in-memory cache.

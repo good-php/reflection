@@ -1,0 +1,5 @@
+services:
+    -
+        class: GoodPhp\Reflection\PHPStan\ReflectorReturnType
+        tags:
+            - phpstan.broker.dynamicMethodReturnTypeExtension
