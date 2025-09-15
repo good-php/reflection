@@ -83,6 +83,6 @@ you can effectively override the definition of any type (including PHP internal 
 use GoodPhp\Reflection\ReflectorBuilder;
 
 $reflector = new ReflectorBuilder()
-	->withAddedDefinitionProvider(new YourCustomDefinitionProvider(), prepend: true)
+	->withAddedFallbackDefinitionProvider(new YourCustomDefinitionProvider())
 	->build();
 ```
