@@ -1,0 +1,25 @@
+---
+title: Supported Features
+---
+
+Most native reflection features and most PHPDoc (or, rather PHPStan) features are supported. Here's a full list:
+
+- reflecting classes, interfaces, traits enums
+- reflecting anonymous classes
+- reflecting properties and methods
+- `@template`, `@template-covariant`, `@template-contravariant`, upper bound (`of string`) and
+default values (`= string`) - in classes and methods
+- `@extends`, `@implements` and `@use`
+- `@var` for properties and promoted properties
+- `@param` for method parameters and promoted properties
+- `@return` for method returns
+- `@phpstan-` and `@psalm-` versions of all tags - with precedence
+- all native types, template (generic) types and array tuples
+
+## What isn't supported, but would be welcomed
+
+- reflecting functions
+- function/method return type inference from arguments
+- conditional types
+- type aliases (local and imported)
+- some other PHPDoc tags
