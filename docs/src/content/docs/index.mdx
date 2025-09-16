@@ -31,15 +31,29 @@ import { Steps } from '@astrojs/starlight/components';
 
 ## PHPStan extension
 
-Upon installation, if you're using `phpstan/extension-installer`, an extension will be enabled automatically.
-Alternatively, you can enable it manually in your `phpstan.neon`:
+A PHPStan extension is shipped with the package. If you're using `phpstan/extension-installer`, it will be
+enabled automatically. We recommend keeping it on, but it's not required.
+
+If it's causing you any issues or you just don't want it, you can disable it through your `composer.json`:
+
+```json
+{
+	"extra": {
+		"phpstan/extension-installer": {
+			"ignore": ["good-php/reflection"]
+		}
+	}
+}
+```
+
+#### If you aren't using `phpstan/extension-installer`
+
+You can, of course, enable it manually in your `phpstan.neon`:
 
 ```neon
 includes:
 	- vendor/good-php/reflection/phpstan-extension.neon
 ```
-
-It improves some type inference, so we recommend keeping it on, but it's not required :)
 
 ## Customizing cache
 
