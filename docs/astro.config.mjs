@@ -30,7 +30,8 @@ export default defineConfig({
 					label: 'Getting Started',
 					items: [
 						{ label: 'Installation', link: '/' },
-						{ label: 'Usage', slug: 'getting-started/usage' },
+						{ slug: 'getting-started/usage' },
+						{ slug: 'getting-started/supported-features' },
 						{ label: 'Changelog', link: 'changelog' },
 					],
 				},
