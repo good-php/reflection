@@ -4,12 +4,15 @@ on: [push, pull_request, workflow_dispatch]
 
 jobs:
     phpunit:
-        name: PHPUnit on PHP v${{ matrix.php }}
+        name: PHPUnit on PHP v${{ matrix.php }} ${{ matrix.dependencies }}
         runs-on: ubuntu-latest
         strategy:
-            fail-fast: true
             matrix:
                 php: [ 8.2, 8.3, 8.4 ]
+                dependencies: ['', --prefer-lowest]
+                exclude:
+                    -   php: 8.4
+                        dependencies: --prefer-lowest
 
         steps:
             -   name: Checkout code
@@ -35,7 +38,7 @@ jobs:
                         ${{ runner.os }}-php-
 
             -   name: Install dependencies
-                run: composer install --prefer-dist --no-progress
+                run: composer update --prefer-dist --no-progress ${{ matrix.dependencies }}
 
             -   name: Execute phpunit
                 run: composer test -- --colors=always
