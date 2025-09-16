@@ -1,3 +1,10 @@
+## [2.5.1](https://github.com/good-php/reflection/compare/v2.5.0...v2.5.1) (2025-09-16)
+
+
+### Bug Fixes
+
+* PHPStan failing on older dependencies ([#37](https://github.com/good-php/reflection/issues/37)) ([9ca9cfa](https://github.com/good-php/reflection/commit/9ca9cfafe805974d8ad331fff5d7a261b11f5582))
+
 # [2.5.0](https://github.com/good-php/reflection/compare/v2.4.0...v2.5.0) (2025-09-15)
 
 
