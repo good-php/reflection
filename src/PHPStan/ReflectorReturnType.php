@@ -87,6 +87,7 @@ class ReflectorReturnType implements DynamicMethodReturnTypeExtension
 
 	private function typeFromMethodCall(MethodCall $methodCall, Scope $scope): ?Type
 	{
+		/** @phpstan-ignore function.alreadyNarrowedType */
 		$nameArg = method_exists($methodCall, 'getArg') ?
 			$methodCall->getArg('name', 0) :
 			$methodCall->getArgs()[0] ?? null;
