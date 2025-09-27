@@ -2,13 +2,13 @@
 
 namespace GoodPhp\Reflection\Reflection\Properties;
 
-use GoodPhp\Reflection\Reflection\HasName;
+use GoodPhp\Reflection\Reflection\Names\HasQualifiedName;
 use GoodPhp\Reflection\Reflection\PropertyReflection;
 
 /**
  * @template-contravariant ReflectableType of object
  */
-interface HasProperties extends HasName
+interface HasProperties extends HasQualifiedName
 {
 	/**
 	 * @return list<PropertyReflection<ReflectableType>>

@@ -1,14 +1,12 @@
 <?php
 
-namespace GoodPhp\Reflection\Reflection;
+namespace GoodPhp\Reflection\Reflection\Names;
 
-interface HasName
+interface HasQualifiedName
 {
 	public function fileName(): ?string;
 
 	public function qualifiedName(): string;
 
 	public function shortName(): string;
-
-	public function location(): string;
 }
