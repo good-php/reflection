@@ -23,6 +23,25 @@ uses:
                     newName: otherOtherFunction
                     newModifier: null
     excludedTraitMethods: {  }
+cases:
+    -
+        asString: FIRST
+        name: FIRST
+        backingValue: null
+        value: FIRST
+        declaringEnum: UnitEnum
+        attributes:
+            asString: '#[]'
+            all: {  }
+    -
+        asString: SECOND
+        name: SECOND
+        backingValue: null
+        value: SECOND
+        declaringEnum: UnitEnum
+        attributes:
+            asString: '#[]'
+            all: {  }
 declaredMethods:
     -
         asString: function()

@@ -13,6 +13,25 @@ implements:
 uses:
     traits: {  }
     excludedTraitMethods: {  }
+cases:
+    -
+        asString: FIRST
+        name: FIRST
+        backingValue: first
+        value: FIRST
+        declaringEnum: BackedEnum
+        attributes:
+            asString: '#[]'
+            all: {  }
+    -
+        asString: SECOND
+        name: SECOND
+        backingValue: second
+        value: SECOND
+        declaringEnum: BackedEnum
+        attributes:
+            asString: '#[]'
+            all: {  }
 declaredMethods: {  }
 methods:
     -

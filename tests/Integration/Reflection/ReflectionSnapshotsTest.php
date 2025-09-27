@@ -6,6 +6,7 @@ use GoodPhp\Reflection\NativePHPDoc\Definition\Cache\CacheUtils;
 use GoodPhp\Reflection\Reflection\Attributes\Attributes;
 use GoodPhp\Reflection\Reflection\ClassReflection;
 use GoodPhp\Reflection\Reflection\EnumReflection;
+use GoodPhp\Reflection\Reflection\Enums\EnumCaseReflection;
 use GoodPhp\Reflection\Reflection\FunctionParameterReflection;
 use GoodPhp\Reflection\Reflection\InterfaceReflection;
 use GoodPhp\Reflection\Reflection\MethodReflection;
@@ -114,6 +115,7 @@ class ReflectionSnapshotsTest extends IntegrationTestCase
 				...$expected,
 				'implements' => array_map(self::typeToExpectation(...), $reflection->implements()),
 				'uses'       => self::usedTraitsToExpectation($reflection->uses()),
+				'cases'      => array_map(self::enumCaseToExpectation(...), $reflection->cases()),
 			];
 		}
 
@@ -221,6 +223,18 @@ class ReflectionSnapshotsTest extends IntegrationTestCase
 			'type'            => self::typeToExpectation($parameter->type()),
 			'hasDefaultValue' => $hasDefault = $parameter->hasDefaultValue(),
 			'defaultValue'    => $hasDefault ? serialize($parameter->defaultValue()) : null,
+		];
+	}
+
+	private static function enumCaseToExpectation(EnumCaseReflection $case): array
+	{
+		return [
+			'asString'      => (string) $case,
+			'name'          => $case->name(),
+			'backingValue'  => $case->backingValue(),
+			'value'         => $case->value()->name,
+			'declaringEnum' => (string) $case->declaringEnum(),
+			'attributes'    => self::attributesToExpectation($case->attributes()),
 		];
 	}
 }

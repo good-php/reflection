@@ -14,6 +14,7 @@ use PHPStan\Analyser\Scope;
 use PHPStan\Reflection\MethodReflection;
 use PHPStan\Type\DynamicMethodReturnTypeExtension;
 use PHPStan\Type\Generic\GenericObjectType;
+use PHPStan\Type\NullType;
 use PHPStan\Type\ParserNodeTypeToPHPStanType;
 use PHPStan\Type\Type;
 use PHPStan\Type\TypeWithClassName;
@@ -53,19 +54,13 @@ class ReflectorReturnType implements DynamicMethodReturnTypeExtension
 			return null;
 		}
 
-		$reflectionTypeClassName = $this->reflectionTypeClassName($reflectableType);
-
-		if (!$reflectionTypeClassName) {
-			return null;
-		}
-
-		return new GenericObjectType($reflectionTypeClassName, [$reflectableType]);
+		return $this->reflectionTypeFromReflectableType($reflectableType);
 	}
 
-	private function reflectionTypeClassName(Type $type): ?string
+	private function reflectionTypeFromReflectableType(Type $type): ?Type
 	{
 		if (!$type->getObjectClassNames()) {
-			return SpecialTypeReflection::class;
+			return new GenericObjectType(SpecialTypeReflection::class, [$type]);
 		}
 
 		/** @var TypeWithClassName $type */
@@ -77,11 +72,13 @@ class ReflectorReturnType implements DynamicMethodReturnTypeExtension
 		}
 
 		return match (true) {
-			$reflection->isClass()     => ClassReflection::class,
-			$reflection->isInterface() => InterfaceReflection::class,
-			$reflection->isTrait()     => TraitReflection::class,
-			$reflection->isEnum()      => EnumReflection::class,
-			default                    => throw new RuntimeException('Unsupported return type')
+			$reflection->isClass()     => new GenericObjectType(ClassReflection::class, [$type]),
+			$reflection->isInterface() => new GenericObjectType(InterfaceReflection::class, [$type]),
+			$reflection->isTrait()     => new GenericObjectType(TraitReflection::class, [$type]),
+			/* @phpstan-ignore argument.type */
+			$reflection->isBackedEnum() => new GenericObjectType(EnumReflection::class, [$type, $reflection->getBackedEnumType()]),
+			$reflection->isEnum()       => new GenericObjectType(EnumReflection::class, [$type, new NullType()]),
+			default                     => throw new RuntimeException('Unsupported return type')
 		};
 	}
 

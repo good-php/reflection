@@ -2,6 +2,7 @@
 
 namespace Tests\Types;
 
+use Carbon\Month;
 use Exception;
 use GoodPhp\Reflection\Reflection\ClassReflection;
 use GoodPhp\Reflection\Reflection\EnumReflection;
@@ -13,6 +14,7 @@ use GoodPhp\Reflection\Reflector;
 use IteratorAggregate;
 use PHPStan\Type\Traits\ObjectTypeTrait;
 use PHPUnit\Architecture\Enums\Visibility;
+use Symfony\Component\Console\Output\AnsiColorMode;
 
 use function PHPStan\Testing\assertSuperType;
 use function PHPStan\Testing\assertType;
@@ -23,7 +25,9 @@ use function PHPStan\Testing\assertType;
 assertType(ClassReflection::class . '<Exception>', $reflector->forType(Exception::class));
 assertType(InterfaceReflection::class . '<IteratorAggregate>', $reflector->forType(IteratorAggregate::class));
 assertType(TraitReflection::class . '<PHPStan\Type\Traits\ObjectTypeTrait>', $reflector->forType(ObjectTypeTrait::class));
-assertType(EnumReflection::class . '<PHPUnit\Architecture\Enums\Visibility>', $reflector->forType(Visibility::class));
+assertType(EnumReflection::class . '<PHPUnit\Architecture\Enums\Visibility, string>', $reflector->forType(Visibility::class));
+assertType(EnumReflection::class . '<Carbon\Month, int>', $reflector->forType(Month::class));
+assertType(EnumReflection::class . '<Symfony\Component\Console\Output\AnsiColorMode, null>', $reflector->forType(AnsiColorMode::class));
 
 // Through ::class
 /** @var IteratorAggregate $iterator */

@@ -2,25 +2,30 @@
 
 namespace GoodPhp\Reflection\NativePHPDoc\Reflection;
 
+use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\EnumCaseDefinition;
 use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\EnumTypeDefinition;
 use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\MethodDefinition;
 use GoodPhp\Reflection\NativePHPDoc\Reflection\Attributes\NativeAttributes;
+use GoodPhp\Reflection\NativePHPDoc\Reflection\Enums\NpdEnumCaseReflection;
 use GoodPhp\Reflection\NativePHPDoc\Reflection\Traits\NpdUsedTraitsReflection;
 use GoodPhp\Reflection\Reflection\Attributes\Attributes;
 use GoodPhp\Reflection\Reflection\ClassMemberInheritanceResolver;
 use GoodPhp\Reflection\Reflection\EnumReflection;
+use GoodPhp\Reflection\Reflection\Enums\EnumCaseReflection;
 use GoodPhp\Reflection\Reflection\MethodReflection;
 use GoodPhp\Reflection\Reflection\Methods\HasMethodsDefaults;
 use GoodPhp\Reflection\Reflection\Traits\UsedTraitsReflection;
 use GoodPhp\Reflection\Reflector;
 use GoodPhp\Reflection\Type\NamedType;
 use GoodPhp\Reflection\Type\Template\TypeParameterMap;
+use Illuminate\Support\Arr;
 use ReflectionEnum;
 
 /**
  * @template ReflectableType of \UnitEnum
+ * @template BackingValueType of string|int|null = string|int|null
  *
- * @implements EnumReflection<ReflectableType>
+ * @implements EnumReflection<ReflectableType, BackingValueType>
  */
 final class NpdEnumReflection extends NpdTypeReflection implements EnumReflection
 {
@@ -37,6 +42,9 @@ final class NpdEnumReflection extends NpdTypeReflection implements EnumReflectio
 	private readonly Attributes $attributes;
 
 	private UsedTraitsReflection $uses;
+
+	/** @var list<EnumCaseReflection<ReflectableType, BackingValueType>> */
+	private array $cases;
 
 	/** @var list<MethodReflection<ReflectableType>> */
 	private array $declaredMethods;
@@ -102,6 +110,19 @@ final class NpdEnumReflection extends NpdTypeReflection implements EnumReflectio
 	public function uses(): UsedTraitsReflection
 	{
 		return $this->uses ??= new NpdUsedTraitsReflection($this->definition->uses, TypeParameterMap::empty(), $this->staticType);
+	}
+
+	public function cases(): array
+	{
+		return $this->cases ??= array_map(
+			fn (EnumCaseDefinition $case) => new NpdEnumCaseReflection($case, $this),
+			$this->definition->cases,
+		);
+	}
+
+	public function case(string $name): ?EnumCaseReflection
+	{
+		return Arr::first($this->cases(), fn (EnumCaseReflection $method) => $name === $method->name());
 	}
 
 	/**
