@@ -14,6 +14,8 @@ final class MergedInheritanceFunctionParameterReflection implements FunctionPara
 {
 	private readonly FunctionParameterReflection $typeFromReflection;
 
+	private readonly FunctionParameterReflection $descriptionFromReflection;
+
 	/**
 	 * @param list<FunctionParameterReflection> $reflections
 	 * @param MethodReflection<*> $declaringMethod
@@ -46,6 +48,11 @@ final class MergedInheritanceFunctionParameterReflection implements FunctionPara
 	public function name(): string
 	{
 		return $this->reflections[0]->name();
+	}
+
+	public function description(): ?string
+	{
+		return $this->descriptionFromReflection()->description();
 	}
 
 	public function passedByReference(): bool
@@ -90,9 +97,21 @@ final class MergedInheritanceFunctionParameterReflection implements FunctionPara
 		}
 
 		// First @param in the inheritance tree - overwrites the native typehint
-		$firstMethodWithPhpDocParam = Arr::first($this->reflections, fn (FunctionParameterReflection $reflection) => $reflection->typeSource() === TypeSource::PHP_DOC);
+		$firstParameterWithPhpDocParam = Arr::first($this->reflections, fn (FunctionParameterReflection $reflection) => $reflection->typeSource() === TypeSource::PHP_DOC);
 
-		return $this->typeFromReflection = $firstMethodWithPhpDocParam ?? $this->reflections[0];
+		return $this->typeFromReflection = $firstParameterWithPhpDocParam ?? $this->reflections[0];
+	}
+
+	private function descriptionFromReflection(): FunctionParameterReflection
+	{
+		if (isset($this->descriptionFromReflection)) {
+			return $this->descriptionFromReflection;
+		}
+
+		// First non-empty description in the inheritance tree
+		$firstParameterWithDescription = Arr::first($this->reflections, fn (FunctionParameterReflection $reflection) => (bool) $reflection->description());
+
+		return $this->descriptionFromReflection = $firstParameterWithDescription ?? $this->reflections[0];
 	}
 
 	public function __toString(): string

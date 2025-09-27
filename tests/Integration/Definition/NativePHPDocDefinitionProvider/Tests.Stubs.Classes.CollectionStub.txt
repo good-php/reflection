@@ -1,0 +1,162 @@
+GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\ClassTypeDefinition {
+	+qualifiedName: "Tests\Stubs\Classes\CollectionStub"
+	+fileName: "/app/tests/Stubs/Classes/CollectionStub.php"
+	+description: null
+	+builtIn: false
+	+anonymous: false
+	+final: false
+	+abstract: false
+	+readOnly: false
+	+cloneable: true
+	+instantiable: true
+	+typeParameters: []
+	+extends: null
+	+implements: [
+		GoodPhp\Reflection\Type\NamedType {
+			+name: "IteratorAggregate"
+			+arguments: [
+				GoodPhp\Reflection\Type\NamedType {#1
+					+name: "string"
+					+arguments: []
+				},
+				GoodPhp\Reflection\Type\NamedType {
+					+name: "Tests\Stubs\Classes\SomeStub"
+					+arguments: []
+				},
+			]
+		},
+		GoodPhp\Reflection\Type\NamedType {
+			+name: "ArrayAccess"
+			+arguments: [
+				GoodPhp\Reflection\Type\NamedType {#1},
+				GoodPhp\Reflection\Type\NamedType {
+					+name: "Tests\Stubs\Classes\SomeStub"
+					+arguments: []
+				},
+			]
+		},
+	]
+	+uses: GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\UsedTraitsDefinition {
+		+traits: []
+		+excludedTraitMethods: []
+	}
+	+constants: [
+		GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\TypeConstantDefinition {
+			+name: "MAX_ITEMS"
+			+description: null
+			+isFinal: false
+			+type: null
+			+typeSource: null
+		},
+	]
+	+properties: []
+	+methods: [
+		GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\MethodDefinition {
+			+name: "getIterator"
+			+description: null
+			+abstract: false
+			+final: false
+			+typeParameters: []
+			+parameters: []
+			+returnType: GoodPhp\Reflection\Type\NamedType {
+				+name: "Traversable"
+				+arguments: []
+			}
+			+returnTypeSource: GoodPhp\Reflection\Reflection\TypeSource {#2
+				+name: "NATIVE"
+			}
+			+returnsByReference: false
+		},
+		GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\MethodDefinition {
+			+name: "offsetExists"
+			+description: null
+			+abstract: false
+			+final: false
+			+typeParameters: []
+			+parameters: [
+				GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\FunctionParameterDefinition {
+					+name: "offset"
+					+description: null
+					+passedByReference: false
+					+type: GoodPhp\Reflection\Type\Special\MixedType {#3}
+					+typeSource: GoodPhp\Reflection\Reflection\TypeSource {#2}
+					+hasDefaultValue: false
+				},
+			]
+			+returnType: GoodPhp\Reflection\Type\NamedType {
+				+name: "bool"
+				+arguments: []
+			}
+			+returnTypeSource: GoodPhp\Reflection\Reflection\TypeSource {#2}
+			+returnsByReference: false
+		},
+		GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\MethodDefinition {
+			+name: "offsetGet"
+			+description: null
+			+abstract: false
+			+final: false
+			+typeParameters: []
+			+parameters: [
+				GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\FunctionParameterDefinition {
+					+name: "offset"
+					+description: null
+					+passedByReference: false
+					+type: GoodPhp\Reflection\Type\Special\MixedType {#3}
+					+typeSource: GoodPhp\Reflection\Reflection\TypeSource {#2}
+					+hasDefaultValue: false
+				},
+			]
+			+returnType: GoodPhp\Reflection\Type\Special\MixedType {#3}
+			+returnTypeSource: GoodPhp\Reflection\Reflection\TypeSource {#2}
+			+returnsByReference: false
+		},
+		GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\MethodDefinition {
+			+name: "offsetSet"
+			+description: null
+			+abstract: false
+			+final: false
+			+typeParameters: []
+			+parameters: [
+				GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\FunctionParameterDefinition {
+					+name: "offset"
+					+description: null
+					+passedByReference: false
+					+type: GoodPhp\Reflection\Type\Special\MixedType {#3}
+					+typeSource: GoodPhp\Reflection\Reflection\TypeSource {#2}
+					+hasDefaultValue: false
+				},
+				GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\FunctionParameterDefinition {
+					+name: "value"
+					+description: null
+					+passedByReference: false
+					+type: GoodPhp\Reflection\Type\Special\MixedType {#3}
+					+typeSource: GoodPhp\Reflection\Reflection\TypeSource {#2}
+					+hasDefaultValue: false
+				},
+			]
+			+returnType: GoodPhp\Reflection\Type\Special\VoidType {#4}
+			+returnTypeSource: GoodPhp\Reflection\Reflection\TypeSource {#2}
+			+returnsByReference: false
+		},
+		GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\MethodDefinition {
+			+name: "offsetUnset"
+			+description: null
+			+abstract: false
+			+final: false
+			+typeParameters: []
+			+parameters: [
+				GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\FunctionParameterDefinition {
+					+name: "offset"
+					+description: null
+					+passedByReference: false
+					+type: GoodPhp\Reflection\Type\Special\MixedType {#3}
+					+typeSource: GoodPhp\Reflection\Reflection\TypeSource {#2}
+					+hasDefaultValue: false
+				},
+			]
+			+returnType: GoodPhp\Reflection\Type\Special\VoidType {#4}
+			+returnTypeSource: GoodPhp\Reflection\Reflection\TypeSource {#2}
+			+returnsByReference: false
+		},
+	]
+}

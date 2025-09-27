@@ -1,8 +1,9 @@
+asString: AllMissingTypes
 type: Tests\Stubs\Classes\AllMissingTypes
 qualifiedName: Tests\Stubs\Classes\AllMissingTypes
 shortName: AllMissingTypes
+description: null
 location: Tests\Stubs\Classes\AllMissingTypes
-asString: AllMissingTypes
 isBuiltIn: false
 isAnonymous: false
 isAbstract: false
@@ -26,6 +27,7 @@ declaredProperties:
     -
         asString: $property
         name: property
+        description: null
         isAbstract: false
         isFinal: false
         isReadOnly: false
@@ -42,6 +44,7 @@ declaredProperties:
     -
         asString: $promoted
         name: promoted
+        description: null
         isAbstract: false
         isFinal: false
         isReadOnly: false
@@ -57,6 +60,7 @@ declaredProperties:
         promotedParameter:
             asString: 'arg $promoted'
             name: promoted
+            description: null
             passedByReference: false
             location: 'Tests\Stubs\Classes\AllMissingTypes::__construct() arg $promoted'
             declaringMethod: __construct()
@@ -66,6 +70,7 @@ declaredProperties:
     -
         asString: $promotedDefault
         name: promotedDefault
+        description: null
         isAbstract: false
         isFinal: false
         isReadOnly: true
@@ -81,6 +86,7 @@ declaredProperties:
         promotedParameter:
             asString: 'arg $promotedDefault'
             name: promotedDefault
+            description: null
             passedByReference: false
             location: 'Tests\Stubs\Classes\AllMissingTypes::__construct() arg $promotedDefault'
             declaringMethod: __construct()
@@ -91,6 +97,7 @@ properties:
     -
         asString: $property
         name: property
+        description: null
         isAbstract: false
         isFinal: false
         isReadOnly: false
@@ -107,6 +114,7 @@ properties:
     -
         asString: $promoted
         name: promoted
+        description: null
         isAbstract: false
         isFinal: false
         isReadOnly: false
@@ -122,6 +130,7 @@ properties:
         promotedParameter:
             asString: 'arg $promoted'
             name: promoted
+            description: null
             passedByReference: false
             location: 'Tests\Stubs\Classes\AllMissingTypes::__construct() arg $promoted'
             declaringMethod: __construct()
@@ -131,6 +140,7 @@ properties:
     -
         asString: $promotedDefault
         name: promotedDefault
+        description: null
         isAbstract: false
         isFinal: false
         isReadOnly: true
@@ -146,6 +156,7 @@ properties:
         promotedParameter:
             asString: 'arg $promotedDefault'
             name: promotedDefault
+            description: null
             passedByReference: false
             location: 'Tests\Stubs\Classes\AllMissingTypes::__construct() arg $promotedDefault'
             declaringMethod: __construct()
@@ -156,6 +167,7 @@ declaredMethods:
     -
         asString: __construct()
         name: __construct
+        description: null
         isAbstract: false
         isFinal: false
         returnsByReference: false
@@ -169,6 +181,7 @@ declaredMethods:
             -
                 asString: 'arg $promoted'
                 name: promoted
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllMissingTypes::__construct() arg $promoted'
                 declaringMethod: __construct()
@@ -178,6 +191,7 @@ declaredMethods:
             -
                 asString: 'arg $promotedDefault'
                 name: promotedDefault
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllMissingTypes::__construct() arg $promotedDefault'
                 declaringMethod: __construct()
@@ -188,6 +202,7 @@ declaredMethods:
     -
         asString: test()
         name: test
+        description: null
         isAbstract: false
         isFinal: false
         returnsByReference: false
@@ -201,6 +216,7 @@ declaredMethods:
             -
                 asString: 'arg $something'
                 name: something
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllMissingTypes::test() arg $something'
                 declaringMethod: test()
@@ -212,6 +228,7 @@ methods:
     -
         asString: __construct()
         name: __construct
+        description: null
         isAbstract: false
         isFinal: false
         returnsByReference: false
@@ -225,6 +242,7 @@ methods:
             -
                 asString: 'arg $promoted'
                 name: promoted
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllMissingTypes::__construct() arg $promoted'
                 declaringMethod: __construct()
@@ -234,6 +252,7 @@ methods:
             -
                 asString: 'arg $promotedDefault'
                 name: promotedDefault
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllMissingTypes::__construct() arg $promotedDefault'
                 declaringMethod: __construct()
@@ -244,6 +263,7 @@ methods:
     -
         asString: test()
         name: test
+        description: null
         isAbstract: false
         isFinal: false
         returnsByReference: false
@@ -257,6 +277,7 @@ methods:
             -
                 asString: 'arg $something'
                 name: something
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllMissingTypes::test() arg $something'
                 declaringMethod: test()

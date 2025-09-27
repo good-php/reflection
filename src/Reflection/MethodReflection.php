@@ -3,6 +3,7 @@
 namespace GoodPhp\Reflection\Reflection;
 
 use GoodPhp\Reflection\Reflection\Attributes\HasAttributes;
+use GoodPhp\Reflection\Reflection\Descriptions\HasDescription;
 use GoodPhp\Reflection\Reflection\Methods\HasMethods;
 use GoodPhp\Reflection\Reflection\TypeParameters\HasTypeParameters;
 use GoodPhp\Reflection\Type\NamedType;
@@ -12,7 +13,7 @@ use Stringable;
 /**
  * @template-contravariant ReflectableType of object
  */
-interface MethodReflection extends Stringable, HasAttributes, HasTypeParameters
+interface MethodReflection extends Stringable, HasAttributes, HasTypeParameters, HasDescription
 {
 	public function withStaticType(NamedType $staticType): static;
 

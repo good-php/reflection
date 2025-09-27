@@ -38,6 +38,7 @@ class BuiltInCoreDefinitionProvider implements DefinitionProvider
 			Countable::class => lazy(fn () => new InterfaceTypeDefinition(
 				qualifiedName: Countable::class,
 				fileName: null,
+				description: null,
 				builtIn: true,
 				typeParameters: [],
 				extends: [],
@@ -45,6 +46,7 @@ class BuiltInCoreDefinitionProvider implements DefinitionProvider
 				methods: [
 					new MethodDefinition(
 						name: 'count',
+						description: null,
 						abstract: true,
 						final: false,
 						typeParameters: [],
@@ -58,16 +60,19 @@ class BuiltInCoreDefinitionProvider implements DefinitionProvider
 			ArrayAccess::class => lazy(fn () => new InterfaceTypeDefinition(
 				qualifiedName: ArrayAccess::class,
 				fileName: null,
+				description: null,
 				builtIn: true,
 				typeParameters: [
 					new TypeParameterDefinition(
 						name: 'TKey',
+						description: null,
 						variadic: false,
 						upperBound: null,
 						variance: TemplateTypeVariance::INVARIANT
 					),
 					new TypeParameterDefinition(
 						name: 'TValue',
+						description: null,
 						variadic: false,
 						upperBound: null,
 						variance: TemplateTypeVariance::INVARIANT
@@ -78,12 +83,14 @@ class BuiltInCoreDefinitionProvider implements DefinitionProvider
 				methods: [
 					new MethodDefinition(
 						name: 'offsetExists',
+						description: null,
 						abstract: true,
 						final: false,
 						typeParameters: [],
 						parameters: [
 							new FunctionParameterDefinition(
 								name: 'offset',
+								description: null,
 								passedByReference: false,
 								type: new TemplateType(
 									name: 'TKey',
@@ -98,12 +105,14 @@ class BuiltInCoreDefinitionProvider implements DefinitionProvider
 					),
 					new MethodDefinition(
 						name: 'offsetGet',
+						description: null,
 						abstract: true,
 						final: false,
 						typeParameters: [],
 						parameters: [
 							new FunctionParameterDefinition(
 								name: 'offset',
+								description: null,
 								passedByReference: false,
 								type: new TemplateType(
 									name: 'TKey',
@@ -122,12 +131,14 @@ class BuiltInCoreDefinitionProvider implements DefinitionProvider
 					),
 					new MethodDefinition(
 						name: 'offsetSet',
+						description: null,
 						abstract: true,
 						final: false,
 						typeParameters: [],
 						parameters: [
 							new FunctionParameterDefinition(
 								name: 'offset',
+								description: null,
 								passedByReference: false,
 								type: new NullableType(
 									new TemplateType(
@@ -139,6 +150,7 @@ class BuiltInCoreDefinitionProvider implements DefinitionProvider
 							),
 							new FunctionParameterDefinition(
 								name: 'value',
+								description: null,
 								passedByReference: false,
 								type: new TemplateType(
 									name: 'TValue',
@@ -153,12 +165,14 @@ class BuiltInCoreDefinitionProvider implements DefinitionProvider
 					),
 					new MethodDefinition(
 						name: 'offsetUnset',
+						description: null,
 						abstract: true,
 						final: false,
 						typeParameters: [],
 						parameters: [
 							new FunctionParameterDefinition(
 								name: 'offset',
+								description: null,
 								passedByReference: false,
 								type: new TemplateType(
 									name: 'TKey',
@@ -176,16 +190,19 @@ class BuiltInCoreDefinitionProvider implements DefinitionProvider
 			Traversable::class => lazy(fn () => new InterfaceTypeDefinition(
 				qualifiedName: Traversable::class,
 				fileName: null,
+				description: null,
 				builtIn: true,
 				typeParameters: [
 					new TypeParameterDefinition(
 						name: 'TKey',
+						description: null,
 						variadic: false,
 						upperBound: null,
 						variance: TemplateTypeVariance::INVARIANT,
 					),
 					new TypeParameterDefinition(
 						name: 'TValue',
+						description: null,
 						variadic: false,
 						upperBound: null,
 						variance: TemplateTypeVariance::COVARIANT,
@@ -207,16 +224,19 @@ class BuiltInCoreDefinitionProvider implements DefinitionProvider
 			IteratorAggregate::class => lazy(fn () => new InterfaceTypeDefinition(
 				qualifiedName: IteratorAggregate::class,
 				fileName: null,
+				description: null,
 				builtIn: true,
 				typeParameters: [
 					new TypeParameterDefinition(
 						name: 'TKey',
+						description: null,
 						variadic: false,
 						upperBound: null,
 						variance: TemplateTypeVariance::INVARIANT,
 					),
 					new TypeParameterDefinition(
 						name: 'TValue',
+						description: null,
 						variadic: false,
 						upperBound: null,
 						variance: TemplateTypeVariance::COVARIANT,
@@ -236,6 +256,7 @@ class BuiltInCoreDefinitionProvider implements DefinitionProvider
 				methods: [
 					new MethodDefinition(
 						name: 'getIterator',
+						description: null,
 						abstract: true,
 						final: false,
 						typeParameters: [],
@@ -256,6 +277,7 @@ class BuiltInCoreDefinitionProvider implements DefinitionProvider
 			Closure::class => lazy(fn () => new ClassTypeDefinition(
 				qualifiedName: Closure::class,
 				fileName: null,
+				description: null,
 				builtIn: true,
 				anonymous: false,
 				final: true,
@@ -266,12 +288,14 @@ class BuiltInCoreDefinitionProvider implements DefinitionProvider
 				typeParameters: [
 					new TypeParameterDefinition(
 						name: 'TReturn',
+						description: null,
 						variadic: false,
 						upperBound: null,
 						variance: TemplateTypeVariance::COVARIANT
 					),
 					new TypeParameterDefinition(
 						name: 'TParameter',
+						description: null,
 						variadic: true,
 						upperBound: null,
 						variance: TemplateTypeVariance::CONTRAVARIANT

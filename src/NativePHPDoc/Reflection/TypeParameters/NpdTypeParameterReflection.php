@@ -25,6 +25,11 @@ final class NpdTypeParameterReflection implements TypeParameterReflection
 		return $this->definition->name;
 	}
 
+	public function description(): ?string
+	{
+		return $this->definition->description;
+	}
+
 	public function variadic(): bool
 	{
 		return $this->definition->variadic;

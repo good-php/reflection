@@ -24,6 +24,7 @@ final class ClassTypeDefinition extends TypeDefinition
 	public function __construct(
 		string $qualifiedName,
 		?string $fileName,
+		public readonly ?string $description,
 		public readonly bool $builtIn,
 		public readonly bool $anonymous,
 		public readonly bool $final,

@@ -29,6 +29,18 @@ class TypeParameterDefinitionTest extends TestCase
 			'T',
 			new TypeParameterDefinition(
 				name: 'T',
+				description: null,
+				variadic: false,
+				upperBound: null,
+				variance: TemplateTypeVariance::INVARIANT,
+			),
+		];
+
+		yield [
+			'T Text',
+			new TypeParameterDefinition(
+				name: 'T',
+				description: 'Text',
 				variadic: false,
 				upperBound: null,
 				variance: TemplateTypeVariance::INVARIANT,
@@ -39,6 +51,7 @@ class TypeParameterDefinitionTest extends TestCase
 			'contravariant T',
 			new TypeParameterDefinition(
 				name: 'T',
+				description: null,
 				variadic: false,
 				upperBound: null,
 				variance: TemplateTypeVariance::CONTRAVARIANT,
@@ -49,6 +62,7 @@ class TypeParameterDefinitionTest extends TestCase
 			'covariant T',
 			new TypeParameterDefinition(
 				name: 'T',
+				description: null,
 				variadic: false,
 				upperBound: null,
 				variance: TemplateTypeVariance::COVARIANT,
@@ -59,6 +73,7 @@ class TypeParameterDefinitionTest extends TestCase
 			'...T',
 			new TypeParameterDefinition(
 				name: 'T',
+				description: null,
 				variadic: true,
 				upperBound: null,
 				variance: TemplateTypeVariance::INVARIANT,
@@ -69,6 +84,7 @@ class TypeParameterDefinitionTest extends TestCase
 			'contravariant ...T',
 			new TypeParameterDefinition(
 				name: 'T',
+				description: null,
 				variadic: true,
 				upperBound: null,
 				variance: TemplateTypeVariance::CONTRAVARIANT,
@@ -79,6 +95,7 @@ class TypeParameterDefinitionTest extends TestCase
 			'T of int',
 			new TypeParameterDefinition(
 				name: 'T',
+				description: null,
 				variadic: false,
 				upperBound: PrimitiveType::integer(),
 				variance: TemplateTypeVariance::INVARIANT,
@@ -86,9 +103,10 @@ class TypeParameterDefinitionTest extends TestCase
 		];
 
 		yield [
-			'covariant ...T of int',
+			'covariant ...T of int Text',
 			new TypeParameterDefinition(
 				name: 'T',
+				description: 'Text',
 				variadic: true,
 				upperBound: PrimitiveType::integer(),
 				variance: TemplateTypeVariance::COVARIANT,
@@ -96,9 +114,10 @@ class TypeParameterDefinitionTest extends TestCase
 		];
 
 		yield [
-			'covariant T of mixed = int',
+			'covariant T of mixed = int Text',
 			new TypeParameterDefinition(
 				name: 'T',
+				description: 'Text',
 				variadic: false,
 				upperBound: MixedType::get(),
 				variance: TemplateTypeVariance::COVARIANT,

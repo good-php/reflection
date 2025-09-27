@@ -2,6 +2,7 @@
 
 namespace GoodPhp\Reflection\Reflection;
 
+use GoodPhp\Reflection\Reflection\Descriptions\HasDescription;
 use GoodPhp\Reflection\Reflection\Names\HasQualifiedName;
 use GoodPhp\Reflection\Type\NamedType;
 use JiriPudil\SealedClasses\Sealed;
@@ -17,7 +18,7 @@ use Stringable;
 	EnumReflection::class,
 	SpecialTypeReflection::class,
 ])]
-interface TypeReflection extends HasQualifiedName, Stringable
+interface TypeReflection extends Stringable, HasQualifiedName, HasDescription
 {
 	public function withStaticType(NamedType $staticType): static;
 

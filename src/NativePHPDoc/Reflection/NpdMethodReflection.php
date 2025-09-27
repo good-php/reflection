@@ -72,6 +72,11 @@ final class NpdMethodReflection implements MethodReflection
 		return $this->definition->name;
 	}
 
+	public function description(): ?string
+	{
+		return $this->definition->description;
+	}
+
 	public function isAbstract(): bool
 	{
 		return $this->definition->abstract;

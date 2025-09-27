@@ -1,0 +1,103 @@
+GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\ClassTypeDefinition {
+	+qualifiedName: "Tests\Stubs\Classes\ParentClassStub"
+	+fileName: "/app/tests/Stubs/Classes/ParentClassStub.php"
+	+description: "Parent class description"
+	+builtIn: false
+	+anonymous: false
+	+final: false
+	+abstract: false
+	+readOnly: false
+	+cloneable: true
+	+instantiable: true
+	+typeParameters: [
+		GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\TypeParameterDefinition {
+			+name: "O"
+			+description: null
+			+variadic: false
+			+upperBound: null
+			+variance: GoodPhp\Reflection\Type\Template\TemplateTypeVariance {#1
+				+name: "INVARIANT"
+			}
+			+default: null
+		},
+		GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\TypeParameterDefinition {
+			+name: "U"
+			+description: null
+			+variadic: false
+			+upperBound: null
+			+variance: GoodPhp\Reflection\Type\Template\TemplateTypeVariance {#1}
+			+default: null
+		},
+	]
+	+extends: null
+	+implements: []
+	+uses: GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\UsedTraitsDefinition {
+		+traits: []
+		+excludedTraitMethods: []
+	}
+	+constants: []
+	+properties: [
+		GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\PropertyDefinition {
+			+name: "parentProperty"
+			+description: "Parent property description"
+			+abstract: false
+			+final: false
+			+readOnly: false
+			+type: GoodPhp\Reflection\Type\Template\TemplateType {
+				+name: "O"
+			}
+			+typeSource: GoodPhp\Reflection\Reflection\TypeSource {#2
+				+name: "PHP_DOC"
+			}
+			+hasDefaultValue: true
+			+isPromoted: false
+		},
+	]
+	+methods: [
+		GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\MethodDefinition {
+			+name: "parentMethod"
+			+description: "Parent method description"
+			+abstract: false
+			+final: false
+			+typeParameters: []
+			+parameters: []
+			+returnType: GoodPhp\Reflection\Type\Template\TemplateType {
+				+name: "U"
+			}
+			+returnTypeSource: GoodPhp\Reflection\Reflection\TypeSource {#2}
+			+returnsByReference: false
+		},
+		GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\MethodDefinition {
+			+name: "test"
+			+description: null
+			+abstract: false
+			+final: false
+			+typeParameters: []
+			+parameters: [
+				GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\FunctionParameterDefinition {
+					+name: "str"
+					+description: null
+					+passedByReference: false
+					+type: GoodPhp\Reflection\Type\Special\NullableType {
+						+innerType: GoodPhp\Reflection\Type\NamedType {
+							+name: "string"
+							+arguments: []
+						}
+					}
+					+typeSource: GoodPhp\Reflection\Reflection\TypeSource {#3
+						+name: "NATIVE"
+					}
+					+hasDefaultValue: true
+				},
+			]
+			+returnType: GoodPhp\Reflection\Type\Special\StaticType {
+				+upperBound: GoodPhp\Reflection\Type\NamedType {
+					+name: "Tests\Stubs\Classes\ParentClassStub"
+					+arguments: []
+				}
+			}
+			+returnTypeSource: GoodPhp\Reflection\Reflection\TypeSource {#3}
+			+returnsByReference: false
+		},
+	]
+}

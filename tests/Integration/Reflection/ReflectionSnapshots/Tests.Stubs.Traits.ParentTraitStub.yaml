@@ -1,8 +1,9 @@
+asString: ParentTraitStub
 type: Tests\Stubs\Traits\ParentTraitStub
 qualifiedName: Tests\Stubs\Traits\ParentTraitStub
 shortName: ParentTraitStub
+description: 'Parent trait description'
 location: Tests\Stubs\Traits\ParentTraitStub
-asString: ParentTraitStub
 isBuiltIn: false
 attributes:
     asString: '#[]'
@@ -10,12 +11,14 @@ attributes:
 typeParameters:
     -
         name: O
+        description: null
         variadic: false
         upperBound: mixed
         variance: INVARIANT
         asString: O
     -
         name: U
+        description: null
         variadic: false
         upperBound: mixed
         variance: INVARIANT
@@ -30,6 +33,7 @@ declaredConstants:
     -
         asString: CONSTANT
         name: CONSTANT
+        description: null
         isFinal: false
         declaringType: Tests\Stubs\Traits\ParentTraitStub
         attributes:
@@ -41,6 +45,7 @@ constants:
     -
         asString: CONSTANT
         name: CONSTANT
+        description: null
         isFinal: false
         declaringType: Tests\Stubs\Traits\ParentTraitStub
         attributes:
@@ -52,6 +57,7 @@ declaredProperties:
     -
         asString: $prop
         name: prop
+        description: null
         isAbstract: false
         isFinal: false
         isReadOnly: false
@@ -69,6 +75,7 @@ properties:
     -
         asString: $prop
         name: prop
+        description: null
         isAbstract: false
         isFinal: false
         isReadOnly: false
@@ -86,6 +93,7 @@ declaredMethods:
     -
         asString: traitMethod()
         name: traitMethod
+        description: null
         isAbstract: false
         isFinal: false
         returnsByReference: false
@@ -101,6 +109,7 @@ methods:
     -
         asString: traitMethod()
         name: traitMethod
+        description: null
         isAbstract: false
         isFinal: false
         returnsByReference: false
@@ -115,6 +124,7 @@ methods:
     -
         asString: otherFunction()
         name: otherFunction
+        description: null
         isAbstract: false
         isFinal: false
         returnsByReference: false

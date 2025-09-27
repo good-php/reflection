@@ -1,0 +1,324 @@
+GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\ClassTypeDefinition {
+	+qualifiedName: "Tests\Stubs\Classes\ClassStub"
+	+fileName: "/app/tests/Stubs/Classes/ClassStub.php"
+	+description: "Class description"
+	+builtIn: false
+	+anonymous: false
+	+final: true
+	+abstract: false
+	+readOnly: false
+	+cloneable: true
+	+instantiable: true
+	+typeParameters: [
+		GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\TypeParameterDefinition {
+			+name: "T"
+			+description: "Class type parameter description"
+			+variadic: false
+			+upperBound: null
+			+variance: GoodPhp\Reflection\Type\Template\TemplateTypeVariance {#1
+				+name: "INVARIANT"
+			}
+			+default: null
+		},
+		GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\TypeParameterDefinition {
+			+name: "S"
+			+description: null
+			+variadic: false
+			+upperBound: GoodPhp\Reflection\Type\NamedType {#2
+				+name: "int"
+				+arguments: []
+			}
+			+variance: GoodPhp\Reflection\Type\Template\TemplateTypeVariance {
+				+name: "COVARIANT"
+			}
+			+default: null
+		},
+	]
+	+extends: GoodPhp\Reflection\Type\NamedType {
+		+name: "Tests\Stubs\Classes\ParentClassStub"
+		+arguments: [
+			GoodPhp\Reflection\Type\Template\TemplateType {
+				+name: "T"
+			},
+			GoodPhp\Reflection\Type\NamedType {
+				+name: "Tests\Stubs\Classes\SomeStub"
+				+arguments: []
+			},
+		]
+	}
+	+implements: [
+		GoodPhp\Reflection\Type\NamedType {
+			+name: "Tests\Stubs\Interfaces\ParentInterfaceStub"
+			+arguments: [
+				GoodPhp\Reflection\Type\Template\TemplateType {
+					+name: "S"
+				},
+				GoodPhp\Reflection\Type\NamedType {
+					+name: "Tests\Stubs\Classes\SomeStub"
+					+arguments: []
+				},
+			]
+		},
+	]
+	+uses: GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\UsedTraitsDefinition {
+		+traits: [
+			GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\UsedTraitDefinition {
+				+trait: GoodPhp\Reflection\Type\NamedType {
+					+name: "Tests\Stubs\Traits\ParentTraitStub"
+					+arguments: [
+						GoodPhp\Reflection\Type\Template\TemplateType {
+							+name: "T"
+						},
+						GoodPhp\Reflection\Type\NamedType {
+							+name: "Tests\Stubs\Classes\SomeStub"
+							+arguments: []
+						},
+					]
+				}
+				+aliases: [
+					GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\UsedTraitAliasDefinition {
+						+name: "traitMethod"
+						+newName: null
+						+newModifier: 4
+					},
+					GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\UsedTraitAliasDefinition {
+						+name: "traitMethod"
+						+newName: "traitMethodTwo"
+						+newModifier: 2
+					},
+				]
+			},
+			GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\UsedTraitDefinition {
+				+trait: GoodPhp\Reflection\Type\NamedType {
+					+name: "Tests\Stubs\Traits\ParentTraitStub"
+					+arguments: []
+				}
+				+aliases: []
+			},
+		]
+		+excludedTraitMethods: []
+	}
+	+constants: []
+	+properties: [
+		GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\PropertyDefinition {
+			+name: "factories"
+			+description: null
+			+abstract: false
+			+final: false
+			+readOnly: false
+			+type: GoodPhp\Reflection\Type\NamedType {
+				+name: "array"
+				+arguments: [
+					GoodPhp\Reflection\Type\Combinatorial\UnionType {
+						+types: [
+							GoodPhp\Reflection\Type\NamedType {#2},
+							GoodPhp\Reflection\Type\NamedType {
+								+name: "string"
+								+arguments: []
+							},
+						]
+					},
+					GoodPhp\Reflection\Type\NamedType {
+						+name: "Tests\Stubs\Classes\SomeStub"
+						+arguments: []
+					},
+				]
+			}
+			+typeSource: GoodPhp\Reflection\Reflection\TypeSource {#3
+				+name: "PHP_DOC"
+			}
+			+hasDefaultValue: false
+			+isPromoted: false
+		},
+		GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\PropertyDefinition {
+			+name: "generic"
+			+description: null
+			+abstract: false
+			+final: false
+			+readOnly: false
+			+type: GoodPhp\Reflection\Type\NamedType {
+				+name: "Tests\Stubs\Classes\DoubleTemplateType"
+				+arguments: [
+					GoodPhp\Reflection\Type\NamedType {
+						+name: "DateTime"
+						+arguments: []
+					},
+					GoodPhp\Reflection\Type\Template\TemplateType {
+						+name: "T"
+					},
+				]
+			}
+			+typeSource: GoodPhp\Reflection\Reflection\TypeSource {#3}
+			+hasDefaultValue: false
+			+isPromoted: false
+		},
+		GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\PropertyDefinition {
+			+name: "promoted"
+			+description: "Promoted parameter description"
+			+abstract: false
+			+final: false
+			+readOnly: true
+			+type: GoodPhp\Reflection\Type\Template\TemplateType {
+				+name: "T"
+			}
+			+typeSource: GoodPhp\Reflection\Reflection\TypeSource {#3}
+			+hasDefaultValue: false
+			+isPromoted: true
+		},
+	]
+	+methods: [
+		GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\MethodDefinition {
+			+name: "__construct"
+			+description: null
+			+abstract: false
+			+final: false
+			+typeParameters: []
+			+parameters: [
+				GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\FunctionParameterDefinition {
+					+name: "promoted"
+					+description: "Promoted parameter description"
+					+passedByReference: false
+					+type: GoodPhp\Reflection\Type\Template\TemplateType {
+						+name: "T"
+					}
+					+typeSource: GoodPhp\Reflection\Reflection\TypeSource {#3}
+					+hasDefaultValue: false
+				},
+			]
+			+returnType: null
+			+returnTypeSource: null
+			+returnsByReference: false
+		},
+		GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\MethodDefinition {
+			+name: "method"
+			+description: "Method description"
+			+abstract: false
+			+final: false
+			+typeParameters: [
+				GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\TypeParameterDefinition {
+					+name: "G"
+					+description: "Method type parameter description"
+					+variadic: false
+					+upperBound: null
+					+variance: GoodPhp\Reflection\Type\Template\TemplateTypeVariance {#1}
+					+default: null
+				},
+			]
+			+parameters: [
+				GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\FunctionParameterDefinition {
+					+name: "param"
+					+description: "Method parameter description"
+					+passedByReference: false
+					+type: GoodPhp\Reflection\Type\NamedType {
+						+name: "Tests\Stubs\Classes\DoubleTemplateType"
+						+arguments: [
+							GoodPhp\Reflection\Type\NamedType {
+								+name: "Tests\Stubs\Classes\SomeStub"
+								+arguments: []
+							},
+							GoodPhp\Reflection\Type\Template\TemplateType {
+								+name: "T"
+							},
+						]
+					}
+					+typeSource: GoodPhp\Reflection\Reflection\TypeSource {#3}
+					+hasDefaultValue: false
+				},
+			]
+			+returnType: GoodPhp\Reflection\Type\NamedType {
+				+name: "Illuminate\Support\Collection"
+				+arguments: [
+					GoodPhp\Reflection\Type\Template\TemplateType {
+						+name: "S"
+					},
+					GoodPhp\Reflection\Type\Template\TemplateType {
+						+name: "G"
+					},
+				]
+			}
+			+returnTypeSource: GoodPhp\Reflection\Reflection\TypeSource {#3}
+			+returnsByReference: false
+		},
+		GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\MethodDefinition {
+			+name: "methodTwo"
+			+description: null
+			+abstract: false
+			+final: false
+			+typeParameters: [
+				GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\TypeParameterDefinition {
+					+name: "KValue"
+					+description: null
+					+variadic: false
+					+upperBound: null
+					+variance: GoodPhp\Reflection\Type\Template\TemplateTypeVariance {#1}
+					+default: null
+				},
+				GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\TypeParameterDefinition {
+					+name: "K"
+					+description: null
+					+variadic: false
+					+upperBound: GoodPhp\Reflection\Type\NamedType {
+						+name: "Tests\Stubs\Interfaces\SingleTemplateType"
+						+arguments: [
+							GoodPhp\Reflection\Type\Template\TemplateType {
+								+name: "KValue"
+							},
+						]
+					}
+					+variance: GoodPhp\Reflection\Type\Template\TemplateTypeVariance {#1}
+					+default: null
+				},
+			]
+			+parameters: [
+				GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\FunctionParameterDefinition {
+					+name: "param"
+					+description: null
+					+passedByReference: false
+					+type: GoodPhp\Reflection\Type\Template\TemplateType {
+						+name: "K"
+					}
+					+typeSource: GoodPhp\Reflection\Reflection\TypeSource {#3}
+					+hasDefaultValue: false
+				},
+			]
+			+returnType: GoodPhp\Reflection\Type\Template\TemplateType {
+				+name: "KValue"
+			}
+			+returnTypeSource: GoodPhp\Reflection\Reflection\TypeSource {#3}
+			+returnsByReference: false
+		},
+		GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\MethodDefinition {
+			+name: "self"
+			+description: null
+			+abstract: false
+			+final: false
+			+typeParameters: []
+			+parameters: [
+				GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\FunctionParameterDefinition {
+					+name: "parent"
+					+description: null
+					+passedByReference: false
+					+type: GoodPhp\Reflection\Type\NamedType {
+						+name: "Tests\Stubs\Classes\ParentClassStub"
+						+arguments: [
+							GoodPhp\Reflection\Type\NamedType {#2},
+							GoodPhp\Reflection\Type\NamedType {#2},
+						]
+					}
+					+typeSource: GoodPhp\Reflection\Reflection\TypeSource {#3}
+					+hasDefaultValue: false
+				},
+			]
+			+returnType: GoodPhp\Reflection\Type\Special\StaticType {
+				+upperBound: GoodPhp\Reflection\Type\NamedType {
+					+name: "Tests\Stubs\Classes\ClassStub"
+					+arguments: []
+				}
+			}
+			+returnTypeSource: GoodPhp\Reflection\Reflection\TypeSource {
+				+name: "NATIVE"
+			}
+			+returnsByReference: false
+		},
+	]
+}

@@ -54,6 +54,11 @@ final class NpdTypeConstantReflection implements TypeConstantReflection
 		return $this->definition->name;
 	}
 
+	public function description(): ?string
+	{
+		return $this->definition->description;
+	}
+
 	public function isFinal(): bool
 	{
 		return $this->definition->isFinal;

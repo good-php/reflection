@@ -27,6 +27,9 @@ final class MergedInheritancePropertyReflection implements PropertyReflection
 	/** @var PropertyReflection<ReflectableType> */
 	private PropertyReflection $typeFromReflection;
 
+	/** @var PropertyReflection<ReflectableType> */
+	private PropertyReflection $descriptionFromReflection;
+
 	/**
 	 * @param list<PropertyReflection<ReflectableType>> $reflections
 	 */
@@ -67,6 +70,11 @@ final class MergedInheritancePropertyReflection implements PropertyReflection
 	public function name(): string
 	{
 		return $this->reflections[0]->name();
+	}
+
+	public function description(): ?string
+	{
+		return $this->descriptionFromReflection()->description();
 	}
 
 	public function isAbstract(): bool
@@ -160,6 +168,21 @@ final class MergedInheritancePropertyReflection implements PropertyReflection
 		$firstPropertyWithPhpDocVar = Arr::first($this->reflections, fn (PropertyReflection $reflection) => $reflection->typeSource() === TypeSource::PHP_DOC);
 
 		return $this->typeFromReflection = $firstPropertyWithPhpDocVar ?? $this->reflections[0];
+	}
+
+	/**
+	 * @return PropertyReflection<ReflectableType>
+	 */
+	private function descriptionFromReflection(): PropertyReflection
+	{
+		if (isset($this->descriptionFromReflection)) {
+			return $this->descriptionFromReflection;
+		}
+
+		// First non-empty description in the inheritance tree
+		$firstPropertyWithDescription = Arr::first($this->reflections, fn (PropertyReflection $reflection) => (bool) $reflection->description());
+
+		return $this->descriptionFromReflection = $firstPropertyWithDescription ?? $this->reflections[0];
 	}
 
 	public function __toString(): string

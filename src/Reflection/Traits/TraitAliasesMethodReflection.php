@@ -41,6 +41,11 @@ final class TraitAliasesMethodReflection implements MethodReflection
 		return $this->alias->newName() ?? $this->method->name();
 	}
 
+	public function description(): ?string
+	{
+		return $this->method->description();
+	}
+
 	public function isAbstract(): bool
 	{
 		return $this->method->isAbstract();

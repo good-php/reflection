@@ -1,8 +1,9 @@
+asString: ContravariantParameter
 type: Tests\Stubs\Classes\ContravariantParameter
 qualifiedName: Tests\Stubs\Classes\ContravariantParameter
 shortName: ContravariantParameter
+description: null
 location: Tests\Stubs\Classes\ContravariantParameter
-asString: ContravariantParameter
 isBuiltIn: false
 isAnonymous: false
 isAbstract: false
@@ -16,6 +17,7 @@ attributes:
 typeParameters:
     -
         name: T
+        description: null
         variadic: false
         upperBound: mixed
         variance: CONTRAVARIANT

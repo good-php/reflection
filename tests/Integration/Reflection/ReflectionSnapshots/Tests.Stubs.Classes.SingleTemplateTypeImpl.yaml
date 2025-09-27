@@ -1,8 +1,9 @@
+asString: SingleTemplateTypeImpl
 type: Tests\Stubs\Classes\SingleTemplateTypeImpl
 qualifiedName: Tests\Stubs\Classes\SingleTemplateTypeImpl
 shortName: SingleTemplateTypeImpl
+description: null
 location: Tests\Stubs\Classes\SingleTemplateTypeImpl
-asString: SingleTemplateTypeImpl
 isBuiltIn: false
 isAnonymous: false
 isAbstract: false
@@ -16,6 +17,7 @@ attributes:
 typeParameters:
     -
         name: T
+        description: null
         variadic: false
         upperBound: mixed
         variance: INVARIANT

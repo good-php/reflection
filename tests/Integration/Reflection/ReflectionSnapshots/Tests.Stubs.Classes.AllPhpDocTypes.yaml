@@ -1,8 +1,9 @@
+asString: AllPhpDocTypes
 type: Tests\Stubs\Classes\AllPhpDocTypes
 qualifiedName: Tests\Stubs\Classes\AllPhpDocTypes
 shortName: AllPhpDocTypes
+description: null
 location: Tests\Stubs\Classes\AllPhpDocTypes
-asString: AllPhpDocTypes
 isBuiltIn: false
 isAnonymous: false
 isAbstract: false
@@ -27,6 +28,7 @@ declaredMethods:
     -
         asString: f1()
         name: f1
+        description: null
         isAbstract: false
         isFinal: false
         returnsByReference: false
@@ -40,6 +42,7 @@ declaredMethods:
             -
                 asString: 'arg $p1'
                 name: p1
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f1() arg $p1'
                 declaringMethod: f1()
@@ -49,6 +52,7 @@ declaredMethods:
             -
                 asString: 'arg $p2'
                 name: p2
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f1() arg $p2'
                 declaringMethod: f1()
@@ -58,6 +62,7 @@ declaredMethods:
             -
                 asString: 'arg $p3'
                 name: p3
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f1() arg $p3'
                 declaringMethod: f1()
@@ -67,6 +72,7 @@ declaredMethods:
             -
                 asString: 'arg $p4'
                 name: p4
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f1() arg $p4'
                 declaringMethod: f1()
@@ -76,6 +82,7 @@ declaredMethods:
             -
                 asString: 'arg $p5'
                 name: p5
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f1() arg $p5'
                 declaringMethod: f1()
@@ -85,6 +92,7 @@ declaredMethods:
             -
                 asString: 'arg $p6'
                 name: p6
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f1() arg $p6'
                 declaringMethod: f1()
@@ -94,6 +102,7 @@ declaredMethods:
             -
                 asString: 'arg $p7'
                 name: p7
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f1() arg $p7'
                 declaringMethod: f1()
@@ -103,6 +112,7 @@ declaredMethods:
             -
                 asString: 'arg $p8'
                 name: p8
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f1() arg $p8'
                 declaringMethod: f1()
@@ -112,6 +122,7 @@ declaredMethods:
             -
                 asString: 'arg $p9'
                 name: p9
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f1() arg $p9'
                 declaringMethod: f1()
@@ -121,6 +132,7 @@ declaredMethods:
             -
                 asString: 'arg $p10'
                 name: p10
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f1() arg $p10'
                 declaringMethod: f1()
@@ -130,6 +142,7 @@ declaredMethods:
             -
                 asString: 'arg $p11'
                 name: p11
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f1() arg $p11'
                 declaringMethod: f1()
@@ -140,6 +153,7 @@ declaredMethods:
     -
         asString: f2()
         name: f2
+        description: null
         isAbstract: false
         isFinal: false
         returnsByReference: false
@@ -153,6 +167,7 @@ declaredMethods:
             -
                 asString: 'arg $p1'
                 name: p1
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f2() arg $p1'
                 declaringMethod: f2()
@@ -162,6 +177,7 @@ declaredMethods:
             -
                 asString: 'arg $p2'
                 name: p2
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f2() arg $p2'
                 declaringMethod: f2()
@@ -171,6 +187,7 @@ declaredMethods:
             -
                 asString: 'arg $p3'
                 name: p3
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f2() arg $p3'
                 declaringMethod: f2()
@@ -180,6 +197,7 @@ declaredMethods:
             -
                 asString: 'arg $p4'
                 name: p4
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f2() arg $p4'
                 declaringMethod: f2()
@@ -189,6 +207,7 @@ declaredMethods:
             -
                 asString: 'arg $p5'
                 name: p5
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f2() arg $p5'
                 declaringMethod: f2()
@@ -198,6 +217,7 @@ declaredMethods:
             -
                 asString: 'arg $p6'
                 name: p6
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f2() arg $p6'
                 declaringMethod: f2()
@@ -207,6 +227,7 @@ declaredMethods:
             -
                 asString: 'arg $p7'
                 name: p7
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f2() arg $p7'
                 declaringMethod: f2()
@@ -216,6 +237,7 @@ declaredMethods:
             -
                 asString: 'arg $p8'
                 name: p8
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f2() arg $p8'
                 declaringMethod: f2()
@@ -226,6 +248,7 @@ declaredMethods:
     -
         asString: f3()
         name: f3
+        description: null
         isAbstract: false
         isFinal: false
         returnsByReference: false
@@ -239,6 +262,7 @@ declaredMethods:
             -
                 asString: 'arg $p1'
                 name: p1
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f3() arg $p1'
                 declaringMethod: f3()
@@ -248,6 +272,7 @@ declaredMethods:
             -
                 asString: 'arg $p2'
                 name: p2
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f3() arg $p2'
                 declaringMethod: f3()
@@ -257,6 +282,7 @@ declaredMethods:
             -
                 asString: 'arg $p3'
                 name: p3
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f3() arg $p3'
                 declaringMethod: f3()
@@ -266,6 +292,7 @@ declaredMethods:
             -
                 asString: 'arg $p4'
                 name: p4
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f3() arg $p4'
                 declaringMethod: f3()
@@ -276,6 +303,7 @@ declaredMethods:
     -
         asString: f4()
         name: f4
+        description: null
         isAbstract: false
         isFinal: false
         returnsByReference: false
@@ -289,6 +317,7 @@ declaredMethods:
             -
                 asString: 'arg $p1'
                 name: p1
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f4() arg $p1'
                 declaringMethod: f4()
@@ -298,6 +327,7 @@ declaredMethods:
             -
                 asString: 'arg $p2'
                 name: p2
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f4() arg $p2'
                 declaringMethod: f4()
@@ -307,6 +337,7 @@ declaredMethods:
             -
                 asString: 'arg $p3'
                 name: p3
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f4() arg $p3'
                 declaringMethod: f4()
@@ -316,6 +347,7 @@ declaredMethods:
             -
                 asString: 'arg $p4'
                 name: p4
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f4() arg $p4'
                 declaringMethod: f4()
@@ -325,6 +357,7 @@ declaredMethods:
             -
                 asString: 'arg $p5'
                 name: p5
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f4() arg $p5'
                 declaringMethod: f4()
@@ -334,6 +367,7 @@ declaredMethods:
             -
                 asString: 'arg $p6'
                 name: p6
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f4() arg $p6'
                 declaringMethod: f4()
@@ -344,6 +378,7 @@ declaredMethods:
     -
         asString: f5()
         name: f5
+        description: null
         isAbstract: false
         isFinal: false
         returnsByReference: false
@@ -357,6 +392,7 @@ declaredMethods:
             -
                 asString: 'arg $p1'
                 name: p1
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f5() arg $p1'
                 declaringMethod: f5()
@@ -366,6 +402,7 @@ declaredMethods:
             -
                 asString: 'arg $p2'
                 name: p2
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f5() arg $p2'
                 declaringMethod: f5()
@@ -375,6 +412,7 @@ declaredMethods:
             -
                 asString: 'arg $p3'
                 name: p3
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f5() arg $p3'
                 declaringMethod: f5()
@@ -384,6 +422,7 @@ declaredMethods:
             -
                 asString: 'arg $p4'
                 name: p4
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f5() arg $p4'
                 declaringMethod: f5()
@@ -393,6 +432,7 @@ declaredMethods:
             -
                 asString: 'arg $p5'
                 name: p5
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f5() arg $p5'
                 declaringMethod: f5()
@@ -402,6 +442,7 @@ declaredMethods:
             -
                 asString: 'arg $p6'
                 name: p6
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f5() arg $p6'
                 declaringMethod: f5()
@@ -411,6 +452,7 @@ declaredMethods:
             -
                 asString: 'arg $p7'
                 name: p7
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f5() arg $p7'
                 declaringMethod: f5()
@@ -421,6 +463,7 @@ declaredMethods:
     -
         asString: f6()
         name: f6
+        description: null
         isAbstract: false
         isFinal: false
         returnsByReference: false
@@ -435,6 +478,7 @@ declaredMethods:
     -
         asString: f7()
         name: f7
+        description: null
         isAbstract: false
         isFinal: false
         returnsByReference: false
@@ -449,6 +493,7 @@ declaredMethods:
     -
         asString: f8()
         name: f8
+        description: null
         isAbstract: false
         isFinal: false
         returnsByReference: false
@@ -463,6 +508,7 @@ declaredMethods:
     -
         asString: f9()
         name: f9
+        description: null
         isAbstract: false
         isFinal: false
         returnsByReference: false
@@ -478,6 +524,7 @@ methods:
     -
         asString: f1()
         name: f1
+        description: null
         isAbstract: false
         isFinal: false
         returnsByReference: false
@@ -491,6 +538,7 @@ methods:
             -
                 asString: 'arg $p1'
                 name: p1
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f1() arg $p1'
                 declaringMethod: f1()
@@ -500,6 +548,7 @@ methods:
             -
                 asString: 'arg $p2'
                 name: p2
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f1() arg $p2'
                 declaringMethod: f1()
@@ -509,6 +558,7 @@ methods:
             -
                 asString: 'arg $p3'
                 name: p3
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f1() arg $p3'
                 declaringMethod: f1()
@@ -518,6 +568,7 @@ methods:
             -
                 asString: 'arg $p4'
                 name: p4
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f1() arg $p4'
                 declaringMethod: f1()
@@ -527,6 +578,7 @@ methods:
             -
                 asString: 'arg $p5'
                 name: p5
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f1() arg $p5'
                 declaringMethod: f1()
@@ -536,6 +588,7 @@ methods:
             -
                 asString: 'arg $p6'
                 name: p6
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f1() arg $p6'
                 declaringMethod: f1()
@@ -545,6 +598,7 @@ methods:
             -
                 asString: 'arg $p7'
                 name: p7
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f1() arg $p7'
                 declaringMethod: f1()
@@ -554,6 +608,7 @@ methods:
             -
                 asString: 'arg $p8'
                 name: p8
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f1() arg $p8'
                 declaringMethod: f1()
@@ -563,6 +618,7 @@ methods:
             -
                 asString: 'arg $p9'
                 name: p9
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f1() arg $p9'
                 declaringMethod: f1()
@@ -572,6 +628,7 @@ methods:
             -
                 asString: 'arg $p10'
                 name: p10
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f1() arg $p10'
                 declaringMethod: f1()
@@ -581,6 +638,7 @@ methods:
             -
                 asString: 'arg $p11'
                 name: p11
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f1() arg $p11'
                 declaringMethod: f1()
@@ -591,6 +649,7 @@ methods:
     -
         asString: f2()
         name: f2
+        description: null
         isAbstract: false
         isFinal: false
         returnsByReference: false
@@ -604,6 +663,7 @@ methods:
             -
                 asString: 'arg $p1'
                 name: p1
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f2() arg $p1'
                 declaringMethod: f2()
@@ -613,6 +673,7 @@ methods:
             -
                 asString: 'arg $p2'
                 name: p2
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f2() arg $p2'
                 declaringMethod: f2()
@@ -622,6 +683,7 @@ methods:
             -
                 asString: 'arg $p3'
                 name: p3
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f2() arg $p3'
                 declaringMethod: f2()
@@ -631,6 +693,7 @@ methods:
             -
                 asString: 'arg $p4'
                 name: p4
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f2() arg $p4'
                 declaringMethod: f2()
@@ -640,6 +703,7 @@ methods:
             -
                 asString: 'arg $p5'
                 name: p5
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f2() arg $p5'
                 declaringMethod: f2()
@@ -649,6 +713,7 @@ methods:
             -
                 asString: 'arg $p6'
                 name: p6
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f2() arg $p6'
                 declaringMethod: f2()
@@ -658,6 +723,7 @@ methods:
             -
                 asString: 'arg $p7'
                 name: p7
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f2() arg $p7'
                 declaringMethod: f2()
@@ -667,6 +733,7 @@ methods:
             -
                 asString: 'arg $p8'
                 name: p8
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f2() arg $p8'
                 declaringMethod: f2()
@@ -677,6 +744,7 @@ methods:
     -
         asString: f3()
         name: f3
+        description: null
         isAbstract: false
         isFinal: false
         returnsByReference: false
@@ -690,6 +758,7 @@ methods:
             -
                 asString: 'arg $p1'
                 name: p1
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f3() arg $p1'
                 declaringMethod: f3()
@@ -699,6 +768,7 @@ methods:
             -
                 asString: 'arg $p2'
                 name: p2
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f3() arg $p2'
                 declaringMethod: f3()
@@ -708,6 +778,7 @@ methods:
             -
                 asString: 'arg $p3'
                 name: p3
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f3() arg $p3'
                 declaringMethod: f3()
@@ -717,6 +788,7 @@ methods:
             -
                 asString: 'arg $p4'
                 name: p4
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f3() arg $p4'
                 declaringMethod: f3()
@@ -727,6 +799,7 @@ methods:
     -
         asString: f4()
         name: f4
+        description: null
         isAbstract: false
         isFinal: false
         returnsByReference: false
@@ -740,6 +813,7 @@ methods:
             -
                 asString: 'arg $p1'
                 name: p1
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f4() arg $p1'
                 declaringMethod: f4()
@@ -749,6 +823,7 @@ methods:
             -
                 asString: 'arg $p2'
                 name: p2
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f4() arg $p2'
                 declaringMethod: f4()
@@ -758,6 +833,7 @@ methods:
             -
                 asString: 'arg $p3'
                 name: p3
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f4() arg $p3'
                 declaringMethod: f4()
@@ -767,6 +843,7 @@ methods:
             -
                 asString: 'arg $p4'
                 name: p4
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f4() arg $p4'
                 declaringMethod: f4()
@@ -776,6 +853,7 @@ methods:
             -
                 asString: 'arg $p5'
                 name: p5
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f4() arg $p5'
                 declaringMethod: f4()
@@ -785,6 +863,7 @@ methods:
             -
                 asString: 'arg $p6'
                 name: p6
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f4() arg $p6'
                 declaringMethod: f4()
@@ -795,6 +874,7 @@ methods:
     -
         asString: f5()
         name: f5
+        description: null
         isAbstract: false
         isFinal: false
         returnsByReference: false
@@ -808,6 +888,7 @@ methods:
             -
                 asString: 'arg $p1'
                 name: p1
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f5() arg $p1'
                 declaringMethod: f5()
@@ -817,6 +898,7 @@ methods:
             -
                 asString: 'arg $p2'
                 name: p2
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f5() arg $p2'
                 declaringMethod: f5()
@@ -826,6 +908,7 @@ methods:
             -
                 asString: 'arg $p3'
                 name: p3
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f5() arg $p3'
                 declaringMethod: f5()
@@ -835,6 +918,7 @@ methods:
             -
                 asString: 'arg $p4'
                 name: p4
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f5() arg $p4'
                 declaringMethod: f5()
@@ -844,6 +928,7 @@ methods:
             -
                 asString: 'arg $p5'
                 name: p5
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f5() arg $p5'
                 declaringMethod: f5()
@@ -853,6 +938,7 @@ methods:
             -
                 asString: 'arg $p6'
                 name: p6
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f5() arg $p6'
                 declaringMethod: f5()
@@ -862,6 +948,7 @@ methods:
             -
                 asString: 'arg $p7'
                 name: p7
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllPhpDocTypes::f5() arg $p7'
                 declaringMethod: f5()
@@ -872,6 +959,7 @@ methods:
     -
         asString: f6()
         name: f6
+        description: null
         isAbstract: false
         isFinal: false
         returnsByReference: false
@@ -886,6 +974,7 @@ methods:
     -
         asString: f7()
         name: f7
+        description: null
         isAbstract: false
         isFinal: false
         returnsByReference: false
@@ -900,6 +989,7 @@ methods:
     -
         asString: f8()
         name: f8
+        description: null
         isAbstract: false
         isFinal: false
         returnsByReference: false
@@ -914,6 +1004,7 @@ methods:
     -
         asString: f9()
         name: f9
+        description: null
         isAbstract: false
         isFinal: false
         returnsByReference: false

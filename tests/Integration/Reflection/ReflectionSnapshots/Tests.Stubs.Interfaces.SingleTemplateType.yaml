@@ -1,8 +1,9 @@
+asString: SingleTemplateType
 type: Tests\Stubs\Interfaces\SingleTemplateType
 qualifiedName: Tests\Stubs\Interfaces\SingleTemplateType
 shortName: SingleTemplateType
+description: null
 location: Tests\Stubs\Interfaces\SingleTemplateType
-asString: SingleTemplateType
 isBuiltIn: false
 attributes:
     asString: '#[]'
@@ -10,6 +11,7 @@ attributes:
 typeParameters:
     -
         name: T
+        description: null
         variadic: false
         upperBound: mixed
         variance: INVARIANT

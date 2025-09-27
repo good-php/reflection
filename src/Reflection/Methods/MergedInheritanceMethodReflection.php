@@ -41,6 +41,9 @@ final class MergedInheritanceMethodReflection implements MethodReflection
 	/** @var MethodReflection<ReflectableType> */
 	private MethodReflection $returnTypeFromReflection;
 
+	/** @var MethodReflection<ReflectableType> */
+	private MethodReflection $descriptionFromReflection;
+
 	/**
 	 * @param list<MethodReflection<ReflectableType>> $reflections
 	 */
@@ -93,6 +96,11 @@ final class MergedInheritanceMethodReflection implements MethodReflection
 	public function name(): string
 	{
 		return $this->reflections[0]->name();
+	}
+
+	public function description(): ?string
+	{
+		return $this->descriptionFromReflection()->description();
 	}
 
 	public function isAbstract(): bool
@@ -172,6 +180,21 @@ final class MergedInheritanceMethodReflection implements MethodReflection
 		$firstMethodWithPhpDocReturn = Arr::first($this->reflections, fn (MethodReflection $reflection) => $reflection->returnTypeSource() === TypeSource::PHP_DOC);
 
 		return $this->returnTypeFromReflection = $firstMethodWithPhpDocReturn ?? $this->reflections[0];
+	}
+
+	/**
+	 * @return MethodReflection<ReflectableType>
+	 */
+	private function descriptionFromReflection(): MethodReflection
+	{
+		if (isset($this->descriptionFromReflection)) {
+			return $this->descriptionFromReflection;
+		}
+
+		// First non-empty description in the inheritance tree
+		$firstMethodWithDescription = Arr::first($this->reflections, fn (MethodReflection $reflection) => (bool) $reflection->description());
+
+		return $this->descriptionFromReflection = $firstMethodWithDescription ?? $this->reflections[0];
 	}
 
 	public function __toString(): string

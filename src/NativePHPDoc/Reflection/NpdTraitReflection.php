@@ -119,6 +119,11 @@ final class NpdTraitReflection extends NpdTypeReflection implements TraitReflect
 		return $this->definition->fileName;
 	}
 
+	public function description(): ?string
+	{
+		return $this->definition->description;
+	}
+
 	public function attributes(): Attributes
 	{
 		return $this->attributes ??= new NativeAttributes(

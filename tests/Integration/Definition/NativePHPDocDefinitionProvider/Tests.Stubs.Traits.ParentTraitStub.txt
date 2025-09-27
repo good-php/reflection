@@ -1,0 +1,78 @@
+GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\TraitTypeDefinition {
+	+qualifiedName: "Tests\Stubs\Traits\ParentTraitStub"
+	+fileName: "/app/tests/Stubs/Traits/ParentTraitStub.php"
+	+description: "Parent trait description"
+	+builtIn: false
+	+typeParameters: [
+		GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\TypeParameterDefinition {
+			+name: "O"
+			+description: null
+			+variadic: false
+			+upperBound: null
+			+variance: GoodPhp\Reflection\Type\Template\TemplateTypeVariance {#1
+				+name: "INVARIANT"
+			}
+			+default: null
+		},
+		GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\TypeParameterDefinition {
+			+name: "U"
+			+description: null
+			+variadic: false
+			+upperBound: null
+			+variance: GoodPhp\Reflection\Type\Template\TemplateTypeVariance {#1}
+			+default: null
+		},
+	]
+	+uses: GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\UsedTraitsDefinition {
+		+traits: [
+			GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\UsedTraitDefinition {
+				+trait: GoodPhp\Reflection\Type\NamedType {
+					+name: "Tests\Stubs\Traits\TraitWithoutProperties"
+					+arguments: []
+				}
+				+aliases: []
+			},
+		]
+		+excludedTraitMethods: []
+	}
+	+constants: [
+		GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\TypeConstantDefinition {
+			+name: "CONSTANT"
+			+description: null
+			+isFinal: false
+			+type: null
+			+typeSource: null
+		},
+	]
+	+properties: [
+		GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\PropertyDefinition {
+			+name: "prop"
+			+description: null
+			+abstract: false
+			+final: false
+			+readOnly: false
+			+type: GoodPhp\Reflection\Type\NamedType {
+				+name: "int"
+				+arguments: []
+			}
+			+typeSource: GoodPhp\Reflection\Reflection\TypeSource {#2
+				+name: "NATIVE"
+			}
+			+hasDefaultValue: false
+			+isPromoted: false
+		},
+	]
+	+methods: [
+		GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\MethodDefinition {
+			+name: "traitMethod"
+			+description: null
+			+abstract: false
+			+final: false
+			+typeParameters: []
+			+parameters: []
+			+returnType: GoodPhp\Reflection\Type\Special\VoidType {}
+			+returnTypeSource: GoodPhp\Reflection\Reflection\TypeSource {#2}
+			+returnsByReference: false
+		},
+	]
+}

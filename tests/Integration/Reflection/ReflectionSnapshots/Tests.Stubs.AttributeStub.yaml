@@ -1,8 +1,9 @@
+asString: AttributeStub
 type: Tests\Stubs\AttributeStub
 qualifiedName: Tests\Stubs\AttributeStub
 shortName: AttributeStub
+description: null
 location: Tests\Stubs\AttributeStub
-asString: AttributeStub
 isBuiltIn: false
 isAnonymous: false
 isAbstract: false
@@ -26,6 +27,7 @@ declaredProperties:
     -
         asString: $something
         name: something
+        description: null
         isAbstract: false
         isFinal: false
         isReadOnly: true
@@ -41,6 +43,7 @@ declaredProperties:
         promotedParameter:
             asString: 'arg $something'
             name: something
+            description: null
             passedByReference: false
             location: 'Tests\Stubs\AttributeStub::__construct() arg $something'
             declaringMethod: __construct()
@@ -51,6 +54,7 @@ properties:
     -
         asString: $something
         name: something
+        description: null
         isAbstract: false
         isFinal: false
         isReadOnly: true
@@ -66,6 +70,7 @@ properties:
         promotedParameter:
             asString: 'arg $something'
             name: something
+            description: null
             passedByReference: false
             location: 'Tests\Stubs\AttributeStub::__construct() arg $something'
             declaringMethod: __construct()
@@ -76,6 +81,7 @@ declaredMethods:
     -
         asString: __construct()
         name: __construct
+        description: null
         isAbstract: false
         isFinal: false
         returnsByReference: false
@@ -89,6 +95,7 @@ declaredMethods:
             -
                 asString: 'arg $something'
                 name: something
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\AttributeStub::__construct() arg $something'
                 declaringMethod: __construct()
@@ -100,6 +107,7 @@ methods:
     -
         asString: __construct()
         name: __construct
+        description: null
         isAbstract: false
         isFinal: false
         returnsByReference: false
@@ -113,6 +121,7 @@ methods:
             -
                 asString: 'arg $something'
                 name: something
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\AttributeStub::__construct() arg $something'
                 declaringMethod: __construct()

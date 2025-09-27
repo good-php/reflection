@@ -1,8 +1,9 @@
+asString: CovariantParameter
 type: Tests\Stubs\Classes\CovariantParameter
 qualifiedName: Tests\Stubs\Classes\CovariantParameter
 shortName: CovariantParameter
+description: null
 location: Tests\Stubs\Classes\CovariantParameter
-asString: CovariantParameter
 isBuiltIn: false
 isAnonymous: false
 isAbstract: false
@@ -16,6 +17,7 @@ attributes:
 typeParameters:
     -
         name: T
+        description: null
         variadic: false
         upperBound: mixed
         variance: COVARIANT

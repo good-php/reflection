@@ -1,0 +1,125 @@
+GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\ClassTypeDefinition {
+	+qualifiedName: "Tests\Stubs\Classes\AllMissingTypes"
+	+fileName: "/app/tests/Stubs/Classes/AllMissingTypes.php"
+	+description: null
+	+builtIn: false
+	+anonymous: false
+	+final: false
+	+abstract: false
+	+readOnly: false
+	+cloneable: true
+	+instantiable: true
+	+typeParameters: []
+	+extends: GoodPhp\Reflection\Type\NamedType {
+		+name: "Tests\Stubs\Classes\SomeStub"
+		+arguments: []
+	}
+	+implements: [
+		GoodPhp\Reflection\Type\NamedType {
+			+name: "Tests\Stubs\Interfaces\SingleTemplateType"
+			+arguments: []
+		},
+	]
+	+uses: GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\UsedTraitsDefinition {
+		+traits: []
+		+excludedTraitMethods: []
+	}
+	+constants: []
+	+properties: [
+		GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\PropertyDefinition {
+			+name: "property"
+			+description: null
+			+abstract: false
+			+final: false
+			+readOnly: false
+			+type: null
+			+typeSource: null
+			+hasDefaultValue: true
+			+isPromoted: false
+		},
+		GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\PropertyDefinition {
+			+name: "promoted"
+			+description: null
+			+abstract: false
+			+final: false
+			+readOnly: false
+			+type: null
+			+typeSource: null
+			+hasDefaultValue: true
+			+isPromoted: true
+		},
+		GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\PropertyDefinition {
+			+name: "promotedDefault"
+			+description: null
+			+abstract: false
+			+final: false
+			+readOnly: true
+			+type: GoodPhp\Reflection\Type\Special\NullableType {
+				+innerType: GoodPhp\Reflection\Type\NamedType {
+					+name: "int"
+					+arguments: []
+				}
+			}
+			+typeSource: GoodPhp\Reflection\Reflection\TypeSource {#1
+				+name: "NATIVE"
+			}
+			+hasDefaultValue: false
+			+isPromoted: true
+		},
+	]
+	+methods: [
+		GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\MethodDefinition {
+			+name: "__construct"
+			+description: null
+			+abstract: false
+			+final: false
+			+typeParameters: []
+			+parameters: [
+				GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\FunctionParameterDefinition {
+					+name: "promoted"
+					+description: null
+					+passedByReference: false
+					+type: null
+					+typeSource: null
+					+hasDefaultValue: true
+				},
+				GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\FunctionParameterDefinition {
+					+name: "promotedDefault"
+					+description: null
+					+passedByReference: false
+					+type: GoodPhp\Reflection\Type\Special\NullableType {
+						+innerType: GoodPhp\Reflection\Type\NamedType {
+							+name: "int"
+							+arguments: []
+						}
+					}
+					+typeSource: GoodPhp\Reflection\Reflection\TypeSource {#1}
+					+hasDefaultValue: true
+				},
+			]
+			+returnType: null
+			+returnTypeSource: null
+			+returnsByReference: false
+		},
+		GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\MethodDefinition {
+			+name: "test"
+			+description: null
+			+abstract: false
+			+final: false
+			+typeParameters: []
+			+parameters: [
+				GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\FunctionParameterDefinition {
+					+name: "something"
+					+description: null
+					+passedByReference: false
+					+type: null
+					+typeSource: null
+					+hasDefaultValue: false
+				},
+			]
+			+returnType: null
+			+returnTypeSource: null
+			+returnsByReference: false
+		},
+	]
+}

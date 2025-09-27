@@ -1,8 +1,9 @@
+asString: InvariantParameter
 type: Tests\Stubs\Classes\InvariantParameter
 qualifiedName: Tests\Stubs\Classes\InvariantParameter
 shortName: InvariantParameter
+description: null
 location: Tests\Stubs\Classes\InvariantParameter
-asString: InvariantParameter
 isBuiltIn: false
 isAnonymous: false
 isAbstract: false
@@ -16,6 +17,7 @@ attributes:
 typeParameters:
     -
         name: T
+        description: null
         variadic: false
         upperBound: mixed
         variance: INVARIANT

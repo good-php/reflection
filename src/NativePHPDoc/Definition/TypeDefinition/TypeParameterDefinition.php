@@ -13,6 +13,7 @@ final class TypeParameterDefinition implements Stringable
 {
 	public function __construct(
 		public readonly string $name,
+		public readonly ?string $description,
 		public readonly bool $variadic,
 		public readonly ?Type $upperBound,
 		public readonly TemplateTypeVariance $variance,
@@ -30,6 +31,7 @@ final class TypeParameterDefinition implements Stringable
 			($this->variadic ? '...' : '') . $this->name,
 			$this->upperBound ? "of {$this->upperBound}" : '',
 			$this->default ? "= {$this->default}" : '',
+			$this->description ?? '',
 		];
 
 		return implode(' ', array_filter($result));

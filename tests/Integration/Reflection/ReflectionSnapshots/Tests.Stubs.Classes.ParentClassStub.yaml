@@ -1,8 +1,9 @@
+asString: ParentClassStub
 type: Tests\Stubs\Classes\ParentClassStub
 qualifiedName: Tests\Stubs\Classes\ParentClassStub
 shortName: ParentClassStub
+description: 'Parent class description'
 location: Tests\Stubs\Classes\ParentClassStub
-asString: ParentClassStub
 isBuiltIn: false
 isAnonymous: false
 isAbstract: false
@@ -16,12 +17,14 @@ attributes:
 typeParameters:
     -
         name: O
+        description: null
         variadic: false
         upperBound: mixed
         variance: INVARIANT
         asString: O
     -
         name: U
+        description: null
         variadic: false
         upperBound: mixed
         variance: INVARIANT
@@ -37,6 +40,7 @@ declaredProperties:
     -
         asString: $parentProperty
         name: parentProperty
+        description: 'Parent property description'
         isAbstract: false
         isFinal: false
         isReadOnly: false
@@ -54,6 +58,7 @@ properties:
     -
         asString: $parentProperty
         name: parentProperty
+        description: 'Parent property description'
         isAbstract: false
         isFinal: false
         isReadOnly: false
@@ -71,6 +76,7 @@ declaredMethods:
     -
         asString: parentMethod()
         name: parentMethod
+        description: 'Parent method description'
         isAbstract: false
         isFinal: false
         returnsByReference: false
@@ -85,6 +91,7 @@ declaredMethods:
     -
         asString: test()
         name: test
+        description: null
         isAbstract: false
         isFinal: false
         returnsByReference: false
@@ -98,6 +105,7 @@ declaredMethods:
             -
                 asString: 'arg $str'
                 name: str
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\ParentClassStub::test() arg $str'
                 declaringMethod: test()
@@ -109,6 +117,7 @@ methods:
     -
         asString: parentMethod()
         name: parentMethod
+        description: 'Parent method description'
         isAbstract: false
         isFinal: false
         returnsByReference: false
@@ -123,6 +132,7 @@ methods:
     -
         asString: test()
         name: test
+        description: null
         isAbstract: false
         isFinal: false
         returnsByReference: false
@@ -136,6 +146,7 @@ methods:
             -
                 asString: 'arg $str'
                 name: str
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\ParentClassStub::test() arg $str'
                 declaringMethod: test()

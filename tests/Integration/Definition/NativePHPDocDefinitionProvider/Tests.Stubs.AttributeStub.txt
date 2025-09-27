@@ -1,0 +1,63 @@
+GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\ClassTypeDefinition {
+	+qualifiedName: "Tests\Stubs\AttributeStub"
+	+fileName: "/app/tests/Stubs/AttributeStub.php"
+	+description: null
+	+builtIn: false
+	+anonymous: false
+	+final: false
+	+abstract: false
+	+readOnly: true
+	+cloneable: true
+	+instantiable: true
+	+typeParameters: []
+	+extends: null
+	+implements: []
+	+uses: GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\UsedTraitsDefinition {
+		+traits: []
+		+excludedTraitMethods: []
+	}
+	+constants: []
+	+properties: [
+		GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\PropertyDefinition {
+			+name: "something"
+			+description: null
+			+abstract: false
+			+final: false
+			+readOnly: true
+			+type: GoodPhp\Reflection\Type\NamedType {
+				+name: "string"
+				+arguments: []
+			}
+			+typeSource: GoodPhp\Reflection\Reflection\TypeSource {#1
+				+name: "NATIVE"
+			}
+			+hasDefaultValue: false
+			+isPromoted: true
+		},
+	]
+	+methods: [
+		GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\MethodDefinition {
+			+name: "__construct"
+			+description: null
+			+abstract: false
+			+final: false
+			+typeParameters: []
+			+parameters: [
+				GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\FunctionParameterDefinition {
+					+name: "something"
+					+description: null
+					+passedByReference: false
+					+type: GoodPhp\Reflection\Type\NamedType {
+						+name: "string"
+						+arguments: []
+					}
+					+typeSource: GoodPhp\Reflection\Reflection\TypeSource {#1}
+					+hasDefaultValue: false
+				},
+			]
+			+returnType: null
+			+returnTypeSource: null
+			+returnsByReference: false
+		},
+	]
+}

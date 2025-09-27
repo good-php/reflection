@@ -3,6 +3,7 @@
 namespace GoodPhp\Reflection\Reflection\Enums;
 
 use GoodPhp\Reflection\Reflection\Attributes\HasAttributes;
+use GoodPhp\Reflection\Reflection\Descriptions\HasDescription;
 use GoodPhp\Reflection\Reflection\EnumReflection;
 use Stringable;
 use UnitEnum;
@@ -11,7 +12,7 @@ use UnitEnum;
  * @template ReflectableType of UnitEnum
  * @template BackingValueType of string|int|null = string|int|null
  */
-interface EnumCaseReflection extends Stringable, HasAttributes
+interface EnumCaseReflection extends Stringable, HasAttributes, HasDescription
 {
 	public function name(): string;
 

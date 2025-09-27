@@ -1,0 +1,503 @@
+GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\ClassTypeDefinition {
+	+qualifiedName: "Tests\Stubs\Classes\AllPhpDocTypes"
+	+fileName: "/app/tests/Stubs/Classes/AllPhpDocTypes.php"
+	+description: null
+	+builtIn: false
+	+anonymous: false
+	+final: false
+	+abstract: false
+	+readOnly: false
+	+cloneable: true
+	+instantiable: true
+	+typeParameters: []
+	+extends: null
+	+implements: []
+	+uses: GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\UsedTraitsDefinition {
+		+traits: []
+		+excludedTraitMethods: []
+	}
+	+constants: []
+	+properties: []
+	+methods: [
+		GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\MethodDefinition {
+			+name: "f1"
+			+description: null
+			+abstract: false
+			+final: false
+			+typeParameters: []
+			+parameters: [
+				GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\FunctionParameterDefinition {
+					+name: "p1"
+					+description: null
+					+passedByReference: false
+					+type: GoodPhp\Reflection\Type\NamedType {#1
+						+name: "int"
+						+arguments: []
+					}
+					+typeSource: GoodPhp\Reflection\Reflection\TypeSource {#2
+						+name: "PHP_DOC"
+					}
+					+hasDefaultValue: false
+				},
+				GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\FunctionParameterDefinition {
+					+name: "p2"
+					+description: null
+					+passedByReference: false
+					+type: GoodPhp\Reflection\Type\NamedType {#1}
+					+typeSource: GoodPhp\Reflection\Reflection\TypeSource {#2}
+					+hasDefaultValue: false
+				},
+				GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\FunctionParameterDefinition {
+					+name: "p3"
+					+description: null
+					+passedByReference: false
+					+type: GoodPhp\Reflection\Type\NamedType {#1}
+					+typeSource: GoodPhp\Reflection\Reflection\TypeSource {#2}
+					+hasDefaultValue: false
+				},
+				GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\FunctionParameterDefinition {
+					+name: "p4"
+					+description: null
+					+passedByReference: false
+					+type: GoodPhp\Reflection\Type\NamedType {#1}
+					+typeSource: GoodPhp\Reflection\Reflection\TypeSource {#2}
+					+hasDefaultValue: false
+				},
+				GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\FunctionParameterDefinition {
+					+name: "p5"
+					+description: null
+					+passedByReference: false
+					+type: GoodPhp\Reflection\Type\NamedType {#1}
+					+typeSource: GoodPhp\Reflection\Reflection\TypeSource {#2}
+					+hasDefaultValue: false
+				},
+				GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\FunctionParameterDefinition {
+					+name: "p6"
+					+description: null
+					+passedByReference: false
+					+type: GoodPhp\Reflection\Type\NamedType {#1}
+					+typeSource: GoodPhp\Reflection\Reflection\TypeSource {#2}
+					+hasDefaultValue: false
+				},
+				GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\FunctionParameterDefinition {
+					+name: "p7"
+					+description: null
+					+passedByReference: false
+					+type: GoodPhp\Reflection\Type\NamedType {#1}
+					+typeSource: GoodPhp\Reflection\Reflection\TypeSource {#2}
+					+hasDefaultValue: false
+				},
+				GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\FunctionParameterDefinition {
+					+name: "p8"
+					+description: null
+					+passedByReference: false
+					+type: GoodPhp\Reflection\Type\Combinatorial\UnionType {
+						+types: [
+							GoodPhp\Reflection\Type\NamedType {#1},
+							GoodPhp\Reflection\Type\NamedType {#3
+								+name: "float"
+								+arguments: []
+							},
+						]
+					}
+					+typeSource: GoodPhp\Reflection\Reflection\TypeSource {#2}
+					+hasDefaultValue: false
+				},
+				GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\FunctionParameterDefinition {
+					+name: "p9"
+					+description: null
+					+passedByReference: false
+					+type: GoodPhp\Reflection\Type\Special\ErrorType {
+						+type: "numeric"
+					}
+					+typeSource: GoodPhp\Reflection\Reflection\TypeSource {#2}
+					+hasDefaultValue: false
+				},
+				GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\FunctionParameterDefinition {
+					+name: "p10"
+					+description: null
+					+passedByReference: false
+					+type: GoodPhp\Reflection\Type\NamedType {#3}
+					+typeSource: GoodPhp\Reflection\Reflection\TypeSource {#2}
+					+hasDefaultValue: false
+				},
+				GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\FunctionParameterDefinition {
+					+name: "p11"
+					+description: null
+					+passedByReference: false
+					+type: GoodPhp\Reflection\Type\NamedType {#3}
+					+typeSource: GoodPhp\Reflection\Reflection\TypeSource {#2}
+					+hasDefaultValue: false
+				},
+			]
+			+returnType: GoodPhp\Reflection\Type\Special\VoidType {}
+			+returnTypeSource: GoodPhp\Reflection\Reflection\TypeSource {#2}
+			+returnsByReference: false
+		},
+		GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\MethodDefinition {
+			+name: "f2"
+			+description: null
+			+abstract: false
+			+final: false
+			+typeParameters: []
+			+parameters: [
+				GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\FunctionParameterDefinition {
+					+name: "p1"
+					+description: null
+					+passedByReference: false
+					+type: GoodPhp\Reflection\Type\NamedType {#4
+						+name: "string"
+						+arguments: []
+					}
+					+typeSource: GoodPhp\Reflection\Reflection\TypeSource {#2}
+					+hasDefaultValue: false
+				},
+				GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\FunctionParameterDefinition {
+					+name: "p2"
+					+description: null
+					+passedByReference: false
+					+type: GoodPhp\Reflection\Type\NamedType {#4}
+					+typeSource: GoodPhp\Reflection\Reflection\TypeSource {#2}
+					+hasDefaultValue: false
+				},
+				GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\FunctionParameterDefinition {
+					+name: "p3"
+					+description: null
+					+passedByReference: false
+					+type: GoodPhp\Reflection\Type\NamedType {#4}
+					+typeSource: GoodPhp\Reflection\Reflection\TypeSource {#2}
+					+hasDefaultValue: false
+				},
+				GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\FunctionParameterDefinition {
+					+name: "p4"
+					+description: null
+					+passedByReference: false
+					+type: GoodPhp\Reflection\Type\NamedType {#4}
+					+typeSource: GoodPhp\Reflection\Reflection\TypeSource {#2}
+					+hasDefaultValue: false
+				},
+				GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\FunctionParameterDefinition {
+					+name: "p5"
+					+description: null
+					+passedByReference: false
+					+type: GoodPhp\Reflection\Type\NamedType {#4}
+					+typeSource: GoodPhp\Reflection\Reflection\TypeSource {#2}
+					+hasDefaultValue: false
+				},
+				GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\FunctionParameterDefinition {
+					+name: "p6"
+					+description: null
+					+passedByReference: false
+					+type: GoodPhp\Reflection\Type\NamedType {#4}
+					+typeSource: GoodPhp\Reflection\Reflection\TypeSource {#2}
+					+hasDefaultValue: false
+				},
+				GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\FunctionParameterDefinition {
+					+name: "p7"
+					+description: null
+					+passedByReference: false
+					+type: GoodPhp\Reflection\Type\NamedType {#4}
+					+typeSource: GoodPhp\Reflection\Reflection\TypeSource {#2}
+					+hasDefaultValue: false
+				},
+				GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\FunctionParameterDefinition {
+					+name: "p8"
+					+description: null
+					+passedByReference: false
+					+type: GoodPhp\Reflection\Type\NamedType {#4}
+					+typeSource: GoodPhp\Reflection\Reflection\TypeSource {#2}
+					+hasDefaultValue: false
+				},
+			]
+			+returnType: GoodPhp\Reflection\Type\Special\NeverType {#5}
+			+returnTypeSource: GoodPhp\Reflection\Reflection\TypeSource {#2}
+			+returnsByReference: false
+		},
+		GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\MethodDefinition {
+			+name: "f3"
+			+description: null
+			+abstract: false
+			+final: false
+			+typeParameters: []
+			+parameters: [
+				GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\FunctionParameterDefinition {
+					+name: "p1"
+					+description: null
+					+passedByReference: false
+					+type: GoodPhp\Reflection\Type\NamedType {#6
+						+name: "bool"
+						+arguments: []
+					}
+					+typeSource: GoodPhp\Reflection\Reflection\TypeSource {#2}
+					+hasDefaultValue: false
+				},
+				GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\FunctionParameterDefinition {
+					+name: "p2"
+					+description: null
+					+passedByReference: false
+					+type: GoodPhp\Reflection\Type\NamedType {#6}
+					+typeSource: GoodPhp\Reflection\Reflection\TypeSource {#2}
+					+hasDefaultValue: false
+				},
+				GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\FunctionParameterDefinition {
+					+name: "p3"
+					+description: null
+					+passedByReference: false
+					+type: GoodPhp\Reflection\Type\NamedType {#6}
+					+typeSource: GoodPhp\Reflection\Reflection\TypeSource {#2}
+					+hasDefaultValue: false
+				},
+				GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\FunctionParameterDefinition {
+					+name: "p4"
+					+description: null
+					+passedByReference: false
+					+type: GoodPhp\Reflection\Type\NamedType {#6}
+					+typeSource: GoodPhp\Reflection\Reflection\TypeSource {#2}
+					+hasDefaultValue: false
+				},
+			]
+			+returnType: GoodPhp\Reflection\Type\Special\NeverType {#5}
+			+returnTypeSource: GoodPhp\Reflection\Reflection\TypeSource {#2}
+			+returnsByReference: false
+		},
+		GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\MethodDefinition {
+			+name: "f4"
+			+description: null
+			+abstract: false
+			+final: false
+			+typeParameters: []
+			+parameters: [
+				GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\FunctionParameterDefinition {
+					+name: "p1"
+					+description: null
+					+passedByReference: false
+					+type: GoodPhp\Reflection\Type\NamedType {
+						+name: "array"
+						+arguments: [
+							GoodPhp\Reflection\Type\Combinatorial\UnionType {
+								+types: [
+									GoodPhp\Reflection\Type\NamedType {#1},
+									GoodPhp\Reflection\Type\NamedType {#4},
+								]
+							},
+							GoodPhp\Reflection\Type\NamedType {#4},
+						]
+					}
+					+typeSource: GoodPhp\Reflection\Reflection\TypeSource {#2}
+					+hasDefaultValue: false
+				},
+				GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\FunctionParameterDefinition {
+					+name: "p2"
+					+description: null
+					+passedByReference: false
+					+type: GoodPhp\Reflection\Type\Combinatorial\UnionType {
+						+types: [
+							GoodPhp\Reflection\Type\NamedType {#1},
+							GoodPhp\Reflection\Type\NamedType {#4},
+						]
+					}
+					+typeSource: GoodPhp\Reflection\Reflection\TypeSource {#2}
+					+hasDefaultValue: false
+				},
+				GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\FunctionParameterDefinition {
+					+name: "p3"
+					+description: null
+					+passedByReference: false
+					+type: GoodPhp\Reflection\Type\NamedType {
+						+name: "array"
+						+arguments: []
+					}
+					+typeSource: GoodPhp\Reflection\Reflection\TypeSource {#2}
+					+hasDefaultValue: false
+				},
+				GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\FunctionParameterDefinition {
+					+name: "p4"
+					+description: null
+					+passedByReference: false
+					+type: GoodPhp\Reflection\Type\NamedType {
+						+name: "array"
+						+arguments: [
+							GoodPhp\Reflection\Type\NamedType {#4},
+							GoodPhp\Reflection\Type\NamedType {#4},
+						]
+					}
+					+typeSource: GoodPhp\Reflection\Reflection\TypeSource {#2}
+					+hasDefaultValue: false
+				},
+				GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\FunctionParameterDefinition {
+					+name: "p5"
+					+description: null
+					+passedByReference: false
+					+type: GoodPhp\Reflection\Type\NamedType {
+						+name: "array"
+						+arguments: [
+							GoodPhp\Reflection\Type\NamedType {#1},
+							GoodPhp\Reflection\Type\NamedType {#4},
+						]
+					}
+					+typeSource: GoodPhp\Reflection\Reflection\TypeSource {#2}
+					+hasDefaultValue: false
+				},
+				GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\FunctionParameterDefinition {
+					+name: "p6"
+					+description: null
+					+passedByReference: false
+					+type: GoodPhp\Reflection\Type\NamedType {
+						+name: "array"
+						+arguments: [
+							GoodPhp\Reflection\Type\NamedType {#1},
+						]
+					}
+					+typeSource: GoodPhp\Reflection\Reflection\TypeSource {#2}
+					+hasDefaultValue: false
+				},
+			]
+			+returnType: GoodPhp\Reflection\Type\Special\NeverType {#5}
+			+returnTypeSource: GoodPhp\Reflection\Reflection\TypeSource {#2}
+			+returnsByReference: false
+		},
+		GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\MethodDefinition {
+			+name: "f5"
+			+description: null
+			+abstract: false
+			+final: false
+			+typeParameters: []
+			+parameters: [
+				GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\FunctionParameterDefinition {
+					+name: "p1"
+					+description: null
+					+passedByReference: false
+					+type: GoodPhp\Reflection\Type\Combinatorial\UnionType {
+						+types: [
+							GoodPhp\Reflection\Type\NamedType {#1},
+							GoodPhp\Reflection\Type\NamedType {#3},
+							GoodPhp\Reflection\Type\NamedType {#4},
+							GoodPhp\Reflection\Type\NamedType {#6},
+						]
+					}
+					+typeSource: GoodPhp\Reflection\Reflection\TypeSource {#2}
+					+hasDefaultValue: false
+				},
+				GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\FunctionParameterDefinition {
+					+name: "p2"
+					+description: null
+					+passedByReference: false
+					+type: GoodPhp\Reflection\Type\Special\ErrorType {
+						+type: "null"
+					}
+					+typeSource: GoodPhp\Reflection\Reflection\TypeSource {#2}
+					+hasDefaultValue: false
+				},
+				GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\FunctionParameterDefinition {
+					+name: "p3"
+					+description: null
+					+passedByReference: false
+					+type: GoodPhp\Reflection\Type\NamedType {
+						+name: "iterable"
+						+arguments: []
+					}
+					+typeSource: GoodPhp\Reflection\Reflection\TypeSource {#2}
+					+hasDefaultValue: false
+				},
+				GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\FunctionParameterDefinition {
+					+name: "p4"
+					+description: null
+					+passedByReference: false
+					+type: GoodPhp\Reflection\Type\NamedType {
+						+name: "callable"
+						+arguments: []
+					}
+					+typeSource: GoodPhp\Reflection\Reflection\TypeSource {#2}
+					+hasDefaultValue: false
+				},
+				GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\FunctionParameterDefinition {
+					+name: "p5"
+					+description: null
+					+passedByReference: false
+					+type: GoodPhp\Reflection\Type\NamedType {
+						+name: "resource"
+						+arguments: []
+					}
+					+typeSource: GoodPhp\Reflection\Reflection\TypeSource {#2}
+					+hasDefaultValue: false
+				},
+				GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\FunctionParameterDefinition {
+					+name: "p6"
+					+description: null
+					+passedByReference: false
+					+type: GoodPhp\Reflection\Type\Special\MixedType {}
+					+typeSource: GoodPhp\Reflection\Reflection\TypeSource {#2}
+					+hasDefaultValue: false
+				},
+				GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\FunctionParameterDefinition {
+					+name: "p7"
+					+description: null
+					+passedByReference: false
+					+type: GoodPhp\Reflection\Type\NamedType {
+						+name: "object"
+						+arguments: []
+					}
+					+typeSource: GoodPhp\Reflection\Reflection\TypeSource {#2}
+					+hasDefaultValue: false
+				},
+			]
+			+returnType: GoodPhp\Reflection\Type\Special\NeverType {#5}
+			+returnTypeSource: GoodPhp\Reflection\Reflection\TypeSource {#2}
+			+returnsByReference: false
+		},
+		GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\MethodDefinition {
+			+name: "f6"
+			+description: null
+			+abstract: false
+			+final: false
+			+typeParameters: []
+			+parameters: []
+			+returnType: GoodPhp\Reflection\Type\Special\NeverType {#5}
+			+returnTypeSource: GoodPhp\Reflection\Reflection\TypeSource {#2}
+			+returnsByReference: false
+		},
+		GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\MethodDefinition {
+			+name: "f7"
+			+description: null
+			+abstract: false
+			+final: false
+			+typeParameters: []
+			+parameters: []
+			+returnType: GoodPhp\Reflection\Type\Special\StaticType {
+				+upperBound: GoodPhp\Reflection\Type\NamedType {#7
+					+name: "Tests\Stubs\Classes\AllPhpDocTypes"
+					+arguments: []
+				}
+			}
+			+returnTypeSource: GoodPhp\Reflection\Reflection\TypeSource {#2}
+			+returnsByReference: false
+		},
+		GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\MethodDefinition {
+			+name: "f8"
+			+description: null
+			+abstract: false
+			+final: false
+			+typeParameters: []
+			+parameters: []
+			+returnType: GoodPhp\Reflection\Type\NamedType {
+				+name: "Tests\Stubs\Classes\AllPhpDocTypes"
+				+arguments: []
+			}
+			+returnTypeSource: GoodPhp\Reflection\Reflection\TypeSource {#2}
+			+returnsByReference: false
+		},
+		GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\MethodDefinition {
+			+name: "f9"
+			+description: null
+			+abstract: false
+			+final: false
+			+typeParameters: []
+			+parameters: []
+			+returnType: GoodPhp\Reflection\Type\Special\StaticType {
+				+upperBound: GoodPhp\Reflection\Type\NamedType {#7}
+			}
+			+returnTypeSource: GoodPhp\Reflection\Reflection\TypeSource {#2}
+			+returnsByReference: false
+		},
+	]
+}

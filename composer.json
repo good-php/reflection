@@ -28,6 +28,7 @@
 		"phpstan/phpstan-mockery": "^2.0",
 		"phpstan/phpstan-phpunit": "^2.0",
 		"phpstan/phpstan-webmozart-assert": "^2.0",
+		"symfony/var-dumper": "^7.3",
 		"symfony/yaml": "^7.3",
 		"tenantcloud/php-cs-fixer-rule-sets": "~3.4.1"
 	},

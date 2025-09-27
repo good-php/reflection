@@ -1,8 +1,9 @@
+asString: UnitEnum
 type: Tests\Stubs\Enums\UnitEnum
 qualifiedName: Tests\Stubs\Enums\UnitEnum
 shortName: UnitEnum
+description: null
 location: Tests\Stubs\Enums\UnitEnum
-asString: UnitEnum
 isBuiltIn: false
 attributes:
     asString: '#[]'
@@ -27,6 +28,7 @@ cases:
     -
         asString: FIRST
         name: FIRST
+        description: null
         backingValue: null
         value: FIRST
         declaringEnum: UnitEnum
@@ -36,6 +38,7 @@ cases:
     -
         asString: SECOND
         name: SECOND
+        description: null
         backingValue: null
         value: SECOND
         declaringEnum: UnitEnum
@@ -47,6 +50,7 @@ constants:
     -
         asString: INTERFACE_CONSTANT
         name: INTERFACE_CONSTANT
+        description: null
         isFinal: true
         declaringType: Tests\Stubs\Interfaces\NonGenericInterface
         attributes:
@@ -58,6 +62,7 @@ declaredMethods:
     -
         asString: function()
         name: function
+        description: null
         isAbstract: false
         isFinal: false
         returnsByReference: false
@@ -71,6 +76,7 @@ declaredMethods:
             -
                 asString: 'arg $i'
                 name: i
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Enums\UnitEnum::function() arg $i'
                 declaringMethod: function()
@@ -82,6 +88,7 @@ methods:
     -
         asString: function()
         name: function
+        description: null
         isAbstract: false
         isFinal: false
         returnsByReference: false
@@ -95,6 +102,7 @@ methods:
             -
                 asString: 'arg $i'
                 name: i
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Enums\UnitEnum::function() arg $i'
                 declaringMethod: function()
@@ -105,6 +113,7 @@ methods:
     -
         asString: otherFunction()
         name: otherFunction
+        description: null
         isAbstract: false
         isFinal: false
         returnsByReference: false
@@ -119,6 +128,7 @@ methods:
     -
         asString: otherOtherFunction()
         name: otherOtherFunction
+        description: null
         isAbstract: false
         isFinal: false
         returnsByReference: false
@@ -133,6 +143,7 @@ methods:
     -
         asString: cases()
         name: cases
+        description: null
         isAbstract: true
         isFinal: false
         returnsByReference: false

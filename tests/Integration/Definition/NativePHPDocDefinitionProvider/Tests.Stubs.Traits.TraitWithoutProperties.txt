@@ -1,0 +1,31 @@
+GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\TraitTypeDefinition {
+	+qualifiedName: "Tests\Stubs\Traits\TraitWithoutProperties"
+	+fileName: "/app/tests/Stubs/Traits/TraitWithoutProperties.php"
+	+description: null
+	+builtIn: false
+	+typeParameters: []
+	+uses: GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\UsedTraitsDefinition {
+		+traits: []
+		+excludedTraitMethods: []
+	}
+	+constants: []
+	+properties: []
+	+methods: [
+		GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\MethodDefinition {
+			+name: "otherFunction"
+			+description: null
+			+abstract: false
+			+final: false
+			+typeParameters: []
+			+parameters: []
+			+returnType: GoodPhp\Reflection\Type\NamedType {
+				+name: "Generator"
+				+arguments: []
+			}
+			+returnTypeSource: GoodPhp\Reflection\Reflection\TypeSource {
+				+name: "NATIVE"
+			}
+			+returnsByReference: false
+		},
+	]
+}

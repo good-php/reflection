@@ -1,8 +1,9 @@
+asString: BackedEnum
 type: Tests\Stubs\Enums\BackedEnum
 qualifiedName: Tests\Stubs\Enums\BackedEnum
 shortName: BackedEnum
+description: 'Backed enum description'
 location: Tests\Stubs\Enums\BackedEnum
-asString: BackedEnum
 isBuiltIn: false
 attributes:
     asString: '#[]'
@@ -17,6 +18,10 @@ cases:
     -
         asString: FIRST
         name: FIRST
+        description: |-
+            Enum case description
+
+            Multiline
         backingValue: first
         value: FIRST
         declaringEnum: BackedEnum
@@ -26,6 +31,7 @@ cases:
     -
         asString: SECOND
         name: SECOND
+        description: null
         backingValue: second
         value: SECOND
         declaringEnum: BackedEnum
@@ -36,6 +42,7 @@ declaredConstants:
     -
         asString: ALIASED
         name: ALIASED
+        description: 'Constant description'
         isFinal: false
         declaringType: Tests\Stubs\Enums\BackedEnum
         attributes:
@@ -47,6 +54,7 @@ constants:
     -
         asString: ALIASED
         name: ALIASED
+        description: 'Constant description'
         isFinal: false
         declaringType: Tests\Stubs\Enums\BackedEnum
         attributes:
@@ -59,6 +67,7 @@ methods:
     -
         asString: from()
         name: from
+        description: null
         isAbstract: true
         isFinal: false
         returnsByReference: false
@@ -72,6 +81,7 @@ methods:
             -
                 asString: 'arg $value'
                 name: value
+                description: null
                 passedByReference: false
                 location: 'BackedEnum::from() arg $value'
                 declaringMethod: from()
@@ -82,6 +92,7 @@ methods:
     -
         asString: tryFrom()
         name: tryFrom
+        description: null
         isAbstract: true
         isFinal: false
         returnsByReference: false
@@ -95,6 +106,7 @@ methods:
             -
                 asString: 'arg $value'
                 name: value
+                description: null
                 passedByReference: false
                 location: 'BackedEnum::tryFrom() arg $value'
                 declaringMethod: tryFrom()
@@ -105,6 +117,7 @@ methods:
     -
         asString: cases()
         name: cases
+        description: null
         isAbstract: true
         isFinal: false
         returnsByReference: false

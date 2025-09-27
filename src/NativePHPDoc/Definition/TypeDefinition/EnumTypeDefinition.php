@@ -23,6 +23,7 @@ final class EnumTypeDefinition extends TypeDefinition
 	public function __construct(
 		string $qualifiedName,
 		?string $fileName,
+		public readonly ?string $description,
 		public readonly bool $builtIn,
 		public readonly ?NamedType $backingType,
 		public readonly array $implements,

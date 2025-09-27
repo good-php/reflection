@@ -1,8 +1,9 @@
+asString: DoubleTemplateType
 type: Tests\Stubs\Classes\DoubleTemplateType<int>
 qualifiedName: Tests\Stubs\Classes\DoubleTemplateType
 shortName: DoubleTemplateType
+description: null
 location: Tests\Stubs\Classes\DoubleTemplateType
-asString: DoubleTemplateType
 isBuiltIn: false
 isAnonymous: false
 isAbstract: false
@@ -16,12 +17,14 @@ attributes:
 typeParameters:
     -
         name: TOne
+        description: null
         variadic: false
         upperBound: mixed
         variance: INVARIANT
         asString: TOne
     -
         name: TTwo
+        description: null
         variadic: false
         upperBound: mixed
         variance: INVARIANT
@@ -39,6 +42,7 @@ declaredMethods:
     -
         asString: something()
         name: something
+        description: null
         isAbstract: false
         isFinal: false
         returnsByReference: false
@@ -54,6 +58,7 @@ methods:
     -
         asString: something()
         name: something
+        description: null
         isAbstract: false
         isFinal: false
         returnsByReference: false

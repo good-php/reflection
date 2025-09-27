@@ -125,6 +125,11 @@ final class NpdClassReflection extends NpdTypeReflection implements ClassReflect
 		return $this->definition->qualifiedName;
 	}
 
+	public function description(): ?string
+	{
+		return $this->definition->description;
+	}
+
 	public function attributes(): Attributes
 	{
 		return $this->attributes ??= new NativeAttributes(

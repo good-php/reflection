@@ -11,6 +11,7 @@ use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocChildNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagValueNode;
+use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTextNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\ReturnTagValueNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\TemplateTagValueNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\UsesTagValueNode;
@@ -54,6 +55,16 @@ class ParsedPhpDoc
 		}
 
 		return $instance;
+	}
+
+	/**
+	 * @return list<PhpDocTextNode>
+	 */
+	public function textNodes(): array
+	{
+		return array_values(
+			array_filter($this->phpDocNode->children, fn (PhpDocChildNode $node) => $node instanceof PhpDocTextNode)
+		);
 	}
 
 	/**

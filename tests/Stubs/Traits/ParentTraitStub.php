@@ -3,6 +3,8 @@
 namespace Tests\Stubs\Traits;
 
 /**
+ * Parent trait description
+ *
  * @template O
  * @template U
  */

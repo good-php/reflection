@@ -1,8 +1,9 @@
+asString: AllNativeTypes
 type: Tests\Stubs\Classes\AllNativeTypes
 qualifiedName: Tests\Stubs\Classes\AllNativeTypes
 shortName: AllNativeTypes
+description: null
 location: Tests\Stubs\Classes\AllNativeTypes
-asString: AllNativeTypes
 isBuiltIn: false
 isAnonymous: false
 isAbstract: false
@@ -27,6 +28,7 @@ declaredMethods:
     -
         asString: f1()
         name: f1
+        description: null
         isAbstract: false
         isFinal: false
         returnsByReference: false
@@ -40,6 +42,7 @@ declaredMethods:
             -
                 asString: 'arg $p1'
                 name: p1
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllNativeTypes::f1() arg $p1'
                 declaringMethod: f1()
@@ -49,6 +52,7 @@ declaredMethods:
             -
                 asString: 'arg $p2'
                 name: p2
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllNativeTypes::f1() arg $p2'
                 declaringMethod: f1()
@@ -58,6 +62,7 @@ declaredMethods:
             -
                 asString: 'arg $p3'
                 name: p3
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllNativeTypes::f1() arg $p3'
                 declaringMethod: f1()
@@ -67,6 +72,7 @@ declaredMethods:
             -
                 asString: 'arg $p4'
                 name: p4
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllNativeTypes::f1() arg $p4'
                 declaringMethod: f1()
@@ -76,6 +82,7 @@ declaredMethods:
             -
                 asString: 'arg $p5'
                 name: p5
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllNativeTypes::f1() arg $p5'
                 declaringMethod: f1()
@@ -85,6 +92,7 @@ declaredMethods:
             -
                 asString: 'arg $p6'
                 name: p6
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllNativeTypes::f1() arg $p6'
                 declaringMethod: f1()
@@ -94,6 +102,7 @@ declaredMethods:
             -
                 asString: 'arg $p7'
                 name: p7
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllNativeTypes::f1() arg $p7'
                 declaringMethod: f1()
@@ -103,6 +112,7 @@ declaredMethods:
             -
                 asString: 'arg $p8'
                 name: p8
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllNativeTypes::f1() arg $p8'
                 declaringMethod: f1()
@@ -112,6 +122,7 @@ declaredMethods:
             -
                 asString: 'arg $p9'
                 name: p9
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllNativeTypes::f1() arg $p9'
                 declaringMethod: f1()
@@ -122,6 +133,7 @@ declaredMethods:
     -
         asString: f2()
         name: f2
+        description: null
         isAbstract: false
         isFinal: false
         returnsByReference: false
@@ -135,6 +147,7 @@ declaredMethods:
             -
                 asString: 'arg $p1'
                 name: p1
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllNativeTypes::f2() arg $p1'
                 declaringMethod: f2()
@@ -144,6 +157,7 @@ declaredMethods:
             -
                 asString: 'arg $p2'
                 name: p2
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllNativeTypes::f2() arg $p2'
                 declaringMethod: f2()
@@ -153,6 +167,7 @@ declaredMethods:
             -
                 asString: 'arg $p3'
                 name: p3
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllNativeTypes::f2() arg $p3'
                 declaringMethod: f2()
@@ -162,6 +177,7 @@ declaredMethods:
             -
                 asString: 'arg $p4'
                 name: p4
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllNativeTypes::f2() arg $p4'
                 declaringMethod: f2()
@@ -171,6 +187,7 @@ declaredMethods:
             -
                 asString: 'arg $p5'
                 name: p5
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllNativeTypes::f2() arg $p5'
                 declaringMethod: f2()
@@ -181,6 +198,7 @@ declaredMethods:
     -
         asString: f3()
         name: f3
+        description: null
         isAbstract: false
         isFinal: false
         returnsByReference: false
@@ -196,6 +214,7 @@ methods:
     -
         asString: f1()
         name: f1
+        description: null
         isAbstract: false
         isFinal: false
         returnsByReference: false
@@ -209,6 +228,7 @@ methods:
             -
                 asString: 'arg $p1'
                 name: p1
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllNativeTypes::f1() arg $p1'
                 declaringMethod: f1()
@@ -218,6 +238,7 @@ methods:
             -
                 asString: 'arg $p2'
                 name: p2
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllNativeTypes::f1() arg $p2'
                 declaringMethod: f1()
@@ -227,6 +248,7 @@ methods:
             -
                 asString: 'arg $p3'
                 name: p3
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllNativeTypes::f1() arg $p3'
                 declaringMethod: f1()
@@ -236,6 +258,7 @@ methods:
             -
                 asString: 'arg $p4'
                 name: p4
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllNativeTypes::f1() arg $p4'
                 declaringMethod: f1()
@@ -245,6 +268,7 @@ methods:
             -
                 asString: 'arg $p5'
                 name: p5
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllNativeTypes::f1() arg $p5'
                 declaringMethod: f1()
@@ -254,6 +278,7 @@ methods:
             -
                 asString: 'arg $p6'
                 name: p6
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllNativeTypes::f1() arg $p6'
                 declaringMethod: f1()
@@ -263,6 +288,7 @@ methods:
             -
                 asString: 'arg $p7'
                 name: p7
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllNativeTypes::f1() arg $p7'
                 declaringMethod: f1()
@@ -272,6 +298,7 @@ methods:
             -
                 asString: 'arg $p8'
                 name: p8
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllNativeTypes::f1() arg $p8'
                 declaringMethod: f1()
@@ -281,6 +308,7 @@ methods:
             -
                 asString: 'arg $p9'
                 name: p9
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllNativeTypes::f1() arg $p9'
                 declaringMethod: f1()
@@ -291,6 +319,7 @@ methods:
     -
         asString: f2()
         name: f2
+        description: null
         isAbstract: false
         isFinal: false
         returnsByReference: false
@@ -304,6 +333,7 @@ methods:
             -
                 asString: 'arg $p1'
                 name: p1
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllNativeTypes::f2() arg $p1'
                 declaringMethod: f2()
@@ -313,6 +343,7 @@ methods:
             -
                 asString: 'arg $p2'
                 name: p2
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllNativeTypes::f2() arg $p2'
                 declaringMethod: f2()
@@ -322,6 +353,7 @@ methods:
             -
                 asString: 'arg $p3'
                 name: p3
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllNativeTypes::f2() arg $p3'
                 declaringMethod: f2()
@@ -331,6 +363,7 @@ methods:
             -
                 asString: 'arg $p4'
                 name: p4
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllNativeTypes::f2() arg $p4'
                 declaringMethod: f2()
@@ -340,6 +373,7 @@ methods:
             -
                 asString: 'arg $p5'
                 name: p5
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\AllNativeTypes::f2() arg $p5'
                 declaringMethod: f2()
@@ -350,6 +384,7 @@ methods:
     -
         asString: f3()
         name: f3
+        description: null
         isAbstract: false
         isFinal: false
         returnsByReference: false

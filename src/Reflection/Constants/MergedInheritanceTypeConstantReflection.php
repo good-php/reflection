@@ -25,6 +25,9 @@ final class MergedInheritanceTypeConstantReflection implements TypeConstantRefle
 	/** @var TypeConstantReflection<ReflectableType> */
 	private TypeConstantReflection $typeFromReflection;
 
+	/** @var TypeConstantReflection<ReflectableType> */
+	private TypeConstantReflection $descriptionFromReflection;
+
 	/**
 	 * @param list<TypeConstantReflection<ReflectableType>> $reflections
 	 */
@@ -65,6 +68,11 @@ final class MergedInheritanceTypeConstantReflection implements TypeConstantRefle
 	public function name(): string
 	{
 		return $this->reflections[0]->name();
+	}
+
+	public function description(): ?string
+	{
+		return $this->descriptionFromReflection()->description();
 	}
 
 	public function type(): ?Type
@@ -108,6 +116,21 @@ final class MergedInheritanceTypeConstantReflection implements TypeConstantRefle
 		$firstConstantWithPhpDocVar = Arr::first($this->reflections, fn (TypeConstantReflection $reflection) => $reflection->typeSource() === TypeSource::PHP_DOC);
 
 		return $this->typeFromReflection = $firstConstantWithPhpDocVar ?? $this->reflections[0];
+	}
+
+	/**
+	 * @return TypeConstantReflection<ReflectableType>
+	 */
+	private function descriptionFromReflection(): TypeConstantReflection
+	{
+		if (isset($this->descriptionFromReflection)) {
+			return $this->descriptionFromReflection;
+		}
+
+		// First non-empty description in the inheritance tree
+		$firstConstantWithDescription = Arr::first($this->reflections, fn (TypeConstantReflection $reflection) => (bool) $reflection->description());
+
+		return $this->descriptionFromReflection = $firstConstantWithDescription ?? $this->reflections[0];
 	}
 
 	public function __toString(): string

@@ -1,8 +1,9 @@
+asString: CollectionStub
 type: Tests\Stubs\Classes\CollectionStub
 qualifiedName: Tests\Stubs\Classes\CollectionStub
 shortName: CollectionStub
+description: null
 location: Tests\Stubs\Classes\CollectionStub
-asString: CollectionStub
 isBuiltIn: false
 isAnonymous: false
 isAbstract: false
@@ -25,6 +26,7 @@ declaredConstants:
     -
         asString: MAX_ITEMS
         name: MAX_ITEMS
+        description: null
         isFinal: false
         declaringType: Tests\Stubs\Classes\CollectionStub
         attributes:
@@ -36,6 +38,7 @@ constants:
     -
         asString: MAX_ITEMS
         name: MAX_ITEMS
+        description: null
         isFinal: false
         declaringType: Tests\Stubs\Classes\CollectionStub
         attributes:
@@ -49,6 +52,7 @@ declaredMethods:
     -
         asString: getIterator()
         name: getIterator
+        description: null
         isAbstract: false
         isFinal: false
         returnsByReference: false
@@ -63,6 +67,7 @@ declaredMethods:
     -
         asString: offsetExists()
         name: offsetExists
+        description: null
         isAbstract: false
         isFinal: false
         returnsByReference: false
@@ -76,6 +81,7 @@ declaredMethods:
             -
                 asString: 'arg $offset'
                 name: offset
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\CollectionStub::offsetExists() arg $offset'
                 declaringMethod: offsetExists()
@@ -86,6 +92,7 @@ declaredMethods:
     -
         asString: offsetGet()
         name: offsetGet
+        description: null
         isAbstract: false
         isFinal: false
         returnsByReference: false
@@ -99,6 +106,7 @@ declaredMethods:
             -
                 asString: 'arg $offset'
                 name: offset
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\CollectionStub::offsetGet() arg $offset'
                 declaringMethod: offsetGet()
@@ -109,6 +117,7 @@ declaredMethods:
     -
         asString: offsetSet()
         name: offsetSet
+        description: null
         isAbstract: false
         isFinal: false
         returnsByReference: false
@@ -122,6 +131,7 @@ declaredMethods:
             -
                 asString: 'arg $offset'
                 name: offset
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\CollectionStub::offsetSet() arg $offset'
                 declaringMethod: offsetSet()
@@ -131,6 +141,7 @@ declaredMethods:
             -
                 asString: 'arg $value'
                 name: value
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\CollectionStub::offsetSet() arg $value'
                 declaringMethod: offsetSet()
@@ -141,6 +152,7 @@ declaredMethods:
     -
         asString: offsetUnset()
         name: offsetUnset
+        description: null
         isAbstract: false
         isFinal: false
         returnsByReference: false
@@ -154,6 +166,7 @@ declaredMethods:
             -
                 asString: 'arg $offset'
                 name: offset
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\CollectionStub::offsetUnset() arg $offset'
                 declaringMethod: offsetUnset()
@@ -165,6 +178,7 @@ methods:
     -
         asString: getIterator()
         name: getIterator
+        description: null
         isAbstract: false
         isFinal: false
         returnsByReference: false
@@ -179,6 +193,7 @@ methods:
     -
         asString: offsetExists()
         name: offsetExists
+        description: null
         isAbstract: false
         isFinal: false
         returnsByReference: false
@@ -192,6 +207,7 @@ methods:
             -
                 asString: 'arg $offset'
                 name: offset
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\CollectionStub::offsetExists() arg $offset'
                 declaringMethod: offsetExists()
@@ -202,6 +218,7 @@ methods:
     -
         asString: offsetGet()
         name: offsetGet
+        description: null
         isAbstract: false
         isFinal: false
         returnsByReference: false
@@ -215,6 +232,7 @@ methods:
             -
                 asString: 'arg $offset'
                 name: offset
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\CollectionStub::offsetGet() arg $offset'
                 declaringMethod: offsetGet()
@@ -225,6 +243,7 @@ methods:
     -
         asString: offsetSet()
         name: offsetSet
+        description: null
         isAbstract: false
         isFinal: false
         returnsByReference: false
@@ -238,6 +257,7 @@ methods:
             -
                 asString: 'arg $offset'
                 name: offset
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\CollectionStub::offsetSet() arg $offset'
                 declaringMethod: offsetSet()
@@ -247,6 +267,7 @@ methods:
             -
                 asString: 'arg $value'
                 name: value
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\CollectionStub::offsetSet() arg $value'
                 declaringMethod: offsetSet()
@@ -257,6 +278,7 @@ methods:
     -
         asString: offsetUnset()
         name: offsetUnset
+        description: null
         isAbstract: false
         isFinal: false
         returnsByReference: false
@@ -270,6 +292,7 @@ methods:
             -
                 asString: 'arg $offset'
                 name: offset
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\CollectionStub::offsetUnset() arg $offset'
                 declaringMethod: offsetUnset()

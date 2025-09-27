@@ -1,0 +1,60 @@
+GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\InterfaceTypeDefinition {
+	+qualifiedName: "Tests\Stubs\Interfaces\ParentInterfaceStub"
+	+fileName: "/app/tests/Stubs/Interfaces/ParentInterfaceStub.php"
+	+description: "Parent interface description"
+	+builtIn: false
+	+typeParameters: [
+		GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\TypeParameterDefinition {
+			+name: "O"
+			+description: null
+			+variadic: false
+			+upperBound: null
+			+variance: GoodPhp\Reflection\Type\Template\TemplateTypeVariance {#1
+				+name: "INVARIANT"
+			}
+			+default: null
+		},
+		GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\TypeParameterDefinition {
+			+name: "U"
+			+description: null
+			+variadic: false
+			+upperBound: null
+			+variance: GoodPhp\Reflection\Type\Template\TemplateTypeVariance {#1}
+			+default: null
+		},
+	]
+	+extends: []
+	+constants: []
+	+methods: [
+		GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\MethodDefinition {
+			+name: "test"
+			+description: null
+			+abstract: true
+			+final: false
+			+typeParameters: []
+			+parameters: [
+				GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\FunctionParameterDefinition {
+					+name: "str"
+					+description: null
+					+passedByReference: false
+					+type: GoodPhp\Reflection\Type\NamedType {
+						+name: "string"
+						+arguments: []
+					}
+					+typeSource: GoodPhp\Reflection\Reflection\TypeSource {#2
+						+name: "NATIVE"
+					}
+					+hasDefaultValue: false
+				},
+			]
+			+returnType: GoodPhp\Reflection\Type\Special\StaticType {
+				+upperBound: GoodPhp\Reflection\Type\NamedType {
+					+name: "Tests\Stubs\Interfaces\ParentInterfaceStub"
+					+arguments: []
+				}
+			}
+			+returnTypeSource: GoodPhp\Reflection\Reflection\TypeSource {#2}
+			+returnsByReference: false
+		},
+	]
+}

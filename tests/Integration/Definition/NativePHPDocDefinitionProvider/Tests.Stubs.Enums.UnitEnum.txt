@@ -1,0 +1,82 @@
+GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\EnumTypeDefinition {
+	+qualifiedName: "Tests\Stubs\Enums\UnitEnum"
+	+fileName: "/app/tests/Stubs/Enums/UnitEnum.php"
+	+description: null
+	+builtIn: false
+	+backingType: null
+	+implements: [
+		GoodPhp\Reflection\Type\NamedType {
+			+name: "Tests\Stubs\Interfaces\NonGenericInterface"
+			+arguments: []
+		},
+		GoodPhp\Reflection\Type\NamedType {
+			+name: "UnitEnum"
+			+arguments: []
+		},
+	]
+	+uses: GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\UsedTraitsDefinition {
+		+traits: [
+			GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\UsedTraitDefinition {
+				+trait: GoodPhp\Reflection\Type\NamedType {
+					+name: "Tests\Stubs\Traits\TraitWithoutProperties"
+					+arguments: []
+				}
+				+aliases: []
+			},
+			GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\UsedTraitDefinition {
+				+trait: GoodPhp\Reflection\Type\NamedType {
+					+name: "Tests\Stubs\Traits\TraitWithoutProperties"
+					+arguments: []
+				}
+				+aliases: [
+					GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\UsedTraitAliasDefinition {
+						+name: "otherFunction"
+						+newName: "otherOtherFunction"
+						+newModifier: null
+					},
+				]
+			},
+		]
+		+excludedTraitMethods: []
+	}
+	+cases: [
+		GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\EnumCaseDefinition {
+			+name: "FIRST"
+			+description: null
+			+backingValue: null
+		},
+		GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\EnumCaseDefinition {
+			+name: "SECOND"
+			+description: null
+			+backingValue: null
+		},
+	]
+	+constants: []
+	+methods: [
+		GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\MethodDefinition {
+			+name: "function"
+			+description: null
+			+abstract: false
+			+final: false
+			+typeParameters: []
+			+parameters: [
+				GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\FunctionParameterDefinition {
+					+name: "i"
+					+description: null
+					+passedByReference: false
+					+type: GoodPhp\Reflection\Type\NamedType {
+						+name: "string"
+						+arguments: []
+					}
+					+typeSource: GoodPhp\Reflection\Reflection\TypeSource {#1
+						+name: "NATIVE"
+					}
+					+hasDefaultValue: false
+				},
+			]
+			+returnType: GoodPhp\Reflection\Type\Special\MixedType {}
+			+returnTypeSource: GoodPhp\Reflection\Reflection\TypeSource {#1}
+			+returnsByReference: false
+		},
+	]
+}

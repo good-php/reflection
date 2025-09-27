@@ -1,0 +1,42 @@
+GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\ClassTypeDefinition {
+	+qualifiedName: "Tests\Stubs\Classes\SingleTemplateTypeImpl"
+	+fileName: "/app/tests/Stubs/Classes/SingleTemplateTypeImpl.php"
+	+description: null
+	+builtIn: false
+	+anonymous: false
+	+final: false
+	+abstract: false
+	+readOnly: false
+	+cloneable: true
+	+instantiable: true
+	+typeParameters: [
+		GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\TypeParameterDefinition {
+			+name: "T"
+			+description: null
+			+variadic: false
+			+upperBound: null
+			+variance: GoodPhp\Reflection\Type\Template\TemplateTypeVariance {
+				+name: "INVARIANT"
+			}
+			+default: null
+		},
+	]
+	+extends: null
+	+implements: [
+		GoodPhp\Reflection\Type\NamedType {
+			+name: "Tests\Stubs\Interfaces\SingleTemplateType"
+			+arguments: [
+				GoodPhp\Reflection\Type\Template\TemplateType {
+					+name: "T"
+				},
+			]
+		},
+	]
+	+uses: GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\UsedTraitsDefinition {
+		+traits: []
+		+excludedTraitMethods: []
+	}
+	+constants: []
+	+properties: []
+	+methods: []
+}

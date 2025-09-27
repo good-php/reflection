@@ -1,0 +1,44 @@
+GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\InterfaceTypeDefinition {
+	+qualifiedName: "Tests\Stubs\Interfaces\NonGenericInterface"
+	+fileName: "/app/tests/Stubs/Interfaces/NonGenericInterface.php"
+	+description: null
+	+builtIn: false
+	+typeParameters: []
+	+extends: []
+	+constants: [
+		GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\TypeConstantDefinition {
+			+name: "INTERFACE_CONSTANT"
+			+description: null
+			+isFinal: true
+			+type: null
+			+typeSource: null
+		},
+	]
+	+methods: [
+		GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\MethodDefinition {
+			+name: "function"
+			+description: null
+			+abstract: true
+			+final: false
+			+typeParameters: []
+			+parameters: [
+				GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\FunctionParameterDefinition {
+					+name: "i"
+					+description: null
+					+passedByReference: false
+					+type: GoodPhp\Reflection\Type\NamedType {
+						+name: "string"
+						+arguments: []
+					}
+					+typeSource: GoodPhp\Reflection\Reflection\TypeSource {#1
+						+name: "NATIVE"
+					}
+					+hasDefaultValue: false
+				},
+			]
+			+returnType: GoodPhp\Reflection\Type\Special\MixedType {}
+			+returnTypeSource: GoodPhp\Reflection\Reflection\TypeSource {#1}
+			+returnsByReference: false
+		},
+	]
+}

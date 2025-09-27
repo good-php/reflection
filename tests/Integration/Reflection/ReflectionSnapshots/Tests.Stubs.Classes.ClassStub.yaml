@@ -1,8 +1,9 @@
+asString: ClassStub
 type: Tests\Stubs\Classes\ClassStub
 qualifiedName: Tests\Stubs\Classes\ClassStub
 shortName: ClassStub
+description: 'Class description'
 location: Tests\Stubs\Classes\ClassStub
-asString: ClassStub
 isBuiltIn: false
 isAnonymous: false
 isAbstract: false
@@ -17,12 +18,14 @@ attributes:
 typeParameters:
     -
         name: T
+        description: 'Class type parameter description'
         variadic: false
         upperBound: mixed
         variance: INVARIANT
-        asString: T
+        asString: 'T Class type parameter description'
     -
         name: S
+        description: null
         variadic: false
         upperBound: int
         variance: COVARIANT
@@ -52,6 +55,7 @@ constants:
     -
         asString: CONSTANT
         name: CONSTANT
+        description: null
         isFinal: false
         declaringType: 'Tests\Stubs\Traits\ParentTraitStub<T, Tests\Stubs\Classes\SomeStub>'
         attributes:
@@ -63,6 +67,7 @@ declaredProperties:
     -
         asString: $factories
         name: factories
+        description: null
         isAbstract: false
         isFinal: false
         isReadOnly: false
@@ -80,6 +85,7 @@ declaredProperties:
     -
         asString: $generic
         name: generic
+        description: null
         isAbstract: false
         isFinal: false
         isReadOnly: false
@@ -96,6 +102,7 @@ declaredProperties:
     -
         asString: $promoted
         name: promoted
+        description: 'Promoted parameter description'
         isAbstract: false
         isFinal: false
         isReadOnly: true
@@ -112,6 +119,7 @@ declaredProperties:
         promotedParameter:
             asString: 'arg $promoted'
             name: promoted
+            description: 'Promoted parameter description'
             passedByReference: false
             location: 'Tests\Stubs\Classes\ClassStub::__construct() arg $promoted'
             declaringMethod: __construct()
@@ -122,6 +130,7 @@ properties:
     -
         asString: $factories
         name: factories
+        description: null
         isAbstract: false
         isFinal: false
         isReadOnly: false
@@ -139,6 +148,7 @@ properties:
     -
         asString: $generic
         name: generic
+        description: null
         isAbstract: false
         isFinal: false
         isReadOnly: false
@@ -155,6 +165,7 @@ properties:
     -
         asString: $promoted
         name: promoted
+        description: 'Promoted parameter description'
         isAbstract: false
         isFinal: false
         isReadOnly: true
@@ -171,6 +182,7 @@ properties:
         promotedParameter:
             asString: 'arg $promoted'
             name: promoted
+            description: 'Promoted parameter description'
             passedByReference: false
             location: 'Tests\Stubs\Classes\ClassStub::__construct() arg $promoted'
             declaringMethod: __construct()
@@ -180,6 +192,7 @@ properties:
     -
         asString: $parentProperty
         name: parentProperty
+        description: 'Parent property description'
         isAbstract: false
         isFinal: false
         isReadOnly: false
@@ -196,6 +209,7 @@ properties:
     -
         asString: $prop
         name: prop
+        description: null
         isAbstract: false
         isFinal: false
         isReadOnly: false
@@ -213,6 +227,7 @@ declaredMethods:
     -
         asString: __construct()
         name: __construct
+        description: null
         isAbstract: false
         isFinal: false
         returnsByReference: false
@@ -226,6 +241,7 @@ declaredMethods:
             -
                 asString: 'arg $promoted'
                 name: promoted
+                description: 'Promoted parameter description'
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\ClassStub::__construct() arg $promoted'
                 declaringMethod: __construct()
@@ -236,6 +252,7 @@ declaredMethods:
     -
         asString: method()
         name: method
+        description: 'Method description'
         isAbstract: false
         isFinal: false
         returnsByReference: false
@@ -248,14 +265,16 @@ declaredMethods:
         typeParameters:
             -
                 name: G
+                description: 'Method type parameter description'
                 variadic: false
                 upperBound: mixed
                 variance: INVARIANT
-                asString: G
+                asString: 'G Method type parameter description'
         parameters:
             -
                 asString: 'arg $param'
                 name: param
+                description: 'Method parameter description'
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\ClassStub::method() arg $param'
                 declaringMethod: method()
@@ -266,6 +285,7 @@ declaredMethods:
     -
         asString: methodTwo()
         name: methodTwo
+        description: null
         isAbstract: false
         isFinal: false
         returnsByReference: false
@@ -277,12 +297,14 @@ declaredMethods:
         typeParameters:
             -
                 name: KValue
+                description: null
                 variadic: false
                 upperBound: mixed
                 variance: INVARIANT
                 asString: KValue
             -
                 name: K
+                description: null
                 variadic: false
                 upperBound: Tests\Stubs\Interfaces\SingleTemplateType<KValue>
                 variance: INVARIANT
@@ -291,6 +313,7 @@ declaredMethods:
             -
                 asString: 'arg $param'
                 name: param
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\ClassStub::methodTwo() arg $param'
                 declaringMethod: methodTwo()
@@ -301,6 +324,7 @@ declaredMethods:
     -
         asString: self()
         name: self
+        description: null
         isAbstract: false
         isFinal: false
         returnsByReference: false
@@ -314,6 +338,7 @@ declaredMethods:
             -
                 asString: 'arg $parent'
                 name: parent
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\ClassStub::self() arg $parent'
                 declaringMethod: self()
@@ -325,6 +350,7 @@ methods:
     -
         asString: __construct()
         name: __construct
+        description: null
         isAbstract: false
         isFinal: false
         returnsByReference: false
@@ -338,6 +364,7 @@ methods:
             -
                 asString: 'arg $promoted'
                 name: promoted
+                description: 'Promoted parameter description'
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\ClassStub::__construct() arg $promoted'
                 declaringMethod: __construct()
@@ -348,6 +375,7 @@ methods:
     -
         asString: method()
         name: method
+        description: 'Method description'
         isAbstract: false
         isFinal: false
         returnsByReference: false
@@ -360,14 +388,16 @@ methods:
         typeParameters:
             -
                 name: G
+                description: 'Method type parameter description'
                 variadic: false
                 upperBound: mixed
                 variance: INVARIANT
-                asString: G
+                asString: 'G Method type parameter description'
         parameters:
             -
                 asString: 'arg $param'
                 name: param
+                description: 'Method parameter description'
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\ClassStub::method() arg $param'
                 declaringMethod: method()
@@ -378,6 +408,7 @@ methods:
     -
         asString: methodTwo()
         name: methodTwo
+        description: null
         isAbstract: false
         isFinal: false
         returnsByReference: false
@@ -389,12 +420,14 @@ methods:
         typeParameters:
             -
                 name: KValue
+                description: null
                 variadic: false
                 upperBound: mixed
                 variance: INVARIANT
                 asString: KValue
             -
                 name: K
+                description: null
                 variadic: false
                 upperBound: Tests\Stubs\Interfaces\SingleTemplateType<KValue>
                 variance: INVARIANT
@@ -403,6 +436,7 @@ methods:
             -
                 asString: 'arg $param'
                 name: param
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\ClassStub::methodTwo() arg $param'
                 declaringMethod: methodTwo()
@@ -413,6 +447,7 @@ methods:
     -
         asString: self()
         name: self
+        description: null
         isAbstract: false
         isFinal: false
         returnsByReference: false
@@ -426,6 +461,7 @@ methods:
             -
                 asString: 'arg $parent'
                 name: parent
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\ClassStub::self() arg $parent'
                 declaringMethod: self()
@@ -436,6 +472,7 @@ methods:
     -
         asString: parentMethod()
         name: parentMethod
+        description: 'Parent method description'
         isAbstract: false
         isFinal: false
         returnsByReference: false
@@ -450,6 +487,7 @@ methods:
     -
         asString: test()
         name: test
+        description: null
         isAbstract: false
         isFinal: false
         returnsByReference: false
@@ -463,6 +501,7 @@ methods:
             -
                 asString: 'arg $str'
                 name: str
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Classes\ParentClassStub::test() arg $str'
                 declaringMethod: test()
@@ -473,6 +512,7 @@ methods:
     -
         asString: traitMethod()
         name: traitMethod
+        description: null
         isAbstract: false
         isFinal: false
         returnsByReference: false
@@ -487,6 +527,7 @@ methods:
     -
         asString: traitMethodTwo()
         name: traitMethodTwo
+        description: null
         isAbstract: false
         isFinal: false
         returnsByReference: false
@@ -501,6 +542,7 @@ methods:
     -
         asString: otherFunction()
         name: otherFunction
+        description: null
         isAbstract: false
         isFinal: false
         returnsByReference: false

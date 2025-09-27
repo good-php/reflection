@@ -4,7 +4,7 @@ namespace Tests\Integration;
 
 use GoodPhp\Reflection\Reflector;
 use GoodPhp\Reflection\ReflectorBuilder;
-use PHPUnit\Framework\TestCase;
+use Tests\TestCase;
 
 class IntegrationTestCase extends TestCase
 {

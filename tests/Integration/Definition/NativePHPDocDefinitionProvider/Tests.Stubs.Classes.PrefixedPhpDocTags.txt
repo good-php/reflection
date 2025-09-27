@@ -1,0 +1,113 @@
+GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\ClassTypeDefinition {
+	+qualifiedName: "Tests\Stubs\Classes\PrefixedPhpDocTags"
+	+fileName: "/app/tests/Stubs/Classes/PrefixedPhpDocTags.php"
+	+description: null
+	+builtIn: false
+	+anonymous: false
+	+final: false
+	+abstract: false
+	+readOnly: false
+	+cloneable: true
+	+instantiable: true
+	+typeParameters: [
+		GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\TypeParameterDefinition {
+			+name: "TPhpStan"
+			+description: null
+			+variadic: false
+			+upperBound: null
+			+variance: GoodPhp\Reflection\Type\Template\TemplateTypeVariance {
+				+name: "INVARIANT"
+			}
+			+default: null
+		},
+		GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\TypeParameterDefinition {
+			+name: "TPsalmCovariant"
+			+description: null
+			+variadic: false
+			+upperBound: GoodPhp\Reflection\Type\NamedType {#1
+				+name: "int"
+				+arguments: []
+			}
+			+variance: GoodPhp\Reflection\Type\Template\TemplateTypeVariance {
+				+name: "COVARIANT"
+			}
+			+default: null
+		},
+	]
+	+extends: GoodPhp\Reflection\Type\NamedType {
+		+name: "Tests\Stubs\Classes\SingleTemplateTypeImpl"
+		+arguments: [
+			GoodPhp\Reflection\Type\NamedType {#1},
+		]
+	}
+	+implements: [
+		GoodPhp\Reflection\Type\NamedType {
+			+name: "Tests\Stubs\Interfaces\SingleGenericInterface"
+			+arguments: [
+				GoodPhp\Reflection\Type\NamedType {
+					+name: "string"
+					+arguments: []
+				},
+			]
+		},
+	]
+	+uses: GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\UsedTraitsDefinition {
+		+traits: []
+		+excludedTraitMethods: []
+	}
+	+constants: []
+	+properties: [
+		GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\PropertyDefinition {
+			+name: "property"
+			+description: null
+			+abstract: false
+			+final: false
+			+readOnly: false
+			+type: GoodPhp\Reflection\Type\NamedType {
+				+name: "stdClass"
+				+arguments: []
+			}
+			+typeSource: GoodPhp\Reflection\Reflection\TypeSource {#2
+				+name: "PHP_DOC"
+			}
+			+hasDefaultValue: false
+			+isPromoted: false
+		},
+	]
+	+methods: [
+		GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\MethodDefinition {
+			+name: "method"
+			+description: null
+			+abstract: false
+			+final: false
+			+typeParameters: []
+			+parameters: [
+				GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\FunctionParameterDefinition {
+					+name: "param1"
+					+description: null
+					+passedByReference: false
+					+type: GoodPhp\Reflection\Type\NamedType {
+						+name: "bool"
+						+arguments: []
+					}
+					+typeSource: GoodPhp\Reflection\Reflection\TypeSource {#2}
+					+hasDefaultValue: false
+				},
+				GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\FunctionParameterDefinition {
+					+name: "param2"
+					+description: null
+					+passedByReference: false
+					+type: GoodPhp\Reflection\Type\NamedType {
+						+name: "stdClass"
+						+arguments: []
+					}
+					+typeSource: GoodPhp\Reflection\Reflection\TypeSource {#2}
+					+hasDefaultValue: false
+				},
+			]
+			+returnType: GoodPhp\Reflection\Type\NamedType {#1}
+			+returnTypeSource: GoodPhp\Reflection\Reflection\TypeSource {#2}
+			+returnsByReference: false
+		},
+	]
+}

@@ -32,6 +32,7 @@ class FileModificationCacheDefinitionProviderTest extends IntegrationTestCase
 			->thenReturn(new ClassTypeDefinition(
 				qualifiedName: ClassStub::class,
 				fileName: '/opt/project/tests/Stubs/Classes/ClassStub.php',
+				description: null,
 				builtIn: false,
 				anonymous: false,
 				final: true,

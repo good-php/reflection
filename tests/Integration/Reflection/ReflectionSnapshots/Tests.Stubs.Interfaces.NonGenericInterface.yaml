@@ -1,8 +1,9 @@
+asString: NonGenericInterface
 type: Tests\Stubs\Interfaces\NonGenericInterface
 qualifiedName: Tests\Stubs\Interfaces\NonGenericInterface
 shortName: NonGenericInterface
+description: null
 location: Tests\Stubs\Interfaces\NonGenericInterface
-asString: NonGenericInterface
 isBuiltIn: false
 attributes:
     asString: '#[]'
@@ -13,6 +14,7 @@ declaredConstants:
     -
         asString: INTERFACE_CONSTANT
         name: INTERFACE_CONSTANT
+        description: null
         isFinal: true
         declaringType: Tests\Stubs\Interfaces\NonGenericInterface
         attributes:
@@ -24,6 +26,7 @@ constants:
     -
         asString: INTERFACE_CONSTANT
         name: INTERFACE_CONSTANT
+        description: null
         isFinal: true
         declaringType: Tests\Stubs\Interfaces\NonGenericInterface
         attributes:
@@ -35,6 +38,7 @@ declaredMethods:
     -
         asString: function()
         name: function
+        description: null
         isAbstract: true
         isFinal: false
         returnsByReference: false
@@ -48,6 +52,7 @@ declaredMethods:
             -
                 asString: 'arg $i'
                 name: i
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Interfaces\NonGenericInterface::function() arg $i'
                 declaringMethod: function()
@@ -59,6 +64,7 @@ methods:
     -
         asString: function()
         name: function
+        description: null
         isAbstract: true
         isFinal: false
         returnsByReference: false
@@ -72,6 +78,7 @@ methods:
             -
                 asString: 'arg $i'
                 name: i
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Interfaces\NonGenericInterface::function() arg $i'
                 declaringMethod: function()

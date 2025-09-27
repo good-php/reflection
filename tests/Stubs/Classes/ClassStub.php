@@ -10,7 +10,9 @@ use Tests\Stubs\Interfaces\SingleTemplateType;
 use Tests\Stubs\Traits\ParentTraitStub;
 
 /**
- * @template T
+ * Class description
+ *
+ * @template T Class type parameter description
  *
  * @template-covariant S of int
  *
@@ -36,7 +38,7 @@ final class ClassStub extends ParentClassStub implements ParentInterfaceStub
 	private DoubleTemplateType $generic;
 
 	/**
-	 * @param T $promoted
+	 * @param T $promoted Promoted parameter description
 	 */
 	public function __construct(
 		#[AttributeStub('6')]
@@ -46,9 +48,11 @@ final class ClassStub extends ParentClassStub implements ParentInterfaceStub
 	}
 
 	/**
-	 * @template G
+	 * Method description
 	 *
-	 * @param DoubleTemplateType<SomeStub, T> $param
+	 * @template G Method type parameter description
+	 *
+	 * @param DoubleTemplateType<SomeStub, T> $param Method parameter description
 	 *
 	 * @return Collection<S, G>
 	 */

@@ -1,8 +1,9 @@
+asString: TraitWithoutProperties
 type: Tests\Stubs\Traits\TraitWithoutProperties
 qualifiedName: Tests\Stubs\Traits\TraitWithoutProperties
 shortName: TraitWithoutProperties
+description: null
 location: Tests\Stubs\Traits\TraitWithoutProperties
-asString: TraitWithoutProperties
 isBuiltIn: false
 attributes:
     asString: '#[]'
@@ -19,6 +20,7 @@ declaredMethods:
     -
         asString: otherFunction()
         name: otherFunction
+        description: null
         isAbstract: false
         isFinal: false
         returnsByReference: false
@@ -34,6 +36,7 @@ methods:
     -
         asString: otherFunction()
         name: otherFunction
+        description: null
         isAbstract: false
         isFinal: false
         returnsByReference: false

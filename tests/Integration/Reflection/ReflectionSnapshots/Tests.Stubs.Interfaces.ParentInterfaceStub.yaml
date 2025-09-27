@@ -1,8 +1,9 @@
+asString: ParentInterfaceStub
 type: Tests\Stubs\Interfaces\ParentInterfaceStub
 qualifiedName: Tests\Stubs\Interfaces\ParentInterfaceStub
 shortName: ParentInterfaceStub
+description: 'Parent interface description'
 location: Tests\Stubs\Interfaces\ParentInterfaceStub
-asString: ParentInterfaceStub
 isBuiltIn: false
 attributes:
     asString: '#[]'
@@ -10,12 +11,14 @@ attributes:
 typeParameters:
     -
         name: O
+        description: null
         variadic: false
         upperBound: mixed
         variance: INVARIANT
         asString: O
     -
         name: U
+        description: null
         variadic: false
         upperBound: mixed
         variance: INVARIANT
@@ -27,6 +30,7 @@ declaredMethods:
     -
         asString: test()
         name: test
+        description: null
         isAbstract: true
         isFinal: false
         returnsByReference: false
@@ -40,6 +44,7 @@ declaredMethods:
             -
                 asString: 'arg $str'
                 name: str
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Interfaces\ParentInterfaceStub::test() arg $str'
                 declaringMethod: test()
@@ -51,6 +56,7 @@ methods:
     -
         asString: test()
         name: test
+        description: null
         isAbstract: true
         isFinal: false
         returnsByReference: false
@@ -64,6 +70,7 @@ methods:
             -
                 asString: 'arg $str'
                 name: str
+                description: null
                 passedByReference: false
                 location: 'Tests\Stubs\Interfaces\ParentInterfaceStub::test() arg $str'
                 declaringMethod: test()

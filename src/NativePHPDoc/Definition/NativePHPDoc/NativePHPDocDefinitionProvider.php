@@ -36,6 +36,7 @@ use GoodPhp\Reflection\Util\ReflectionAssert;
 use Illuminate\Support\Str;
 use PHPStan\PhpDocParser\Ast\PhpDoc\ExtendsTagValueNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\ImplementsTagValueNode;
+use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTextNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\TemplateTagValueNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\UsesTagValueNode;
 use PHPStan\PhpDocParser\Ast\Type\TypeNode;
@@ -112,6 +113,7 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 			$reflection->isTrait() => new TraitTypeDefinition(
 				qualifiedName: $this->qualifiedName($reflection),
 				fileName: $this->fileName($reflection),
+				description: $this->description($phpDoc),
 				builtIn: !$reflection->isUserDefined(),
 				typeParameters: $this->typeParameters($phpDoc, $context),
 				uses: $this->traits($reflection, $context),
@@ -122,6 +124,7 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 			$reflection->isInterface() => new InterfaceTypeDefinition(
 				qualifiedName: $this->qualifiedName($reflection),
 				fileName: $this->fileName($reflection),
+				description: $this->description($phpDoc),
 				builtIn: !$reflection->isUserDefined(),
 				typeParameters: $this->typeParameters($phpDoc, $context),
 				extends: $this->interfaces($reflection, $phpDoc, $context),
@@ -131,6 +134,7 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 			default => new ClassTypeDefinition(
 				qualifiedName: $this->qualifiedName($reflection),
 				fileName: $this->fileName($reflection),
+				description: $this->description($phpDoc),
 				builtIn: !$reflection->isUserDefined(),
 				anonymous: $reflection->isAnonymous(),
 				final: $reflection->isFinal(),
@@ -166,6 +170,7 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 		return new EnumTypeDefinition(
 			qualifiedName: $this->qualifiedName($reflection),
 			fileName: $this->fileName($reflection),
+			description: $this->description($phpDoc),
 			builtIn: !$reflection->isUserDefined(),
 			backingType: $backingType,
 			implements: [...$this->interfaces($reflection, $phpDoc, $context), ...$implicitInterfaces],
@@ -213,6 +218,18 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 		return $reflection->getFileName() ?: null;
 	}
 
+	private function description(ParsedPhpDoc|string|null $phpDocOrDescription): ?string
+	{
+		if ($phpDocOrDescription instanceof ParsedPhpDoc) {
+			$phpDocOrDescription = implode(
+				"\n",
+				array_map(fn (PhpDocTextNode $node) => $node->text, $phpDocOrDescription->textNodes())
+			);
+		}
+
+		return trim($phpDocOrDescription ?? '') ?: null;
+	}
+
 	/**
 	 * @param ReflectionClass<object> $reflection
 	 *
@@ -237,6 +254,7 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 
 				return new TypeConstantDefinition(
 					name: $constant->getName(),
+					description: $this->description($phpDoc),
 					isFinal: $constant->isFinal(),
 					type: $type,
 					typeSource: $typeSource,
@@ -253,23 +271,18 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 	 */
 	private function properties(ReflectionClass $reflection, TypeContext $context): array
 	{
-		$constructorPhpDoc = $this->phpDocStringParser->parse(
-			$reflection->getConstructor()?->getDocComment() ?: ''
-		);
+		$constructorPhpDoc = $this->phpDocStringParser->parse($reflection->getConstructor());
 
 		return collect($reflection->getProperties())
 			->filter(fn (ReflectionProperty $property) => !$context->fileClassLikeContext || in_array($property->getName(), $context->fileClassLikeContext->declaredProperties, true))
 			->map(function (ReflectionProperty $property) use ($context, $constructorPhpDoc) {
 				$phpDoc = $this->phpDocStringParser->parse($property);
+				$constructorParamTag = $property->isPromoted() ? $constructorPhpDoc->firstParamTagValue($property->getName()) : null;
 
 				// Get first @var tag (if any specified). Works for both regular and promoted properties.
-				$phpDocType = $phpDoc->firstVarTagValue()?->type;
-
 				// If none found, fallback to @param tag if it's a promoted property. The check for promoted property
 				// is important because there could be a property with the same name as a parameter, but those being unrelated.
-				if (!$phpDocType && $property->isPromoted()) {
-					$phpDocType = $constructorPhpDoc->firstParamTagValue($property->getName())?->type;
-				}
+				$phpDocType = $phpDoc->firstVarTagValue()?->type ?? $constructorParamTag?->type;
 
 				[$type, $typeSource] = $this->map(
 					$property->getType(),
@@ -279,6 +292,7 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 
 				return new PropertyDefinition(
 					name: $property->getName(),
+					description: $this->description($constructorParamTag?->description ?? $phpDoc),
 					abstract: method_exists($property, 'isAbstract') && $property->isAbstract(),
 					final: method_exists($property, 'isFinal') && $property->isFinal(),
 					readOnly: $property->isReadOnly(),
@@ -319,6 +333,7 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 
 				return new MethodDefinition(
 					name: $method->getName(),
+					description: $this->description($phpDoc),
 					abstract: $method->isAbstract(),
 					final: $method->isFinal(),
 					typeParameters: $this->typeParameters($phpDoc, $context),
@@ -352,6 +367,7 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 				function () use ($node, $value, $temporaryContext) {
 					return new TypeParameterDefinition(
 						name: $value->name,
+						description: $this->description($value->description),
 						variadic: false,
 						upperBound: $value->bound ?
 							$this->phpDocTypeMapper->map(
@@ -409,6 +425,7 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 
 				return new FunctionParameterDefinition(
 					name: $parameter->getName(),
+					description: $this->description($paramTag?->description),
 					passedByReference: $parameter->isPassedByReference(),
 					type: $type,
 					typeSource: $typeSource,
@@ -549,6 +566,7 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 		return array_map(
 			fn (ReflectionEnumUnitCase $case) => new EnumCaseDefinition(
 				name: $case->getName(),
+				description: $this->description($this->phpDocStringParser->parse($case)),
 				backingValue: $case instanceof ReflectionEnumBackedCase ? $case->getBackingValue() : null,
 			),
 			$reflection->getCases()

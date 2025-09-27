@@ -1,8 +1,9 @@
+asString: SomeStub
 type: Tests\Stubs\Classes\SomeStub
 qualifiedName: Tests\Stubs\Classes\SomeStub
 shortName: SomeStub
+description: null
 location: Tests\Stubs\Classes\SomeStub
-asString: SomeStub
 isBuiltIn: false
 isAnonymous: false
 isAbstract: false

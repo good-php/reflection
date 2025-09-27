@@ -43,12 +43,14 @@ class BuiltInSpecialsDefinitionProvider implements DefinitionProvider
 				[
 					new TypeParameterDefinition(
 						name: 'TKey',
+						description: null,
 						variadic: false,
 						upperBound: null,
 						variance: TemplateTypeVariance::COVARIANT
 					),
 					new TypeParameterDefinition(
 						name: 'TValue',
+						description: null,
 						variadic: false,
 						upperBound: null,
 						variance: TemplateTypeVariance::COVARIANT
@@ -60,12 +62,14 @@ class BuiltInSpecialsDefinitionProvider implements DefinitionProvider
 				[
 					new TypeParameterDefinition(
 						name: 'TKey',
+						description: null,
 						variadic: false,
 						upperBound: null,
 						variance: TemplateTypeVariance::INVARIANT
 					),
 					new TypeParameterDefinition(
 						name: 'TValue',
+						description: null,
 						variadic: false,
 						upperBound: null,
 						variance: TemplateTypeVariance::INVARIANT
@@ -87,12 +91,14 @@ class BuiltInSpecialsDefinitionProvider implements DefinitionProvider
 				[
 					new TypeParameterDefinition(
 						name: 'TReturn',
+						description: null,
 						variadic: false,
 						upperBound: null,
 						variance: TemplateTypeVariance::COVARIANT
 					),
 					new TypeParameterDefinition(
 						name: 'TParameter',
+						description: null,
 						variadic: true,
 						upperBound: null,
 						variance: TemplateTypeVariance::CONTRAVARIANT

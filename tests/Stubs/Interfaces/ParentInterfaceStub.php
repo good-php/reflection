@@ -3,6 +3,8 @@
 namespace Tests\Stubs\Interfaces;
 
 /**
+ * Parent interface description
+ *
  * @template O
  * @template U
  */

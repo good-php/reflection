@@ -42,6 +42,11 @@ final class NpdEnumCaseReflection implements EnumCaseReflection
 		return $this->definition->name;
 	}
 
+	public function description(): ?string
+	{
+		return $this->definition->description;
+	}
+
 	public function backingValue(): string|int|null
 	{
 		/* @phpstan-ignore return.type */

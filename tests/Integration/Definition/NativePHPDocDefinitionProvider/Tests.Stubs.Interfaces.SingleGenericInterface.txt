@@ -1,0 +1,21 @@
+GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\InterfaceTypeDefinition {
+	+qualifiedName: "Tests\Stubs\Interfaces\SingleGenericInterface"
+	+fileName: "/app/tests/Stubs/Interfaces/SingleGenericInterface.php"
+	+description: null
+	+builtIn: false
+	+typeParameters: [
+		GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\TypeParameterDefinition {
+			+name: "T"
+			+description: null
+			+variadic: false
+			+upperBound: null
+			+variance: GoodPhp\Reflection\Type\Template\TemplateTypeVariance {
+				+name: "COVARIANT"
+			}
+			+default: null
+		},
+	]
+	+extends: []
+	+constants: []
+	+methods: []
+}

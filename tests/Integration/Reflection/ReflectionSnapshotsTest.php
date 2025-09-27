@@ -59,11 +59,12 @@ class ReflectionSnapshotsTest extends IntegrationTestCase
 
 		$expected = [
 			// Basic info
+			'asString'      => (string) $reflection,
 			'type'          => self::typeToExpectation($reflection->type()),
 			'qualifiedName' => $reflection->qualifiedName(),
 			'shortName'     => $reflection->shortName(),
+			'description'   => $reflection->description(),
 			'location'      => $reflection->location(),
-			'asString'      => (string) $reflection,
 
 			'isBuiltIn' => $reflection->isBuiltIn(),
 		];
@@ -165,11 +166,12 @@ class ReflectionSnapshotsTest extends IntegrationTestCase
 	private static function typeParameterToExpectation(TypeParameterReflection $typeParameter): array
 	{
 		return [
-			'name'       => $typeParameter->name(),
-			'variadic'   => $typeParameter->variadic(),
-			'upperBound' => self::typeToExpectation($typeParameter->upperBound()),
-			'variance'   => $typeParameter->variance()->name,
-			'asString'   => (string) $typeParameter,
+			'name'        => $typeParameter->name(),
+			'description' => $typeParameter->description(),
+			'variadic'    => $typeParameter->variadic(),
+			'upperBound'  => self::typeToExpectation($typeParameter->upperBound()),
+			'variance'    => $typeParameter->variance()->name,
+			'asString'    => (string) $typeParameter,
 		];
 	}
 
@@ -201,6 +203,7 @@ class ReflectionSnapshotsTest extends IntegrationTestCase
 		return [
 			'asString'      => (string) $constant,
 			'name'          => $constant->name(),
+			'description'   => $constant->description(),
 			'isFinal'       => $constant->isFinal(),
 			'declaringType' => self::typeToExpectation($constant->declaringType()->type()),
 			'attributes'    => self::attributesToExpectation($constant->attributes()),
@@ -214,6 +217,7 @@ class ReflectionSnapshotsTest extends IntegrationTestCase
 		return [
 			'asString'          => (string) $property,
 			'name'              => $property->name(),
+			'description'       => $property->description(),
 			'isAbstract'        => $property->isAbstract(),
 			'isFinal'           => $property->isFinal(),
 			'isReadOnly'        => $property->isReadOnly(),
@@ -233,6 +237,7 @@ class ReflectionSnapshotsTest extends IntegrationTestCase
 		return [
 			'asString'           => (string) $method,
 			'name'               => $method->name(),
+			'description'        => $method->description(),
 			'isAbstract'         => $method->isAbstract(),
 			'isFinal'            => $method->isFinal(),
 			'returnsByReference' => $method->returnsByReference(),
@@ -250,6 +255,7 @@ class ReflectionSnapshotsTest extends IntegrationTestCase
 		return [
 			'asString'          => (string) $parameter,
 			'name'              => $parameter->name(),
+			'description'       => $parameter->description(),
 			'passedByReference' => $parameter->passedByReference(),
 			'location'          => $parameter->location(),
 			'declaringMethod'   => (string) $parameter->declaringMethod(),
@@ -264,6 +270,7 @@ class ReflectionSnapshotsTest extends IntegrationTestCase
 		return [
 			'asString'      => (string) $case,
 			'name'          => $case->name(),
+			'description'   => $case->description(),
 			'backingValue'  => $case->backingValue(),
 			'value'         => $case->value()->name,
 			'declaringEnum' => (string) $case->declaringEnum(),

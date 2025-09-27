@@ -3,10 +3,11 @@
 namespace GoodPhp\Reflection\Reflection;
 
 use GoodPhp\Reflection\Reflection\Attributes\HasAttributes;
+use GoodPhp\Reflection\Reflection\Descriptions\HasDescription;
 use GoodPhp\Reflection\Type\Type;
 use Stringable;
 
-interface FunctionParameterReflection extends Stringable, HasAttributes
+interface FunctionParameterReflection extends Stringable, HasAttributes, HasDescription
 {
 	public function name(): string;
 
