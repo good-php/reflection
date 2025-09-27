@@ -233,6 +233,9 @@ class BuiltInCoreDefinitionProvider implements DefinitionProvider
 				anonymous: false,
 				final: true,
 				abstract: false,
+				readOnly: false,
+				cloneable: false,
+				instantiable: false,
 				typeParameters: [
 					new TypeParameterDefinition(
 						name: 'TReturn',

@@ -40,6 +40,12 @@ interface ClassReflection extends TypeReflection, HasAttributes, HasTypeParamete
 
 	public function isFinal(): bool;
 
+	public function isReadOnly(): bool;
+
+	public function isCloneable(): bool;
+
+	public function isInstantiable(): bool;
+
 	/**
 	 * @return ReflectableType
 	 */

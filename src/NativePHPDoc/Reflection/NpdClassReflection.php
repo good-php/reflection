@@ -247,6 +247,21 @@ final class NpdClassReflection extends NpdTypeReflection implements ClassReflect
 		return $this->definition->builtIn;
 	}
 
+	public function isReadOnly(): bool
+	{
+		return $this->definition->readOnly;
+	}
+
+	public function isCloneable(): bool
+	{
+		return $this->definition->cloneable;
+	}
+
+	public function isInstantiable(): bool
+	{
+		return $this->definition->instantiable;
+	}
+
 	/**
 	 * @return ReflectableType
 	 */

@@ -112,6 +112,9 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 				anonymous: false,
 				final: true,
 				abstract: false,
+				readOnly: false,
+				cloneable: true,
+				instantiable: true,
 				typeParameters: [
 					new TypeParameterDefinition(
 						name: 'T',
@@ -300,6 +303,9 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 				anonymous: false,
 				final: false,
 				abstract: false,
+				readOnly: false,
+				cloneable: true,
+				instantiable: true,
 				typeParameters: [],
 				extends: new NamedType(SomeStub::class),
 				implements: [
@@ -377,6 +383,9 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 				anonymous: false,
 				final: false,
 				abstract: false,
+				readOnly: false,
+				cloneable: true,
+				instantiable: true,
 				typeParameters: [],
 				extends: null,
 				implements: [],
@@ -516,6 +525,9 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 				anonymous: false,
 				final: false,
 				abstract: false,
+				readOnly: false,
+				cloneable: true,
+				instantiable: true,
 				typeParameters: [],
 				extends: null,
 				implements: [],
@@ -848,6 +860,9 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 				anonymous: false,
 				final: false,
 				abstract: false,
+				readOnly: false,
+				cloneable: true,
+				instantiable: true,
 				typeParameters: [
 					new TypeParameterDefinition(
 						name: 'T',
@@ -873,6 +888,9 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 				anonymous: false,
 				final: false,
 				abstract: false,
+				readOnly: false,
+				cloneable: true,
+				instantiable: true,
 				typeParameters: [
 					new TypeParameterDefinition(
 						name: 'T',
@@ -898,6 +916,9 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 				anonymous: false,
 				final: false,
 				abstract: false,
+				readOnly: false,
+				cloneable: true,
+				instantiable: true,
 				typeParameters: [
 					new TypeParameterDefinition(
 						name: 'T',
@@ -1071,6 +1092,9 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 				anonymous: false,
 				final: false,
 				abstract: false,
+				readOnly: false,
+				cloneable: true,
+				instantiable: true,
 				typeParameters: [
 					new TypeParameterDefinition(
 						name: 'TPhpStan',

@@ -69,9 +69,12 @@ class ReflectionSnapshotsTest extends IntegrationTestCase
 		if ($reflection instanceof ClassReflection) {
 			$expected = [
 				...$expected,
-				'isAnonymous' => $reflection->isAnonymous(),
-				'isAbstract'  => $reflection->isAbstract(),
-				'isFinal'     => $reflection->isFinal(),
+				'isAnonymous'    => $reflection->isAnonymous(),
+				'isAbstract'     => $reflection->isAbstract(),
+				'isFinal'        => $reflection->isFinal(),
+				'isReadOnly'     => $reflection->isReadOnly(),
+				'isCloneable'    => $reflection->isCloneable(),
+				'isInstantiable' => $reflection->isInstantiable(),
 			];
 		}
 

@@ -7,6 +7,9 @@ isBuiltIn: false
 isAnonymous: false
 isAbstract: false
 isFinal: false
+isReadOnly: false
+isCloneable: true
+isInstantiable: true
 attributes:
     asString: '#[\Attribute(...)]'
     all:

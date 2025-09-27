@@ -7,6 +7,9 @@ isBuiltIn: false
 isAnonymous: false
 isAbstract: false
 isFinal: true
+isReadOnly: false
+isCloneable: true
+isInstantiable: true
 attributes:
     asString: '#[\Tests\Stubs\AttributeStub(...)]'
     all:
@@ -142,25 +145,27 @@ properties:
             type: T
             hasDefaultValue: false
             defaultValue: null
-    -   asString: $parentProperty
+    -
+        asString: $parentProperty
         name: parentProperty
         location: 'Tests\Stubs\Classes\ParentClassStub::$parentProperty'
         declaringType: 'Tests\Stubs\Classes\ParentClassStub<T, Tests\Stubs\Classes\SomeStub>'
         attributes:
             asString: '#[]'
-            all: { }
+            all: {  }
         type: T
         hasDefaultValue: true
         defaultValue: N;
         isPromoted: false
         promotedParameter: null
-    -   asString: $prop
+    -
+        asString: $prop
         name: prop
         location: 'Tests\Stubs\Traits\ParentTraitStub::$prop'
         declaringType: 'Tests\Stubs\Traits\ParentTraitStub<T, Tests\Stubs\Classes\SomeStub>'
         attributes:
             asString: '#[]'
-            all: { }
+            all: {  }
         type: int
         hasDefaultValue: false
         defaultValue: null
@@ -369,16 +374,18 @@ methods:
         typeParameters: {  }
         parameters: {  }
         returnType: Tests\Stubs\Classes\SomeStub
-    -   asString: test()
+    -
+        asString: test()
         name: test
         location: 'Tests\Stubs\Classes\ParentClassStub::test()'
         declaringType: 'Tests\Stubs\Classes\ParentClassStub<T, Tests\Stubs\Classes\SomeStub>'
         attributes:
             asString: '#[]'
-            all: { }
-        typeParameters: { }
+            all: {  }
+        typeParameters: {  }
         parameters:
-            -   asString: 'arg $str'
+            -
+                asString: 'arg $str'
                 name: str
                 location: 'Tests\Stubs\Classes\ParentClassStub::test() arg $str'
                 declaringMethod: test()
@@ -386,25 +393,27 @@ methods:
                 hasDefaultValue: true
                 defaultValue: N;
         returnType: static<Tests\Stubs\Classes\ClassStub>
-    -   asString: traitMethod()
+    -
+        asString: traitMethod()
         name: traitMethod
         location: 'Tests\Stubs\Traits\ParentTraitStub::traitMethod()'
         declaringType: 'Tests\Stubs\Traits\ParentTraitStub<T, Tests\Stubs\Classes\SomeStub>'
         attributes:
             asString: '#[]'
-            all: { }
-        typeParameters: { }
-        parameters: { }
+            all: {  }
+        typeParameters: {  }
+        parameters: {  }
         returnType: void
-    -   asString: traitMethodTwo()
+    -
+        asString: traitMethodTwo()
         name: traitMethodTwo
         location: 'Tests\Stubs\Traits\ParentTraitStub::traitMethod()'
         declaringType: 'Tests\Stubs\Traits\ParentTraitStub<T, Tests\Stubs\Classes\SomeStub>'
         attributes:
             asString: '#[]'
-            all: { }
-        typeParameters: { }
-        parameters: { }
+            all: {  }
+        typeParameters: {  }
+        parameters: {  }
         returnType: void
     -
         asString: otherFunction()
