@@ -29,6 +29,8 @@ interface MethodReflection extends Stringable, HasAttributes, HasTypeParameters
 
 	public function returnTypeSource(): ?TypeSource;
 
+	public function returnsByReference(): bool;
+
 	/**
 	 * Call a method with strict_types=1.
 	 *

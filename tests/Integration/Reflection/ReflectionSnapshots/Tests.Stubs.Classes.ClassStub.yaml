@@ -103,6 +103,7 @@ declaredProperties:
         promotedParameter:
             asString: 'arg $promoted'
             name: promoted
+            passedByReference: false
             location: 'Tests\Stubs\Classes\ClassStub::__construct() arg $promoted'
             declaringMethod: __construct()
             type: T
@@ -152,6 +153,7 @@ properties:
         promotedParameter:
             asString: 'arg $promoted'
             name: promoted
+            passedByReference: false
             location: 'Tests\Stubs\Classes\ClassStub::__construct() arg $promoted'
             declaringMethod: __construct()
             type: T
@@ -187,6 +189,7 @@ declaredMethods:
     -
         asString: __construct()
         name: __construct
+        returnsByReference: false
         location: 'Tests\Stubs\Classes\ClassStub::__construct()'
         declaringType: Tests\Stubs\Classes\ClassStub
         attributes:
@@ -197,6 +200,7 @@ declaredMethods:
             -
                 asString: 'arg $promoted'
                 name: promoted
+                passedByReference: false
                 location: 'Tests\Stubs\Classes\ClassStub::__construct() arg $promoted'
                 declaringMethod: __construct()
                 type: T
@@ -206,6 +210,7 @@ declaredMethods:
     -
         asString: method()
         name: method
+        returnsByReference: false
         location: 'Tests\Stubs\Classes\ClassStub::method()'
         declaringType: Tests\Stubs\Classes\ClassStub
         attributes:
@@ -223,6 +228,7 @@ declaredMethods:
             -
                 asString: 'arg $param'
                 name: param
+                passedByReference: false
                 location: 'Tests\Stubs\Classes\ClassStub::method() arg $param'
                 declaringMethod: method()
                 type: 'Tests\Stubs\Classes\DoubleTemplateType<Tests\Stubs\Classes\SomeStub, T>'
@@ -232,6 +238,7 @@ declaredMethods:
     -
         asString: methodTwo()
         name: methodTwo
+        returnsByReference: false
         location: 'Tests\Stubs\Classes\ClassStub::methodTwo()'
         declaringType: Tests\Stubs\Classes\ClassStub
         attributes:
@@ -254,6 +261,7 @@ declaredMethods:
             -
                 asString: 'arg $param'
                 name: param
+                passedByReference: false
                 location: 'Tests\Stubs\Classes\ClassStub::methodTwo() arg $param'
                 declaringMethod: methodTwo()
                 type: K
@@ -263,6 +271,7 @@ declaredMethods:
     -
         asString: self()
         name: self
+        returnsByReference: false
         location: 'Tests\Stubs\Classes\ClassStub::self()'
         declaringType: Tests\Stubs\Classes\ClassStub
         attributes:
@@ -273,6 +282,7 @@ declaredMethods:
             -
                 asString: 'arg $parent'
                 name: parent
+                passedByReference: false
                 location: 'Tests\Stubs\Classes\ClassStub::self() arg $parent'
                 declaringMethod: self()
                 type: 'Tests\Stubs\Classes\ParentClassStub<int, int>'
@@ -283,6 +293,7 @@ methods:
     -
         asString: __construct()
         name: __construct
+        returnsByReference: false
         location: 'Tests\Stubs\Classes\ClassStub::__construct()'
         declaringType: Tests\Stubs\Classes\ClassStub
         attributes:
@@ -293,6 +304,7 @@ methods:
             -
                 asString: 'arg $promoted'
                 name: promoted
+                passedByReference: false
                 location: 'Tests\Stubs\Classes\ClassStub::__construct() arg $promoted'
                 declaringMethod: __construct()
                 type: T
@@ -302,6 +314,7 @@ methods:
     -
         asString: method()
         name: method
+        returnsByReference: false
         location: 'Tests\Stubs\Classes\ClassStub::method()'
         declaringType: Tests\Stubs\Classes\ClassStub
         attributes:
@@ -319,6 +332,7 @@ methods:
             -
                 asString: 'arg $param'
                 name: param
+                passedByReference: false
                 location: 'Tests\Stubs\Classes\ClassStub::method() arg $param'
                 declaringMethod: method()
                 type: 'Tests\Stubs\Classes\DoubleTemplateType<Tests\Stubs\Classes\SomeStub, T>'
@@ -328,6 +342,7 @@ methods:
     -
         asString: methodTwo()
         name: methodTwo
+        returnsByReference: false
         location: 'Tests\Stubs\Classes\ClassStub::methodTwo()'
         declaringType: Tests\Stubs\Classes\ClassStub
         attributes:
@@ -350,6 +365,7 @@ methods:
             -
                 asString: 'arg $param'
                 name: param
+                passedByReference: false
                 location: 'Tests\Stubs\Classes\ClassStub::methodTwo() arg $param'
                 declaringMethod: methodTwo()
                 type: K
@@ -359,6 +375,7 @@ methods:
     -
         asString: self()
         name: self
+        returnsByReference: false
         location: 'Tests\Stubs\Classes\ClassStub::self()'
         declaringType: Tests\Stubs\Classes\ClassStub
         attributes:
@@ -369,6 +386,7 @@ methods:
             -
                 asString: 'arg $parent'
                 name: parent
+                passedByReference: false
                 location: 'Tests\Stubs\Classes\ClassStub::self() arg $parent'
                 declaringMethod: self()
                 type: 'Tests\Stubs\Classes\ParentClassStub<int, int>'
@@ -378,6 +396,7 @@ methods:
     -
         asString: parentMethod()
         name: parentMethod
+        returnsByReference: false
         location: 'Tests\Stubs\Classes\ParentClassStub::parentMethod()'
         declaringType: 'Tests\Stubs\Classes\ParentClassStub<T, Tests\Stubs\Classes\SomeStub>'
         attributes:
@@ -389,6 +408,7 @@ methods:
     -
         asString: test()
         name: test
+        returnsByReference: false
         location: 'Tests\Stubs\Classes\ParentClassStub::test()'
         declaringType: 'Tests\Stubs\Classes\ParentClassStub<T, Tests\Stubs\Classes\SomeStub>'
         attributes:
@@ -399,6 +419,7 @@ methods:
             -
                 asString: 'arg $str'
                 name: str
+                passedByReference: false
                 location: 'Tests\Stubs\Classes\ParentClassStub::test() arg $str'
                 declaringMethod: test()
                 type: '?string'
@@ -408,6 +429,7 @@ methods:
     -
         asString: traitMethod()
         name: traitMethod
+        returnsByReference: false
         location: 'Tests\Stubs\Traits\ParentTraitStub::traitMethod()'
         declaringType: 'Tests\Stubs\Traits\ParentTraitStub<T, Tests\Stubs\Classes\SomeStub>'
         attributes:
@@ -419,6 +441,7 @@ methods:
     -
         asString: traitMethodTwo()
         name: traitMethodTwo
+        returnsByReference: false
         location: 'Tests\Stubs\Traits\ParentTraitStub::traitMethod()'
         declaringType: 'Tests\Stubs\Traits\ParentTraitStub<T, Tests\Stubs\Classes\SomeStub>'
         attributes:
@@ -430,6 +453,7 @@ methods:
     -
         asString: otherFunction()
         name: otherFunction
+        returnsByReference: false
         location: 'Tests\Stubs\Traits\TraitWithoutProperties::otherFunction()'
         declaringType: Tests\Stubs\Traits\TraitWithoutProperties
         attributes:

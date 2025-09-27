@@ -59,6 +59,7 @@ methods:
     -
         asString: from()
         name: from
+        returnsByReference: false
         location: 'BackedEnum::from()'
         declaringType: BackedEnum
         attributes:
@@ -69,6 +70,7 @@ methods:
             -
                 asString: 'arg $value'
                 name: value
+                passedByReference: false
                 location: 'BackedEnum::from() arg $value'
                 declaringMethod: from()
                 type: string|int
@@ -78,6 +80,7 @@ methods:
     -
         asString: tryFrom()
         name: tryFrom
+        returnsByReference: false
         location: 'BackedEnum::tryFrom()'
         declaringType: BackedEnum
         attributes:
@@ -88,6 +91,7 @@ methods:
             -
                 asString: 'arg $value'
                 name: value
+                passedByReference: false
                 location: 'BackedEnum::tryFrom() arg $value'
                 declaringMethod: tryFrom()
                 type: string|int
@@ -97,6 +101,7 @@ methods:
     -
         asString: cases()
         name: cases
+        returnsByReference: false
         location: 'BackedEnum::cases()'
         declaringType: BackedEnum
         attributes:

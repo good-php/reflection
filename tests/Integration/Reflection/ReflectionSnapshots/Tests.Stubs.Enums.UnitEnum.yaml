@@ -58,6 +58,7 @@ declaredMethods:
     -
         asString: function()
         name: function
+        returnsByReference: false
         location: 'Tests\Stubs\Enums\UnitEnum::function()'
         declaringType: Tests\Stubs\Enums\UnitEnum
         attributes:
@@ -68,6 +69,7 @@ declaredMethods:
             -
                 asString: 'arg $i'
                 name: i
+                passedByReference: false
                 location: 'Tests\Stubs\Enums\UnitEnum::function() arg $i'
                 declaringMethod: function()
                 type: string
@@ -78,6 +80,7 @@ methods:
     -
         asString: function()
         name: function
+        returnsByReference: false
         location: 'Tests\Stubs\Enums\UnitEnum::function()'
         declaringType: Tests\Stubs\Enums\UnitEnum
         attributes:
@@ -88,6 +91,7 @@ methods:
             -
                 asString: 'arg $i'
                 name: i
+                passedByReference: false
                 location: 'Tests\Stubs\Enums\UnitEnum::function() arg $i'
                 declaringMethod: function()
                 type: string
@@ -97,6 +101,7 @@ methods:
     -
         asString: otherFunction()
         name: otherFunction
+        returnsByReference: false
         location: 'Tests\Stubs\Traits\TraitWithoutProperties::otherFunction()'
         declaringType: Tests\Stubs\Traits\TraitWithoutProperties
         attributes:
@@ -108,6 +113,7 @@ methods:
     -
         asString: otherOtherFunction()
         name: otherOtherFunction
+        returnsByReference: false
         location: 'Tests\Stubs\Traits\TraitWithoutProperties::otherFunction()'
         declaringType: Tests\Stubs\Traits\TraitWithoutProperties
         attributes:
@@ -119,6 +125,7 @@ methods:
     -
         asString: cases()
         name: cases
+        returnsByReference: false
         location: 'UnitEnum::cases()'
         declaringType: UnitEnum
         attributes:

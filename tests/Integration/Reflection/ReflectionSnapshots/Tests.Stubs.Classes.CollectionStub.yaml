@@ -49,6 +49,7 @@ declaredMethods:
     -
         asString: getIterator()
         name: getIterator
+        returnsByReference: false
         location: 'Tests\Stubs\Classes\CollectionStub::getIterator()'
         declaringType: Tests\Stubs\Classes\CollectionStub
         attributes:
@@ -60,6 +61,7 @@ declaredMethods:
     -
         asString: offsetExists()
         name: offsetExists
+        returnsByReference: false
         location: 'Tests\Stubs\Classes\CollectionStub::offsetExists()'
         declaringType: Tests\Stubs\Classes\CollectionStub
         attributes:
@@ -70,6 +72,7 @@ declaredMethods:
             -
                 asString: 'arg $offset'
                 name: offset
+                passedByReference: false
                 location: 'Tests\Stubs\Classes\CollectionStub::offsetExists() arg $offset'
                 declaringMethod: offsetExists()
                 type: mixed
@@ -79,6 +82,7 @@ declaredMethods:
     -
         asString: offsetGet()
         name: offsetGet
+        returnsByReference: false
         location: 'Tests\Stubs\Classes\CollectionStub::offsetGet()'
         declaringType: Tests\Stubs\Classes\CollectionStub
         attributes:
@@ -89,6 +93,7 @@ declaredMethods:
             -
                 asString: 'arg $offset'
                 name: offset
+                passedByReference: false
                 location: 'Tests\Stubs\Classes\CollectionStub::offsetGet() arg $offset'
                 declaringMethod: offsetGet()
                 type: mixed
@@ -98,6 +103,7 @@ declaredMethods:
     -
         asString: offsetSet()
         name: offsetSet
+        returnsByReference: false
         location: 'Tests\Stubs\Classes\CollectionStub::offsetSet()'
         declaringType: Tests\Stubs\Classes\CollectionStub
         attributes:
@@ -108,6 +114,7 @@ declaredMethods:
             -
                 asString: 'arg $offset'
                 name: offset
+                passedByReference: false
                 location: 'Tests\Stubs\Classes\CollectionStub::offsetSet() arg $offset'
                 declaringMethod: offsetSet()
                 type: mixed
@@ -116,6 +123,7 @@ declaredMethods:
             -
                 asString: 'arg $value'
                 name: value
+                passedByReference: false
                 location: 'Tests\Stubs\Classes\CollectionStub::offsetSet() arg $value'
                 declaringMethod: offsetSet()
                 type: mixed
@@ -125,6 +133,7 @@ declaredMethods:
     -
         asString: offsetUnset()
         name: offsetUnset
+        returnsByReference: false
         location: 'Tests\Stubs\Classes\CollectionStub::offsetUnset()'
         declaringType: Tests\Stubs\Classes\CollectionStub
         attributes:
@@ -135,6 +144,7 @@ declaredMethods:
             -
                 asString: 'arg $offset'
                 name: offset
+                passedByReference: false
                 location: 'Tests\Stubs\Classes\CollectionStub::offsetUnset() arg $offset'
                 declaringMethod: offsetUnset()
                 type: mixed
@@ -145,6 +155,7 @@ methods:
     -
         asString: getIterator()
         name: getIterator
+        returnsByReference: false
         location: 'Tests\Stubs\Classes\CollectionStub::getIterator()'
         declaringType: Tests\Stubs\Classes\CollectionStub
         attributes:
@@ -156,6 +167,7 @@ methods:
     -
         asString: offsetExists()
         name: offsetExists
+        returnsByReference: false
         location: 'Tests\Stubs\Classes\CollectionStub::offsetExists()'
         declaringType: Tests\Stubs\Classes\CollectionStub
         attributes:
@@ -166,6 +178,7 @@ methods:
             -
                 asString: 'arg $offset'
                 name: offset
+                passedByReference: false
                 location: 'Tests\Stubs\Classes\CollectionStub::offsetExists() arg $offset'
                 declaringMethod: offsetExists()
                 type: string
@@ -175,6 +188,7 @@ methods:
     -
         asString: offsetGet()
         name: offsetGet
+        returnsByReference: false
         location: 'Tests\Stubs\Classes\CollectionStub::offsetGet()'
         declaringType: Tests\Stubs\Classes\CollectionStub
         attributes:
@@ -185,6 +199,7 @@ methods:
             -
                 asString: 'arg $offset'
                 name: offset
+                passedByReference: false
                 location: 'Tests\Stubs\Classes\CollectionStub::offsetGet() arg $offset'
                 declaringMethod: offsetGet()
                 type: string
@@ -194,6 +209,7 @@ methods:
     -
         asString: offsetSet()
         name: offsetSet
+        returnsByReference: false
         location: 'Tests\Stubs\Classes\CollectionStub::offsetSet()'
         declaringType: Tests\Stubs\Classes\CollectionStub
         attributes:
@@ -204,6 +220,7 @@ methods:
             -
                 asString: 'arg $offset'
                 name: offset
+                passedByReference: false
                 location: 'Tests\Stubs\Classes\CollectionStub::offsetSet() arg $offset'
                 declaringMethod: offsetSet()
                 type: '?string'
@@ -212,6 +229,7 @@ methods:
             -
                 asString: 'arg $value'
                 name: value
+                passedByReference: false
                 location: 'Tests\Stubs\Classes\CollectionStub::offsetSet() arg $value'
                 declaringMethod: offsetSet()
                 type: Tests\Stubs\Classes\SomeStub
@@ -221,6 +239,7 @@ methods:
     -
         asString: offsetUnset()
         name: offsetUnset
+        returnsByReference: false
         location: 'Tests\Stubs\Classes\CollectionStub::offsetUnset()'
         declaringType: Tests\Stubs\Classes\CollectionStub
         attributes:
@@ -231,6 +250,7 @@ methods:
             -
                 asString: 'arg $offset'
                 name: offset
+                passedByReference: false
                 location: 'Tests\Stubs\Classes\CollectionStub::offsetUnset() arg $offset'
                 declaringMethod: offsetUnset()
                 type: string

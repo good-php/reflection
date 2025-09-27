@@ -17,5 +17,6 @@ final class MethodDefinition
 		public readonly array $parameters,
 		public readonly ?Type $returnType,
 		public readonly ?TypeSource $returnTypeSource,
+		public readonly bool $returnsByReference,
 	) {}
 }

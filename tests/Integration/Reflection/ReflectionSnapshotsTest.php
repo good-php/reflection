@@ -228,27 +228,29 @@ class ReflectionSnapshotsTest extends IntegrationTestCase
 	private static function methodToExpectation(MethodReflection $method): array
 	{
 		return [
-			'asString'       => (string) $method,
-			'name'           => $method->name(),
-			'location'       => $method->location(),
-			'declaringType'  => self::typeToExpectation($method->declaringType()->type()),
-			'attributes'     => self::attributesToExpectation($method->attributes()),
-			'typeParameters' => array_map(self::typeParameterToExpectation(...), $method->typeParameters()),
-			'parameters'     => array_map(self::parameterToExpectation(...), $method->parameters()),
-			'returnType'     => self::typeToExpectation($method->returnType()),
+			'asString'           => (string) $method,
+			'name'               => $method->name(),
+			'returnsByReference' => $method->returnsByReference(),
+			'location'           => $method->location(),
+			'declaringType'      => self::typeToExpectation($method->declaringType()->type()),
+			'attributes'         => self::attributesToExpectation($method->attributes()),
+			'typeParameters'     => array_map(self::typeParameterToExpectation(...), $method->typeParameters()),
+			'parameters'         => array_map(self::parameterToExpectation(...), $method->parameters()),
+			'returnType'         => self::typeToExpectation($method->returnType()),
 		];
 	}
 
 	private static function parameterToExpectation(FunctionParameterReflection $parameter): array
 	{
 		return [
-			'asString'        => (string) $parameter,
-			'name'            => $parameter->name(),
-			'location'        => $parameter->location(),
-			'declaringMethod' => (string) $parameter->declaringMethod(),
-			'type'            => self::typeToExpectation($parameter->type()),
-			'hasDefaultValue' => $hasDefault = $parameter->hasDefaultValue(),
-			'defaultValue'    => $hasDefault ? serialize($parameter->defaultValue()) : null,
+			'asString'          => (string) $parameter,
+			'name'              => $parameter->name(),
+			'passedByReference' => $parameter->passedByReference(),
+			'location'          => $parameter->location(),
+			'declaringMethod'   => (string) $parameter->declaringMethod(),
+			'type'              => self::typeToExpectation($parameter->type()),
+			'hasDefaultValue'   => $hasDefault = $parameter->hasDefaultValue(),
+			'defaultValue'      => $hasDefault ? serialize($parameter->defaultValue()) : null,
 		];
 	}
 

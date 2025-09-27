@@ -320,6 +320,7 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 					parameters: $this->functionParameters($method, $phpDoc, $context),
 					returnType: $returnType,
 					returnTypeSource: $returnTypeSource,
+					returnsByReference: $method->returnsReference(),
 				);
 			})
 			->values()
@@ -403,6 +404,7 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 
 				return new FunctionParameterDefinition(
 					name: $parameter->getName(),
+					passedByReference: $parameter->isPassedByReference(),
 					type: $type,
 					typeSource: $typeSource,
 					hasDefaultValue: $parameter->isDefaultValueAvailable(),

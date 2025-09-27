@@ -76,6 +76,11 @@ final class TraitAliasesMethodReflection implements MethodReflection
 		return $this->method->returnTypeSource();
 	}
 
+	public function returnsByReference(): bool
+	{
+		return $this->method->returnsByReference();
+	}
+
 	public function invoke(object $receiver, mixed ...$args): mixed
 	{
 		return $this->method->invoke($receiver, ...$args);

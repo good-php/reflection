@@ -38,6 +38,11 @@ final class NpdFunctionParameterReflection implements FunctionParameterReflectio
 		return $this->definition->name;
 	}
 
+	public function passedByReference(): bool
+	{
+		return $this->definition->passedByReference;
+	}
+
 	public function type(): ?Type
 	{
 		if (isset($this->type)) {

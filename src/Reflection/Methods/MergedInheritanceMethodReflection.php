@@ -121,6 +121,11 @@ final class MergedInheritanceMethodReflection implements MethodReflection
 		return $this->returnTypeFromReflection()->returnTypeSource();
 	}
 
+	public function returnsByReference(): bool
+	{
+		return $this->reflections[0]->returnsByReference();
+	}
+
 	public function invoke(object $receiver, ...$args): mixed
 	{
 		return $this->reflections[0]->invoke($receiver, ...$args);

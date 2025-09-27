@@ -80,6 +80,7 @@ declaredMethods:
     -
         asString: traitMethod()
         name: traitMethod
+        returnsByReference: false
         location: 'Tests\Stubs\Traits\ParentTraitStub::traitMethod()'
         declaringType: Tests\Stubs\Traits\ParentTraitStub
         attributes:
@@ -92,6 +93,7 @@ methods:
     -
         asString: traitMethod()
         name: traitMethod
+        returnsByReference: false
         location: 'Tests\Stubs\Traits\ParentTraitStub::traitMethod()'
         declaringType: Tests\Stubs\Traits\ParentTraitStub
         attributes:
@@ -103,6 +105,7 @@ methods:
     -
         asString: otherFunction()
         name: otherFunction
+        returnsByReference: false
         location: 'Tests\Stubs\Traits\TraitWithoutProperties::otherFunction()'
         declaringType: Tests\Stubs\Traits\TraitWithoutProperties
         attributes:

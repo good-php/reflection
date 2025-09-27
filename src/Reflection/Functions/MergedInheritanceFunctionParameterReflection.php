@@ -48,6 +48,11 @@ final class MergedInheritanceFunctionParameterReflection implements FunctionPara
 		return $this->reflections[0]->name();
 	}
 
+	public function passedByReference(): bool
+	{
+		return $this->reflections[0]->passedByReference();
+	}
+
 	public function type(): ?Type
 	{
 		return $this->typeFromReflection()->type();

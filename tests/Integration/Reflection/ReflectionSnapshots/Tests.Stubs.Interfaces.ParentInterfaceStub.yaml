@@ -27,6 +27,7 @@ declaredMethods:
     -
         asString: test()
         name: test
+        returnsByReference: false
         location: 'Tests\Stubs\Interfaces\ParentInterfaceStub::test()'
         declaringType: Tests\Stubs\Interfaces\ParentInterfaceStub
         attributes:
@@ -37,6 +38,7 @@ declaredMethods:
             -
                 asString: 'arg $str'
                 name: str
+                passedByReference: false
                 location: 'Tests\Stubs\Interfaces\ParentInterfaceStub::test() arg $str'
                 declaringMethod: test()
                 type: string
@@ -47,6 +49,7 @@ methods:
     -
         asString: test()
         name: test
+        returnsByReference: false
         location: 'Tests\Stubs\Interfaces\ParentInterfaceStub::test()'
         declaringType: Tests\Stubs\Interfaces\ParentInterfaceStub
         attributes:
@@ -57,6 +60,7 @@ methods:
             -
                 asString: 'arg $str'
                 name: str
+                passedByReference: false
                 location: 'Tests\Stubs\Interfaces\ParentInterfaceStub::test() arg $str'
                 declaringMethod: test()
                 type: string

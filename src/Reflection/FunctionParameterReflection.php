@@ -10,6 +10,8 @@ interface FunctionParameterReflection extends Stringable, HasAttributes
 {
 	public function name(): string;
 
+	public function passedByReference(): bool;
+
 	public function type(): ?Type;
 
 	public function typeSource(): ?TypeSource;

@@ -49,6 +49,7 @@ class BuiltInCoreDefinitionProvider implements DefinitionProvider
 						parameters: [],
 						returnType: PrimitiveType::integer(),
 						returnTypeSource: TypeSource::PHP_DOC,
+						returnsByReference: false,
 					),
 				]
 			)),
@@ -79,6 +80,7 @@ class BuiltInCoreDefinitionProvider implements DefinitionProvider
 						parameters: [
 							new FunctionParameterDefinition(
 								name: 'offset',
+								passedByReference: false,
 								type: new TemplateType(
 									name: 'TKey',
 								),
@@ -88,6 +90,7 @@ class BuiltInCoreDefinitionProvider implements DefinitionProvider
 						],
 						returnType: PrimitiveType::boolean(),
 						returnTypeSource: TypeSource::PHP_DOC,
+						returnsByReference: false,
 					),
 					new MethodDefinition(
 						name: 'offsetGet',
@@ -95,6 +98,7 @@ class BuiltInCoreDefinitionProvider implements DefinitionProvider
 						parameters: [
 							new FunctionParameterDefinition(
 								name: 'offset',
+								passedByReference: false,
 								type: new TemplateType(
 									name: 'TKey',
 								),
@@ -108,6 +112,7 @@ class BuiltInCoreDefinitionProvider implements DefinitionProvider
 							)
 						),
 						returnTypeSource: TypeSource::PHP_DOC,
+						returnsByReference: false,
 					),
 					new MethodDefinition(
 						name: 'offsetSet',
@@ -115,6 +120,7 @@ class BuiltInCoreDefinitionProvider implements DefinitionProvider
 						parameters: [
 							new FunctionParameterDefinition(
 								name: 'offset',
+								passedByReference: false,
 								type: new NullableType(
 									new TemplateType(
 										name: 'TKey',
@@ -125,6 +131,7 @@ class BuiltInCoreDefinitionProvider implements DefinitionProvider
 							),
 							new FunctionParameterDefinition(
 								name: 'value',
+								passedByReference: false,
 								type: new TemplateType(
 									name: 'TValue',
 								),
@@ -134,6 +141,7 @@ class BuiltInCoreDefinitionProvider implements DefinitionProvider
 						],
 						returnType: VoidType::get(),
 						returnTypeSource: TypeSource::PHP_DOC,
+						returnsByReference: false,
 					),
 					new MethodDefinition(
 						name: 'offsetUnset',
@@ -141,6 +149,7 @@ class BuiltInCoreDefinitionProvider implements DefinitionProvider
 						parameters: [
 							new FunctionParameterDefinition(
 								name: 'offset',
+								passedByReference: false,
 								type: new TemplateType(
 									name: 'TKey',
 								),
@@ -150,6 +159,7 @@ class BuiltInCoreDefinitionProvider implements DefinitionProvider
 						],
 						returnType: VoidType::get(),
 						returnTypeSource: TypeSource::PHP_DOC,
+						returnsByReference: false,
 					),
 				]
 			)),
@@ -227,6 +237,7 @@ class BuiltInCoreDefinitionProvider implements DefinitionProvider
 							),
 						]),
 						returnTypeSource: TypeSource::PHP_DOC,
+						returnsByReference: false,
 					),
 				]
 			)),

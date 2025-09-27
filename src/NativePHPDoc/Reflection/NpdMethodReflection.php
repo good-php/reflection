@@ -123,6 +123,11 @@ final class NpdMethodReflection implements MethodReflection
 		return $this->definition->returnTypeSource;
 	}
 
+	public function returnsByReference(): bool
+	{
+		return $this->definition->returnsByReference;
+	}
+
 	public function invoke(object $receiver, mixed ...$args): mixed
 	{
 		$methodName = $this->name();
