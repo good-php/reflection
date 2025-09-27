@@ -60,6 +60,21 @@ final class NpdPropertyReflection implements PropertyReflection
 		return $this->definition->name;
 	}
 
+	public function isAbstract(): bool
+	{
+		return $this->definition->abstract;
+	}
+
+	public function isFinal(): bool
+	{
+		return $this->definition->final;
+	}
+
+	public function isReadOnly(): bool
+	{
+		return $this->definition->readOnly;
+	}
+
 	public function type(): ?Type
 	{
 		if (isset($this->type)) {
@@ -127,6 +142,11 @@ final class NpdPropertyReflection implements PropertyReflection
 		return $this->attributes ??= new NativeAttributes(
 			fn () => $this->nativeReflection()->getAttributes()
 		);
+	}
+
+	public function initialized(object $receiver): bool
+	{
+		return $this->nativeReflection()->isInitialized($receiver);
 	}
 
 	public function get(object $receiver): mixed

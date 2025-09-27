@@ -69,6 +69,21 @@ final class MergedInheritancePropertyReflection implements PropertyReflection
 		return $this->reflections[0]->name();
 	}
 
+	public function isAbstract(): bool
+	{
+		return $this->reflections[0]->isAbstract();
+	}
+
+	public function isFinal(): bool
+	{
+		return $this->reflections[0]->isFinal();
+	}
+
+	public function isReadOnly(): bool
+	{
+		return $this->reflections[0]->isReadOnly();
+	}
+
 	public function type(): ?Type
 	{
 		return $this->typeFromReflection()->type();
@@ -97,6 +112,11 @@ final class MergedInheritancePropertyReflection implements PropertyReflection
 	public function promotedParameter(): ?FunctionParameterReflection
 	{
 		return $this->reflections[0]->promotedParameter();
+	}
+
+	public function initialized(object $receiver): bool
+	{
+		return $this->reflections[0]->initialized($receiver);
 	}
 
 	public function get(object $receiver): mixed

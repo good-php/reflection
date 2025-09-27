@@ -35,6 +35,8 @@ declaredMethods:
     -
         asString: function()
         name: function
+        isAbstract: true
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\Interfaces\NonGenericInterface::function()'
         declaringType: Tests\Stubs\Interfaces\NonGenericInterface
@@ -57,6 +59,8 @@ methods:
     -
         asString: function()
         name: function
+        isAbstract: true
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\Interfaces\NonGenericInterface::function()'
         declaringType: Tests\Stubs\Interfaces\NonGenericInterface

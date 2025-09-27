@@ -38,6 +38,9 @@ declaredProperties:
     -
         asString: $property
         name: property
+        isAbstract: false
+        isFinal: false
+        isReadOnly: false
         location: 'Tests\Stubs\Classes\PrefixedPhpDocTags::$property'
         declaringType: Tests\Stubs\Classes\PrefixedPhpDocTags
         attributes:
@@ -52,6 +55,9 @@ properties:
     -
         asString: $property
         name: property
+        isAbstract: false
+        isFinal: false
+        isReadOnly: false
         location: 'Tests\Stubs\Classes\PrefixedPhpDocTags::$property'
         declaringType: Tests\Stubs\Classes\PrefixedPhpDocTags
         attributes:
@@ -66,6 +72,8 @@ declaredMethods:
     -
         asString: method()
         name: method
+        isAbstract: false
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\Classes\PrefixedPhpDocTags::method()'
         declaringType: Tests\Stubs\Classes\PrefixedPhpDocTags
@@ -97,6 +105,8 @@ methods:
     -
         asString: method()
         name: method
+        isAbstract: false
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\Classes\PrefixedPhpDocTags::method()'
         declaringType: Tests\Stubs\Classes\PrefixedPhpDocTags

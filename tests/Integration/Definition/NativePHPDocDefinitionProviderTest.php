@@ -165,6 +165,9 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 				properties: [
 					new PropertyDefinition(
 						name: 'factories',
+						abstract: false,
+						final: false,
+						readOnly: false,
 						type: PrimitiveType::array(new NamedType(SomeStub::class)),
 						typeSource: TypeSource::PHP_DOC,
 						hasDefaultValue: false,
@@ -172,6 +175,9 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 					),
 					new PropertyDefinition(
 						name: 'generic',
+						abstract: false,
+						final: false,
+						readOnly: false,
 						type: new NamedType(DoubleTemplateType::class, [
 							new NamedType(DateTime::class),
 							new TemplateType(
@@ -184,6 +190,9 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 					),
 					new PropertyDefinition(
 						name: 'promoted',
+						abstract: false,
+						final: false,
+						readOnly: true,
 						type: new TemplateType('T'),
 						typeSource: TypeSource::PHP_DOC,
 						hasDefaultValue: false,
@@ -193,6 +202,8 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 				methods: [
 					new MethodDefinition(
 						name: '__construct',
+						abstract: false,
+						final: false,
 						typeParameters: [],
 						parameters: [
 							new FunctionParameterDefinition(
@@ -209,6 +220,8 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 					),
 					new MethodDefinition(
 						name: 'method',
+						abstract: false,
+						final: false,
 						typeParameters: [
 							new TypeParameterDefinition(
 								name: 'G',
@@ -244,6 +257,8 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 					),
 					new MethodDefinition(
 						name: 'methodTwo',
+						abstract: false,
+						final: false,
 						typeParameters: [
 							new TypeParameterDefinition(
 								name: 'KValue',
@@ -281,6 +296,8 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 					),
 					new MethodDefinition(
 						name: 'self',
+						abstract: false,
+						final: false,
 						typeParameters: [],
 						parameters: [
 							new FunctionParameterDefinition(
@@ -326,6 +343,9 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 				properties: [
 					new PropertyDefinition(
 						name: 'property',
+						abstract: false,
+						final: false,
+						readOnly: false,
 						type: null,
 						typeSource: null,
 						hasDefaultValue: true,
@@ -333,6 +353,9 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 					),
 					new PropertyDefinition(
 						name: 'promoted',
+						abstract: false,
+						final: false,
+						readOnly: false,
 						type: null,
 						typeSource: null,
 						hasDefaultValue: true,
@@ -340,6 +363,9 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 					),
 					new PropertyDefinition(
 						name: 'promotedDefault',
+						abstract: false,
+						final: false,
+						readOnly: true,
 						type: new NullableType(PrimitiveType::integer()),
 						typeSource: TypeSource::NATIVE,
 						hasDefaultValue: false,
@@ -349,6 +375,8 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 				methods: [
 					new MethodDefinition(
 						name: '__construct',
+						abstract: false,
+						final: false,
 						typeParameters: [],
 						parameters: [
 							new FunctionParameterDefinition(
@@ -372,6 +400,8 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 					),
 					new MethodDefinition(
 						name: 'test',
+						abstract: false,
+						final: false,
 						typeParameters: [],
 						parameters: [
 							new FunctionParameterDefinition(
@@ -411,6 +441,8 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 				methods: [
 					new MethodDefinition(
 						name: 'f1',
+						abstract: false,
+						final: false,
 						typeParameters: [],
 						parameters: [
 							new FunctionParameterDefinition(
@@ -483,6 +515,8 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 					),
 					new MethodDefinition(
 						name: 'f2',
+						abstract: false,
+						final: false,
 						typeParameters: [],
 						parameters: [
 							new FunctionParameterDefinition(
@@ -538,6 +572,8 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 					),
 					new MethodDefinition(
 						name: 'f3',
+						abstract: false,
+						final: false,
 						typeParameters: [],
 						parameters: [],
 						returnType: new StaticType(
@@ -571,6 +607,8 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 				methods: [
 					new MethodDefinition(
 						name: 'f1',
+						abstract: false,
+						final: false,
 						typeParameters: [],
 						parameters: [
 							new FunctionParameterDefinition(
@@ -660,6 +698,8 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 					),
 					new MethodDefinition(
 						name: 'f2',
+						abstract: false,
+						final: false,
 						typeParameters: [],
 						parameters: [
 							new FunctionParameterDefinition(
@@ -725,6 +765,8 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 					),
 					new MethodDefinition(
 						name: 'f3',
+						abstract: false,
+						final: false,
 						typeParameters: [],
 						parameters: [
 							new FunctionParameterDefinition(
@@ -762,6 +804,8 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 					),
 					new MethodDefinition(
 						name: 'f4',
+						abstract: false,
+						final: false,
 						typeParameters: [],
 						parameters: [
 							new FunctionParameterDefinition(
@@ -830,6 +874,8 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 					),
 					new MethodDefinition(
 						name: 'f5',
+						abstract: false,
+						final: false,
 						typeParameters: [],
 						parameters: [
 							new FunctionParameterDefinition(
@@ -893,6 +939,8 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 					),
 					new MethodDefinition(
 						name: 'f6',
+						abstract: false,
+						final: false,
 						typeParameters: [],
 						parameters: [],
 						returnType: NeverType::get(),
@@ -901,6 +949,8 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 					),
 					new MethodDefinition(
 						name: 'f7',
+						abstract: false,
+						final: false,
 						typeParameters: [],
 						parameters: [],
 						returnType: new StaticType(
@@ -911,6 +961,8 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 					),
 					new MethodDefinition(
 						name: 'f8',
+						abstract: false,
+						final: false,
 						typeParameters: [],
 						parameters: [],
 						returnType: new NamedType(AllPhpDocTypes::class),
@@ -919,6 +971,8 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 					),
 					new MethodDefinition(
 						name: 'f9',
+						abstract: false,
+						final: false,
 						typeParameters: [],
 						parameters: [],
 						returnType: new StaticType(
@@ -1037,6 +1091,8 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 				methods: [
 					new MethodDefinition(
 						name: 'function',
+						abstract: true,
+						final: false,
 						typeParameters: [],
 						parameters: [
 							new FunctionParameterDefinition(
@@ -1088,6 +1144,8 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 				methods: [
 					new MethodDefinition(
 						name: 'otherFunction',
+						abstract: false,
+						final: false,
 						typeParameters: [],
 						parameters: [],
 						returnType: new NamedType(Generator::class),
@@ -1172,6 +1230,8 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 				methods: [
 					new MethodDefinition(
 						name: 'function',
+						abstract: false,
+						final: false,
 						typeParameters: [],
 						parameters: [
 							new FunctionParameterDefinition(
@@ -1229,6 +1289,9 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 				properties: [
 					new PropertyDefinition(
 						name: 'property',
+						abstract: false,
+						final: false,
+						readOnly: false,
 						type: new NamedType(stdClass::class),
 						typeSource: TypeSource::PHP_DOC,
 						hasDefaultValue: false,
@@ -1238,6 +1301,8 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 				methods: [
 					new MethodDefinition(
 						name: 'method',
+						abstract: false,
+						final: false,
 						typeParameters: [],
 						parameters: [
 							new FunctionParameterDefinition(

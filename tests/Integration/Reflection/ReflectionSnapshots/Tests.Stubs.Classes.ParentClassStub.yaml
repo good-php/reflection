@@ -37,6 +37,9 @@ declaredProperties:
     -
         asString: $parentProperty
         name: parentProperty
+        isAbstract: false
+        isFinal: false
+        isReadOnly: false
         location: 'Tests\Stubs\Classes\ParentClassStub::$parentProperty'
         declaringType: Tests\Stubs\Classes\ParentClassStub
         attributes:
@@ -51,6 +54,9 @@ properties:
     -
         asString: $parentProperty
         name: parentProperty
+        isAbstract: false
+        isFinal: false
+        isReadOnly: false
         location: 'Tests\Stubs\Classes\ParentClassStub::$parentProperty'
         declaringType: Tests\Stubs\Classes\ParentClassStub
         attributes:
@@ -65,6 +71,8 @@ declaredMethods:
     -
         asString: parentMethod()
         name: parentMethod
+        isAbstract: false
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\Classes\ParentClassStub::parentMethod()'
         declaringType: Tests\Stubs\Classes\ParentClassStub
@@ -77,6 +85,8 @@ declaredMethods:
     -
         asString: test()
         name: test
+        isAbstract: false
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\Classes\ParentClassStub::test()'
         declaringType: Tests\Stubs\Classes\ParentClassStub
@@ -99,6 +109,8 @@ methods:
     -
         asString: parentMethod()
         name: parentMethod
+        isAbstract: false
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\Classes\ParentClassStub::parentMethod()'
         declaringType: Tests\Stubs\Classes\ParentClassStub
@@ -111,6 +123,8 @@ methods:
     -
         asString: test()
         name: test
+        isAbstract: false
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\Classes\ParentClassStub::test()'
         declaringType: Tests\Stubs\Classes\ParentClassStub

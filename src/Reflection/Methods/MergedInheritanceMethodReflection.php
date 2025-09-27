@@ -95,6 +95,16 @@ final class MergedInheritanceMethodReflection implements MethodReflection
 		return $this->reflections[0]->name();
 	}
 
+	public function isAbstract(): bool
+	{
+		return $this->reflections[0]->isAbstract();
+	}
+
+	public function isFinal(): bool
+	{
+		return $this->reflections[0]->isFinal();
+	}
+
 	public function parameters(): array
 	{
 		if (isset($this->parameters)) {

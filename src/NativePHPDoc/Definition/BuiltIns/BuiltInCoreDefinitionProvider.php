@@ -45,6 +45,8 @@ class BuiltInCoreDefinitionProvider implements DefinitionProvider
 				methods: [
 					new MethodDefinition(
 						name: 'count',
+						abstract: true,
+						final: false,
 						typeParameters: [],
 						parameters: [],
 						returnType: PrimitiveType::integer(),
@@ -76,6 +78,8 @@ class BuiltInCoreDefinitionProvider implements DefinitionProvider
 				methods: [
 					new MethodDefinition(
 						name: 'offsetExists',
+						abstract: true,
+						final: false,
 						typeParameters: [],
 						parameters: [
 							new FunctionParameterDefinition(
@@ -94,6 +98,8 @@ class BuiltInCoreDefinitionProvider implements DefinitionProvider
 					),
 					new MethodDefinition(
 						name: 'offsetGet',
+						abstract: true,
+						final: false,
 						typeParameters: [],
 						parameters: [
 							new FunctionParameterDefinition(
@@ -116,6 +122,8 @@ class BuiltInCoreDefinitionProvider implements DefinitionProvider
 					),
 					new MethodDefinition(
 						name: 'offsetSet',
+						abstract: true,
+						final: false,
 						typeParameters: [],
 						parameters: [
 							new FunctionParameterDefinition(
@@ -145,6 +153,8 @@ class BuiltInCoreDefinitionProvider implements DefinitionProvider
 					),
 					new MethodDefinition(
 						name: 'offsetUnset',
+						abstract: true,
+						final: false,
 						typeParameters: [],
 						parameters: [
 							new FunctionParameterDefinition(
@@ -226,6 +236,8 @@ class BuiltInCoreDefinitionProvider implements DefinitionProvider
 				methods: [
 					new MethodDefinition(
 						name: 'getIterator',
+						abstract: true,
+						final: false,
 						typeParameters: [],
 						parameters: [],
 						returnType: new NamedType(Traversable::class, [

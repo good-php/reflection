@@ -27,6 +27,8 @@ declaredMethods:
     -
         asString: f1()
         name: f1
+        isAbstract: false
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\Classes\AllNativeTypes::f1()'
         declaringType: Tests\Stubs\Classes\AllNativeTypes
@@ -120,6 +122,8 @@ declaredMethods:
     -
         asString: f2()
         name: f2
+        isAbstract: false
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\Classes\AllNativeTypes::f2()'
         declaringType: Tests\Stubs\Classes\AllNativeTypes
@@ -177,6 +181,8 @@ declaredMethods:
     -
         asString: f3()
         name: f3
+        isAbstract: false
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\Classes\AllNativeTypes::f3()'
         declaringType: Tests\Stubs\Classes\AllNativeTypes
@@ -190,6 +196,8 @@ methods:
     -
         asString: f1()
         name: f1
+        isAbstract: false
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\Classes\AllNativeTypes::f1()'
         declaringType: Tests\Stubs\Classes\AllNativeTypes
@@ -283,6 +291,8 @@ methods:
     -
         asString: f2()
         name: f2
+        isAbstract: false
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\Classes\AllNativeTypes::f2()'
         declaringType: Tests\Stubs\Classes\AllNativeTypes
@@ -340,6 +350,8 @@ methods:
     -
         asString: f3()
         name: f3
+        isAbstract: false
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\Classes\AllNativeTypes::f3()'
         declaringType: Tests\Stubs\Classes\AllNativeTypes

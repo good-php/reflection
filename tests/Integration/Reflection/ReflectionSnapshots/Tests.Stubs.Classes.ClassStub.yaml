@@ -63,6 +63,9 @@ declaredProperties:
     -
         asString: $factories
         name: factories
+        isAbstract: false
+        isFinal: false
+        isReadOnly: false
         location: 'Tests\Stubs\Classes\ClassStub::$factories'
         declaringType: Tests\Stubs\Classes\ClassStub
         attributes:
@@ -77,6 +80,9 @@ declaredProperties:
     -
         asString: $generic
         name: generic
+        isAbstract: false
+        isFinal: false
+        isReadOnly: false
         location: 'Tests\Stubs\Classes\ClassStub::$generic'
         declaringType: Tests\Stubs\Classes\ClassStub
         attributes:
@@ -90,6 +96,9 @@ declaredProperties:
     -
         asString: $promoted
         name: promoted
+        isAbstract: false
+        isFinal: false
+        isReadOnly: true
         location: 'Tests\Stubs\Classes\ClassStub::$promoted'
         declaringType: Tests\Stubs\Classes\ClassStub
         attributes:
@@ -113,6 +122,9 @@ properties:
     -
         asString: $factories
         name: factories
+        isAbstract: false
+        isFinal: false
+        isReadOnly: false
         location: 'Tests\Stubs\Classes\ClassStub::$factories'
         declaringType: Tests\Stubs\Classes\ClassStub
         attributes:
@@ -127,6 +139,9 @@ properties:
     -
         asString: $generic
         name: generic
+        isAbstract: false
+        isFinal: false
+        isReadOnly: false
         location: 'Tests\Stubs\Classes\ClassStub::$generic'
         declaringType: Tests\Stubs\Classes\ClassStub
         attributes:
@@ -140,6 +155,9 @@ properties:
     -
         asString: $promoted
         name: promoted
+        isAbstract: false
+        isFinal: false
+        isReadOnly: true
         location: 'Tests\Stubs\Classes\ClassStub::$promoted'
         declaringType: Tests\Stubs\Classes\ClassStub
         attributes:
@@ -162,6 +180,9 @@ properties:
     -
         asString: $parentProperty
         name: parentProperty
+        isAbstract: false
+        isFinal: false
+        isReadOnly: false
         location: 'Tests\Stubs\Classes\ParentClassStub::$parentProperty'
         declaringType: 'Tests\Stubs\Classes\ParentClassStub<T, Tests\Stubs\Classes\SomeStub>'
         attributes:
@@ -175,6 +196,9 @@ properties:
     -
         asString: $prop
         name: prop
+        isAbstract: false
+        isFinal: false
+        isReadOnly: false
         location: 'Tests\Stubs\Traits\ParentTraitStub::$prop'
         declaringType: 'Tests\Stubs\Traits\ParentTraitStub<T, Tests\Stubs\Classes\SomeStub>'
         attributes:
@@ -189,6 +213,8 @@ declaredMethods:
     -
         asString: __construct()
         name: __construct
+        isAbstract: false
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\Classes\ClassStub::__construct()'
         declaringType: Tests\Stubs\Classes\ClassStub
@@ -210,6 +236,8 @@ declaredMethods:
     -
         asString: method()
         name: method
+        isAbstract: false
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\Classes\ClassStub::method()'
         declaringType: Tests\Stubs\Classes\ClassStub
@@ -238,6 +266,8 @@ declaredMethods:
     -
         asString: methodTwo()
         name: methodTwo
+        isAbstract: false
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\Classes\ClassStub::methodTwo()'
         declaringType: Tests\Stubs\Classes\ClassStub
@@ -271,6 +301,8 @@ declaredMethods:
     -
         asString: self()
         name: self
+        isAbstract: false
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\Classes\ClassStub::self()'
         declaringType: Tests\Stubs\Classes\ClassStub
@@ -293,6 +325,8 @@ methods:
     -
         asString: __construct()
         name: __construct
+        isAbstract: false
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\Classes\ClassStub::__construct()'
         declaringType: Tests\Stubs\Classes\ClassStub
@@ -314,6 +348,8 @@ methods:
     -
         asString: method()
         name: method
+        isAbstract: false
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\Classes\ClassStub::method()'
         declaringType: Tests\Stubs\Classes\ClassStub
@@ -342,6 +378,8 @@ methods:
     -
         asString: methodTwo()
         name: methodTwo
+        isAbstract: false
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\Classes\ClassStub::methodTwo()'
         declaringType: Tests\Stubs\Classes\ClassStub
@@ -375,6 +413,8 @@ methods:
     -
         asString: self()
         name: self
+        isAbstract: false
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\Classes\ClassStub::self()'
         declaringType: Tests\Stubs\Classes\ClassStub
@@ -396,6 +436,8 @@ methods:
     -
         asString: parentMethod()
         name: parentMethod
+        isAbstract: false
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\Classes\ParentClassStub::parentMethod()'
         declaringType: 'Tests\Stubs\Classes\ParentClassStub<T, Tests\Stubs\Classes\SomeStub>'
@@ -408,6 +450,8 @@ methods:
     -
         asString: test()
         name: test
+        isAbstract: false
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\Classes\ParentClassStub::test()'
         declaringType: 'Tests\Stubs\Classes\ParentClassStub<T, Tests\Stubs\Classes\SomeStub>'
@@ -429,6 +473,8 @@ methods:
     -
         asString: traitMethod()
         name: traitMethod
+        isAbstract: false
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\Traits\ParentTraitStub::traitMethod()'
         declaringType: 'Tests\Stubs\Traits\ParentTraitStub<T, Tests\Stubs\Classes\SomeStub>'
@@ -441,6 +487,8 @@ methods:
     -
         asString: traitMethodTwo()
         name: traitMethodTwo
+        isAbstract: false
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\Traits\ParentTraitStub::traitMethod()'
         declaringType: 'Tests\Stubs\Traits\ParentTraitStub<T, Tests\Stubs\Classes\SomeStub>'
@@ -453,6 +501,8 @@ methods:
     -
         asString: otherFunction()
         name: otherFunction
+        isAbstract: false
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\Traits\TraitWithoutProperties::otherFunction()'
         declaringType: Tests\Stubs\Traits\TraitWithoutProperties

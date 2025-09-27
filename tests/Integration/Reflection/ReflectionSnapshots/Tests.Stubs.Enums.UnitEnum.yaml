@@ -58,6 +58,8 @@ declaredMethods:
     -
         asString: function()
         name: function
+        isAbstract: false
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\Enums\UnitEnum::function()'
         declaringType: Tests\Stubs\Enums\UnitEnum
@@ -80,6 +82,8 @@ methods:
     -
         asString: function()
         name: function
+        isAbstract: false
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\Enums\UnitEnum::function()'
         declaringType: Tests\Stubs\Enums\UnitEnum
@@ -101,6 +105,8 @@ methods:
     -
         asString: otherFunction()
         name: otherFunction
+        isAbstract: false
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\Traits\TraitWithoutProperties::otherFunction()'
         declaringType: Tests\Stubs\Traits\TraitWithoutProperties
@@ -113,6 +119,8 @@ methods:
     -
         asString: otherOtherFunction()
         name: otherOtherFunction
+        isAbstract: false
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\Traits\TraitWithoutProperties::otherFunction()'
         declaringType: Tests\Stubs\Traits\TraitWithoutProperties
@@ -125,6 +133,8 @@ methods:
     -
         asString: cases()
         name: cases
+        isAbstract: true
+        isFinal: false
         returnsByReference: false
         location: 'UnitEnum::cases()'
         declaringType: UnitEnum

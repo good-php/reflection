@@ -18,6 +18,10 @@ interface MethodReflection extends Stringable, HasAttributes, HasTypeParameters
 
 	public function name(): string;
 
+	public function isAbstract(): bool;
+
+	public function isFinal(): bool;
+
 	/**
 	 * @return list<FunctionParameterReflection>
 	 */

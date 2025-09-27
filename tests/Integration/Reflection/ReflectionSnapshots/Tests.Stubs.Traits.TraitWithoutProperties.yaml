@@ -19,6 +19,8 @@ declaredMethods:
     -
         asString: otherFunction()
         name: otherFunction
+        isAbstract: false
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\Traits\TraitWithoutProperties::otherFunction()'
         declaringType: Tests\Stubs\Traits\TraitWithoutProperties
@@ -32,6 +34,8 @@ methods:
     -
         asString: otherFunction()
         name: otherFunction
+        isAbstract: false
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\Traits\TraitWithoutProperties::otherFunction()'
         declaringType: Tests\Stubs\Traits\TraitWithoutProperties

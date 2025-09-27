@@ -9,6 +9,9 @@ final class PropertyDefinition
 {
 	public function __construct(
 		public readonly string $name,
+		public readonly bool $abstract,
+		public readonly bool $final,
+		public readonly bool $readOnly,
 		public readonly ?Type $type,
 		public readonly ?TypeSource $typeSource,
 		public readonly bool $hasDefaultValue,

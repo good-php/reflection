@@ -17,6 +17,12 @@ interface PropertyReflection extends Stringable, HasAttributes
 
 	public function name(): string;
 
+	public function isAbstract(): bool;
+
+	public function isFinal(): bool;
+
+	public function isReadOnly(): bool;
+
 	public function type(): ?Type;
 
 	public function typeSource(): ?TypeSource;
@@ -31,6 +37,11 @@ interface PropertyReflection extends Stringable, HasAttributes
 	 * If property is promoted, it refers to the __construct parameter it was promoted for.
 	 */
 	public function promotedParameter(): ?FunctionParameterReflection;
+
+	/**
+	 * @param ReflectableType $receiver
+	 */
+	public function initialized(object $receiver): bool;
 
 	/**
 	 * @param ReflectableType $receiver

@@ -214,6 +214,9 @@ class ReflectionSnapshotsTest extends IntegrationTestCase
 		return [
 			'asString'          => (string) $property,
 			'name'              => $property->name(),
+			'isAbstract'        => $property->isAbstract(),
+			'isFinal'           => $property->isFinal(),
+			'isReadOnly'        => $property->isReadOnly(),
 			'location'          => $property->location(),
 			'declaringType'     => self::typeToExpectation($property->declaringType()->type()),
 			'attributes'        => self::attributesToExpectation($property->attributes()),
@@ -230,6 +233,8 @@ class ReflectionSnapshotsTest extends IntegrationTestCase
 		return [
 			'asString'           => (string) $method,
 			'name'               => $method->name(),
+			'isAbstract'         => $method->isAbstract(),
+			'isFinal'            => $method->isFinal(),
 			'returnsByReference' => $method->returnsByReference(),
 			'location'           => $method->location(),
 			'declaringType'      => self::typeToExpectation($method->declaringType()->type()),

@@ -59,6 +59,8 @@ methods:
     -
         asString: from()
         name: from
+        isAbstract: true
+        isFinal: false
         returnsByReference: false
         location: 'BackedEnum::from()'
         declaringType: BackedEnum
@@ -80,6 +82,8 @@ methods:
     -
         asString: tryFrom()
         name: tryFrom
+        isAbstract: true
+        isFinal: false
         returnsByReference: false
         location: 'BackedEnum::tryFrom()'
         declaringType: BackedEnum
@@ -101,6 +105,8 @@ methods:
     -
         asString: cases()
         name: cases
+        isAbstract: true
+        isFinal: false
         returnsByReference: false
         location: 'BackedEnum::cases()'
         declaringType: BackedEnum

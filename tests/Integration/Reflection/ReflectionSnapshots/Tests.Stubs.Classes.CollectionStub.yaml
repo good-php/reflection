@@ -49,6 +49,8 @@ declaredMethods:
     -
         asString: getIterator()
         name: getIterator
+        isAbstract: false
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\Classes\CollectionStub::getIterator()'
         declaringType: Tests\Stubs\Classes\CollectionStub
@@ -61,6 +63,8 @@ declaredMethods:
     -
         asString: offsetExists()
         name: offsetExists
+        isAbstract: false
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\Classes\CollectionStub::offsetExists()'
         declaringType: Tests\Stubs\Classes\CollectionStub
@@ -82,6 +86,8 @@ declaredMethods:
     -
         asString: offsetGet()
         name: offsetGet
+        isAbstract: false
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\Classes\CollectionStub::offsetGet()'
         declaringType: Tests\Stubs\Classes\CollectionStub
@@ -103,6 +109,8 @@ declaredMethods:
     -
         asString: offsetSet()
         name: offsetSet
+        isAbstract: false
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\Classes\CollectionStub::offsetSet()'
         declaringType: Tests\Stubs\Classes\CollectionStub
@@ -133,6 +141,8 @@ declaredMethods:
     -
         asString: offsetUnset()
         name: offsetUnset
+        isAbstract: false
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\Classes\CollectionStub::offsetUnset()'
         declaringType: Tests\Stubs\Classes\CollectionStub
@@ -155,6 +165,8 @@ methods:
     -
         asString: getIterator()
         name: getIterator
+        isAbstract: false
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\Classes\CollectionStub::getIterator()'
         declaringType: Tests\Stubs\Classes\CollectionStub
@@ -167,6 +179,8 @@ methods:
     -
         asString: offsetExists()
         name: offsetExists
+        isAbstract: false
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\Classes\CollectionStub::offsetExists()'
         declaringType: Tests\Stubs\Classes\CollectionStub
@@ -188,6 +202,8 @@ methods:
     -
         asString: offsetGet()
         name: offsetGet
+        isAbstract: false
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\Classes\CollectionStub::offsetGet()'
         declaringType: Tests\Stubs\Classes\CollectionStub
@@ -209,6 +225,8 @@ methods:
     -
         asString: offsetSet()
         name: offsetSet
+        isAbstract: false
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\Classes\CollectionStub::offsetSet()'
         declaringType: Tests\Stubs\Classes\CollectionStub
@@ -239,6 +257,8 @@ methods:
     -
         asString: offsetUnset()
         name: offsetUnset
+        isAbstract: false
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\Classes\CollectionStub::offsetUnset()'
         declaringType: Tests\Stubs\Classes\CollectionStub

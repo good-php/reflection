@@ -13,6 +13,8 @@ final class MethodDefinition
 	 */
 	public function __construct(
 		public readonly string $name,
+		public readonly bool $abstract,
+		public readonly bool $final,
 		public readonly array $typeParameters,
 		public readonly array $parameters,
 		public readonly ?Type $returnType,

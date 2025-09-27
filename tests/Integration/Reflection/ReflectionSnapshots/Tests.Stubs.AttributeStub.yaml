@@ -7,7 +7,7 @@ isBuiltIn: false
 isAnonymous: false
 isAbstract: false
 isFinal: false
-isReadOnly: false
+isReadOnly: true
 isCloneable: true
 isInstantiable: true
 attributes:
@@ -26,6 +26,9 @@ declaredProperties:
     -
         asString: $something
         name: something
+        isAbstract: false
+        isFinal: false
+        isReadOnly: true
         location: 'Tests\Stubs\AttributeStub::$something'
         declaringType: Tests\Stubs\AttributeStub
         attributes:
@@ -48,6 +51,9 @@ properties:
     -
         asString: $something
         name: something
+        isAbstract: false
+        isFinal: false
+        isReadOnly: true
         location: 'Tests\Stubs\AttributeStub::$something'
         declaringType: Tests\Stubs\AttributeStub
         attributes:
@@ -70,6 +76,8 @@ declaredMethods:
     -
         asString: __construct()
         name: __construct
+        isAbstract: false
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\AttributeStub::__construct()'
         declaringType: Tests\Stubs\AttributeStub
@@ -92,6 +100,8 @@ methods:
     -
         asString: __construct()
         name: __construct
+        isAbstract: false
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\AttributeStub::__construct()'
         declaringType: Tests\Stubs\AttributeStub

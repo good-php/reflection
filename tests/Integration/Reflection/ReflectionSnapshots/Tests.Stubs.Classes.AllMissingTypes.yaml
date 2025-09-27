@@ -26,6 +26,9 @@ declaredProperties:
     -
         asString: $property
         name: property
+        isAbstract: false
+        isFinal: false
+        isReadOnly: false
         location: 'Tests\Stubs\Classes\AllMissingTypes::$property'
         declaringType: Tests\Stubs\Classes\AllMissingTypes
         attributes:
@@ -39,6 +42,9 @@ declaredProperties:
     -
         asString: $promoted
         name: promoted
+        isAbstract: false
+        isFinal: false
+        isReadOnly: false
         location: 'Tests\Stubs\Classes\AllMissingTypes::$promoted'
         declaringType: Tests\Stubs\Classes\AllMissingTypes
         attributes:
@@ -60,6 +66,9 @@ declaredProperties:
     -
         asString: $promotedDefault
         name: promotedDefault
+        isAbstract: false
+        isFinal: false
+        isReadOnly: true
         location: 'Tests\Stubs\Classes\AllMissingTypes::$promotedDefault'
         declaringType: Tests\Stubs\Classes\AllMissingTypes
         attributes:
@@ -82,6 +91,9 @@ properties:
     -
         asString: $property
         name: property
+        isAbstract: false
+        isFinal: false
+        isReadOnly: false
         location: 'Tests\Stubs\Classes\AllMissingTypes::$property'
         declaringType: Tests\Stubs\Classes\AllMissingTypes
         attributes:
@@ -95,6 +107,9 @@ properties:
     -
         asString: $promoted
         name: promoted
+        isAbstract: false
+        isFinal: false
+        isReadOnly: false
         location: 'Tests\Stubs\Classes\AllMissingTypes::$promoted'
         declaringType: Tests\Stubs\Classes\AllMissingTypes
         attributes:
@@ -116,6 +131,9 @@ properties:
     -
         asString: $promotedDefault
         name: promotedDefault
+        isAbstract: false
+        isFinal: false
+        isReadOnly: true
         location: 'Tests\Stubs\Classes\AllMissingTypes::$promotedDefault'
         declaringType: Tests\Stubs\Classes\AllMissingTypes
         attributes:
@@ -138,6 +156,8 @@ declaredMethods:
     -
         asString: __construct()
         name: __construct
+        isAbstract: false
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\Classes\AllMissingTypes::__construct()'
         declaringType: Tests\Stubs\Classes\AllMissingTypes
@@ -168,6 +188,8 @@ declaredMethods:
     -
         asString: test()
         name: test
+        isAbstract: false
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\Classes\AllMissingTypes::test()'
         declaringType: Tests\Stubs\Classes\AllMissingTypes
@@ -190,6 +212,8 @@ methods:
     -
         asString: __construct()
         name: __construct
+        isAbstract: false
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\Classes\AllMissingTypes::__construct()'
         declaringType: Tests\Stubs\Classes\AllMissingTypes
@@ -220,6 +244,8 @@ methods:
     -
         asString: test()
         name: test
+        isAbstract: false
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\Classes\AllMissingTypes::test()'
         declaringType: Tests\Stubs\Classes\AllMissingTypes

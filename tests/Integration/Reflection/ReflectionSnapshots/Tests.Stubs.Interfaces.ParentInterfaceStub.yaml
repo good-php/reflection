@@ -27,6 +27,8 @@ declaredMethods:
     -
         asString: test()
         name: test
+        isAbstract: true
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\Interfaces\ParentInterfaceStub::test()'
         declaringType: Tests\Stubs\Interfaces\ParentInterfaceStub
@@ -49,6 +51,8 @@ methods:
     -
         asString: test()
         name: test
+        isAbstract: true
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\Interfaces\ParentInterfaceStub::test()'
         declaringType: Tests\Stubs\Interfaces\ParentInterfaceStub

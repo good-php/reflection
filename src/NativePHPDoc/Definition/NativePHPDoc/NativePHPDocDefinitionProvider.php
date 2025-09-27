@@ -279,6 +279,9 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 
 				return new PropertyDefinition(
 					name: $property->getName(),
+					abstract: method_exists($property, 'isAbstract') && $property->isAbstract(),
+					final: method_exists($property, 'isFinal') && $property->isFinal(),
+					readOnly: $property->isReadOnly(),
 					type: $type,
 					typeSource: $typeSource,
 					hasDefaultValue: $property->hasDefaultValue(),
@@ -316,6 +319,8 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 
 				return new MethodDefinition(
 					name: $method->getName(),
+					abstract: $method->isAbstract(),
+					final: $method->isFinal(),
 					typeParameters: $this->typeParameters($phpDoc, $context),
 					parameters: $this->functionParameters($method, $phpDoc, $context),
 					returnType: $returnType,

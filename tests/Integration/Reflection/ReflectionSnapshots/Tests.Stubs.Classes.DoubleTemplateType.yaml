@@ -39,6 +39,8 @@ declaredMethods:
     -
         asString: something()
         name: something
+        isAbstract: false
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\Classes\DoubleTemplateType::something()'
         declaringType: Tests\Stubs\Classes\DoubleTemplateType<int>
@@ -52,6 +54,8 @@ methods:
     -
         asString: something()
         name: something
+        isAbstract: false
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\Classes\DoubleTemplateType::something()'
         declaringType: Tests\Stubs\Classes\DoubleTemplateType<int>

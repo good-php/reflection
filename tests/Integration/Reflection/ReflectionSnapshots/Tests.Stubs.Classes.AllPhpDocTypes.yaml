@@ -27,6 +27,8 @@ declaredMethods:
     -
         asString: f1()
         name: f1
+        isAbstract: false
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\Classes\AllPhpDocTypes::f1()'
         declaringType: Tests\Stubs\Classes\AllPhpDocTypes
@@ -138,6 +140,8 @@ declaredMethods:
     -
         asString: f2()
         name: f2
+        isAbstract: false
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\Classes\AllPhpDocTypes::f2()'
         declaringType: Tests\Stubs\Classes\AllPhpDocTypes
@@ -222,6 +226,8 @@ declaredMethods:
     -
         asString: f3()
         name: f3
+        isAbstract: false
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\Classes\AllPhpDocTypes::f3()'
         declaringType: Tests\Stubs\Classes\AllPhpDocTypes
@@ -270,6 +276,8 @@ declaredMethods:
     -
         asString: f4()
         name: f4
+        isAbstract: false
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\Classes\AllPhpDocTypes::f4()'
         declaringType: Tests\Stubs\Classes\AllPhpDocTypes
@@ -336,6 +344,8 @@ declaredMethods:
     -
         asString: f5()
         name: f5
+        isAbstract: false
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\Classes\AllPhpDocTypes::f5()'
         declaringType: Tests\Stubs\Classes\AllPhpDocTypes
@@ -411,6 +421,8 @@ declaredMethods:
     -
         asString: f6()
         name: f6
+        isAbstract: false
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\Classes\AllPhpDocTypes::f6()'
         declaringType: Tests\Stubs\Classes\AllPhpDocTypes
@@ -423,6 +435,8 @@ declaredMethods:
     -
         asString: f7()
         name: f7
+        isAbstract: false
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\Classes\AllPhpDocTypes::f7()'
         declaringType: Tests\Stubs\Classes\AllPhpDocTypes
@@ -435,6 +449,8 @@ declaredMethods:
     -
         asString: f8()
         name: f8
+        isAbstract: false
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\Classes\AllPhpDocTypes::f8()'
         declaringType: Tests\Stubs\Classes\AllPhpDocTypes
@@ -447,6 +463,8 @@ declaredMethods:
     -
         asString: f9()
         name: f9
+        isAbstract: false
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\Classes\AllPhpDocTypes::f9()'
         declaringType: Tests\Stubs\Classes\AllPhpDocTypes
@@ -460,6 +478,8 @@ methods:
     -
         asString: f1()
         name: f1
+        isAbstract: false
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\Classes\AllPhpDocTypes::f1()'
         declaringType: Tests\Stubs\Classes\AllPhpDocTypes
@@ -571,6 +591,8 @@ methods:
     -
         asString: f2()
         name: f2
+        isAbstract: false
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\Classes\AllPhpDocTypes::f2()'
         declaringType: Tests\Stubs\Classes\AllPhpDocTypes
@@ -655,6 +677,8 @@ methods:
     -
         asString: f3()
         name: f3
+        isAbstract: false
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\Classes\AllPhpDocTypes::f3()'
         declaringType: Tests\Stubs\Classes\AllPhpDocTypes
@@ -703,6 +727,8 @@ methods:
     -
         asString: f4()
         name: f4
+        isAbstract: false
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\Classes\AllPhpDocTypes::f4()'
         declaringType: Tests\Stubs\Classes\AllPhpDocTypes
@@ -769,6 +795,8 @@ methods:
     -
         asString: f5()
         name: f5
+        isAbstract: false
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\Classes\AllPhpDocTypes::f5()'
         declaringType: Tests\Stubs\Classes\AllPhpDocTypes
@@ -844,6 +872,8 @@ methods:
     -
         asString: f6()
         name: f6
+        isAbstract: false
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\Classes\AllPhpDocTypes::f6()'
         declaringType: Tests\Stubs\Classes\AllPhpDocTypes
@@ -856,6 +886,8 @@ methods:
     -
         asString: f7()
         name: f7
+        isAbstract: false
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\Classes\AllPhpDocTypes::f7()'
         declaringType: Tests\Stubs\Classes\AllPhpDocTypes
@@ -868,6 +900,8 @@ methods:
     -
         asString: f8()
         name: f8
+        isAbstract: false
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\Classes\AllPhpDocTypes::f8()'
         declaringType: Tests\Stubs\Classes\AllPhpDocTypes
@@ -880,6 +914,8 @@ methods:
     -
         asString: f9()
         name: f9
+        isAbstract: false
+        isFinal: false
         returnsByReference: false
         location: 'Tests\Stubs\Classes\AllPhpDocTypes::f9()'
         declaringType: Tests\Stubs\Classes\AllPhpDocTypes

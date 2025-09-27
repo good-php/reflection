@@ -5,7 +5,7 @@ namespace Tests\Stubs;
 use Attribute;
 
 #[Attribute]
-class AttributeStub
+readonly class AttributeStub
 {
 	public function __construct(public string $something) {}
 }
