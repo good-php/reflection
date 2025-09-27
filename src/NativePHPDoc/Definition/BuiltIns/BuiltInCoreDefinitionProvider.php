@@ -41,6 +41,7 @@ class BuiltInCoreDefinitionProvider implements DefinitionProvider
 				builtIn: true,
 				typeParameters: [],
 				extends: [],
+				constants: [],
 				methods: [
 					new MethodDefinition(
 						name: 'count',
@@ -70,6 +71,7 @@ class BuiltInCoreDefinitionProvider implements DefinitionProvider
 					),
 				],
 				extends: [],
+				constants: [],
 				methods: [
 					new MethodDefinition(
 						name: 'offsetExists',
@@ -179,6 +181,7 @@ class BuiltInCoreDefinitionProvider implements DefinitionProvider
 						),
 					]),
 				],
+				constants: [],
 				methods: []
 			)),
 			IteratorAggregate::class => lazy(fn () => new InterfaceTypeDefinition(
@@ -209,6 +212,7 @@ class BuiltInCoreDefinitionProvider implements DefinitionProvider
 						),
 					]),
 				],
+				constants: [],
 				methods: [
 					new MethodDefinition(
 						name: 'getIterator',
@@ -264,6 +268,7 @@ class BuiltInCoreDefinitionProvider implements DefinitionProvider
 					]),
 				],
 				uses: new UsedTraitsDefinition(),
+				constants: [],
 				properties: [],
 				methods: [],
 			)),

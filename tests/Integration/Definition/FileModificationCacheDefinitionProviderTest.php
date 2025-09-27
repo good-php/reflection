@@ -43,6 +43,7 @@ class FileModificationCacheDefinitionProviderTest extends IntegrationTestCase
 				extends: null,
 				implements: [],
 				uses: new UsedTraitsDefinition(),
+				constants: [],
 				properties: [],
 				methods: []
 			));

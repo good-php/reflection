@@ -21,6 +21,8 @@ typeParameters:
         variance: INVARIANT
         asString: U
 extends: {  }
+declaredConstants: {  }
+constants: {  }
 declaredMethods:
     -
         asString: test()

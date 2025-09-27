@@ -4,11 +4,15 @@ namespace GoodPhp\Reflection\NativePHPDoc\Reflection;
 
 use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\InterfaceTypeDefinition;
 use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\MethodDefinition;
+use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\TypeConstantDefinition;
 use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\TypeParameterDefinition;
 use GoodPhp\Reflection\NativePHPDoc\Reflection\Attributes\NativeAttributes;
+use GoodPhp\Reflection\NativePHPDoc\Reflection\Constants\NpdTypeConstantReflection;
 use GoodPhp\Reflection\NativePHPDoc\Reflection\TypeParameters\NpdTypeParameterReflection;
 use GoodPhp\Reflection\Reflection\Attributes\Attributes;
 use GoodPhp\Reflection\Reflection\ClassMemberInheritanceResolver;
+use GoodPhp\Reflection\Reflection\Constants\HasConstantsDefaults;
+use GoodPhp\Reflection\Reflection\Constants\TypeConstantReflection;
 use GoodPhp\Reflection\Reflection\InterfaceReflection;
 use GoodPhp\Reflection\Reflection\MethodReflection;
 use GoodPhp\Reflection\Reflection\Methods\HasMethodsDefaults;
@@ -27,6 +31,9 @@ use ReflectionClass;
  */
 final class NpdInterfaceReflection extends NpdTypeReflection implements InterfaceReflection
 {
+	/** @use HasConstantsDefaults<ReflectableType> */
+	use HasConstantsDefaults;
+
 	/** @use HasMethodsDefaults<ReflectableType> */
 	use HasMethodsDefaults;
 
@@ -46,6 +53,12 @@ final class NpdInterfaceReflection extends NpdTypeReflection implements Interfac
 
 	/** @var list<NamedType> */
 	private array $extends;
+
+	/** @var list<TypeConstantReflection<ReflectableType>> */
+	private array $declaredConstants;
+
+	/** @var list<TypeConstantReflection<ReflectableType>> */
+	private array $constants;
 
 	/** @var list<MethodReflection<ReflectableType>> */
 	private array $declaredMethods;
@@ -122,6 +135,30 @@ final class NpdInterfaceReflection extends NpdTypeReflection implements Interfac
 			$this->resolvedTypeParameterMap,
 			$this->staticType,
 		), $this->definition->extends);
+	}
+
+	/**
+	 * @return list<TypeConstantReflection<ReflectableType>>
+	 */
+	public function declaredConstants(): array
+	{
+		return $this->declaredConstants ??= array_map(
+			fn (TypeConstantDefinition $constant) => new NpdTypeConstantReflection($constant, $this, $this->staticType),
+			$this->definition->constants,
+		);
+	}
+
+	/**
+	 * @return list<TypeConstantReflection<ReflectableType>>
+	 */
+	public function constants(): array
+	{
+		return $this->constants ??= $this->classMemberInheritanceResolver->constants(
+			reflector: $this->reflector,
+			staticType: $this->staticType,
+			declaredConstants: $this->declaredConstants(),
+			implements: $this->extends(),
+		);
 	}
 
 	/**

@@ -14,10 +14,11 @@ final class EnumTypeDefinition extends TypeDefinition
 	public readonly string $qualifiedName;
 
 	/**
-	 * @param class-string<T>          $qualifiedName
-	 * @param list<NamedType>          $implements
-	 * @param list<EnumCaseDefinition> $cases
-	 * @param list<MethodDefinition>   $methods
+	 * @param class-string<T>              $qualifiedName
+	 * @param list<NamedType>              $implements
+	 * @param list<EnumCaseDefinition>     $cases
+	 * @param list<TypeConstantDefinition> $constants
+	 * @param list<MethodDefinition>       $methods
 	 */
 	public function __construct(
 		string $qualifiedName,
@@ -27,6 +28,7 @@ final class EnumTypeDefinition extends TypeDefinition
 		public readonly array $implements,
 		public readonly UsedTraitsDefinition $uses,
 		public readonly array $cases,
+		public readonly array $constants,
 		public readonly array $methods,
 	) {
 		parent::__construct(

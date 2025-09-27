@@ -21,6 +21,28 @@ implements:
 uses:
     traits: {  }
     excludedTraitMethods: {  }
+declaredConstants:
+    -
+        asString: MAX_ITEMS
+        name: MAX_ITEMS
+        isFinal: false
+        declaringType: Tests\Stubs\Classes\CollectionStub
+        attributes:
+            asString: '#[]'
+            all: {  }
+        type: null
+        value: 'i:9223372036854775807;'
+constants:
+    -
+        asString: MAX_ITEMS
+        name: MAX_ITEMS
+        isFinal: false
+        declaringType: Tests\Stubs\Classes\CollectionStub
+        attributes:
+            asString: '#[]'
+            all: {  }
+        type: null
+        value: 'i:9223372036854775807;'
 declaredProperties: {  }
 properties: {  }
 declaredMethods:

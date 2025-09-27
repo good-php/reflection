@@ -11,6 +11,8 @@ typeParameters: {  }
 uses:
     traits: {  }
     excludedTraitMethods: {  }
+declaredConstants: {  }
+constants: {  }
 declaredProperties: {  }
 properties: {  }
 declaredMethods:

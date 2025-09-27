@@ -9,6 +9,8 @@ use Tests\Stubs\Interfaces\SingleGenericInterface;
  */
 enum BackedEnum: string implements SingleGenericInterface
 {
+	public const ALIASED = self::SECOND;
+
 	case FIRST = 'first';
 	case SECOND = 'second';
 }

@@ -21,6 +21,7 @@ use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\InterfaceTypeDefin
 use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\MethodDefinition;
 use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\PropertyDefinition;
 use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\TraitTypeDefinition;
+use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\TypeConstantDefinition;
 use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\TypeParameterDefinition;
 use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\UsedTraitAliasDefinition;
 use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\UsedTraitDefinition;
@@ -39,6 +40,7 @@ use PHPStan\PhpDocParser\Ast\PhpDoc\TemplateTagValueNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\UsesTagValueNode;
 use PHPStan\PhpDocParser\Ast\Type\TypeNode;
 use ReflectionClass;
+use ReflectionClassConstant;
 use ReflectionEnum;
 use ReflectionEnumBackedCase;
 use ReflectionEnumUnitCase;
@@ -113,6 +115,7 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 				builtIn: !$reflection->isUserDefined(),
 				typeParameters: $this->typeParameters($phpDoc, $context),
 				uses: $this->traits($reflection, $context),
+				constants: $this->typeConstants($reflection, $context),
 				properties: $this->properties($reflection, $context),
 				methods: $this->methods($reflection, $context),
 			),
@@ -122,6 +125,7 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 				builtIn: !$reflection->isUserDefined(),
 				typeParameters: $this->typeParameters($phpDoc, $context),
 				extends: $this->interfaces($reflection, $phpDoc, $context),
+				constants: $this->typeConstants($reflection, $context),
 				methods: $this->methods($reflection, $context),
 			),
 			default => new ClassTypeDefinition(
@@ -138,6 +142,7 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 				extends: $this->parent($reflection, $phpDoc, $context),
 				implements: $this->interfaces($reflection, $phpDoc, $context),
 				uses: $this->traits($reflection, $context),
+				constants: $this->typeConstants($reflection, $context),
 				properties: $this->properties($reflection, $context),
 				methods: $this->methods($reflection, $context),
 			)
@@ -166,6 +171,7 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 			implements: [...$this->interfaces($reflection, $phpDoc, $context), ...$implicitInterfaces],
 			uses: $this->traits($reflection, $context),
 			cases: $this->enumCases($reflection),
+			constants: $this->typeConstants($reflection, $context),
 			methods: $this->methods($reflection, $context),
 		);
 	}
@@ -205,6 +211,39 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 	private function fileName(ReflectionClass $reflection): ?string
 	{
 		return $reflection->getFileName() ?: null;
+	}
+
+	/**
+	 * @param ReflectionClass<object> $reflection
+	 *
+	 * @return list<TypeConstantDefinition>
+	 */
+	private function typeConstants(ReflectionClass $reflection, TypeContext $context): array
+	{
+		return collect($reflection->getReflectionConstants())
+			->filter(fn (ReflectionClassConstant $constant) => !$context->fileClassLikeContext || in_array($constant->getName(), $context->fileClassLikeContext->declaredConstants, true))
+			->map(function (ReflectionClassConstant $constant) use ($context) {
+				$phpDoc = $this->phpDocStringParser->parse($constant);
+
+				// Get first @var tag (if any specified)
+				$phpDocType = $phpDoc->firstVarTagValue()?->type;
+
+				[$type, $typeSource] = $this->map(
+					/* @phpstan-ignore argument.type */
+					method_exists($constant, 'getType') ? $constant->getType() : null,
+					$phpDocType,
+					$context
+				);
+
+				return new TypeConstantDefinition(
+					name: $constant->getName(),
+					isFinal: $constant->isFinal(),
+					type: $type,
+					typeSource: $typeSource,
+				);
+			})
+			->values()
+			->all();
 	}
 
 	/**

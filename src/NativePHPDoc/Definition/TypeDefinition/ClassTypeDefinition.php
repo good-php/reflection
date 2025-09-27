@@ -17,6 +17,7 @@ final class ClassTypeDefinition extends TypeDefinition
 	 * @param class-string<T>               $qualifiedName
 	 * @param list<TypeParameterDefinition> $typeParameters
 	 * @param list<NamedType>               $implements
+	 * @param list<TypeConstantDefinition>  $constants
 	 * @param list<PropertyDefinition>      $properties
 	 * @param list<MethodDefinition>        $methods
 	 */
@@ -34,6 +35,7 @@ final class ClassTypeDefinition extends TypeDefinition
 		public readonly ?NamedType $extends,
 		public readonly array $implements,
 		public readonly UsedTraitsDefinition $uses,
+		public readonly array $constants,
 		public readonly array $properties,
 		public readonly array $methods,
 	) {

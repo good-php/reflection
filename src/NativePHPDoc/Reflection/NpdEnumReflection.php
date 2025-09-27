@@ -5,11 +5,15 @@ namespace GoodPhp\Reflection\NativePHPDoc\Reflection;
 use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\EnumCaseDefinition;
 use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\EnumTypeDefinition;
 use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\MethodDefinition;
+use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\TypeConstantDefinition;
 use GoodPhp\Reflection\NativePHPDoc\Reflection\Attributes\NativeAttributes;
+use GoodPhp\Reflection\NativePHPDoc\Reflection\Constants\NpdTypeConstantReflection;
 use GoodPhp\Reflection\NativePHPDoc\Reflection\Enums\NpdEnumCaseReflection;
 use GoodPhp\Reflection\NativePHPDoc\Reflection\Traits\NpdUsedTraitsReflection;
 use GoodPhp\Reflection\Reflection\Attributes\Attributes;
 use GoodPhp\Reflection\Reflection\ClassMemberInheritanceResolver;
+use GoodPhp\Reflection\Reflection\Constants\HasConstantsDefaults;
+use GoodPhp\Reflection\Reflection\Constants\TypeConstantReflection;
 use GoodPhp\Reflection\Reflection\EnumReflection;
 use GoodPhp\Reflection\Reflection\Enums\EnumCaseReflection;
 use GoodPhp\Reflection\Reflection\MethodReflection;
@@ -29,6 +33,9 @@ use ReflectionEnum;
  */
 final class NpdEnumReflection extends NpdTypeReflection implements EnumReflection
 {
+	/** @use HasConstantsDefaults<ReflectableType> */
+	use HasConstantsDefaults;
+
 	/** @use HasMethodsDefaults<ReflectableType> */
 	use HasMethodsDefaults;
 
@@ -45,6 +52,12 @@ final class NpdEnumReflection extends NpdTypeReflection implements EnumReflectio
 
 	/** @var list<EnumCaseReflection<ReflectableType, BackingValueType>> */
 	private array $cases;
+
+	/** @var list<TypeConstantReflection<ReflectableType>> */
+	private array $declaredConstants;
+
+	/** @var list<TypeConstantReflection<ReflectableType>> */
+	private array $constants;
 
 	/** @var list<MethodReflection<ReflectableType>> */
 	private array $declaredMethods;
@@ -123,6 +136,31 @@ final class NpdEnumReflection extends NpdTypeReflection implements EnumReflectio
 	public function case(string $name): ?EnumCaseReflection
 	{
 		return Arr::first($this->cases(), fn (EnumCaseReflection $method) => $name === $method->name());
+	}
+
+	/**
+	 * @return list<TypeConstantReflection<ReflectableType>>
+	 */
+	public function declaredConstants(): array
+	{
+		return $this->declaredConstants ??= array_map(
+			fn (TypeConstantDefinition $constant) => new NpdTypeConstantReflection($constant, $this, $this->staticType),
+			$this->definition->constants,
+		);
+	}
+
+	/**
+	 * @return list<TypeConstantReflection<ReflectableType>>
+	 */
+	public function constants(): array
+	{
+		return $this->constants ??= $this->classMemberInheritanceResolver->constants(
+			reflector: $this->reflector,
+			staticType: $this->staticType,
+			declaredConstants: $this->declaredConstants(),
+			implements: $this->implements(),
+			usedTraits: $this->uses(),
+		);
 	}
 
 	/**

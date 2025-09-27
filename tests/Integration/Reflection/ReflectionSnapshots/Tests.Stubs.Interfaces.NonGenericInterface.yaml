@@ -9,6 +9,28 @@ attributes:
     all: {  }
 typeParameters: {  }
 extends: {  }
+declaredConstants:
+    -
+        asString: INTERFACE_CONSTANT
+        name: INTERFACE_CONSTANT
+        isFinal: true
+        declaringType: Tests\Stubs\Interfaces\NonGenericInterface
+        attributes:
+            asString: '#[]'
+            all: {  }
+        type: null
+        value: 's:6:"string";'
+constants:
+    -
+        asString: INTERFACE_CONSTANT
+        name: INTERFACE_CONSTANT
+        isFinal: true
+        declaringType: Tests\Stubs\Interfaces\NonGenericInterface
+        attributes:
+            asString: '#[]'
+            all: {  }
+        type: null
+        value: 's:6:"string";'
 declaredMethods:
     -
         asString: function()

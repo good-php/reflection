@@ -15,5 +15,7 @@ typeParameters:
         variance: INVARIANT
         asString: T
 extends: {  }
+declaredConstants: {  }
+constants: {  }
 declaredMethods: {  }
 methods: {  }

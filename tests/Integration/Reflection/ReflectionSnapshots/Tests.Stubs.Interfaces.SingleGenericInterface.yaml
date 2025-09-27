@@ -15,5 +15,7 @@ typeParameters:
         variance: COVARIANT
         asString: 'covariant T'
 extends: {  }
+declaredConstants: {  }
+constants: {  }
 declaredMethods: {  }
 methods: {  }

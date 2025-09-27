@@ -5,6 +5,8 @@ namespace Tests\Integration\Reflection;
 use GoodPhp\Reflection\NativePHPDoc\Definition\Cache\CacheUtils;
 use GoodPhp\Reflection\Reflection\Attributes\Attributes;
 use GoodPhp\Reflection\Reflection\ClassReflection;
+use GoodPhp\Reflection\Reflection\Constants\HasConstants;
+use GoodPhp\Reflection\Reflection\Constants\TypeConstantReflection;
 use GoodPhp\Reflection\Reflection\EnumReflection;
 use GoodPhp\Reflection\Reflection\Enums\EnumCaseReflection;
 use GoodPhp\Reflection\Reflection\FunctionParameterReflection;
@@ -122,6 +124,14 @@ class ReflectionSnapshotsTest extends IntegrationTestCase
 			];
 		}
 
+		if ($reflection instanceof HasConstants) {
+			$expected = [
+				...$expected,
+				'declaredConstants' => array_map(self::typeConstantToExpectation(...), $reflection->declaredConstants()),
+				'constants'         => array_map(self::typeConstantToExpectation(...), $reflection->constants()),
+			];
+		}
+
 		if ($reflection instanceof HasProperties) {
 			$expected = [
 				...$expected,
@@ -183,6 +193,19 @@ class ReflectionSnapshotsTest extends IntegrationTestCase
 				], $usedTrait->aliases()),
 			], $uses->traits()),
 			'excludedTraitMethods' => $uses->excludedTraitMethods(),
+		];
+	}
+
+	private static function typeConstantToExpectation(TypeConstantReflection $constant): array
+	{
+		return [
+			'asString'      => (string) $constant,
+			'name'          => $constant->name(),
+			'isFinal'       => $constant->isFinal(),
+			'declaringType' => self::typeToExpectation($constant->declaringType()->type()),
+			'attributes'    => self::attributesToExpectation($constant->attributes()),
+			'type'          => self::typeToExpectation($constant->type()),
+			'value'         => serialize($constant->value()),
 		];
 	}
 

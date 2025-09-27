@@ -32,6 +32,28 @@ cases:
         attributes:
             asString: '#[]'
             all: {  }
+declaredConstants:
+    -
+        asString: ALIASED
+        name: ALIASED
+        isFinal: false
+        declaringType: Tests\Stubs\Enums\BackedEnum
+        attributes:
+            asString: '#[]'
+            all: {  }
+        type: null
+        value: 'E:35:"Tests\Stubs\Enums\BackedEnum:SECOND";'
+constants:
+    -
+        asString: ALIASED
+        name: ALIASED
+        isFinal: false
+        declaringType: Tests\Stubs\Enums\BackedEnum
+        attributes:
+            asString: '#[]'
+            all: {  }
+        type: null
+        value: 'E:35:"Tests\Stubs\Enums\BackedEnum:SECOND";'
 declaredMethods: {  }
 methods:
     -

@@ -11,6 +11,7 @@ class FileClassLikeContext
 	 * @param array<string, string>             $uses
 	 * @param list<TraitsUse>                   $traitsUses
 	 * @param array<class-string, list<string>> $excludedTraitMethods
+	 * @param list<string>                      $declaredConstants
 	 * @param list<string>                      $declaredProperties
 	 * @param list<string>                      $declaredMethods
 	 */
@@ -20,6 +21,7 @@ class FileClassLikeContext
 		public readonly array $uses,
 		public readonly array $traitsUses,
 		public readonly array $excludedTraitMethods,
+		public readonly array $declaredConstants,
 		public readonly array $declaredProperties,
 		public readonly array $declaredMethods,
 	) {}

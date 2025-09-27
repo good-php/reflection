@@ -5,13 +5,17 @@ namespace GoodPhp\Reflection\NativePHPDoc\Reflection;
 use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\ClassTypeDefinition;
 use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\MethodDefinition;
 use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\PropertyDefinition;
+use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\TypeConstantDefinition;
 use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\TypeParameterDefinition;
 use GoodPhp\Reflection\NativePHPDoc\Reflection\Attributes\NativeAttributes;
+use GoodPhp\Reflection\NativePHPDoc\Reflection\Constants\NpdTypeConstantReflection;
 use GoodPhp\Reflection\NativePHPDoc\Reflection\Traits\NpdUsedTraitsReflection;
 use GoodPhp\Reflection\NativePHPDoc\Reflection\TypeParameters\NpdTypeParameterReflection;
 use GoodPhp\Reflection\Reflection\Attributes\Attributes;
 use GoodPhp\Reflection\Reflection\ClassMemberInheritanceResolver;
 use GoodPhp\Reflection\Reflection\ClassReflection;
+use GoodPhp\Reflection\Reflection\Constants\HasConstantsDefaults;
+use GoodPhp\Reflection\Reflection\Constants\TypeConstantReflection;
 use GoodPhp\Reflection\Reflection\MethodReflection;
 use GoodPhp\Reflection\Reflection\Methods\HasMethodsDefaults;
 use GoodPhp\Reflection\Reflection\Properties\HasPropertiesDefaults;
@@ -32,6 +36,9 @@ use ReflectionClass;
  */
 final class NpdClassReflection extends NpdTypeReflection implements ClassReflection
 {
+	/** @use HasConstantsDefaults<ReflectableType> */
+	use HasConstantsDefaults;
+
 	/** @use HasMethodsDefaults<ReflectableType> */
 	use HasMethodsDefaults;
 
@@ -58,6 +65,12 @@ final class NpdClassReflection extends NpdTypeReflection implements ClassReflect
 	private array $implements;
 
 	private UsedTraitsReflection $uses;
+
+	/** @var list<TypeConstantReflection<ReflectableType>> */
+	private array $declaredConstants;
+
+	/** @var list<TypeConstantReflection<ReflectableType>> */
+	private array $constants;
 
 	/** @var list<PropertyReflection<ReflectableType>> */
 	private array $declaredProperties;
@@ -165,6 +178,32 @@ final class NpdClassReflection extends NpdTypeReflection implements ClassReflect
 	public function uses(): UsedTraitsReflection
 	{
 		return $this->uses ??= new NpdUsedTraitsReflection($this->definition->uses, $this->resolvedTypeParameterMap, $this->staticType);
+	}
+
+	/**
+	 * @return list<TypeConstantReflection<ReflectableType>>
+	 */
+	public function declaredConstants(): array
+	{
+		return $this->declaredConstants ??= array_map(
+			fn (TypeConstantDefinition $constant) => new NpdTypeConstantReflection($constant, $this, $this->staticType),
+			$this->definition->constants,
+		);
+	}
+
+	/**
+	 * @return list<TypeConstantReflection<ReflectableType>>
+	 */
+	public function constants(): array
+	{
+		return $this->constants ??= $this->classMemberInheritanceResolver->constants(
+			reflector: $this->reflector,
+			staticType: $this->staticType,
+			declaredConstants: $this->declaredConstants(),
+			extends: $this->extends(),
+			implements: $this->implements(),
+			usedTraits: $this->uses(),
+		);
 	}
 
 	/**

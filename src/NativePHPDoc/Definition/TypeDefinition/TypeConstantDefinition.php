@@ -1,0 +1,16 @@
+<?php
+
+namespace GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition;
+
+use GoodPhp\Reflection\Reflection\TypeSource;
+use GoodPhp\Reflection\Type\Type;
+
+final class TypeConstantDefinition
+{
+	public function __construct(
+		public readonly string $name,
+		public readonly bool $isFinal,
+		public readonly ?Type $type,
+		public readonly ?TypeSource $typeSource,
+	) {}
+}

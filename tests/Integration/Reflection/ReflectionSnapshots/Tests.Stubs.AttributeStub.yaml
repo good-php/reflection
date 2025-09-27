@@ -20,6 +20,8 @@ implements: {  }
 uses:
     traits: {  }
     excludedTraitMethods: {  }
+declaredConstants: {  }
+constants: {  }
 declaredProperties:
     -
         asString: $something

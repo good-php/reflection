@@ -17,6 +17,7 @@ final class InterfaceTypeDefinition extends TypeDefinition
 	 * @param class-string<T>               $qualifiedName
 	 * @param list<TypeParameterDefinition> $typeParameters
 	 * @param list<NamedType>               $extends
+	 * @param list<TypeConstantDefinition>  $constants
 	 * @param list<MethodDefinition>        $methods
 	 */
 	public function __construct(
@@ -25,6 +26,7 @@ final class InterfaceTypeDefinition extends TypeDefinition
 		public readonly bool $builtIn,
 		public readonly array $typeParameters,
 		public readonly array $extends,
+		public readonly array $constants,
 		public readonly array $methods,
 	) {
 		parent::__construct(

@@ -19,6 +19,7 @@ use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\InterfaceTypeDefin
 use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\MethodDefinition;
 use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\PropertyDefinition;
 use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\TraitTypeDefinition;
+use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\TypeConstantDefinition;
 use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\TypeParameterDefinition;
 use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\UsedTraitAliasDefinition;
 use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\UsedTraitDefinition;
@@ -160,6 +161,7 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 						),
 					]
 				),
+				constants: [],
 				properties: [
 					new PropertyDefinition(
 						name: 'factories',
@@ -312,6 +314,7 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 					new NamedType(SingleTemplateType::class),
 				],
 				uses: new UsedTraitsDefinition(),
+				constants: [],
 				properties: [
 					new PropertyDefinition(
 						name: 'property',
@@ -390,6 +393,7 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 				extends: null,
 				implements: [],
 				uses: new UsedTraitsDefinition(),
+				constants: [],
 				properties: [],
 				methods: [
 					new MethodDefinition(
@@ -532,6 +536,7 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 				extends: null,
 				implements: [],
 				uses: new UsedTraitsDefinition(),
+				constants: [],
 				properties: [],
 				methods: [
 					new MethodDefinition(
@@ -874,6 +879,7 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 				extends: null,
 				implements: [],
 				uses: new UsedTraitsDefinition(),
+				constants: [],
 				properties: [],
 				methods: [],
 			),
@@ -902,6 +908,7 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 				extends: null,
 				implements: [],
 				uses: new UsedTraitsDefinition(),
+				constants: [],
 				properties: [],
 				methods: [],
 			),
@@ -930,6 +937,7 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 				extends: null,
 				implements: [],
 				uses: new UsedTraitsDefinition(),
+				constants: [],
 				properties: [],
 				methods: [],
 			),
@@ -943,6 +951,14 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 				builtIn: false,
 				typeParameters: [],
 				extends: [],
+				constants: [
+					new TypeConstantDefinition(
+						name: 'INTERFACE_CONSTANT',
+						isFinal: true,
+						type: null,
+						typeSource: null,
+					),
+				],
 				methods: [
 					new MethodDefinition(
 						name: 'function',
@@ -977,6 +993,7 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 					),
 				],
 				extends: [],
+				constants: [],
 				methods: [],
 			),
 		];
@@ -989,6 +1006,7 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 				builtIn: false,
 				typeParameters: [],
 				uses: new UsedTraitsDefinition(),
+				constants: [],
 				properties: [],
 				methods: [
 					new MethodDefinition(
@@ -1024,6 +1042,14 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 					new EnumCaseDefinition(
 						name: 'SECOND',
 						backingValue: 'second',
+					),
+				],
+				constants: [
+					new TypeConstantDefinition(
+						name: 'ALIASED',
+						isFinal: false,
+						type: null,
+						typeSource: null,
 					),
 				],
 				methods: [],
@@ -1064,6 +1090,7 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 						backingValue: null,
 					),
 				],
+				constants: [],
 				methods: [
 					new MethodDefinition(
 						name: 'function',
@@ -1118,6 +1145,7 @@ class NativePHPDocDefinitionProviderTest extends IntegrationTestCase
 					]),
 				],
 				uses: new UsedTraitsDefinition(),
+				constants: [],
 				properties: [
 					new PropertyDefinition(
 						name: 'property',

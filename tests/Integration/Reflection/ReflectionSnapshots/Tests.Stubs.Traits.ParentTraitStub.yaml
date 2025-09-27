@@ -26,6 +26,28 @@ uses:
             trait: Tests\Stubs\Traits\TraitWithoutProperties
             aliases: {  }
     excludedTraitMethods: {  }
+declaredConstants:
+    -
+        asString: CONSTANT
+        name: CONSTANT
+        isFinal: false
+        declaringType: Tests\Stubs\Traits\ParentTraitStub
+        attributes:
+            asString: '#[]'
+            all: {  }
+        type: null
+        value: 'i:123;'
+constants:
+    -
+        asString: CONSTANT
+        name: CONSTANT
+        isFinal: false
+        declaringType: Tests\Stubs\Traits\ParentTraitStub
+        attributes:
+            asString: '#[]'
+            all: {  }
+        type: null
+        value: 'i:123;'
 declaredProperties:
     -
         asString: $prop

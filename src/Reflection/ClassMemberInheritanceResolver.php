@@ -2,6 +2,9 @@
 
 namespace GoodPhp\Reflection\Reflection;
 
+use GoodPhp\Reflection\Reflection\Constants\HasConstants;
+use GoodPhp\Reflection\Reflection\Constants\MergedInheritanceTypeConstantReflection;
+use GoodPhp\Reflection\Reflection\Constants\TypeConstantReflection;
 use GoodPhp\Reflection\Reflection\Methods\HasMethods;
 use GoodPhp\Reflection\Reflection\Methods\MergedInheritanceMethodReflection;
 use GoodPhp\Reflection\Reflection\Properties\HasProperties;
@@ -17,6 +20,34 @@ use Webmozart\Assert\Assert;
 
 final class ClassMemberInheritanceResolver
 {
+	/**
+	 * @template ReflectableType of object
+	 *
+	 * @param list<TypeConstantReflection<ReflectableType>> $declaredConstants
+	 * @param list<NamedType>                               $implements
+	 *
+	 * @return list<TypeConstantReflection<ReflectableType>>
+	 */
+	public function constants(
+		Reflector $reflector,
+		NamedType $staticType,
+		array $declaredConstants,
+		?NamedType $extends = null,
+		array $implements = [],
+		?UsedTraitsReflection $usedTraits = null,
+	): array {
+		return collect([
+			...$declaredConstants,
+			...($extends ? $this->constantsFromTypes($extends, $staticType, $reflector) : []),
+			...($usedTraits ? $this->constantsFromTraits($usedTraits, $staticType, $reflector) : []),
+			...$this->constantsFromTypes($implements, $staticType, $reflector),
+		])
+			->groupBy(fn (TypeConstantReflection $constant) => $constant->name())
+			->map(fn (Collection $sameConstants) => MergedInheritanceTypeConstantReflection::merge($sameConstants->all()))
+			->values()
+			->all();
+	}
+
 	/**
 	 * @template ReflectableType of object
 	 *
@@ -71,6 +102,41 @@ final class ClassMemberInheritanceResolver
 			->map(fn (Collection $sameMethods) => MergedInheritanceMethodReflection::merge($sameMethods->all()))
 			->values()
 			->all();
+	}
+
+	/**
+	 * @param list<NamedType>|NamedType $types
+	 *
+	 * @return list<TypeConstantReflection<object>>
+	 */
+	protected function constantsFromTypes(array|NamedType $types, NamedType $staticType, Reflector $reflector): array
+	{
+		return collect(is_array($types) ? $types : [$types])
+			->flatMap(function (NamedType $type) use ($staticType, $reflector) {
+				$reflection = $reflector->forNamedType($type);
+
+				if (!$reflection instanceof HasConstants) {
+					return [];
+				}
+
+				return $reflection
+					->withStaticType($staticType)
+					->constants();
+			})
+			->all();
+	}
+
+	/**
+	 * @return list<TypeConstantReflection<object>>
+	 */
+	protected function constantsFromTraits(UsedTraitsReflection $usedTraits, NamedType $staticType, Reflector $reflector): array
+	{
+		$types = array_map(
+			fn (UsedTraitReflection $usedTrait) => $usedTrait->trait(),
+			$usedTraits->traits()
+		);
+
+		return $this->constantsFromTypes($types, $staticType, $reflector);
 	}
 
 	/**

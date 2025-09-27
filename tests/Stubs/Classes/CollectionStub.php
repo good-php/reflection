@@ -12,6 +12,8 @@ use Traversable;
  */
 class CollectionStub implements IteratorAggregate, ArrayAccess
 {
+	public const MAX_ITEMS = PHP_INT_MAX;
+
 	public function getIterator(): Traversable
 	{
 		yield from [];

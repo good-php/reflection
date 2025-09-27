@@ -7,9 +7,11 @@ use GoodPhp\Reflection\NativePHPDoc\Definition\NativePHPDoc\File\FileClassLikeCo
 use Illuminate\Support\Collection;
 use PhpParser\NameContext;
 use PhpParser\Node;
+use PhpParser\Node\Const_;
 use PhpParser\Node\Name;
 use PhpParser\Node\PropertyItem;
 use PhpParser\Node\Stmt\Class_;
+use PhpParser\Node\Stmt\ClassConst;
 use PhpParser\Node\Stmt\ClassLike;
 use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node\Stmt\Enum_;
@@ -54,6 +56,7 @@ class ClassLikeContextParsingVisitor extends NodeVisitorAbstract
 			uses: $this->uses($nameContext),
 			traitsUses: $this->traitsUses($node),
 			excludedTraitMethods: $this->excludedTraitMethods($node),
+			declaredConstants: $this->constants($node),
 			declaredProperties: $this->properties($node),
 			declaredMethods: $this->methods($node),
 		);
@@ -167,6 +170,18 @@ class ClassLikeContextParsingVisitor extends NodeVisitorAbstract
 				docComment: ((string) $traitUseNode->getDocComment()) ?: null,
 			);
 		}, $classLike->getTraitUses());
+	}
+
+	/**
+	 * @return list<string>
+	 */
+	private function constants(ClassLike $classLike): array
+	{
+		return collect($classLike->stmts)
+			->whereInstanceOf(ClassConst::class)
+			->flatMap(fn (ClassConst $constant) => $constant->consts)
+			->map(fn (Const_ $constant) => (string) $constant->name)
+			->all();
 	}
 
 	/**

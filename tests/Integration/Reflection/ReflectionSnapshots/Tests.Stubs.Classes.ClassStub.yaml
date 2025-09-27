@@ -47,6 +47,18 @@ uses:
             trait: Tests\Stubs\Traits\ParentTraitStub
             aliases: {  }
     excludedTraitMethods: {  }
+declaredConstants: {  }
+constants:
+    -
+        asString: CONSTANT
+        name: CONSTANT
+        isFinal: false
+        declaringType: 'Tests\Stubs\Traits\ParentTraitStub<T, Tests\Stubs\Classes\SomeStub>'
+        attributes:
+            asString: '#[]'
+            all: {  }
+        type: null
+        value: 'i:123;'
 declaredProperties:
     -
         asString: $factories

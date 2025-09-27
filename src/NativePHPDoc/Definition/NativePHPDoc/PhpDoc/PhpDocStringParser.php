@@ -6,6 +6,7 @@ use PHPStan\PhpDocParser\Lexer\Lexer;
 use PHPStan\PhpDocParser\Parser\PhpDocParser;
 use PHPStan\PhpDocParser\Parser\TokenIterator;
 use ReflectionClass;
+use ReflectionClassConstant;
 use ReflectionMethod;
 use ReflectionProperty;
 use Reflector;
@@ -18,9 +19,9 @@ class PhpDocStringParser
 	) {}
 
 	/**
-	 * @param string|ReflectionClass<object>|ReflectionProperty|ReflectionMethod|null $input
+	 * @param string|ReflectionClass<object>|ReflectionClassConstant|ReflectionProperty|ReflectionMethod|null $input
 	 */
-	public function parse(string|ReflectionClass|ReflectionProperty|ReflectionMethod|null $input): ParsedPhpDoc
+	public function parse(string|ReflectionClass|ReflectionClassConstant|ReflectionProperty|ReflectionMethod|null $input): ParsedPhpDoc
 	{
 		if ($input instanceof Reflector) {
 			$input = $input->getDocComment() ?: null;
