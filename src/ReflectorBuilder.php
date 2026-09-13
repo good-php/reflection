@@ -79,7 +79,7 @@ class ReflectorBuilder
 	{
 		$this->inMemoryCache = new ArrayAdapter(
 			defaultLifetime: (int) $ttl?->format('s'),
-			storeSerialized: false,
+			deepClone: false,
 			maxItems: $maxItems,
 		);
 
