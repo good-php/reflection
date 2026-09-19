@@ -24,7 +24,7 @@
 		"pestphp/pest": "^3.0",
 		"phake/phake": "^4.2",
 		"php-cs-fixer/shim": "~3.94.2",
-		"phpstan/phpstan": "~2.1.0",
+		"phpstan/phpstan": "~2.1.46",
 		"phpstan/phpstan-mockery": "^2.0",
 		"phpstan/phpstan-phpunit": "^2.0",
 		"phpstan/phpstan-webmozart-assert": "^2.0",

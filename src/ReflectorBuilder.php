@@ -77,11 +77,12 @@ class ReflectorBuilder
 	 */
 	public function withMemoryCache(int $maxItems = 100, ?DateInterval $ttl = null): self
 	{
-		$this->inMemoryCache = new ArrayAdapter(
-			defaultLifetime: (int) $ttl?->format('s'),
-			deepClone: false,
-			maxItems: $maxItems,
-		);
+		$defaultLifetime = (int) $ttl?->format('s');
+
+		$this->inMemoryCache = property_exists(ArrayAdapter::class, 'deepClone')
+			? new ArrayAdapter(defaultLifetime: $defaultLifetime, maxItems: $maxItems, deepClone: false) // @phpstan-ignore argument.unknown (symfony/cache ^8.0)
+			// Remove after Symfony 8 is minimum:
+			: new ArrayAdapter(defaultLifetime: $defaultLifetime, maxItems: $maxItems, storeSerialized: false); // @phpstan-ignore argument.unknown (symfony/cache ^7.3)
 
 		return $this->wrapDefinitionProvider(
 			fn (DefinitionProvider $provider) => new StaticCacheDefinitionProvider(
