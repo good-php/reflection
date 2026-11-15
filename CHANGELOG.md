@@ -1,3 +1,10 @@
+# [2.6.0](https://github.com/good-php/reflection/compare/v2.5.1...v2.6.0) (2026-11-15)
+
+
+### Features
+
+* Support Symfony 8, Laravel 13 and PHP 8.5 ([6392e56](https://github.com/good-php/reflection/commit/6392e56891dee151640e29565cb9d1d224256c34))
+
 ## [2.5.1](https://github.com/good-php/reflection/compare/v2.5.0...v2.5.1) (2025-09-16)
 
 
