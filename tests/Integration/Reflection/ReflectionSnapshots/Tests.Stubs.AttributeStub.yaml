@@ -10,7 +10,7 @@ isFinal: false
 attributes:
     asString: '#[\Attribute(...)]'
     all:
-        - 'O:9:"Attribute":1:{s:5:"flags";i:127;}'
+        - 'O:9:"Attribute":1:{s:5:"flags";i:45;}'
 typeParameters: {  }
 extends: null
 implements: {  }
