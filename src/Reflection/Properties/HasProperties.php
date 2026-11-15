@@ -11,6 +11,11 @@ use GoodPhp\Reflection\Reflection\PropertyReflection;
 interface HasProperties extends HasName
 {
 	/**
+	 * @return class-string
+	 */
+	public function qualifiedName(): string;
+
+	/**
 	 * @return list<PropertyReflection<ReflectableType>>
 	 */
 	public function declaredProperties(): array;

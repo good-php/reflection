@@ -158,15 +158,7 @@ final class NpdPropertyReflection implements PropertyReflection
 
 	private function nativeReflection(): ReflectionProperty
 	{
-		if (isset($this->nativeReflection)) {
-			return $this->nativeReflection;
-		}
-
-		$qualifiedName = $this->declaringType->qualifiedName();
-
-		Assert::true(class_exists($qualifiedName) || interface_exists($qualifiedName) || trait_exists($qualifiedName) || enum_exists($qualifiedName));
-
-		return $this->nativeReflection = new ReflectionProperty($qualifiedName, $this->definition->name);
+		return $this->nativeReflection ??= new ReflectionProperty($this->declaringType->qualifiedName(), $this->definition->name);
 	}
 
 	public function __toString(): string
