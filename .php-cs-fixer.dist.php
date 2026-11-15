@@ -16,4 +16,11 @@ $finder = Finder::create()
 	->notName('_*.php')
 	->ignoreVCS(true);
 
-return Config::make()->setFinder($finder);
+$config = Config::make();
+
+return $config
+	->setRules([
+		...$config->getRules(),
+		'PhpCsFixerCustomFixers/phpdoc_no_superfluous_param' => false,
+	])
+	->setFinder($finder);

@@ -26,6 +26,7 @@ use PHPStan\PhpDocParser\Ast\Type\CallableTypeParameterNode;
 use PHPStan\PhpDocParser\Ast\Type\GenericTypeNode;
 use PHPStan\PhpDocParser\Ast\Type\IdentifierTypeNode;
 use PHPStan\PhpDocParser\Ast\Type\IntersectionTypeNode;
+use PHPStan\PhpDocParser\Ast\Type\NameNode;
 use PHPStan\PhpDocParser\Ast\Type\NullableTypeNode;
 use PHPStan\PhpDocParser\Ast\Type\ThisTypeNode;
 use PHPStan\PhpDocParser\Ast\Type\TypeNode;
@@ -61,7 +62,7 @@ class PhpDocTypeMapper
 					)
 				),
 				$node instanceof CallableTypeNode => $this->mapNamed(
-					$node->identifier->name,
+					self::nameOf($node->identifier),
 					[
 						$this->map($node->returnType, $context),
 						...array_map(
@@ -72,7 +73,7 @@ class PhpDocTypeMapper
 					$context,
 				),
 				$node instanceof GenericTypeNode => $this->mapNamed(
-					$node->type->name,
+					self::nameOf($node->type),
 					$this->map($node->genericTypes, $context),
 					$context,
 				),
@@ -166,6 +167,11 @@ class PhpDocTypeMapper
 		$type = $this->typeAliasResolver->resolve($type, $context->fileClassLikeContext);
 
 		return new NamedType($type, $arguments);
+	}
+
+	public static function nameOf(IdentifierTypeNode|NameNode $node): string
+	{
+		return $node instanceof NameNode ? $node->toCodeString() : $node->name;
 	}
 
 	private function mapUnion(UnionTypeNode $node, TypeContext $context): Type

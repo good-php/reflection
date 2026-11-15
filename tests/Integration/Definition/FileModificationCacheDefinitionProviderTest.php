@@ -8,6 +8,7 @@ use GoodPhp\Reflection\NativePHPDoc\Definition\DefinitionProvider;
 use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\ClassTypeDefinition;
 use GoodPhp\Reflection\NativePHPDoc\Definition\TypeDefinition\UsedTraitsDefinition;
 use Phake;
+use ReflectionClass;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Component\Cache\Psr16Cache;
 use Tests\Integration\IntegrationTestCase;
@@ -31,7 +32,7 @@ class FileModificationCacheDefinitionProviderTest extends IntegrationTestCase
 			->forType(ClassStub::class)
 			->thenReturn(new ClassTypeDefinition(
 				qualifiedName: ClassStub::class,
-				fileName: '/opt/project/tests/Stubs/Classes/ClassStub.php',
+				fileName: (new ReflectionClass(ClassStub::class))->getFileName(),
 				builtIn: false,
 				anonymous: false,
 				final: true,

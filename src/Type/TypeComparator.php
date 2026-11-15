@@ -29,9 +29,7 @@ use Tests\Integration\Type\TypeComparatorTest;
  */
 class TypeComparator
 {
-	public function __construct(
-		private readonly Reflector $reflector
-	) {}
+	public function __construct(private readonly Reflector $reflector) {}
 
 	public function accepts(Type $a, Type $b): bool
 	{
@@ -156,7 +154,6 @@ class TypeComparator
 				->implements(),
 			$aReflection instanceof SpecialTypeReflection => $aReflection
 				->superTypes(),
-			default => throw new InvalidArgumentException('Unsupported type of reflection [' . $aReflection::class . '] given.'),
 		};
 
 		foreach ($descendants as $type) {
