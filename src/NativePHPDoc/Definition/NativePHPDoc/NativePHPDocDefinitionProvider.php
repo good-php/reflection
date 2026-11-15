@@ -381,7 +381,7 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 		}
 
 		$tagValue = $phpDoc->firstExtendsTagValue(
-			fn (ExtendsTagValueNode $node) => $parentClass === $this->typeAliasResolver->resolve($node->type->type->name, $context->fileClassLikeContext)
+			fn (ExtendsTagValueNode $node) => $parentClass === $this->typeAliasResolver->resolve(PhpDocTypeMapper::nameOf($node->type->type), $context->fileClassLikeContext)
 		);
 
 		[$type] = $this->map(
@@ -410,10 +410,10 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 			->filter(fn (string $className) => !$context->fileClassLikeContext || in_array($className, $context->fileClassLikeContext->implementsInterfaces, true))
 			->map(function (string $className) use ($reflection, $context, $phpDoc) {
 				$tagValue = $phpDoc->firstImplementsTagValue(
-					fn (ImplementsTagValueNode $node) => $className === $this->typeAliasResolver->resolve($node->type->type->name, $context->fileClassLikeContext)
+					fn (ImplementsTagValueNode $node) => $className === $this->typeAliasResolver->resolve(PhpDocTypeMapper::nameOf($node->type->type), $context->fileClassLikeContext)
 				);
 				$tagValue ??= $phpDoc->firstExtendsTagValue(
-					fn (ExtendsTagValueNode $node) => $className === $this->typeAliasResolver->resolve($node->type->type->name, $context->fileClassLikeContext)
+					fn (ExtendsTagValueNode $node) => $className === $this->typeAliasResolver->resolve(PhpDocTypeMapper::nameOf($node->type->type), $context->fileClassLikeContext)
 				);
 
 				[$type] = $this->map(
@@ -459,7 +459,7 @@ class NativePHPDocDefinitionProvider implements DefinitionProvider
 					$qualifiedName = $this->typeAliasResolver->resolve($traitUse->qualifiedName, $context->fileClassLikeContext);
 
 					$tagValue = $phpDoc->firstUsesTagValue(
-						fn (UsesTagValueNode $node) => $qualifiedName === $this->typeAliasResolver->resolve($node->type->type->name, $context->fileClassLikeContext)
+						fn (UsesTagValueNode $node) => $qualifiedName === $this->typeAliasResolver->resolve(PhpDocTypeMapper::nameOf($node->type->type), $context->fileClassLikeContext)
 					);
 
 					[$type] = $this->map(
